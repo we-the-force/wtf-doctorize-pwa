@@ -1,7 +1,7 @@
 {
-  "name": "doctorize-pwa",
-  "short_name": "doctorize-pwa",
-  "description": "doctorize-pwa",
+  "name": "Doctorize",
+  "short_name": "Doctorize",
+  "description": "Doctorize",
   "lang": "en-US",
   "start_url": "/",
   "display": "standalone",

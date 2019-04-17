@@ -1,6 +1,8 @@
 
 // import HomePage from '../pages/home.f7.html';
 import LoginPage from '../pages/login.f7.html';
+import RecoveryPage from '../pages/recovery.f7.html';
+import RecoverySentPage from '../pages/recovery-sent.f7.html';
 import AboutPage from '../pages/about.f7.html';
 import FormPage from '../pages/form.f7.html';
 
@@ -20,6 +22,14 @@ var routes = [
   {
     path: '/about/',
     component: AboutPage,
+  },
+  {
+    path: '/recovery/',
+    component: RecoveryPage,
+  },
+  {
+    path: '/recovery-sent/',
+    component: RecoverySentPage,
   },
   {
     path: '/form/',

@@ -1,6 +1,7 @@
 
 <template>
 <div class="page" data-name="login">
+    
     <div class="page-content login-screen-content">
       <div class="login-screen-title">
         <img src="/static/images/logo.png" srcset="/static/images/logo@2x.png 2x, /static/images/logo@3x.png 3x, /static/images/logo@4x.png 4x" >
@@ -9,29 +10,71 @@
         <ul>
           <li class="item-content item-input">
             <div class="item-inner">
-              <div class="item-title item-label">Username</div>
+              <!-- <div class="item-title item-label">Username</div> -->
               <div class="item-input-wrap">
-                <input type="text" name="username" placeholder="Your username">
+                <div class="row no-gap">
+                  <div class="col-10">
+                    <i class="material-icons">person</i>
+                    
+                  </div>
+                  <div class="col-90">
+                    <input type="text" name="username" placeholder="correo electrónico">
+
+                  </div>
+                </div>
               </div>
             </div>
           </li>
           <li class="item-content item-input">
             <div class="item-inner">
-              <div class="item-title item-label">Password</div>
+              <!-- <div class="item-title item-label">Password</div> -->
               <div class="item-input-wrap">
-                <input type="password" name="password" placeholder="Your password">
+                <div class="row no-gap">
+                  <div class="col-10">
+                    <i class="material-icons">vpn_key</i>
+
+                  </div>
+                  <div class="col-90">
+                    <input type="password" name="password" placeholder="contraseña">
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="row">
+              <div class="col-60">
+                <a href="/recovery/" data-view=".view-main" class="item-link list-button login-recovery-button">Olvidé mi
+                  contraseña</a>
               </div>
             </div>
           </li>
         </ul>
       </div>
+      
       <div class="list">
         <ul>
           <li>
-            <a href="#" class="item-link list-button login-button">Sign In</a>
+            
+            <div class="row">
+              <div class="col-50">
+                <a href="/recovery/" data-view=".view-main" class="item-link list-button login-register-button">Regístrate</a>
+              </div>
+              <div class="col-50">
+                <a href="#" class="item-link list-button login-button">
+                  <p>Ingresar </p>
+                  <i class="material-icons">chevron_right</i>
+                </a>
+              </div>
+            </div>
+           
+              
+            
           </li>
         </ul>
-        <div class="block-footer">Some text about login information.<br>Click "Sign In" to close Login Screen</div>
+        <!-- <div class="block-footer">Some text about login information.<br>Click "Sign In" to close Login Screen</div> -->
       </div>
     </div>
   </div>

@@ -1,0 +1,80 @@
+.page-content.login-screen-content
+  background: radial-gradient(698.35px at 16.69% 17.13%, #F5F7FF 0%, #CCE4ED 100%)
+a.item-link
+  display: flex
+  align-items: center
+  justify-content: center
+  padding-right: 10px
+.md .item-input:not(.item-input-outline) .item-input-wrap:after, .md .input:not(.input-outline):after
+  display: none
+
+.md .item-input 
+  transition: all 0.2s 
+       
+  .item-input-wrap
+    background-color: #ffffff
+    border-radius: 20px
+    box-shadow: -2px 2px 5px rgba(16, 43, 200, 0.2)
+    height: 40px
+    transition: all 0.2s
+    transform: scale(1)
+  .item-title
+    margin-bottom: 15px
+  &.item-input-focused
+     
+    .item-input-wrap
+      transform: scale(1.01)
+      box-shadow: -2px 2px 15px rgba(16, 43, 200, 0.2)
+      i
+        color: #2F80ED
+  i
+    display: block
+    //padding-left: 3%
+    //padding-right: 3%
+    line-height: 40px
+    margin-left: auto
+    margin-right: auto
+    width: 25px
+    text-align: center
+    padding-top: 0px
+    vertical-align: middle
+    color: #7B8EFF
+  input
+    display: inline-block
+    color: #7B8EFF
+
+.login-button
+  height: 40px
+  // width: 50%
+  // margin-left: auto
+  // margin-right: auto
+  color: white
+  background: radial-gradient(64.53px at 100% 100%, #00A1C5 0%, #2FCFBC 100%)
+  box-shadow: -2px 2px 15px rgba(16, 43, 200, 0.2)
+  border-radius: 20px
+
+.login-screen-content 
+  .list-button.login-recovery-button, .list-button.login-register-button
+    color: #2F80ED
+    height: 40px
+    margin-left: auto
+    font-family: 'Nunito'
+    margin-right: auto
+    background: transparent
+    border-radius: 20px
+
+.login-screen-content .list-button.login-button
+  // width: 100%
+  width: 50%
+
+  display: flex
+  align-items: center
+  justify-content: space-between
+  // padding-right: 10px
+
+.recovery-sent-page
+  h1,h4
+    text-align: center
+  .recovery-sent-img
+    width: 100%
+    height: auto

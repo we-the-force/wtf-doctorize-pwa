@@ -1,9 +1,12 @@
 // Custom color theme properties
 \:root
-  --f7-theme-color: #2F80ED
+  //--f7-theme-color: #2F80ED
+  --f7-theme-color: #fff
   --f7-theme-color-rgb: 47, 128, 237
   --f7-theme-color-shade: #136be0
   --f7-theme-color-tint: #5597f0
+  --f7-list-item-min-height: 40px
+  --f7-font-family: 'Nunito'
 
 // Left Panel right border when it is visible by breakpoint
 .panel-left.panel-visible-by-breakpoint:before
@@ -31,5 +34,21 @@
   background: rgba(0, 0, 0, 0.1)
   content: ''
   z-index: 6000
-.page-content.login-screen-content
-  background: radial-gradient(698.35px at 16.69% 17.13%, #F5F7FF 0%, #CCE4ED 100%)
+@import url('https://fonts.googleapis.com/css?family=Nunito:300,400')
+
+*
+  font-family: 'Nunito', sans-serif
+
+
+h1
+  font-family: 'Nunito', sans-serif
+  font-weight: 300
+  font-size: 28px
+  color: #2F80ED
+h4
+  font-family: 'Nunito', sans-serif
+  font-weight: 300
+  font-size: 16px
+  color: #2F80ED
+
+@import "login"

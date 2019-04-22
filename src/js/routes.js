@@ -2,6 +2,10 @@
 // import HomePage from '../pages/home.f7.html';
 import LoginPage from '../pages/login.f7.html';
 import RecoveryPage from '../pages/recovery.f7.html';
+import RegisterS1Page from '../pages/register-step1.f7.html';
+import RegisterS2Page from '../pages/register-step2.f7.html';
+import RegisterS3Page from '../pages/register-step3.f7.html';
+import RegisterS4Page from '../pages/register-step4.f7.html';
 import RecoverySentPage from '../pages/recovery-sent.f7.html';
 import AboutPage from '../pages/about.f7.html';
 import FormPage from '../pages/form.f7.html';
@@ -18,6 +22,22 @@ var routes = [
   {
     path: '/',
     component: LoginPage,
+  },
+  {
+    path: '/register-s1',
+    component: RegisterS1Page,
+  },
+  {
+    path: '/register-s2',
+    component: RegisterS2Page,
+  },
+  {
+    path: '/register-s3',
+    component: RegisterS3Page,
+  },
+  {
+    path: '/register-s4',
+    component: RegisterS4Page,
   },
   {
     path: '/about/',

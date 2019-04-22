@@ -1,24 +1,37 @@
 
 <template>
-<div class="page" data-name="login">
-    
+<div class="page" data-name="register-step2">
     <div class="page-content login-screen-content">
-      <div class="login-screen-title">
-        <img src="/static/images/logo.png" srcset="/static/images/logo@2x.png 2x, /static/images/logo@3x.png 3x, /static/images/logo@4x.png 4x" >
+      <div class="screen-title">
+        <div class="list">
+          <ul>
+            <li>
+              <div class="row">
+                <div class="col-10"></div>
+                <div class="col-80">
+                  <h1>Correo <br>y Teléfono</h1>
+                  <h4>Ahora apóyanos con tu correo electrónico y tu celular.</h4>
+                </div>
+                <div class="col-10"></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        
       </div>
       <div class="list">
         <ul>
           <li class="item-content item-input">
             <div class="item-inner">
-              <!-- <div class="item-title item-label">Username</div> -->
+              <!-- <div class="item-title item-label">email</div> -->
               <div class="item-input-wrap">
                 <div class="row no-gap">
                   <div class="col-10">
-                    <i class="material-icons">person</i>
+                    <i class="material-icons">email</i>
                     
                   </div>
                   <div class="col-90">
-                    <input type="text" name="username" placeholder="correo electrónico">
+                    <input type="email" name="email" placeholder="correo electrónico">
 
                   </div>
                 </div>
@@ -27,49 +40,40 @@
           </li>
           <li class="item-content item-input">
             <div class="item-inner">
-              <!-- <div class="item-title item-label">Password</div> -->
+              <!-- <div class="item-title item-label">email</div> -->
               <div class="item-input-wrap">
                 <div class="row no-gap">
                   <div class="col-10">
-                    <i class="material-icons">vpn_key</i>
-
+                    <i class="material-icons">phone</i>
+                    
                   </div>
                   <div class="col-90">
-                    <input type="password" name="password" placeholder="contraseña">
+                    <input type="tel" name="phone" placeholder="teléfono">
 
                   </div>
                 </div>
-
               </div>
             </div>
           </li>
-          <li>
-            <div class="row">
-              <div class="col-60">
-                <a href="/recovery/" data-view=".view-main" class="item-link list-button login-recovery-button">Olvidé mi
-                  contraseña</a>
-              </div>
-            </div>
-          </li>
+          
         </ul>
       </div>
       
       <div class="list">
         <ul>
           <li>
-            
             <div class="row">
               <div class="col-50">
-                <a href="/register-s1/" data-view=".view-main" class="item-link list-button login-register-button">Regístrate</a>
+                <a href="/register-s2/" data-view=".view-main" class="item-link list-button login-register-button">Regresar</a>
+
               </div>
               <div class="col-50">
-                <a href="#" class="item-link list-button login-button">
-                  <p>Ingresar </p>
+                <a href="/register-s3/" data-view=".view-main"  class="item-link list-button login-button">
+                  <p>Siguiente </p>
                   <i class="material-icons">chevron_right</i>
                 </a>
-              </div>
+              </div> 
             </div>
-           
               
             
           </li>

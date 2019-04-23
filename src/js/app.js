@@ -55,34 +55,41 @@ $$(document).on('page:init', '.page[data-name="register-step3"]', function (e) {
     ]
   });
   
-  const input = document.querySelector('input[type="range"]');
-
   var imageCapture;
+  const input = document.querySelector('input[type="range"]');
+  $$('.web-cam').on('click', function(){
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(mediaStream => {
+        document.querySelector('video').srcObject = mediaStream;
 
-  navigator.mediaDevices.getUserMedia({ video: true })
-    .then(mediaStream => {
-      document.querySelector('video').srcObject = mediaStream;
+        const track = mediaStream.getVideoTracks()[0];
+        imageCapture = new ImageCapture(track);
 
-      const track = mediaStream.getVideoTracks()[0];
-      imageCapture = new ImageCapture(track);
+        return imageCapture.getPhotoCapabilities();
+      })
+      .then(photoCapabilities => {
+        const settings = imageCapture.track.getSettings();
 
-      return imageCapture.getPhotoCapabilities();
-    })
-    .then(photoCapabilities => {
-      const settings = imageCapture.track.getSettings();
+        input.min = 600;
+        // input.min = photoCapabilities.imageWidth.min;
+        input.max = 600;
+        // input.max = photoCapabilities.imageWidth.max;
+        input.step = photoCapabilities.imageWidth.step;
 
-      input.min = 600;
-      // input.min = photoCapabilities.imageWidth.min;
-      input.max = 600;
-      // input.max = photoCapabilities.imageWidth.max;
-      input.step = photoCapabilities.imageWidth.step;
+        return imageCapture.getPhotoSettings();
+      })
+      .then(photoSettings => {
+        input.value = photoSettings.imageWidth;
+      })
+      .catch(error => console.log('Argh!', error.name || error));
+    document.querySelector('video').addEventListener('play', function () {
+      document.querySelector('#takePhotoButton').disabled = false;
+    });
+  });
 
-      return imageCapture.getPhotoSettings();
-    })
-    .then(photoSettings => {
-      input.value = photoSettings.imageWidth;
-    })
-    .catch(error => console.log('Argh!', error.name || error));
+
+
+  
 
   function onTakePhotoButtonClick() {
     imageCapture.takePhoto({ imageWidth: input.value })
@@ -94,9 +101,7 @@ $$(document).on('page:init', '.page[data-name="register-step3"]', function (e) {
       .catch(error => console.log(error));
   }
 
-  document.querySelector('video').addEventListener('play', function () {
-    document.querySelector('#takePhotoButton').disabled = false;
-  });
+  
 
   /* Utils */
 

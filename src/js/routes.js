@@ -34,6 +34,7 @@ var routes = [
   {
     path: '/register-s3',
     component: RegisterS3Page,
+    
   },
   {
     path: '/register-s4',

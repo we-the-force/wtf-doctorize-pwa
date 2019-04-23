@@ -70,10 +70,10 @@ $$(document).on('page:init', '.page[data-name="register-step3"]', function (e) {
       .then(photoCapabilities => {
         const settings = imageCapture.track.getSettings();
 
-        input.min = 600;
-        // input.min = photoCapabilities.imageWidth.min;
-        input.max = 600;
-        // input.max = photoCapabilities.imageWidth.max;
+        // input.min = 600;
+        input.min = photoCapabilities.imageWidth.min;
+        // input.max = 600;
+        input.max = photoCapabilities.imageWidth.max;
         input.step = photoCapabilities.imageWidth.step;
 
         return imageCapture.getPhotoSettings();

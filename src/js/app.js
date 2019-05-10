@@ -92,6 +92,8 @@ $$(document).on('page:init', '.page[data-name="register-step3"]', function (e) {
   
 
   function onTakePhotoButtonClick() {
+    console.log('click');
+    
     imageCapture.takePhoto({ imageWidth: input.value })
       .then(blob => createImageBitmap(blob))
       .then(imageBitmap => {
@@ -117,7 +119,7 @@ $$(document).on('page:init', '.page[data-name="register-step3"]', function (e) {
       x, y, img.width * ratio, img.height * ratio);
   }
 
-
+  document.querySelector('#takePhotoButton').addEventListener('click', onTakePhotoButtonClick);
   
 })
 

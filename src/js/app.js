@@ -49,8 +49,8 @@ $$(document).on('page:init', '.page[data-name="register-step3"]', function (e) {
     inputEl: '#specialty-picker',
     cols: [
       {
-        values: ['apple', 'orange', 'bananna'],
-        displayValues: ['Apple', 'Orange', 'Bananna'],
+        values: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
+        displayValues: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
       }
     ]
   });

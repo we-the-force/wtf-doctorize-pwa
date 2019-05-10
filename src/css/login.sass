@@ -5,10 +5,17 @@ a.item-link
   align-items: center
   justify-content: center
   padding-right: 10px
-.md .item-input:not(.item-input-outline) .item-input-wrap:after, .md .input:not(.input-outline):after
+.list .item-inner
+  height: 56px
+  display: flex
+  flex-direction: column
+  align-items: flex-start
+  border: none
+  padding-bottom: var(--f7-list-item-padding-vertical)
+.item-input:not(.item-input-outline) .item-input-wrap:after, .input:not(.input-outline):after
   display: none
 
-.md .item-input 
+.item-input 
   transition: all 0.2s 
        
   .item-input-wrap
@@ -96,7 +103,7 @@ a.item-link
       background-position: 50% 50%
     video
       
-      background-color: red
+      //background-color: red
       height: 100%
       width: 100%
 

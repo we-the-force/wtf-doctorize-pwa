@@ -1,5 +1,18 @@
 # doctorize-pwa
 
+
+## Dependencies
+
+* node
+* npm
+* [Framework7 Core Documentation](https://framework7.io/docs/)
+
+
+## Installation
+
+* `npm install` - install dependencies
+
+
 ## Framework7 CLI Options
 
 Framework7 app created with following options:

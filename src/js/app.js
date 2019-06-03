@@ -130,9 +130,17 @@ $$(document).on('page:init', '.page[data-name="register-step3"]', function (e) {
 
   document.querySelector('#takePhotoButton').addEventListener('click', onTakePhotoButtonClick);
   
-})
+});
 
-// Login Screen Demo
+$$('#login .login-button').on('click', function(){
+  console.log('click');
+  var username = $$('[name="username"]').val();
+  var password = $$('[name="password"]').val();
+  app.request.post('http://206.189.192.79:8080/doctorize-rest-core/login', { "email": "cristof_tb@hotmail.com" , "password": "Torres2015" }, function(){
+    console.log('ok');
+  });
+});
+/** Login Screen Demo
 $$('#my-login-screen .login-button').on('click', function () {
   var username = $$('#my-login-screen [name="username"]').val();
   var password = $$('#my-login-screen [name="password"]').val();
@@ -143,4 +151,5 @@ $$('#my-login-screen .login-button').on('click', function () {
   // Alert username and password
   app.dialog.alert('Username: ' + username + '<br>Password: ' + password);
 });
+*/
 

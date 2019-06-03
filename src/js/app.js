@@ -1,6 +1,6 @@
 import $$ from 'dom7';
 import Framework7 from 'framework7/framework7.esm.bundle.js';
-
+import { orderBy } from 'lodash';
 // Import F7 Styles
 import 'framework7/css/framework7.bundle.css';
 
@@ -19,6 +19,11 @@ var app = new Framework7({
   // App root data
   data: function () {
     return {
+      specialties:
+        {
+          values: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
+          displayValues: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
+        },
       user: {
         firstName: 'John',
         lastName: 'Doe',
@@ -45,6 +50,10 @@ var app = new Framework7({
 });
 
 $$(document).on('page:init', '.page[data-name="register-step3"]', function (e) {
+  var specialties = app.data.specialties;
+  _.orderBy(specialties, specialties.values, 'desc');
+  console.log(specialties);
+  
   var picker = app.picker.create({
     inputEl: '#specialty-picker',
     cols: [

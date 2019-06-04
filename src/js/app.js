@@ -132,14 +132,27 @@ $$(document).on('page:init', '.page[data-name="register-step3"]', function (e) {
   
 });
 
+
+//login button
 $$('#login .login-button').on('click', function(){
-  console.log('click');
   var username = $$('[name="username"]').val();
   var password = $$('[name="password"]').val();
-  app.request.post('http://206.189.192.79:8080/doctorize-rest-core/login', { "email": "cristof_tb@hotmail.com" , "password": "Torres2015" }, function(){
-    console.log('ok');
+  //cristof_tb@hotmail.com Torres2015
+  app.request.postJSON('http://api.mydoctorize.com/doctorize-rest-core/POST/account/login', { "email": username , "password": password }, function(e){
+    console.log(e);
   });
 });
+
+//recuperar contrase
+$$(document).on('page:init', '.page[data-name="recovery"]', function (e) {
+  $$('.login-button').on('click', function(){
+    var email = $$('[name="username"]').val();
+    app.request.postJSON('http://api.mydoctorize.com/doctorize-rest-core/POST/account/password/reset', { "email": email }, function(e){
+      console.log(e);
+    });
+  });
+});
+
 /** Login Screen Demo
 $$('#my-login-screen .login-button').on('click', function () {
   var username = $$('#my-login-screen [name="username"]').val();

@@ -28,6 +28,10 @@ var app = new Framework7({
         firstName: 'John',
         lastName: 'Doe',
       },
+      password: {
+        first: '',
+        second: ''
+      }
 
     };
   },
@@ -155,7 +159,10 @@ $$(document).on('page:init', '.page[data-name="recovery"]', function (e) {
 
 
 $$(document).on('page:init', '.page[data-name="recovery-pass"]', function (e) {
+  
   var loc = document.location.href;
+  var firstPass = app.data.password.first;
+  var secondPass = app.data.password.second;
   
   if(loc.indexOf('?')>0)
   {
@@ -166,9 +173,19 @@ $$(document).on('page:init', '.page[data-name="recovery-pass"]', function (e) {
     var code = param2.split('=')[1];
   }
 
-  var pass1 = $$('[name="password1"]').val();
-  var pass2 = $$('[name="password2"]').val();
+  var pass1 = '';
+  var pass2 = '';
 
+  firstPass = pass1;
+  secondPass = pass2;
+  console.log();
+  
+  $$(document).on('input:notempty', '#password2', function(e){
+    pass1 = $$('[name="password1"]').val();
+    pass2 = $$('[name="password2"]').val();
+    $$('#password2').attr('pattern', pass1+'');
+    
+  });
   $$('#recovery-pass .login-button').on('click', function(){
 
     if(pass1 !== pass2){

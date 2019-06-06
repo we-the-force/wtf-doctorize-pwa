@@ -138,7 +138,7 @@ $$('#login .login-button').on('click', function(){
   var username = $$('[name="username"]').val();
   var password = $$('[name="password"]').val();
   //cristof_tb@hotmail.com Torres2015
-  app.request.postJSON('http://api.mydoctorize.com/doctorize-rest-core/POST/account/login', { "email": username , "password": password }, function(e){
+  app.request.postJSON('http://api.mydoctorize.com/account/login', { "email": username , "password": password }, function(e){
     console.log(e);
   });
 });
@@ -147,22 +147,50 @@ $$('#login .login-button').on('click', function(){
 $$(document).on('page:init', '.page[data-name="recovery"]', function (e) {
   $$('.login-button').on('click', function(){
     var email = $$('[name="username"]').val();
-    app.request.postJSON('http://api.mydoctorize.com/doctorize-rest-core/POST/account/password/reset', { "email": email }, function(e){
+    app.request.postJSON('http://api.mydoctorize.com/account/password/reset', { "email": email }, function(e){
       console.log(e);
     });
   });
 });
 
-/** Login Screen Demo
-$$('#my-login-screen .login-button').on('click', function () {
-  var username = $$('#my-login-screen [name="username"]').val();
-  var password = $$('#my-login-screen [name="password"]').val();
 
-  // Close login screen
-  app.loginScreen.close('#my-login-screen');
+$$(document).on('page:init', '.page[data-name="recovery-pass"]', function (e) {
+  var loc = document.location.href;
+  if(loc.indexOf('?')>0)
+  {
+    var val = loc.split('?')[1];
+    var param1 = val.split('&')[0];
+    var mail = param1.split('=')[1];
+    var param2 = val.split('&')[1];
+    var code = param2.split('=')[1];
+  }
 
-  // Alert username and password
-  app.dialog.alert('Username: ' + username + '<br>Password: ' + password);
+  $$('#recovery-pass .login-button').on('click', function(){
+    var pass1 = $$('[name="password1"]').val();
+    var pass2 = $$('[name="password2"]').val();
+    if(pass1 !== pass2){
+      notification.open();
+    }else if(pass1 == "" || pass2 ==""){
+      notification.open();
+    }else{
+      app.request.postJSON('http://api.mydoctorize.com/account/password/confirmation', { 
+        "email": mail , 
+        "password": pass1 , 
+        "passwordConfirmation": pass2 , 
+        "code": code 
+      }, function(e){
+        console.log(e);
+      });
+      location.href = '/';
+    }
+  });
 });
-*/
 
+var notification = app.notification.create({
+  icon: '<i></i>',
+  title: 'Doctorize',
+  titleRightText: 'ahora',
+  subtitle: 'Contraseña invalida',
+  text: 'Las contraseñas no coinciden',
+  closeTimeout: 3000,
+});

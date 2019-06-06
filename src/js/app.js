@@ -156,6 +156,7 @@ $$(document).on('page:init', '.page[data-name="recovery"]', function (e) {
 
 $$(document).on('page:init', '.page[data-name="recovery-pass"]', function (e) {
   var loc = document.location.href;
+  
   if(loc.indexOf('?')>0)
   {
     var val = loc.split('?')[1];
@@ -165,9 +166,11 @@ $$(document).on('page:init', '.page[data-name="recovery-pass"]', function (e) {
     var code = param2.split('=')[1];
   }
 
+  var pass1 = $$('[name="password1"]').val();
+  var pass2 = $$('[name="password2"]').val();
+
   $$('#recovery-pass .login-button').on('click', function(){
-    var pass1 = $$('[name="password1"]').val();
-    var pass2 = $$('[name="password2"]').val();
+
     if(pass1 !== pass2){
       notification.open();
     }else if(pass1 == "" || pass2 ==""){
@@ -181,7 +184,7 @@ $$(document).on('page:init', '.page[data-name="recovery-pass"]', function (e) {
       }, function(e){
         console.log(e);
       });
-      location.href = '/';
+      //location.href = '/';
     }
   });
 });

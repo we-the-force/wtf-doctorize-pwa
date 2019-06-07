@@ -28,10 +28,6 @@ var app = new Framework7({
         firstName: 'John',
         lastName: 'Doe',
       },
-      password: {
-        first: '',
-        second: ''
-      }
 
     };
   },
@@ -137,6 +133,9 @@ $$(document).on('page:init', '.page[data-name="register-step3"]', function (e) {
 });
 
 
+
+
+
 //login button
 $$('#login .login-button').on('click', function(){
   var username = $$('[name="username"]').val();
@@ -146,6 +145,9 @@ $$('#login .login-button').on('click', function(){
     console.log(e);
   });
 });
+
+
+
 
 //recuperar contrase
 $$(document).on('page:init', '.page[data-name="recovery"]', function (e) {
@@ -158,12 +160,15 @@ $$(document).on('page:init', '.page[data-name="recovery"]', function (e) {
 });
 
 
+
+
+
+
 $$(document).on('page:init', '.page[data-name="recovery-pass"]', function (e) {
   
   var loc = document.location.href;
-  var firstPass = app.data.password.first;
-  var secondPass = app.data.password.second;
-  
+  var pass1,pass2;
+
   if(loc.indexOf('?')>0)
   {
     var val = loc.split('?')[1];
@@ -172,45 +177,28 @@ $$(document).on('page:init', '.page[data-name="recovery-pass"]', function (e) {
     var param2 = val.split('&')[1];
     var code = param2.split('=')[1];
   }
-
-  var pass1 = '';
-  var pass2 = '';
-
-  firstPass = pass1;
-  secondPass = pass2;
-  console.log();
+  
+  $$('#recovery-pass .login-button').addClass('grey');
+  $$('#recovery-pass .login-button').off('click');
   
   $$(document).on('input:notempty', '#password2', function(e){
     pass1 = $$('[name="password1"]').val();
     pass2 = $$('[name="password2"]').val();
-    $$('#password2').attr('pattern', pass1+'');
-    
-  });
-  $$('#recovery-pass .login-button').on('click', function(){
+    $$('#password2').attr('pattern', pass1);
 
-    if(pass1 !== pass2){
-      notification.open();
-    }else if(pass1 == "" || pass2 ==""){
-      notification.open();
-    }else{
-      app.request.postJSON('http://api.mydoctorize.com/account/password/confirmation', { 
-        "email": mail , 
-        "password": pass1 , 
-        "passwordConfirmation": pass2 , 
-        "code": code 
-      }, function(e){
-        console.log(e);
+    if(pass1 === pass2){
+      $$('#recovery-pass .login-button').removeClass('grey');
+      $$('#recovery-pass .login-button').on('click', function(){
+        app.request.postJSON('http://api.mydoctorize.com/account/password/confirmation', { 
+          "email": mail , 
+          "password": pass1 , 
+          "passwordConfirmation": pass2 , 
+          "code": code 
+        }, function(e){
+          console.log(e);
+        });
+        location.href = '/';
       });
-      //location.href = '/';
     }
   });
-});
-
-var notification = app.notification.create({
-  icon: '<i></i>',
-  title: 'Doctorize',
-  titleRightText: 'ahora',
-  subtitle: 'Contraseña invalida',
-  text: 'Las contraseñas no coinciden',
-  closeTimeout: 3000,
 });

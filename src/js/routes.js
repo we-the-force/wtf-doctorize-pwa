@@ -45,7 +45,7 @@ var routes = [
     component: AboutPage,
   },
   {
-    path: '/recovery/',
+    path: '/account/password/reset',
     component: RecoveryPage,
   },
   {
@@ -53,7 +53,7 @@ var routes = [
     component: RecoverySentPage,
   },
   {
-    path: '/recovery-pass/',
+    path: '/account/password/confirmation',
     component: RecoveryPassPage,
   },
   {

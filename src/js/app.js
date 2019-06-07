@@ -62,12 +62,16 @@ $$(document).on('input:notempty', '#username', function(e){
   email_login = $$('[name="username"]').val();
   if(regex.test(email_login)){
     $$('#login .login-button').removeClass('grey');
-    $$('.login-button').once('click', function(){
+    $$('#login .login-button').off('click');
+    $$('#login .login-button').on('click', function(e){
+      e.preventDefault();
       password_login = $$('[name="password"]').val();
-      app.request.postJSON('http://api.mydoctorize.com/account/login', { "email": email_login , "password": password_login }, function(e){
-        console.log(e);
-        console.log(email_login + " " + password_login);
-      });
+      console.log('click');
+      
+      // app.request.postJSON('http://api.mydoctorize.com/account/login', { "email": email_login , "password": password_login }, function(e){
+      //   console.log(e);
+      //   console.log(email_login + " " + password_login);
+      // });
     });
   }
 });
@@ -93,7 +97,8 @@ $$(document).on('page:init', '.page[data-name="recovery"]', function (e) {
 
     if(regex.test(email_recovery)){
       $$('#recovery .login-button').removeClass('grey');
-      $$('.login-button').once('click', function(){
+      $$('#recovery .login-button').off('click');
+      $$('#recovery .login-button').on('click', function(){
         app.request.postJSON('http://api.mydoctorize.com/account/password/reset', { "email": email_recovery }, function(e){
           console.log(e);
         });
@@ -124,6 +129,7 @@ $$(document).on('page:init', '.page[data-name="recovery-pass"]', function (e) {
 
     if(pass1 === pass2){
       $$('#recovery-pass .login-button').removeClass('grey');
+      $$('#recovery-pass .login-button').off('click');
       $$('#recovery-pass .login-button').on('click', function(){
         app.request.postJSON('http://api.mydoctorize.com/account/password/confirmation', { 
           "email": mail , 
@@ -133,7 +139,7 @@ $$(document).on('page:init', '.page[data-name="recovery-pass"]', function (e) {
         }, function(e){
           console.log(e);
         });
-        location.href = '/';
+        // location.href = '/';
       });
     }
   });

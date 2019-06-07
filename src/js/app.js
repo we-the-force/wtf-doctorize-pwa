@@ -32,7 +32,7 @@ var app = new Framework7({
     };
   },
   // App root methods
-  methods: {
+  methods: {      
     helloWorld: function () {
       app.dialog.alert('Hello World!');
     },
@@ -47,7 +47,98 @@ var app = new Framework7({
   serviceWorker: {
     path: '/service-worker.js',
   },
+
 });
+
+
+//login
+var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+var email_login,password_login;
+
+$$('#login .login-button').addClass('grey');
+$$('#login .login-button').off('click');
+
+$$(document).on('input:notempty', '#username', function(e){
+  email_login = $$('[name="username"]').val();
+  if(regex.test(email_login)){
+    $$('#login .login-button').removeClass('grey');
+    $$('.login-button').once('click', function(){
+      password_login = $$('[name="password"]').val();
+      app.request.postJSON('http://api.mydoctorize.com/account/login', { "email": email_login , "password": password_login }, function(e){
+        console.log(e);
+        console.log(email_login + " " + password_login);
+      });
+    });
+  }
+});
+
+
+
+
+
+
+
+
+//recuperar contrase
+$$(document).on('page:init', '.page[data-name="recovery"]', function (e) {
+  
+  var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+  $$('#recovery .login-button').addClass('grey');
+  $$('#recovery .login-button').off('click');
+
+  $$(document).on('input:notempty', '#password', function(e){
+    var email_recovery = $$('[name="username"]').val();
+    console.log(email_reecovery);
+
+    if(regex.test(email_recovery)){
+      $$('#recovery .login-button').removeClass('grey');
+      $$('.login-button').once('click', function(){
+        app.request.postJSON('http://api.mydoctorize.com/account/password/reset', { "email": email_recovery }, function(e){
+          console.log(e);
+        });
+      });
+    }
+  });
+});
+
+
+
+
+
+//restaurar contrasena
+$$(document).on('page:init', '.page[data-name="recovery-pass"]', function (e) {
+  //parametros
+  let params = (new URL(document.location)).searchParams;
+  let mail = params.get("email");
+  let code = params.get("code");
+  var pass1,pass2;
+
+  $$('#recovery-pass .login-button').addClass('grey');
+  $$('#recovery-pass .login-button').off('click');
+  
+  $$(document).on('input:notempty', '#password2', function(e){
+    pass1 = $$('[name="password1"]').val();
+    pass2 = $$('[name="password2"]').val();
+    $$('#password2').attr('pattern', pass1);
+
+    if(pass1 === pass2){
+      $$('#recovery-pass .login-button').removeClass('grey');
+      $$('#recovery-pass .login-button').on('click', function(){
+        app.request.postJSON('http://api.mydoctorize.com/account/password/confirmation', { 
+          "email": mail , 
+          "password": pass1 , 
+          "passwordConfirmation": pass2 , 
+          "code": code 
+        }, function(e){
+          console.log(e);
+        });
+        location.href = '/';
+      });
+    }
+  });
+});
+
 
 $$(document).on('page:init', '.page[data-name="register-step3"]', function (e) {
   var specialties = app.data.specialties;
@@ -130,75 +221,4 @@ $$(document).on('page:init', '.page[data-name="register-step3"]', function (e) {
 
   document.querySelector('#takePhotoButton').addEventListener('click', onTakePhotoButtonClick);
   
-});
-
-
-
-
-
-//login button
-$$('#login .login-button').on('click', function(){
-  var username = $$('[name="username"]').val();
-  var password = $$('[name="password"]').val();
-  //cristof_tb@hotmail.com Torres2015
-  app.request.postJSON('http://api.mydoctorize.com/account/login', { "email": username , "password": password }, function(e){
-    console.log(e);
-  });
-});
-
-
-
-
-//recuperar contrase
-$$(document).on('page:init', '.page[data-name="recovery"]', function (e) {
-  $$('.login-button').on('click', function(){
-    var email = $$('[name="username"]').val();
-    app.request.postJSON('http://api.mydoctorize.com/account/password/reset', { "email": email }, function(e){
-      console.log(e);
-    });
-  });
-});
-
-
-
-
-
-
-$$(document).on('page:init', '.page[data-name="recovery-pass"]', function (e) {
-  
-  var loc = document.location.href;
-  var pass1,pass2;
-
-  if(loc.indexOf('?')>0)
-  {
-    var val = loc.split('?')[1];
-    var param1 = val.split('&')[0];
-    var mail = param1.split('=')[1];
-    var param2 = val.split('&')[1];
-    var code = param2.split('=')[1];
-  }
-  
-  $$('#recovery-pass .login-button').addClass('grey');
-  $$('#recovery-pass .login-button').off('click');
-  
-  $$(document).on('input:notempty', '#password2', function(e){
-    pass1 = $$('[name="password1"]').val();
-    pass2 = $$('[name="password2"]').val();
-    $$('#password2').attr('pattern', pass1);
-
-    if(pass1 === pass2){
-      $$('#recovery-pass .login-button').removeClass('grey');
-      $$('#recovery-pass .login-button').on('click', function(){
-        app.request.postJSON('http://api.mydoctorize.com/account/password/confirmation', { 
-          "email": mail , 
-          "password": pass1 , 
-          "passwordConfirmation": pass2 , 
-          "code": code 
-        }, function(e){
-          console.log(e);
-        });
-        location.href = '/';
-      });
-    }
-  });
 });

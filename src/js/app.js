@@ -54,6 +54,23 @@ var app = new Framework7({
 //login
 var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 var email_login,password_login;
+var dynamicPopup = app.popup.create({
+  content: '<div class="popup">'+
+              '<div class="block">'+
+                '<p>Bienvenido!</p>'+
+                '<p><a href="#" class="link popup-close">Close me</a></p>'+
+              '</div>'+
+            '</div>',
+  // Events
+  on: {
+    open: function (popup) {
+      console.log('Popup open');
+    },
+    opened: function (popup) {
+      console.log('Popup opened');
+    },
+  }
+});
 
 $$('#login .login-button').addClass('grey');
 $$('#login .login-button').off('click');
@@ -68,6 +85,7 @@ $$(document).on('input:notempty', '#username', function(e){
       password_login = $$('[name="password"]').val();
       app.request.postJSON('http://api.mydoctorize.com/account/login', { "email": email_login , "password": password_login }, function(e){
          console.log(e);
+         dynamicPopup.open();
       });
     });
   }

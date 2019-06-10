@@ -32,7 +32,7 @@ var app = new Framework7({
     };
   },
   // App root methods
-  methods: {
+  methods: {      
     helloWorld: function () {
       app.dialog.alert('Hello World!');
     },
@@ -47,7 +47,101 @@ var app = new Framework7({
   serviceWorker: {
     path: '/service-worker.js',
   },
+
 });
+
+
+//login
+var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+var email_login,password_login;
+
+$$('#login .login-button').addClass('grey');
+$$('#login .login-button').off('click');
+
+$$(document).on('input:notempty', '#username', function(e){
+  email_login = $$('[name="username"]').val();
+  if(regex.test(email_login)){
+    $$('#login .login-button').removeClass('grey');
+    $$('#login .login-button').off('click');
+    $$('#login .login-button').on('click', function(e){
+      e.preventDefault();
+      password_login = $$('[name="password"]').val();
+      app.request.postJSON('http://api.mydoctorize.com/account/login', { "email": email_login , "password": password_login }, function(e){
+         console.log(e);
+      });
+    });
+  }
+});
+
+
+
+
+
+
+
+
+//recuperar contrase
+$$(document).on('page:init', '.page[data-name="recovery"]', function (e) {
+
+  var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  var email_recovery;
+
+  $$('#recovery .login-button').addClass('grey');
+  $$('#recovery .login-button').off('click');
+
+  $$(document).on('input:notempty', '#username', function(e){
+    email_recovery = $$('#recovery #username').val();
+
+    if(regex.test(email_recovery)){
+      $$('#recovery .login-button').removeClass('grey');
+      $$('#recovery .login-button').off('click');
+      $$('#recovery .login-button').on('click', function(){
+        app.request.postJSON('http://api.mydoctorize.com/account/password/reset', { "email": email_recovery }, function(e){
+          console.log(e);
+        });
+      });
+    }
+  });
+});
+
+
+
+
+
+//restaurar contrasena
+$$(document).on('page:init', '.page[data-name="recovery-pass"]', function (e) {
+  //parametros
+  let params = (new URL(document.location)).searchParams;
+  let mail = params.get("email");
+  let code = params.get("code");
+  var pass1,pass2;
+
+  $$('#recovery-pass .login-button').addClass('grey');
+  $$('#recovery-pass .login-button').off('click');
+  
+  $$(document).on('input:notempty', '#password2', function(e){
+    pass1 = $$('[name="password1"]').val();
+    pass2 = $$('[name="password2"]').val();
+    $$('#password2').attr('pattern', pass1);
+
+    if(pass1 === pass2){
+      $$('#recovery-pass .login-button').removeClass('grey');
+      $$('#recovery-pass .login-button').off('click');
+      $$('#recovery-pass .login-button').on('click', function(){
+        app.request.postJSON('http://api.mydoctorize.com/account/password/confirmation', { 
+          "email": mail , 
+          "password": pass1 , 
+          "passwordConfirmation": pass2 , 
+          "code": code 
+        }, function(e){
+          console.log(e);
+        });
+        location.href = '/';
+      });
+    }
+  });
+});
+
 
 $$(document).on('page:init', '.page[data-name="register-step3"]', function (e) {
   var specialties = app.data.specialties;
@@ -130,17 +224,4 @@ $$(document).on('page:init', '.page[data-name="register-step3"]', function (e) {
 
   document.querySelector('#takePhotoButton').addEventListener('click', onTakePhotoButtonClick);
   
-})
-
-// Login Screen Demo
-$$('#my-login-screen .login-button').on('click', function () {
-  var username = $$('#my-login-screen [name="username"]').val();
-  var password = $$('#my-login-screen [name="password"]').val();
-
-  // Close login screen
-  app.loginScreen.close('#my-login-screen');
-
-  // Alert username and password
-  app.dialog.alert('Username: ' + username + '<br>Password: ' + password);
 });
-

@@ -1,10 +1,10 @@
-
 <template>
-<div class="page" data-name="login">
-    
+  <div class="page" data-name="login" id="login">
+
     <div class="page-content login-screen-content">
       <div class="login-screen-title">
-        <img src="/static/images/logo.png" srcset="/static/images/logo@2x.png 2x, /static/images/logo@3x.png 3x, /static/images/logo@4x.png 4x" >
+        <img src="/static/images/logo.png"
+          srcset="/static/images/logo@2x.png 2x, /static/images/logo@3x.png 3x, /static/images/logo@4x.png 4x">
       </div>
       <div class="list">
         <ul>
@@ -15,10 +15,10 @@
                 <div class="row no-gap">
                   <div class="col-10">
                     <i class="material-icons">person</i>
-                    
+
                   </div>
                   <div class="col-90">
-                    <input type="text" name="username" placeholder="correo electrónico">
+                    <input type="email" name="username" id="username" placeholder="correo electrónico" required validate>
 
                   </div>
                 </div>
@@ -35,7 +35,7 @@
 
                   </div>
                   <div class="col-90">
-                    <input type="password" name="password" placeholder="contraseña">
+                    <input type="password" name="password" id="password" placeholder="contraseña">
 
                   </div>
                 </div>
@@ -46,21 +46,21 @@
           <li>
             <div class="row">
               <div class="col-60">
-                <a href="/recovery/" data-view=".view-main" class="item-link list-button login-recovery-button">Olvidé mi
-                  contraseña</a>
+                <a href="/account/password/reset" data-view=".view-main" class="item-link list-button login-recovery-button">Olvidé mi contraseña</a>
               </div>
             </div>
           </li>
         </ul>
       </div>
-      
+
       <div class="list">
         <ul>
           <li>
-            
+
             <div class="row">
               <div class="col-50">
-                <a href="/register-s1/" data-view=".view-main" class="item-link list-button login-register-button">Regístrate</a>
+                <a href="/register-s1/" data-view=".view-main"
+                  class="item-link list-button login-register-button">Regístrate</a>
               </div>
               <div class="col-50">
                 <a href="#" class="item-link list-button login-button">
@@ -69,9 +69,9 @@
                 </a>
               </div>
             </div>
-           
-              
-            
+
+
+
           </li>
         </ul>
         <!-- <div class="block-footer">Some text about login information.<br>Click "Sign In" to close Login Screen</div> -->

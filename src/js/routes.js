@@ -9,6 +9,7 @@ import RegisterS4Page from '../pages/register-step4.f7.html';
 import RecoverySentPage from '../pages/recovery-sent.f7.html';
 import AboutPage from '../pages/about.f7.html';
 import FormPage from '../pages/form.f7.html';
+import RecoveryPassPage from '../pages/recovery-pass.f7.html';
 
 import LeftPage1 from '../pages/left-page-1.f7.html';
 import LeftPage2 from '../pages/left-page-2.f7.html';
@@ -17,7 +18,6 @@ import RequestAndLoad from '../pages/request-and-load.f7.html';
 // import NotFoundPage from '../pages/404.f7.html';
 
 var routes = [
-  
   
   {
     path: '/',
@@ -45,12 +45,16 @@ var routes = [
     component: AboutPage,
   },
   {
-    path: '/recovery/',
+    path: '/account/password/reset',
     component: RecoveryPage,
   },
   {
     path: '/recovery-sent/',
     component: RecoverySentPage,
+  },
+  {
+    path: '/account/password/confirmation',
+    component: RecoveryPassPage,
   },
   {
     path: '/form/',

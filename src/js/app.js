@@ -66,12 +66,9 @@ $$(document).on('input:notempty', '#username', function(e){
     $$('#login .login-button').on('click', function(e){
       e.preventDefault();
       password_login = $$('[name="password"]').val();
-      console.log('click');
-      
-      // app.request.postJSON('http://api.mydoctorize.com/account/login', { "email": email_login , "password": password_login }, function(e){
-      //   console.log(e);
-      //   console.log(email_login + " " + password_login);
-      // });
+      app.request.postJSON('http://api.mydoctorize.com/account/login', { "email": email_login , "password": password_login }, function(e){
+         console.log(e);
+      });
     });
   }
 });
@@ -85,15 +82,15 @@ $$(document).on('input:notempty', '#username', function(e){
 
 //recuperar contrase
 $$(document).on('page:init', '.page[data-name="recovery"]', function (e) {
-  
+
   var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  var email_recovery;
 
   $$('#recovery .login-button').addClass('grey');
   $$('#recovery .login-button').off('click');
 
-  $$(document).on('input:notempty', '#password', function(e){
-    var email_recovery = $$('[name="username"]').val();
-    console.log(email_reecovery);
+  $$(document).on('input:notempty', '#username', function(e){
+    email_recovery = $$('#recovery #username').val();
 
     if(regex.test(email_recovery)){
       $$('#recovery .login-button').removeClass('grey');
@@ -139,7 +136,7 @@ $$(document).on('page:init', '.page[data-name="recovery-pass"]', function (e) {
         }, function(e){
           console.log(e);
         });
-        // location.href = '/';
+        location.href = '/';
       });
     }
   });

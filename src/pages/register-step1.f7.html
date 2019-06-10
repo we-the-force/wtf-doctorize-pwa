@@ -1,6 +1,6 @@
 
 <template>
-<div class="page" data-name="register-step1">
+<div class="page" data-name="register-step1" id="register-step1">
     <div class="page-content login-screen-content">
       <div class="screen-title">
         <div class="list">
@@ -31,7 +31,7 @@
                     
                   </div>
                   <div class="col-90">
-                    <input type="text" name="fullname" placeholder="nombre completo">
+                    <input type="text" name="fullname" id="username" placeholder="nombre completo" required validate>
 
                   </div>
                 </div>
@@ -48,7 +48,7 @@
                     
                   </div>
                   <div class="col-90">
-                    <input type="text" name="password" placeholder="contraseña">
+                    <input type="text" name="password" id="password" placeholder="contraseña" required validate>
 
                   </div>
                 </div>

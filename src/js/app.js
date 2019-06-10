@@ -11,6 +11,9 @@ import '../css/app.sass';
 // Import Routes
 import routes from './routes.js';
 
+
+import register from './register.js';
+
 var app = new Framework7({
   root: '#app', // App root element
 
@@ -220,4 +223,8 @@ $$(document).on('page:init', '.page[data-name="register-step3"]', function (e) {
 
   document.querySelector('#takePhotoButton').addEventListener('click', onTakePhotoButtonClick);
   
+
 });
+
+
+require('./register.js');

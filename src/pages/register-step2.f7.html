@@ -1,6 +1,6 @@
 
 <template>
-<div class="page" data-name="register-step2">
+<div class="page" data-name="register-step2" id="register-step2">
     <div class="page-content login-screen-content">
       <div class="screen-title">
         <div class="list">
@@ -31,7 +31,7 @@
                     
                   </div>
                   <div class="col-90">
-                    <input type="email" name="email" placeholder="correo electrónico">
+                    <input type="email" name="email" id="email" placeholder="correo electrónico" required validate>
 
                   </div>
                 </div>
@@ -48,7 +48,7 @@
                     
                   </div>
                   <div class="col-90">
-                    <input type="tel" name="phone" placeholder="teléfono">
+                    <input type="tel" name="phone" id="phone" placeholder="teléfono" required validate pattern="[0-9]*" data-error-message="Only numbers please!">
 
                   </div>
                 </div>

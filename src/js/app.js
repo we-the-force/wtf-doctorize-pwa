@@ -127,41 +127,44 @@ $$(document).on('page:init', '.page[data-name="recovery"]', function (e) {
 
 
 //restaurar contrasena
-$$(document).on('page:init', '.page[data-name="recovery-pass"]', function (e) {
-  //parametros
-  var panel=app.panel.get('left');
-  panel.close();
-  // app.panel.swipePanel = false;
-  let urlParams = (new URL(document.location)).searchParams;
-  let mail = urlParams.get("email");
-  let code = urlParams.get("code");
-  var pass1,pass2;
-
-  $$('#recovery-pass .login-button').addClass('grey');
-  $$('#recovery-pass .login-button').off('click');
+// $$(document).on('page:init', '.page[data-name="recovery-pass"]', function (e) {
+//   //parametros
   
-  $$(document).on('input:notempty', '#password2', function(e){
-    pass1 = $$('[name="password1"]').val();
-    pass2 = $$('[name="password2"]').val();
-    $$('#password2').attr('pattern', pass1);
+//   // app.panel.swipePanel = false;
+//   let urlParams = (new URL(document.location)).searchParams;
+//   let mail = urlParams.get("email");
+//   let code = urlParams.get("code");
+//   var pass1,pass2;
 
-    if(pass1 === pass2){
-      $$('#recovery-pass .login-button').removeClass('grey');
-      $$('#recovery-pass .login-button').off('click');
-      $$('#recovery-pass .login-button').on('click', function(){
-        app.request.postJSON('http://api.mydoctorize.com/account/password/confirmation', { 
-          "email": mail , 
-          "password": pass1 , 
-          "passwordConfirmation": pass2 , 
-          "code": code 
-        }, function(e){
-          console.log(e);
-        });
-        location.href = '/';
-      });
-    }
-  });
-});
+//   $$('#recovery-pass .login-button').addClass('grey');
+//   $$('#recovery-pass .login-button').off('click');
+  
+//   $$(document).on('input:notempty', '#password2', function(e){
+//     console.log(mail+' '+code);
+    
+//     pass1 = $$('[name="password1"]').val();
+//     pass2 = $$('[name="password2"]').val();
+//     console.log(pass1);
+    
+//     $$('#password2').attr('pattern', pass1);
+
+//     if(pass1 === pass2){
+//       $$('#recovery-pass .login-button').removeClass('grey');
+//       $$('#recovery-pass .login-button').off('click');
+//       $$('#recovery-pass .login-button').on('click', function(){
+//         app.request.postJSON('http://api.mydoctorize.com/account/password/confirmation', { 
+//           "email": mail , 
+//           "password": pass1 , 
+//           "passwordConfirmation": pass2 , 
+//           "code": code 
+//         }, function(e){
+//           console.log(e);
+//         });
+//         location.href = '/';
+//       });
+//     }
+//   });
+// });
 
 
 $$(document).on('page:init', '.page[data-name="register-step3"]', function (e) {

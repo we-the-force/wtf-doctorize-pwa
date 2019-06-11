@@ -47,6 +47,9 @@ var app = new Framework7({
   serviceWorker: {
     path: '/service-worker.js',
   },
+  view: {
+    pushState: true
+  }
 
 });
 
@@ -54,6 +57,23 @@ var app = new Framework7({
 //login
 var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 var email_login,password_login;
+var dynamicPopup = app.popup.create({
+  content: '<div class="popup">'+
+              '<div class="block">'+
+                '<p>Bienvenido!</p>'+
+                '<p><a href="#" class="link popup-close">Close me</a></p>'+
+              '</div>'+
+            '</div>',
+  // Events
+  on: {
+    open: function (popup) {
+      console.log('Popup open');
+    },
+    opened: function (popup) {
+      console.log('Popup opened');
+    },
+  }
+});
 
 $$('#login .login-button').addClass('grey');
 $$('#login .login-button').off('click');
@@ -68,6 +88,7 @@ $$(document).on('input:notempty', '#username', function(e){
       password_login = $$('[name="password"]').val();
       app.request.postJSON('http://api.mydoctorize.com/account/login', { "email": email_login , "password": password_login }, function(e){
          console.log(e);
+         dynamicPopup.open();
       });
     });
   }
@@ -107,9 +128,12 @@ $$(document).on('page:init', '.page[data-name="recovery"]', function (e) {
 //restaurar contrasena
 $$(document).on('page:init', '.page[data-name="recovery-pass"]', function (e) {
   //parametros
-  let params = (new URL(document.location)).searchParams;
-  let mail = params.get("email");
-  let code = params.get("code");
+  var panel=app.panel.get('left');
+  panel.close();
+  // app.panel.swipePanel = false;
+  let urlParams = (new URL(document.location)).searchParams;
+  let mail = urlParams.get("email");
+  let code = urlParams.get("code");
   var pass1,pass2;
 
   $$('#recovery-pass .login-button').addClass('grey');

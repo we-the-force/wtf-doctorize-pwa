@@ -157,7 +157,12 @@ $$(document).on('page:init', '.page[data-name="register-step3"]', function (e) {
   var imageCapture;
   const input = document.querySelector('input[type="range"]');
   $$('.web-cam').on('click', function(){
-    navigator.mediaDevices.getUserMedia({ video: true })
+    dynamicPopup.open();
+
+    $$('.popup #takephoto').on('click', function(){
+      dynamicPopup.close();
+
+      navigator.mediaDevices.getUserMedia({ video: true })
       .then(mediaStream => {
         document.querySelector('video').srcObject = mediaStream;
 
@@ -181,12 +186,149 @@ $$(document).on('page:init', '.page[data-name="register-step3"]', function (e) {
         input.value = photoSettings.imageWidth;
       })
       .catch(error => console.log('Argh!', error.name || error));
-    document.querySelector('video').addEventListener('play', function () {
-      document.querySelector('#takePhotoButton').disabled = false;
+      document.querySelector('video').addEventListener('play', function () {
+        document.querySelector('#takePhotoButton').disabled = false;
+      });
     });
+
+    if (window.File && window.FileReader && window.FormData) {
+      var $inputField = $$('#file-upload');
+    
+      $inputField.off('change');
+      $inputField.on('change', function (e) {
+        var file = e.target.files[0];
+    
+        if (file) {
+          if (/^image\//i.test(file.type)) {
+            readFile(file);
+          } else {
+            alert('Not a valid image!');
+            console.log('Not a valid image!');
+          }
+        }else{
+          console.log('Not a FILE');
+        }
+      });
+    } else {
+      alert("File upload is not supported!");
+      console.log('File upload is not supported!');
+    }
+
   });
+  function processFile(dataURL, fileType) {
+    var maxWidth = 200;
+    var maxHeight = 200;
+  
+    var image = new Image();
+    image.src = dataURL;
+  
+    image.onload = function () {
+      var width = image.width;
+      var height = image.height;
+      var shouldResize = (width > maxWidth) || (height > maxHeight);
+  
+      if (!shouldResize) {
+       console.log('enviar archivo');
+        return;
+      }
+  
+      var newWidth;
+      var newHeight;
+  
+      if (width > height) {
+        newHeight = height * (maxWidth / width);
+        newWidth = maxWidth;
+      } else {
+        newWidth = width * (maxHeight / height);
+        newHeight = maxHeight;
+      }
+  
+      var canvas = document.createElement('canvas');
+  
+      canvas.width = newWidth;
+      canvas.height = newHeight;
+  
+      var context = canvas.getContext('2d');
+  
+      context.drawImage(this, 0, 0, newWidth, newHeight);
+  
+      dataURL = canvas.toDataURL(fileType);
+  
+      //sendFile(dataURL);
+      console.log(dataURL);
+      var imgHtml = '<img src="'+dataURL+'" alt="">';
+      $$('.web-cam').html(imgHtml);
+    };
+  
+    image.onerror = function () {
+      alert('There was an error processing your file!');
+    };
+  }
+  function readFile(file) {
+    var reader = new FileReader();
+  
+    reader.onloadend = function () {
+      $$('.popup #uploadphoto').on('click', function(){
+        console.log('procesing');
+        dynamicPopup.close();
+        processFile(reader.result, file.type);
+      });
+    }
+  
+    reader.onerror = function () {
+      alert('There was an error reading the file!');
+    }
+  
+    reader.readAsDataURL(file);
+  }
 
-
+  var dynamicPopup = app.popup.create({
+    content: 
+      '<div class="popup">' +
+        '<div class="block">' +
+          '<div class="list">'+
+          '<div class="item-inner">'+
+          '<div class="item-input-wrap">'+
+                '<div class="row">'+
+                  '<div class="col-15"></div>'+
+                  '<div class="col-70">'+
+                    '<a href="#" data-view=".view-main" id="takephoto" class="item-link list-button login-button">'+
+                      'Take Photo' +
+                      '<i class="material-icons">chevron_right</i>' +
+                    '</a>' +
+                  '</div>' +
+                  '<div class="col-15"></div>'+
+                '</div>'+
+                '</div>'+
+                '</div>'+
+                '<div class="item-inner">'+
+          '<div class="item-input-wrap">'+
+                '<div class="row">' +
+                  '<div class="col-15"></div>'+  
+                  '<div class="col-70">'+
+                    '<a href="#" data-view=".view-main" for="file-upload" id="uploadphoto" class="item-link list-button login-button">' +
+                    'Update photo <i class="material-icons">chevron_right</i>' +
+                    '</a>' +
+                    '<input id="file-upload" type="file"/>' +
+                  '</div>'+
+                  '<div class="col-15"></div>'+
+                '</div>'+
+                '</div>'+
+                '</div>'+
+          '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>',
+    // Events
+    on: {
+      open: function (popup) {
+        console.log('Popup open');
+      },
+      opened: function (popup) {
+        console.log('Popup opened');
+      },
+    }
+  });
 
   
 

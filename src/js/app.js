@@ -58,10 +58,11 @@ var app = new Framework7({
 var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 var email_login,password_login;
 var dynamicPopup = app.popup.create({
-  content: '<div class="popup">'+
-              '<div class="block">'+
+  content: '<div class="popup popup-swipe-to-close">'+
+              '<div class="block text-align-center">'+
                 '<p>Bienvenido!</p>'+
-                '<p><a href="#" class="link popup-close">Close me</a></p>'+
+                '<p>Swipe hacia abajo para cerrar.</p>'+
+                
               '</div>'+
             '</div>',
   // Events

@@ -78,10 +78,11 @@
             pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
-              console.log('pageInit', page);
               let urlParams = (new URL(document.location)).searchParams;
-              let mail = urlParams.get("email");
-              let code = urlParams.get("code");
+              var query = app.utils.parseUrlQuery(window.location.href);
+              
+              let mail = query.email;
+              let code = query.code;
               var pass1,pass2;
 
               $$('#recovery-pass .login-button').addClass('grey');
@@ -92,7 +93,6 @@
 
                 pass1 = $$('[name="password1"]').val();
                 pass2 = $$('[name="password2"]').val();
-                console.log(pass1);
 
                 $$('#password2').attr('pattern', pass1);
 
@@ -106,9 +106,9 @@
                       "passwordConfirmation": pass2 , 
                       "code": code 
                     }, function(e){
-                      console.log(e);
+                      location.href = '/';
                     });
-                    location.href = '/';
+                    
                   });
                 }
               });

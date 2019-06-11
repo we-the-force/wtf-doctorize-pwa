@@ -61,7 +61,7 @@ var dynamicPopup = app.popup.create({
   content: '<div class="popup popup-swipe-to-close">'+
               '<div class="block text-align-center">'+
                 '<p>Bienvenido!</p>'+
-                '<p>Swipe hacia abajo para cerrar.</p>'+
+                '<div class="list"> <ul> <li><a class="item-link list-button popup-close" href="#">Cerrar</a></li> </ul> </div>'+
                 
               '</div>'+
             '</div>',

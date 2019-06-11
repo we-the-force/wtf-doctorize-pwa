@@ -47,6 +47,9 @@ var app = new Framework7({
   serviceWorker: {
     path: '/service-worker.js',
   },
+  view: {
+    pushState: true
+  }
 
 });
 
@@ -125,9 +128,12 @@ $$(document).on('page:init', '.page[data-name="recovery"]', function (e) {
 //restaurar contrasena
 $$(document).on('page:init', '.page[data-name="recovery-pass"]', function (e) {
   //parametros
-  let params = (new URL(document.location)).searchParams;
-  let mail = params.get("email");
-  let code = params.get("code");
+  var panel=app.panel.get('left');
+  panel.close();
+  // app.panel.swipePanel = false;
+  let urlParams = (new URL(document.location)).searchParams;
+  let mail = urlParams.get("email");
+  let code = urlParams.get("code");
   var pass1,pass2;
 
   $$('#recovery-pass .login-button').addClass('grey');

@@ -94,10 +94,6 @@ $$(document).on('input:notempty', '#username', function(e){
 
 
 
-
-
-
-
 //recuperar contrase
 $$(document).on('page:init', '.page[data-name="recovery"]', function (e) {
 

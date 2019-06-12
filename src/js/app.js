@@ -139,7 +139,7 @@ $$(document).on('page:init', '.page[data-name="recovery-pass"]', function (e) {
 });
 
 
-$$(document).on('page:init', '.page[data-name="register-step3"]', function (e) {
+/**$$(document).on('page:init', '.page[data-name="register-step3"]', function (e) {
   var specialties = app.data.specialties;
   _.orderBy(specialties, specialties.values, 'desc');
   console.log(specialties);
@@ -346,7 +346,7 @@ $$(document).on('page:init', '.page[data-name="register-step3"]', function (e) {
 
   
 
-  /* Utils */
+  /* Utils 
 
   function drawCanvas(img) {
     const canvas = document.querySelector('canvas');
@@ -362,4 +362,4 @@ $$(document).on('page:init', '.page[data-name="register-step3"]', function (e) {
 
   document.querySelector('#takePhotoButton').addEventListener('click', onTakePhotoButtonClick);
   
-});
+});*/

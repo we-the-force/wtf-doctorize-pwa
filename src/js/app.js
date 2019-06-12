@@ -45,6 +45,13 @@ var app = new Framework7({
     helloWorld: function () {
       app.dialog.alert('Hello World!');
     },
+    redirectTo: function(pathTo) {
+      console.log(pathTo);
+      
+      app.views.main.router.navigate({
+        name: pathTo
+      });
+    }
   },
   // App routes
   routes: routes,
@@ -63,6 +70,11 @@ var app = new Framework7({
 //login
 var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 var email_login,password_login;
+
+app.init(function(){
+  console.log('init');
+});
+
 
 $$('#login .login-button').addClass('grey');
 $$('#login .login-button').off('click');

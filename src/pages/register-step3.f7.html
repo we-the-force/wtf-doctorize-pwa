@@ -94,23 +94,27 @@
 </template>
 <script>
   import $$ from 'dom7';
-  import routes from '../js/routes.js';
+  
   export default {  
     on: {
       pageInit: function(e, page) {
         var self = this;
         var app = self.$app;
         
-        $$('#register-step3 .login-button').off('click')
+        
+        $$('#register-step3 .login-button').off('click');
         $$('#register-step3 .login-button').on('click', function(e){
+          console.log('click');
+          
+          
           app.request.postJSON('http://api.mydoctorize.com/user/save', { 	
-          "password": app.data.register.password,
-          "email": app.data.register.email,
-          "name": app.data.register.username,
-          "cellphone": app.data.register.phone
+            "password": app.data.register.password,
+            "email": app.data.register.email,
+            "name": app.data.register.username,
+            "cellphone": app.data.register.phone
           }, function(e){
-              console.log(e);
-              location.href = '/register-s4';
+            console.log(e);
+            app.methods.redirectTo('register-s4');
           });
           //location.href = '/register-s4';
           

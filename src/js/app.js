@@ -61,7 +61,25 @@ var dynamicPopup = app.popup.create({
   content: '<div class="popup popup-swipe-to-close">'+
               '<div class="block text-align-center">'+
                 '<p>Bienvenido!</p>'+
-                '<p>Swipe hacia abajo para cerrar.</p>'+
+                '<div class="list"> <ul> <li><a class="item-link list-button popup-close" href="#">Cerrar</a></li> </ul> </div>'+
+                
+              '</div>'+
+            '</div>',
+  // Events
+  on: {
+    open: function (popup) {
+      console.log('Popup open');
+    },
+    opened: function (popup) {
+      console.log('Popup opened');
+    },
+  }
+});
+var errorPopup = app.popup.create({
+  content: '<div class="popup popup-swipe-to-close">'+
+              '<div class="block text-align-center">'+
+                '<p>Tus datos de acceso son incorrectos. <br/><br/>Intenta nuevamente.</p>'+
+                '<div class="list"> <ul> <li><a class="item-link list-button popup-close" href="#">Cerrar</a></li> </ul> </div>'+
                 
               '</div>'+
             '</div>',
@@ -90,6 +108,8 @@ $$(document).on('input:notempty', '#username', function(e){
       app.request.postJSON('http://api.mydoctorize.com/account/login', { "email": email_login , "password": password_login }, function(e){
          console.log(e);
          dynamicPopup.open();
+      }, function(e){
+          errorPopup.open();
       });
     });
   }

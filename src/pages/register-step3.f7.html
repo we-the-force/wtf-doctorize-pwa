@@ -103,7 +103,7 @@
         
         $$('#register-step3 .login-button').off('click')
         $$('#register-step3 .login-button').on('click', function(e){
-          app.request.postJSON('http://206.189.192.79:8080/user/save', { 	
+          app.request.postJSON('http://api.mydoctorize.com/user/save', { 	
           "password": app.data.register.password,
           "email": app.data.register.email,
           "name": app.data.register.username,

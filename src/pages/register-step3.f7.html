@@ -73,11 +73,11 @@
           <li>
             <div class="row">
               <div class="col-50">
-                <a href="/register-s3/" data-view=".view-main" class="item-link list-button login-register-button">Regresar</a>
+                <a href="/register-s2/" data-view=".view-main" class="item-link list-button login-register-button">Regresar</a>
 
               </div>
               <div class="col-50">
-                <a href="/register-s4/" data-view=".view-main"  class="item-link list-button login-button">
+                <a href="#" data-view=".view-main"  class="item-link list-button login-button">
                   <p>Guardar </p>
                   <i class="material-icons">chevron_right</i>
                 </a>
@@ -93,5 +93,30 @@
   </div>
 </template>
 <script>
-  export default {}
+  import $$ from 'dom7';
+  import routes from '../js/routes.js';
+  export default {  
+    on: {
+      pageInit: function(e, page) {
+        var self = this;
+        var app = self.$app;
+        
+        $$('#register-step3 .login-button').off('click')
+        $$('#register-step3 .login-button').on('click', function(e){
+          app.request.postJSON('http://206.189.192.79:8080/user/save', { 	
+          "password": app.data.register.password,
+          "email": app.data.register.email,
+          "name": app.data.register.username,
+          "cellphone": app.data.register.phone
+          }, function(e){
+              console.log(e);
+              location.href = '/register-s4';
+          });
+          //location.href = '/register-s4';
+          
+        });
+      
+      }
+    }
+  }
 </script>

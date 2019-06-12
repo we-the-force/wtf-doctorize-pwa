@@ -84,5 +84,25 @@
   </div>
 </template>
 <script>
-  export default {}
+    import $$ from 'dom7';
+    export default {  
+      on: {
+        pageInit: function(e, page) {
+          var self = this;
+          var app = self.$app;
+          $$('#register-step1 .login-button').addClass('grey');
+          $$('#register-step1 .login-button').off('click');
+          $$(document).on('input:notempty', '#username', function(e){
+            $$(document).on('input:notempty', '#password', function(e){
+              $$('#register-step1 .login-button').removeClass('grey');
+              $$('#register-step1 .login-button').off('click');
+              $$('#register-step1 .login-button').on('click', function(e){
+                  app.data.register.username = $$('[name="fullname"]').val();
+                  app.data.register.password = $$('[name="password"]').val();
+              });
+            });
+          });
+        }
+      }
+    }
 </script>

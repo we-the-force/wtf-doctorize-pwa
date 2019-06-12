@@ -31,6 +31,12 @@ var app = new Framework7({
         firstName: 'John',
         lastName: 'Doe',
       },
+      register: {
+        username: '',
+        password: '',
+        email: '',
+        phone: '',
+      },
 
     };
   },

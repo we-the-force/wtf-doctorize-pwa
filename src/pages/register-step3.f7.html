@@ -1,6 +1,6 @@
 
 <template>
-<div class="page" data-name="register-step3">
+<div class="page" data-name="register-step3" id="register-step3">
     <div class="page-content login-screen-content">
       <div class="screen-title">
         <div class="list">
@@ -73,12 +73,12 @@
           <li>
             <div class="row">
               <div class="col-50">
-                <a href="/register-s3/" data-view=".view-main" class="item-link list-button login-register-button">Regresar</a>
+                <a href="/register-s2/" data-view=".view-main" class="item-link list-button login-register-button">Regresar</a>
 
               </div>
               <div class="col-50">
-                <a href="/register-s4/" data-view=".view-main"  class="item-link list-button login-button">
-                  <p>Siguiente </p>
+                <a href="#" data-view=".view-main"  class="item-link list-button login-button">
+                  <p>Guardar </p>
                   <i class="material-icons">chevron_right</i>
                 </a>
               </div> 
@@ -93,5 +93,34 @@
   </div>
 </template>
 <script>
-  export default {}
+  import $$ from 'dom7';
+  
+  export default {  
+    on: {
+      pageInit: function(e, page) {
+        var self = this;
+        var app = self.$app;
+        
+        
+        $$('#register-step3 .login-button').off('click');
+        $$('#register-step3 .login-button').on('click', function(e){
+          console.log('click');
+          
+          
+          app.request.postJSON('http://api.mydoctorize.com/user/save', { 	
+            "password": app.data.register.password,
+            "email": app.data.register.email,
+            "name": app.data.register.username,
+            "cellphone": app.data.register.phone
+          }, function(e){
+            console.log(e);
+            app.methods.redirectTo('register-s4');
+          });
+          //location.href = '/register-s4';
+          
+        });
+      
+      }
+    }
+  }
 </script>

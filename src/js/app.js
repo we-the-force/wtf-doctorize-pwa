@@ -11,6 +11,9 @@ import '../css/app.sass';
 // Import Routes
 import routes from './routes.js';
 
+
+import register from './register.js';
+
 var app = new Framework7({
   root: '#app', // App root element
 
@@ -28,6 +31,12 @@ var app = new Framework7({
         firstName: 'John',
         lastName: 'Doe',
       },
+      register: {
+        username: '',
+        password: '',
+        email: '',
+        phone: '',
+      },
 
     };
   },
@@ -36,6 +45,13 @@ var app = new Framework7({
     helloWorld: function () {
       app.dialog.alert('Hello World!');
     },
+    redirectTo: function(pathTo) {
+      console.log(pathTo);
+      
+      app.views.main.router.navigate({
+        name: pathTo
+      });
+    }
   },
   // App routes
   routes: routes,
@@ -93,6 +109,11 @@ var errorPopup = app.popup.create({
     },
   }
 });
+
+app.init(function(){
+  console.log('init');
+});
+
 
 $$('#login .login-button').addClass('grey');
 $$('#login .login-button').off('click');
@@ -268,4 +289,8 @@ $$(document).on('page:init', '.page[data-name="register-step3"]', function (e) {
 
   document.querySelector('#takePhotoButton').addEventListener('click', onTakePhotoButtonClick);
   
+
 });
+
+
+require('./register.js');

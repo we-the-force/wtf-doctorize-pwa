@@ -1,6 +1,6 @@
 
 <template>
-<div class="page" data-name="register-step2">
+<div class="page" data-name="register-step2" id="register-step2">
     <div class="page-content login-screen-content">
       <div class="screen-title">
         <div class="list">
@@ -31,7 +31,7 @@
                     
                   </div>
                   <div class="col-90">
-                    <input type="email" name="email" placeholder="correo electrónico">
+                    <input type="email" name="email" id="email" placeholder="correo electrónico" required validate>
 
                   </div>
                 </div>
@@ -48,7 +48,7 @@
                     
                   </div>
                   <div class="col-90">
-                    <input type="tel" name="phone" placeholder="teléfono">
+                    <input type="tel" name="phone" id="phone" placeholder="teléfono" required validate pattern="[0-9]*" data-error-message="Only numbers please!">
 
                   </div>
                 </div>
@@ -84,5 +84,37 @@
   </div>
 </template>
 <script>
-  export default {}
+  import $$ from 'dom7';
+  export default {  
+    on: {
+      pageInit: function(e, page) {
+        var self = this;
+        var app = self.$app;
+        var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        var regex2 = /^([0-9]){10}$/;
+        
+        $$('#register-step2 .login-button').addClass('grey');
+        $$('#register-step2 .login-button').off('click');
+        $$(document).on('input:notempty', '#email', function(e){
+          $$(document).on('input:notempty', '#phone', function(e){
+              app.data.register.email = $$('[name="email"]').val();
+              app.data.register.phone = $$('[name="phone"]').val();
+              if(regex.test(app.data.register.email) && regex2.test(app.data.register.phone))
+              {
+                  $$('#register-step2 .login-button').removeClass('grey');
+                  $$('#register-step2 .login-button').off('click');
+                  $$('#register-step2 .login-button').on('click', function(e){
+                    console.log(app.data.register.email);
+                    console.log(app.data.register.phone);
+
+                  });
+              }else{
+                  $$('#register-step2 .login-button').addClass('grey');
+                  $$('#register-step2 .login-button').off('click');
+              }
+          });
+        });
+      }
+    }
+  }
 </script>

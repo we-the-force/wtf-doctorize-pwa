@@ -24,16 +24,19 @@
             <div class="row">
               <div class="col-25"></div>
               <div class="col-50">
-                <div id="takePhotoButton">
+                <!-- <div id="takePhotoButton">
                     <i class="material-icons">camera</i>
-                </div>
+                </div> -->
                 <div class="web-cam" id="web-cam">
 
                   <video autoplay></video>
                   <canvas style="visibility: hidden;"></canvas>
                 </div>
+                <div id="takePhotoButton">
 
-                <button id="takePhotoButton" disabled>Take Photo</button>
+                    <!-- <i class="material-icons">camera</i> -->
+                </div>
+                <!-- <button id="takePhotoButton" disabled>Take Photo</button> -->
 
               </div>
               <div class="col-25"></div>
@@ -380,7 +383,15 @@ background: #ccc;
                 const input = document.querySelector('input[type="range"]');
                 $$('.web-cam').on('click', function() {
                     dynamicPopup.open();
-
+                    var btnHTML = '<div class="row">'+
+                      '<div class="col-100">'+
+                        '<a data-view=".view-main"  class="item-link list-button login-button tomar-foto">'+
+                          '<p>Tomar Foto </p>'+
+                          '<i class="material-icons">camera</i>'+
+                        '</a> '+                   
+                      '</div>'+
+                    '</div>';
+                    $$('#takePhotoButton').html(btnHTML);
                     $$('.popup #takephoto').on('click', function() {
                         dynamicPopup.close();
 

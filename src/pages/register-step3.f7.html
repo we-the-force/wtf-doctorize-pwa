@@ -1,4 +1,3 @@
-
 <template>
 <div class="page" data-name="register-step3" id="register-step3">
     <div class="page-content login-screen-content">
@@ -17,7 +16,7 @@
             </li>
           </ul>
         </div>
-        
+
       </div>
       <div class="list">
         <ul>
@@ -26,21 +25,21 @@
               <div class="col-25"></div>
               <div class="col-50">
                 <div id="takePhotoButton">
-                    <i class="material-icons">keyboard_arrow_down</i>
+                    <i class="material-icons">camera</i>
                 </div>
                 <div class="web-cam" id="web-cam">
 
                   <video autoplay></video>
-                  <canvas></canvas>
+                  <canvas style="visibility: hidden;"></canvas>
                 </div>
-                
+
                 <button id="takePhotoButton" disabled>Take Photo</button>
-                
+
               </div>
               <div class="col-25"></div>
             </div>
           </li>
-      
+
         </ul>
       </div>
       <div class="list">
@@ -60,17 +59,17 @@
                       <i class="material-icons">keyboard_arrow_down</i>
                     </div>
                   </div>
-                 
+
                 </div>
               </div>
             </div>
           </li>
           <!--  -->
-          
-          
+
+
         </ul>
       </div>
-      
+
       <div class="list">
         <ul>
           <li>
@@ -84,10 +83,10 @@
                   <p>Siguiente </p>
                   <i class="material-icons">chevron_right</i>
                 </a>
-              </div> 
+              </div>
             </div>
-              
-            
+
+
           </li>
         </ul>
         <!-- <div class="block-footer">Some text about login information.<br>Click "Sign In" to close Login Screen</div> -->
@@ -96,488 +95,536 @@
   </div>
 </template>
 <style>
-.croppie-container {
-    width: 100%;
-    height: 100%;
-}
-
-.croppie-container .cr-image {
-    z-index: -1;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform-origin: 0 0;
-    max-height: none;
-    max-width: none;
-}
-
-.croppie-container .cr-boundary {
-    position: relative;
-    overflow: hidden;
-    margin: 0 auto;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-}
-
-.croppie-container .cr-viewport,
-.croppie-container .cr-resizer {
-    position: absolute;
-    border: 2px solid #fff;
-    margin: auto;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    box-shadow: 0 0 2000px 2000px rgba(0, 0, 0, 0.5);
-    z-index: 0;
-}
-
-.croppie-container .cr-resizer {
-  z-index: 2;
-  box-shadow: none;
-  pointer-events: none;
-}
-
-.croppie-container .cr-resizer-vertical,
-.croppie-container .cr-resizer-horisontal {
-  position: absolute;
-  pointer-events: all;
-}
-
-.croppie-container .cr-resizer-vertical::after,
-.croppie-container .cr-resizer-horisontal::after {
-    display: block;
-    position: absolute;
-    box-sizing: border-box;
-    border: 1px solid black;
-    background: #fff;
-    width: 10px;
-    height: 10px;
-    content: '';
-}
-
-.croppie-container .cr-resizer-vertical {
-  bottom: -5px;
-  cursor: row-resize;
-  width: 100%;
-  height: 10px;
-}
-
-.croppie-container .cr-resizer-vertical::after {
-    left: 50%;
-    margin-left: -5px;
-}
-
-.croppie-container .cr-resizer-horisontal {
-  right: -5px;
-  cursor: col-resize;
-  width: 10px;
-  height: 100%;
-}
-
-.croppie-container .cr-resizer-horisontal::after {
-    top: 50%;
-    margin-top: -5px;
-}
-
-.croppie-container .cr-original-image {
-    display: none;
-}
-
-.croppie-container .cr-vp-circle {
-    border-radius: 50%;
-}
-
-.croppie-container .cr-overlay {
-    z-index: 1;
-    position: absolute;
-    cursor: move;
-    touch-action: none;
-}
-
-.croppie-container .cr-slider-wrap {
-    width: 75%;
-    margin: 15px auto;
-    text-align: center;
-}
-
-.croppie-result {
-    position: relative;
-    overflow: hidden;
-}
-
-.croppie-result img {
-    position: absolute;
-}
-
-.croppie-container .cr-image,
-.croppie-container .cr-overlay,
-.croppie-container .cr-viewport {
-    -webkit-transform: translateZ(0);
-    -moz-transform: translateZ(0);
-    -ms-transform: translateZ(0);
-    transform: translateZ(0);
-}
-
-/*************************************/
-/***** STYLING RANGE INPUT ***********/
-/*************************************/
-/*http://brennaobrien.com/blog/2014/05/style-input-type-range-in-every-browser.html */
-/*************************************/
-
-.cr-slider {
-    -webkit-appearance: none;
-/*removes default webkit styles*/
-	/*border: 1px solid white; *//*fix for FF unable to apply focus style bug */
-    width: 300px;
-/*required for proper track sizing in FF*/
-    max-width: 100%;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    background-color: transparent;
-}
-
-.cr-slider::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 3px;
-    background: rgba(0, 0, 0, 0.5);
-    border: 0;
-    border-radius: 3px;
-}
-
-.cr-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    border: none;
-    height: 16px;
-    width: 16px;
-    border-radius: 50%;
-    background: #ddd;
-    margin-top: -6px;
-}
-
-.cr-slider:focus {
-    outline: none;
-}
-/*
+    .croppie-container {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .croppie-container .cr-image {
+        z-index: -1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform-origin: 0 0;
+        max-height: none;
+        max-width: none;
+    }
+    
+    .croppie-container .cr-boundary {
+        position: relative;
+        overflow: hidden;
+        margin: 0 auto;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .croppie-container .cr-viewport,
+    .croppie-container .cr-resizer {
+        position: absolute;
+        border: 2px solid #fff;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        box-shadow: 0 0 2000px 2000px rgba(0, 0, 0, 0.5);
+        z-index: 0;
+    }
+    
+    .croppie-container .cr-resizer {
+        z-index: 2;
+        box-shadow: none;
+        pointer-events: none;
+    }
+    
+    .croppie-container .cr-resizer-vertical,
+    .croppie-container .cr-resizer-horisontal {
+        position: absolute;
+        pointer-events: all;
+    }
+    
+    .croppie-container .cr-resizer-vertical::after,
+    .croppie-container .cr-resizer-horisontal::after {
+        display: block;
+        position: absolute;
+        box-sizing: border-box;
+        border: 1px solid black;
+        background: #fff;
+        width: 10px;
+        height: 10px;
+        content: '';
+    }
+    
+    .croppie-container .cr-resizer-vertical {
+        bottom: -5px;
+        cursor: row-resize;
+        width: 100%;
+        height: 10px;
+    }
+    
+    .croppie-container .cr-resizer-vertical::after {
+        left: 50%;
+        margin-left: -5px;
+    }
+    
+    .croppie-container .cr-resizer-horisontal {
+        right: -5px;
+        cursor: col-resize;
+        width: 10px;
+        height: 100%;
+    }
+    
+    .croppie-container .cr-resizer-horisontal::after {
+        top: 50%;
+        margin-top: -5px;
+    }
+    
+    .croppie-container .cr-original-image {
+        display: none;
+    }
+    
+    .croppie-container .cr-vp-circle {
+        border-radius: 50%;
+    }
+    
+    .croppie-container .cr-overlay {
+        z-index: 1;
+        position: absolute;
+        cursor: move;
+        touch-action: none;
+    }
+    
+    .croppie-container .cr-slider-wrap {
+        width: 75%;
+        margin: 15px auto;
+        text-align: center;
+    }
+    
+    .croppie-result {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .croppie-result img {
+        position: absolute;
+    }
+    
+    .croppie-container .cr-image,
+    .croppie-container .cr-overlay,
+    .croppie-container .cr-viewport {
+        -webkit-transform: translateZ(0);
+        -moz-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+    /*************************************/
+    /***** STYLING RANGE INPUT ***********/
+    /*************************************/
+    /*http://brennaobrien.com/blog/2014/05/style-input-type-range-in-every-browser.html */
+    /*************************************/
+    
+    .cr-slider {
+        -webkit-appearance: none;
+        /*removes default webkit styles*/
+        /*border: 1px solid white; */
+        /*fix for FF unable to apply focus style bug */
+        width: 300px;
+        /*required for proper track sizing in FF*/
+        max-width: 100%;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        background-color: transparent;
+    }
+    
+    .cr-slider::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 3px;
+        background: rgba(0, 0, 0, 0.5);
+        border: 0;
+        border-radius: 3px;
+    }
+    
+    .cr-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        border: none;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background: #ddd;
+        margin-top: -6px;
+    }
+    
+    .cr-slider:focus {
+        outline: none;
+    }
+    /*
 .cr-slider:focus::-webkit-slider-runnable-track {
 background: #ccc;
 }
 */
-
-.cr-slider::-moz-range-track {
-    width: 100%;
-    height: 3px;
-    background: rgba(0, 0, 0, 0.5);
-    border: 0;
-    border-radius: 3px;
-}
-
-.cr-slider::-moz-range-thumb {
-    border: none;
-    height: 16px;
-    width: 16px;
-    border-radius: 50%;
-    background: #ddd;
-    margin-top: -6px;
-}
-
-/*hide the outline behind the border*/
-.cr-slider:-moz-focusring {
-    outline: 1px solid white;
-    outline-offset: -1px;
-}
-
-.cr-slider::-ms-track {
-    width: 100%;
-    height: 5px;
-    background: transparent;
-/*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
-	border-color: transparent;/*leave room for the larger thumb to overflow with a transparent border */
-	border-width: 6px 0;
-	color: transparent;/*remove default tick marks*/
-}
-.cr-slider::-ms-fill-lower {
-	background: rgba(0, 0, 0, 0.5);
-	border-radius: 10px;
-}
-.cr-slider::-ms-fill-upper {
-	background: rgba(0, 0, 0, 0.5);
-	border-radius: 10px;
-}
-.cr-slider::-ms-thumb {
-	border: none;
-	height: 16px;
-	width: 16px;
-	border-radius: 50%;
-	background: #ddd;
-	margin-top:1px;
-}
-.cr-slider:focus::-ms-fill-lower {
-	background: rgba(0, 0, 0, 0.5);
-}
-.cr-slider:focus::-ms-fill-upper {
-	background: rgba(0, 0, 0, 0.5);
-}
-/*******************************************/
-
-/***********************************/
-/* Rotation Tools */
-/***********************************/
-.cr-rotate-controls {
-	position: absolute;
-	bottom: 5px;
-	left: 5px;
-	z-index: 1;
-}
-.cr-rotate-controls button {
-	border: 0;
-	background: none;
-}
-.cr-rotate-controls i:before {
-	display: inline-block;
-	font-style: normal;
-	font-weight: 900;
-	font-size: 22px;
-}
-.cr-rotate-l i:before {
-	content: '↺';
-}
-.cr-rotate-r i:before {
-	content: '↻';
-}
+    
+    .cr-slider::-moz-range-track {
+        width: 100%;
+        height: 3px;
+        background: rgba(0, 0, 0, 0.5);
+        border: 0;
+        border-radius: 3px;
+    }
+    
+    .cr-slider::-moz-range-thumb {
+        border: none;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background: #ddd;
+        margin-top: -6px;
+    }
+    /*hide the outline behind the border*/
+    
+    .cr-slider:-moz-focusring {
+        outline: 1px solid white;
+        outline-offset: -1px;
+    }
+    
+    .cr-slider::-ms-track {
+        width: 100%;
+        height: 5px;
+        background: transparent;
+        /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+        border-color: transparent;
+        /*leave room for the larger thumb to overflow with a transparent border */
+        border-width: 6px 0;
+        color: transparent;
+        /*remove default tick marks*/
+    }
+    
+    .cr-slider::-ms-fill-lower {
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+    }
+    
+    .cr-slider::-ms-fill-upper {
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+    }
+    
+    .cr-slider::-ms-thumb {
+        border: none;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background: #ddd;
+        margin-top: 1px;
+    }
+    
+    .cr-slider:focus::-ms-fill-lower {
+        background: rgba(0, 0, 0, 0.5);
+    }
+    
+    .cr-slider:focus::-ms-fill-upper {
+        background: rgba(0, 0, 0, 0.5);
+    }
+    /*******************************************/
+    /***********************************/
+    /* Rotation Tools */
+    /***********************************/
+    
+    .cr-rotate-controls {
+        position: absolute;
+        bottom: 5px;
+        left: 5px;
+        z-index: 1;
+    }
+    
+    .cr-rotate-controls button {
+        border: 0;
+        background: none;
+    }
+    
+    .cr-rotate-controls i:before {
+        display: inline-block;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 22px;
+    }
+    
+    .cr-rotate-l i:before {
+        content: '↺';
+    }
+    
+    .cr-rotate-r i:before {
+        content: '↻';
+    }
 </style>
 <script>
-  import $$ from 'dom7';
-  import croppie from 'croppie';
-  export default {
-    on:{
-      pageInit: function(e){
-        var self = this;
-        var app = self.$app;
-        var specialties = app.data.specialties;
-        _.orderBy(specialties, specialties.values, 'desc');
-  
-        var picker = app.picker.create({
-          inputEl: '#specialty-picker',
-          cols: [
-            {
-              values: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
-              displayValues: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
-            }
-          ]
-        });
-        
-        var imageCapture;
-        const input = document.querySelector('input[type="range"]');
-        $$('.web-cam').on('click', function(){
-          dynamicPopup.open();
+    import $$ from 'dom7';
+    import croppie from 'croppie';
+    export default {
+        on: {
+            pageInit: function(e) {
+                var self = this;
+                var app = self.$app;
+                var specialties = app.data.specialties;
+                _.orderBy(specialties, specialties.values, 'desc');
 
-          $$('.popup #takephoto').on('click', function(){
-            dynamicPopup.close();
+                var picker = app.picker.create({
+                    inputEl: '#specialty-picker',
+                    cols: [{
+                        values: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
+                        displayValues: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
+                    }]
+                });
 
-            navigator.mediaDevices.getUserMedia({ video: true })
-            .then(mediaStream => {
-              document.querySelector('video').srcObject = mediaStream;
+                var imageCapture;
+                const input = document.querySelector('input[type="range"]');
+                $$('.web-cam').on('click', function() {
+                    dynamicPopup.open();
 
-              const track = mediaStream.getVideoTracks()[0];
-              imageCapture = new ImageCapture(track);
+                    $$('.popup #takephoto').on('click', function() {
+                        dynamicPopup.close();
 
-              return imageCapture.getPhotoCapabilities();
-            })
-            .then(photoCapabilities => {
-              const settings = imageCapture.track.getSettings();
+                        navigator.mediaDevices.getUserMedia({
+                                video: true
+                            })
+                            .then(mediaStream => {
+                                document.querySelector('video').srcObject = mediaStream;
 
-              // input.min = 600;
-              input.min = 200;
-              // input.max = 600;
-              input.max = 200;
-              input.step = photoCapabilities.imageWidth.step;
+                                const track = mediaStream.getVideoTracks()[0];
+                                imageCapture = new ImageCapture(track);
 
-              return imageCapture.getPhotoSettings();
-            })
-            .then(photoSettings => {
-              input.value = photoSettings.imageWidth;
-            })
-            .catch(error => console.log('Argh!', error.name || error));
-            document.querySelector('video').addEventListener('play', function () {
-              document.querySelector('#takePhotoButton').disabled = false;
-            });
-          });
+                                return imageCapture.getPhotoCapabilities();
+                            })
+                            .then(photoCapabilities => {
+                                const settings = imageCapture.track.getSettings();
 
-          if (window.File && window.FileReader && window.FormData) {
-            var $inputField = $$('#file-upload');
-          
-            $inputField.off('change');
-            $inputField.on('change', function (e) {
-              var file = e.target.files[0];
-          
-              if (file) {
-                if (/^image\//i.test(file.type)) {
-                  readFile(file);
-                } else {
-                  alert('Not a valid image!');
-                  console.log('Not a valid image!');
+                                // input.min = 600;
+                                input.min = 200;
+                                // input.max = 600;
+                                input.max = 200;
+                                input.step = photoCapabilities.imageWidth.step;
+
+                                return imageCapture.getPhotoSettings();
+                            })
+                            .then(photoSettings => {
+                                input.value = photoSettings.imageWidth;
+                            })
+                            .catch(error => console.log('Argh!', error.name || error));
+                        document.querySelector('video').addEventListener('play', function() {
+                            document.querySelector('#takePhotoButton').disabled = false;
+                        });
+                    });
+
+                    if (window.File && window.FileReader && window.FormData) {
+                        var $inputField = $$('#file-upload');
+
+                        $inputField.off('change');
+                        $inputField.on('change', function(e) {
+                            var file = e.target.files[0];
+
+                            if (file) {
+                                if (/^image\//i.test(file.type)) {
+                                    readFile(file);
+                                } else {
+                                    alert('Not a valid image!');
+                                    console.log('Not a valid image!');
+                                }
+                            } else {
+                                console.log('Not a FILE');
+                            }
+                        });
+                    } else {
+                        alert("File upload is not supported!");
+                        console.log('File upload is not supported!');
+                    }
+
+                });
+
+                function processFile(dataURL, fileType) {
+                    var maxWidth = 200;
+                    var maxHeight = 200;
+
+                    var image = new Image();
+                    image.src = dataURL;
+
+                    image.onload = function() {
+                        var width = image.width;
+                        var height = image.height;
+                        var shouldResize = (width > maxWidth) || (height > maxHeight);
+
+                        if (!shouldResize) {
+                            console.log('enviar archivo');
+                            return;
+                        }
+
+                        var newWidth;
+                        var newHeight;
+
+                        if (width > height) {
+                            newHeight = height * (maxWidth / width);
+                            newWidth = maxWidth;
+                        } else {
+                            newWidth = width * (maxHeight / height);
+                            newHeight = maxHeight;
+                        }
+
+                        var canvas = document.createElement('canvas');
+
+                        canvas.width = newWidth;
+                        canvas.height = newHeight;
+
+                        var context = canvas.getContext('2d');
+
+                        context.drawImage(this, 0, 0, newWidth, newHeight);
+
+                        dataURL = canvas.toDataURL(fileType);
+
+                        //sendFile(dataURL);
+                        console.log(dataURL);
+                        var imgHtml = '<img id="web-img" src="' + dataURL + '" alt="">';
+                        $$('.web-cam').html(imgHtml);
+                        var c = new croppie(document.getElementById('web-img'), {
+                            viewport: {
+                                width: 200,
+                                height: 200
+                            },
+                            boundary: {
+                                width: 200,
+                                height: 200
+                            },
+                            showZoomer: true,
+                        });
+                        console.log(c);
+                        /* $$('.web-img').croppie(); */
+                    };
+
+                    image.onerror = function() {
+                        alert('There was an error processing your file!');
+                    };
                 }
-              }else{
-                console.log('Not a FILE');
-              }
-            });
-          } else {
-            alert("File upload is not supported!");
-            console.log('File upload is not supported!');
-          }
 
-        });
+                function readFile(file) {
+                    var reader = new FileReader();
 
-        function processFile(dataURL, fileType) {
-          var maxWidth = 200;
-          var maxHeight = 200;
-        
-          var image = new Image();
-          image.src = dataURL;
-        
-          image.onload = function () {
-            var width = image.width;
-            var height = image.height;
-            var shouldResize = (width > maxWidth) || (height > maxHeight);
-        
-            if (!shouldResize) {
-            console.log('enviar archivo');
-              return;
-            }
-        
-            var newWidth;
-            var newHeight;
-        
-            if (width > height) {
-              newHeight = height * (maxWidth / width);
-              newWidth = maxWidth;
-            } else {
-              newWidth = width * (maxHeight / height);
-              newHeight = maxHeight;
-            }
-        
-            var canvas = document.createElement('canvas');
-        
-            canvas.width = newWidth;
-            canvas.height = newHeight;
-        
-            var context = canvas.getContext('2d');
-        
-            context.drawImage(this, 0, 0, newWidth, newHeight);
-        
-            dataURL = canvas.toDataURL(fileType);
-        
-            //sendFile(dataURL);
-            console.log(dataURL);
-            var imgHtml = '<img id="web-img" src="'+dataURL+'" alt="">';
-            $$('.web-cam').html(imgHtml);
-            var c = new croppie(document.getElementById('web-img'), {
-    viewport: { width: 200, height: 200 },
-    boundary: { width: 300, height: 300 },
-    showZoomer: true,
-});
-            console.log(c);
-            /* $$('.web-img').croppie(); */
-          };
-        
-          image.onerror = function () {
-            alert('There was an error processing your file!');
-          };
-        }
+                    reader.onloadend = function() {
+                        // $$('.popup #uploadphoto').on('click', function() {
+                        //     console.log('procesing');
 
-        function readFile(file) {
-          var reader = new FileReader();
-        
-          reader.onloadend = function () {
-            $$('.popup #uploadphoto').on('click', function(){
-              console.log('procesing');
-              dynamicPopup.close();
-              processFile(reader.result, file.type);
-            });
-          }
-        
-          reader.onerror = function () {
-            alert('There was an error reading the file!');
-          }
-        
-          reader.readAsDataURL(file);
-        }
+                        // });
+                        dynamicPopup.close();
+                        processFile(reader.result, file.type);
+                    }
 
-        var dynamicPopup = app.popup.create({
-          content: 
-            '<div class="popup">' +
-              '<div class="block">' +
-                '<div class="list">'+
-                '<div class="item-inner">'+
-                '<div class="item-input-wrap">'+
-                      '<div class="row">'+
-                        '<div class="col-15"></div>'+
-                        '<div class="col-70">'+
-                          '<a href="#" data-view=".view-main" id="takephoto" class="item-link list-button login-button">'+
-                            'Take Photo' +
-                            '<i class="material-icons">chevron_right</i>' +
-                          '</a>' +
+                    reader.onerror = function() {
+                        alert('There was an error reading the file!');
+                    }
+
+                    reader.readAsDataURL(file);
+                }
+
+                var dynamicPopup = app.popup.create({
+                    content: '<div class="popup">' +
+                        '<div class="block page-content login-screen-content">' +
+                        '<div class="list">' +
+                        '<div class="item-inner">' +
+                        '<div class="item-input-wrap">' +
+                        '<div class="row">' +
+                        '<div class="col-15"></div>' +
+                        '<div class="col-70">' +
+                        '<a href="#" data-view=".view-main" id="takephoto" class="item-link list-button login-button">' +
+                        'Tomar Foto' +
+                        '<i class="material-icons">chevron_right</i>' +
+                        '</a>' +
                         '</div>' +
-                        '<div class="col-15"></div>'+
-                      '</div>'+
-                      '</div>'+
-                      '</div>'+
-                      '<div class="item-inner">'+
-                '<div class="item-input-wrap">'+
-                      '<div class="row">' +
-                        '<div class="col-15"></div>'+  
-                        '<div class="col-70">'+
-                          '<a href="#" data-view=".view-main" for="file-upload" id="uploadphoto" class="item-link list-button login-button">' +
-                          'Update photo <i class="material-icons">chevron_right</i>' +
-                          '</a>' +
-                          '<input id="file-upload" type="file"/>' +
-                        '</div>'+
-                        '<div class="col-15"></div>'+
-                      '</div>'+
-                      '</div>'+
-                      '</div>'+
-                '</div>' +
-                '</div>' +
-              '</div>' +
-            '</div>',
-          // Events
-        });
+                        '<div class="col-15"></div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="item-inner">' +
+                        '<div class="item-input-wrap">' +
+                        '<div class="row">' +
+                        '<div class="col-15"></div>' +
+                        '<div class="col-70">' +
+                        '<label for="file-upload" id="uploadphoto" class="item-link list-button login-button">' +
+                        'Subir Foto <i class="material-icons">chevron_right</i>' +
+                        '</label>' +
+                        '<input id="file-upload" type="file" style="display: none;"/>' +
+                        '</div>' +
+                        '<div class="col-15"></div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>',
+                    // Events
+                });
+
+                // function onTakePhotoButtonClick() {
+                //   imageCapture.takePhoto()
+                //   .then(blob => createImageBitmap(blob))
+                //   .then(imageBitmap => {
+                //     const canvas = document.querySelector('#takePhotoCanvas');
+                //     drawCanvas(canvas, imageBitmap);
+                //   })
+                //   .catch(error => ChromeSamples.log(error));
+                // }
+
+                function onTakePhotoButtonClick() {
+                    console.log('click');
+                    $$('video').hide();
+                    imageCapture.takePhoto()
+                        .then(blob => createImageBitmap(blob))
+                        .then(imageBitmap => {
+                            drawCanvas(imageBitmap);
+                            console.log(`Photo size is ${imageBitmap.width}x${imageBitmap.height}`);
+                            console.log(imageBitmap);
+
+                        })
+
+                    .catch(error => console.log(error));
+                }
 
 
-      function onTakePhotoButtonClick() {
-        console.log('click');
-        $$('video').hide();
-        imageCapture.takePhoto({ imageWidth: 200 })
-          .then(blob => createImageBitmap(blob))
-          .then(imageBitmap => {
-            drawCanvas(imageBitmap);
-            console.log(`Photo size is ${imageBitmap.width}x${imageBitmap.height}`);
-          })
-          .catch(error => console.log(error));
-      }
 
-  
+                /* Utils */
 
-        /* Utils */
+                function drawCanvas(img) {
 
-        function drawCanvas(img) {
-          const canvas = document.querySelector('canvas');
-          canvas.width = getComputedStyle(canvas).width.split('px')[0];
-          canvas.height = getComputedStyle(canvas).height.split('px')[0];
-          let ratio = Math.min(canvas.width / img.width, canvas.height / img.height);
-          let x = (canvas.width - img.width * ratio) / 2;
-          let y = (canvas.height - img.height * ratio) / 2;
-          canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-          canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height,
-            x, y, img.width * ratio, img.height * ratio);
+                    const canvas = document.querySelector('canvas');
+                    canvas.width = img.width;
+                    // canvas.width = getComputedStyle(canvas).width.split('px')[0];
+                    canvas.height = img.height;
+                    // canvas.height = getComputedStyle(canvas).height.split('px')[0];
+                    let ratio = Math.min(canvas.width / img.width, canvas.height / img.height);
+                    let x = (canvas.width - img.width * ratio) / 2;
+                    let y = (canvas.height - img.height * ratio) / 2;
+                    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+                    canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height,
+                        x, y, img.width * ratio, img.height * ratio);
+                    var imgBase64 = canvas.toDataURL();
+                    console.log(imgBase64);
+                    var imgHtml = '<img  id="web-img" src="' + imgBase64 + '" alt="">';
+                    $$('.web-cam').html(imgHtml);
+                    var c = new croppie(document.getElementById('web-img'), {
+                        viewport: {
+                            width: 200,
+                            height: 200
+                        },
+                        boundary: {
+                            width: 200,
+                            height: 200
+                        },
+                        showZoomer: true,
+                    });
+                    console.log(c);
+
+                }
+
+                document.querySelector('#takePhotoButton').addEventListener('click', onTakePhotoButtonClick);
+
+            }
         }
-
-        document.querySelector('#takePhotoButton').addEventListener('click', onTakePhotoButtonClick);
-        
-      }
-    }  
-  }
-
+    }
 </script>

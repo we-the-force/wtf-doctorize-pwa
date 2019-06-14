@@ -378,28 +378,32 @@ background: #ccc;
                         displayValues: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
                     }]
                 });
-
+                var c;
                 var imageData;
                 var imageCapture;
                 const input = document.querySelector('input[type="range"]');
+                
 
                 $$('#register-step3 .login-button').off('click');
                 $$('#register-step3 .login-button').on('click', function(e) {
-                    
+                  c.result('base64').then(function(blob){
                     app.request.postJSON('http://api.mydoctorize.com/user/save', {
-                        "password": app.data.register.password,
-                        "name": app.data.register.username,
-                        "email": app.data.register.email,
-                        "cellphone": app.data.register.phone,
-                        "imageData": imageData
+                      "password": app.data.register.password,
+                      "name": app.data.register.username,
+                      "email": app.data.register.email,
+                      "cellphone": app.data.register.phone,
+                      "imageData": blob
                     }, function(e) {
-                        console.log(e);
-                        app.methods.redirectTo('register-s4');
+                      console.log(e);
+                      app.methods.redirectTo('register-s4');
                     });
+                  });
                 });
 
                 $$('.web-cam').on('click', function() {
                     dynamicPopup.open();
+
+
                     $$('.popup #takephoto').on('click', function() {
                         dynamicPopup.close();
 
@@ -508,10 +512,9 @@ background: #ccc;
                         dataURL = canvas.toDataURL(fileType);
 
                         //sendFile(dataURL);
-                        console.log(dataURL);
                         var imgHtml = '<img id="web-img" src="' + dataURL + '" alt="">';
                         $$('.web-cam').html(imgHtml);
-                        var c = new croppie(document.getElementById('web-img'), {
+                        c = new croppie(document.getElementById('web-img'), {
                             viewport: {
                                 width: 200,
                                 height: 200
@@ -522,7 +525,6 @@ background: #ccc;
                             },
                             showZoomer: true,
                         });
-                        imageData = dataURL;
                     };
 
                     image.onerror = function() {
@@ -617,10 +619,9 @@ background: #ccc;
                     canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height,
                         x, y, img.width * ratio, img.height * ratio);
                     var imgBase64 = canvas.toDataURL();
-                    console.log(imgBase64);
                     var imgHtml = '<img  id="web-img" src="' + imgBase64 + '" alt="">';
                     $$('.web-cam').html(imgHtml);
-                    var c = new croppie(document.getElementById('web-img'), {
+                    c = new croppie(document.getElementById('web-img'), {
                         viewport: {
                             width: 200,
                             height: 200
@@ -631,7 +632,6 @@ background: #ccc;
                         },
                         showZoomer: true,
                     });
-                    imageData = imgBase64;
 
                 }
 

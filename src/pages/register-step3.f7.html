@@ -384,274 +384,275 @@ background: #ccc;
 
                 $$('#register-step3 .login-button').off('click');
                 $$('#register-step3 .login-button').on('click', function(e) {
-                        console.log('click');
+                    console.log('click');
 
 
-                        app.request.postJSON('http://api.mydoctorize.com/user/save', {
-                            "password": app.data.register.password,
-                            "email": app.data.register.email,
-                            "name": app.data.register.username,
-                            "cellphone": app.data.register.phone
-                        }, function(e) {
-                            console.log(e);
-                            app.methods.redirectTo('register-s4');
+                    app.request.postJSON('http://api.mydoctorize.com/user/save', {
+                        "password": app.data.register.password,
+                        "email": app.data.register.email,
+                        "name": app.data.register.username,
+                        "cellphone": app.data.register.phone
+                    }, function(e) {
+                        console.log(e);
+                        app.methods.redirectTo('register-s4');
+                    });
+                });
+
+                $$('.web-cam').on('click', function() {
+                    dynamicPopup.open();
+                    var btnHTML = '<div class="row">' +
+                        '<div class="col-100">' +
+                        '<a data-view=".view-main"  class="item-link list-button login-button tomar-foto">' +
+                        '<p>Tomar Foto </p>' +
+                        '<i class="material-icons">camera</i>' +
+                        '</a> ' +
+                        '</div>' +
+                        '</div>';
+                    $$('#takePhotoButton').html(btnHTML);
+                    $$('.popup #takephoto').on('click', function() {
+                        dynamicPopup.close();
+
+                        navigator.mediaDevices.getUserMedia({
+                                video: true
+                            })
+                            .then(mediaStream => {
+                                document.querySelector('video').srcObject = mediaStream;
+
+                                const track = mediaStream.getVideoTracks()[0];
+                                imageCapture = new ImageCapture(track);
+
+                                return imageCapture.getPhotoCapabilities();
+                            })
+                            .then(photoCapabilities => {
+                                const settings = imageCapture.track.getSettings();
+
+                                // input.min = 600;
+                                input.min = 200;
+                                // input.max = 600;
+                                input.max = 200;
+                                input.step = photoCapabilities.imageWidth.step;
+
+                                return imageCapture.getPhotoSettings();
+                            })
+                            .then(photoSettings => {
+                                input.value = photoSettings.imageWidth;
+                            })
+                            .catch(error => console.log('Argh!', error.name || error));
+                        document.querySelector('video').addEventListener('play', function() {
+                            document.querySelector('#takePhotoButton').disabled = false;
                         });
+                    });
 
-                        $$('.web-cam').on('click', function() {
-                            dynamicPopup.open();
-                            var btnHTML = '<div class="row">' +
-                                '<div class="col-100">' +
-                                '<a data-view=".view-main"  class="item-link list-button login-button tomar-foto">' +
-                                '<p>Tomar Foto </p>' +
-                                '<i class="material-icons">camera</i>' +
-                                '</a> ' +
-                                '</div>' +
-                                '</div>';
-                            $$('#takePhotoButton').html(btnHTML);
-                            $$('.popup #takephoto').on('click', function() {
-                                dynamicPopup.close();
+                    if (window.File && window.FileReader && window.FormData) {
+                        var $inputField = $$('#file-upload');
 
-                                navigator.mediaDevices.getUserMedia({
-                                        video: true
-                                    })
-                                    .then(mediaStream => {
-                                        document.querySelector('video').srcObject = mediaStream;
+                        $inputField.off('change');
+                        $inputField.on('change', function(e) {
+                            var file = e.target.files[0];
 
-                                        const track = mediaStream.getVideoTracks()[0];
-                                        imageCapture = new ImageCapture(track);
-
-                                        return imageCapture.getPhotoCapabilities();
-                                    })
-                                    .then(photoCapabilities => {
-                                        const settings = imageCapture.track.getSettings();
-
-                                        // input.min = 600;
-                                        input.min = 200;
-                                        // input.max = 600;
-                                        input.max = 200;
-                                        input.step = photoCapabilities.imageWidth.step;
-
-                                        return imageCapture.getPhotoSettings();
-                                    })
-                                    .then(photoSettings => {
-                                        input.value = photoSettings.imageWidth;
-                                    })
-                                    .catch(error => console.log('Argh!', error.name || error));
-                                document.querySelector('video').addEventListener('play', function() {
-                                    document.querySelector('#takePhotoButton').disabled = false;
-                                });
-                            });
-
-                            if (window.File && window.FileReader && window.FormData) {
-                                var $inputField = $$('#file-upload');
-
-                                $inputField.off('change');
-                                $inputField.on('change', function(e) {
-                                    var file = e.target.files[0];
-
-                                    if (file) {
-                                        if (/^image\//i.test(file.type)) {
-                                            readFile(file);
-                                        } else {
-                                            alert('Not a valid image!');
-                                            console.log('Not a valid image!');
-                                        }
-                                    } else {
-                                        console.log('Not a FILE');
-                                    }
-                                });
-                            } else {
-                                alert("File upload is not supported!");
-                                console.log('File upload is not supported!');
-                            }
-
-                        });
-
-                        function processFile(dataURL, fileType) {
-                            var maxWidth = 200;
-                            var maxHeight = 200;
-
-                            var image = new Image();
-                            image.src = dataURL;
-
-                            image.onload = function() {
-                                var width = image.width;
-                                var height = image.height;
-                                var shouldResize = (width > maxWidth) || (height > maxHeight);
-
-                                if (!shouldResize) {
-                                    console.log('enviar archivo');
-                                    return;
-                                }
-
-                                var newWidth;
-                                var newHeight;
-
-                                if (width > height) {
-                                    newHeight = height * (maxWidth / width);
-                                    newWidth = maxWidth;
+                            if (file) {
+                                if (/^image\//i.test(file.type)) {
+                                    readFile(file);
                                 } else {
-                                    newWidth = width * (maxHeight / height);
-                                    newHeight = maxHeight;
+                                    alert('Not a valid image!');
+                                    console.log('Not a valid image!');
                                 }
-
-                                var canvas = document.createElement('canvas');
-
-                                canvas.width = newWidth;
-                                canvas.height = newHeight;
-
-                                var context = canvas.getContext('2d');
-
-                                context.drawImage(this, 0, 0, newWidth, newHeight);
-
-                                dataURL = canvas.toDataURL(fileType);
-
-                                //sendFile(dataURL);
-                                console.log(dataURL);
-                                var imgHtml = '<img id="web-img" src="' + dataURL + '" alt="">';
-                                $$('.web-cam').html(imgHtml);
-                                var c = new croppie(document.getElementById('web-img'), {
-                                    viewport: {
-                                        width: 200,
-                                        height: 200
-                                    },
-                                    boundary: {
-                                        width: 200,
-                                        height: 200
-                                    },
-                                    showZoomer: true,
-                                });
-                                console.log(c);
-                                /* $$('.web-img').croppie(); */
-                            };
-
-                            image.onerror = function() {
-                                alert('There was an error processing your file!');
-                            };
-                        }
-
-                        function readFile(file) {
-                            var reader = new FileReader();
-
-                            reader.onloadend = function() {
-                                // $$('.popup #uploadphoto').on('click', function() {
-                                //     console.log('procesing');
-
-                                // });
-                                dynamicPopup.close();
-                                processFile(reader.result, file.type);
+                            } else {
+                                console.log('Not a FILE');
                             }
-
-                            reader.onerror = function() {
-                                alert('There was an error reading the file!');
-                            }
-
-                            reader.readAsDataURL(file);
-                        }
-
-                        var dynamicPopup = app.popup.create({
-                            content: '<div class="popup">' +
-                                '<div class="block page-content login-screen-content">' +
-                                '<div class="list">' +
-                                '<div class="item-inner">' +
-                                '<div class="item-input-wrap">' +
-                                '<div class="row">' +
-                                '<div class="col-15"></div>' +
-                                '<div class="col-70">' +
-                                '<a href="#" data-view=".view-main" id="takephoto" class="item-link list-button login-button">' +
-                                'Tomar Foto' +
-                                '<i class="material-icons">chevron_right</i>' +
-                                '</a>' +
-                                '</div>' +
-                                '<div class="col-15"></div>' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>' +
-                                '<div class="item-inner">' +
-                                '<div class="item-input-wrap">' +
-                                '<div class="row">' +
-                                '<div class="col-15"></div>' +
-                                '<div class="col-70">' +
-                                '<label for="file-upload" id="uploadphoto" class="item-link list-button login-button">' +
-                                'Subir Foto <i class="material-icons">chevron_right</i>' +
-                                '</label>' +
-                                '<input id="file-upload" type="file" style="display: none;"/>' +
-                                '</div>' +
-                                '<div class="col-15"></div>' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>',
-                            // Events
                         });
-
-                        // function onTakePhotoButtonClick() {
-                        //   imageCapture.takePhoto()
-                        //   .then(blob => createImageBitmap(blob))
-                        //   .then(imageBitmap => {
-                        //     const canvas = document.querySelector('#takePhotoCanvas');
-                        //     drawCanvas(canvas, imageBitmap);
-                        //   })
-                        //   .catch(error => ChromeSamples.log(error));
-                        // }
-
-                        function onTakePhotoButtonClick() {
-                            console.log('click');
-                            $$('video').hide();
-                            imageCapture.takePhoto()
-                                .then(blob => createImageBitmap(blob))
-                                .then(imageBitmap => {
-                                    drawCanvas(imageBitmap);
-                                    console.log(`Photo size is ${imageBitmap.width}x${imageBitmap.height}`);
-                                    console.log(imageBitmap);
-
-                                })
-
-                            .catch(error => console.log(error));
-                        }
-
-
-
-                        /* Utils */
-
-                        function drawCanvas(img) {
-
-                            const canvas = document.querySelector('canvas');
-                            canvas.width = img.width;
-                            // canvas.width = getComputedStyle(canvas).width.split('px')[0];
-                            canvas.height = img.height;
-                            // canvas.height = getComputedStyle(canvas).height.split('px')[0];
-                            let ratio = Math.min(canvas.width / img.width, canvas.height / img.height);
-                            let x = (canvas.width - img.width * ratio) / 2;
-                            let y = (canvas.height - img.height * ratio) / 2;
-                            canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-                            canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height,
-                                x, y, img.width * ratio, img.height * ratio);
-                            var imgBase64 = canvas.toDataURL();
-                            console.log(imgBase64);
-                            var imgHtml = '<img  id="web-img" src="' + imgBase64 + '" alt="">';
-                            $$('.web-cam').html(imgHtml);
-                            var c = new croppie(document.getElementById('web-img'), {
-                                viewport: {
-                                    width: 200,
-                                    height: 200
-                                },
-                                boundary: {
-                                    width: 200,
-                                    height: 200
-                                },
-                                showZoomer: true,
-                            });
-                            console.log(c);
-
-                        }
-
-                        document.querySelector('#takePhotoButton').addEventListener('click', onTakePhotoButtonClick);
-
+                    } else {
+                        alert("File upload is not supported!");
+                        console.log('File upload is not supported!');
                     }
+
+                });
+
+                function processFile(dataURL, fileType) {
+                    var maxWidth = 200;
+                    var maxHeight = 200;
+
+                    var image = new Image();
+                    image.src = dataURL;
+
+                    image.onload = function() {
+                        var width = image.width;
+                        var height = image.height;
+                        var shouldResize = (width > maxWidth) || (height > maxHeight);
+
+                        if (!shouldResize) {
+                            console.log('enviar archivo');
+                            return;
+                        }
+
+                        var newWidth;
+                        var newHeight;
+
+                        if (width > height) {
+                            newHeight = height * (maxWidth / width);
+                            newWidth = maxWidth;
+                        } else {
+                            newWidth = width * (maxHeight / height);
+                            newHeight = maxHeight;
+                        }
+
+                        var canvas = document.createElement('canvas');
+
+                        canvas.width = newWidth;
+                        canvas.height = newHeight;
+
+                        var context = canvas.getContext('2d');
+
+                        context.drawImage(this, 0, 0, newWidth, newHeight);
+
+                        dataURL = canvas.toDataURL(fileType);
+
+                        //sendFile(dataURL);
+                        console.log(dataURL);
+                        var imgHtml = '<img id="web-img" src="' + dataURL + '" alt="">';
+                        $$('.web-cam').html(imgHtml);
+                        var c = new croppie(document.getElementById('web-img'), {
+                            viewport: {
+                                width: 200,
+                                height: 200
+                            },
+                            boundary: {
+                                width: 200,
+                                height: 200
+                            },
+                            showZoomer: true,
+                        });
+                        console.log(c);
+                        /* $$('.web-img').croppie(); */
+                    };
+
+                    image.onerror = function() {
+                        alert('There was an error processing your file!');
+                    };
                 }
+
+                function readFile(file) {
+                    var reader = new FileReader();
+
+                    reader.onloadend = function() {
+                        // $$('.popup #uploadphoto').on('click', function() {
+                        //     console.log('procesing');
+
+                        // });
+                        dynamicPopup.close();
+                        processFile(reader.result, file.type);
+                    }
+
+                    reader.onerror = function() {
+                        alert('There was an error reading the file!');
+                    }
+
+                    reader.readAsDataURL(file);
+                }
+
+                var dynamicPopup = app.popup.create({
+                    content: '<div class="popup">' +
+                        '<div class="block page-content login-screen-content">' +
+                        '<div class="list">' +
+                        '<div class="item-inner">' +
+                        '<div class="item-input-wrap">' +
+                        '<div class="row">' +
+                        '<div class="col-15"></div>' +
+                        '<div class="col-70">' +
+                        '<a href="#" data-view=".view-main" id="takephoto" class="item-link list-button login-button">' +
+                        'Tomar Foto' +
+                        '<i class="material-icons">chevron_right</i>' +
+                        '</a>' +
+                        '</div>' +
+                        '<div class="col-15"></div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="item-inner">' +
+                        '<div class="item-input-wrap">' +
+                        '<div class="row">' +
+                        '<div class="col-15"></div>' +
+                        '<div class="col-70">' +
+                        '<label for="file-upload" id="uploadphoto" class="item-link list-button login-button">' +
+                        'Subir Foto <i class="material-icons">chevron_right</i>' +
+                        '</label>' +
+                        '<input id="file-upload" type="file" style="display: none;"/>' +
+                        '</div>' +
+                        '<div class="col-15"></div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>',
+                    // Events
+                });
+
+                // function onTakePhotoButtonClick() {
+                //   imageCapture.takePhoto()
+                //   .then(blob => createImageBitmap(blob))
+                //   .then(imageBitmap => {
+                //     const canvas = document.querySelector('#takePhotoCanvas');
+                //     drawCanvas(canvas, imageBitmap);
+                //   })
+                //   .catch(error => ChromeSamples.log(error));
+                // }
+
+                function onTakePhotoButtonClick() {
+                    console.log('click');
+                    $$('video').hide();
+                    imageCapture.takePhoto()
+                        .then(blob => createImageBitmap(blob))
+                        .then(imageBitmap => {
+                            drawCanvas(imageBitmap);
+                            console.log(`Photo size is ${imageBitmap.width}x${imageBitmap.height}`);
+                            console.log(imageBitmap);
+
+                        })
+
+                    .catch(error => console.log(error));
+                }
+
+
+
+                /* Utils */
+
+                function drawCanvas(img) {
+
+                    const canvas = document.querySelector('canvas');
+                    canvas.width = img.width;
+                    // canvas.width = getComputedStyle(canvas).width.split('px')[0];
+                    canvas.height = img.height;
+                    // canvas.height = getComputedStyle(canvas).height.split('px')[0];
+                    let ratio = Math.min(canvas.width / img.width, canvas.height / img.height);
+                    let x = (canvas.width - img.width * ratio) / 2;
+                    let y = (canvas.height - img.height * ratio) / 2;
+                    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+                    canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height,
+                        x, y, img.width * ratio, img.height * ratio);
+                    var imgBase64 = canvas.toDataURL();
+                    console.log(imgBase64);
+                    var imgHtml = '<img  id="web-img" src="' + imgBase64 + '" alt="">';
+                    $$('.web-cam').html(imgHtml);
+                    var c = new croppie(document.getElementById('web-img'), {
+                        viewport: {
+                            width: 200,
+                            height: 200
+                        },
+                        boundary: {
+                            width: 200,
+                            height: 200
+                        },
+                        showZoomer: true,
+                    });
+                    console.log(c);
+
+                }
+
+                document.querySelector('#takePhotoButton').addEventListener('click', onTakePhotoButtonClick);
+
             }
+        }
+    }
 </script>

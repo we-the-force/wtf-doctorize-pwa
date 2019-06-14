@@ -379,19 +379,19 @@ background: #ccc;
                     }]
                 });
 
+                var imageData;
                 var imageCapture;
                 const input = document.querySelector('input[type="range"]');
 
                 $$('#register-step3 .login-button').off('click');
                 $$('#register-step3 .login-button').on('click', function(e) {
-                    console.log('click');
-
-
+                    
                     app.request.postJSON('http://api.mydoctorize.com/user/save', {
                         "password": app.data.register.password,
-                        "email": app.data.register.email,
                         "name": app.data.register.username,
-                        "cellphone": app.data.register.phone
+                        "email": app.data.register.email,
+                        "cellphone": app.data.register.phone,
+                        "imageData": imageData
                     }, function(e) {
                         console.log(e);
                         app.methods.redirectTo('register-s4');
@@ -400,18 +400,18 @@ background: #ccc;
 
                 $$('.web-cam').on('click', function() {
                     dynamicPopup.open();
-                    var btnHTML = '<div class="row">' +
-                        '<div class="col-100">' +
-                        '<a data-view=".view-main"  class="item-link list-button login-button tomar-foto">' +
-                        '<p>Tomar Foto </p>' +
-                        '<i class="material-icons">camera</i>' +
-                        '</a> ' +
-                        '</div>' +
-                        '</div>';
-                    $$('#takePhotoButton').html(btnHTML);
                     $$('.popup #takephoto').on('click', function() {
                         dynamicPopup.close();
 
+                        var btnHTML = '<div class="row">' +
+                            '<div class="col-100">' +
+                            '<a data-view=".view-main"  class="item-link list-button login-button tomar-foto">' +
+                            '<p>Tomar Foto </p>' +
+                            '<i class="material-icons">camera</i>' +
+                            '</a> ' +
+                            '</div>' +
+                            '</div>';
+                        $$('#takePhotoButton').html(btnHTML);
                         navigator.mediaDevices.getUserMedia({
                                 video: true
                             })
@@ -522,8 +522,7 @@ background: #ccc;
                             },
                             showZoomer: true,
                         });
-                        console.log(c);
-                        /* $$('.web-img').croppie(); */
+                        imageData = dataURL;
                     };
 
                     image.onerror = function() {
@@ -535,10 +534,6 @@ background: #ccc;
                     var reader = new FileReader();
 
                     reader.onloadend = function() {
-                        // $$('.popup #uploadphoto').on('click', function() {
-                        //     console.log('procesing');
-
-                        // });
                         dynamicPopup.close();
                         processFile(reader.result, file.type);
                     }
@@ -589,16 +584,6 @@ background: #ccc;
                     // Events
                 });
 
-                // function onTakePhotoButtonClick() {
-                //   imageCapture.takePhoto()
-                //   .then(blob => createImageBitmap(blob))
-                //   .then(imageBitmap => {
-                //     const canvas = document.querySelector('#takePhotoCanvas');
-                //     drawCanvas(canvas, imageBitmap);
-                //   })
-                //   .catch(error => ChromeSamples.log(error));
-                // }
-
                 function onTakePhotoButtonClick() {
                     console.log('click');
                     $$('video').hide();
@@ -646,7 +631,7 @@ background: #ccc;
                         },
                         showZoomer: true,
                     });
-                    console.log(c);
+                    imageData = imgBase64;
 
                 }
 

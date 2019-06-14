@@ -378,40 +378,44 @@ background: #ccc;
                         displayValues: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
                     }]
                 });
-
+                var c;
+                var imageData;
                 var imageCapture;
                 const input = document.querySelector('input[type="range"]');
+                
 
                 $$('#register-step3 .login-button').off('click');
                 $$('#register-step3 .login-button').on('click', function(e) {
-                    console.log('click');
-
-
+                  c.result('base64').then(function(blob){
                     app.request.postJSON('http://api.mydoctorize.com/user/save', {
-                        "password": app.data.register.password,
-                        "email": app.data.register.email,
-                        "name": app.data.register.username,
-                        "cellphone": app.data.register.phone
+                      "password": app.data.register.password,
+                      "name": app.data.register.username,
+                      "email": app.data.register.email,
+                      "cellphone": app.data.register.phone,
+                      "imageData": blob
                     }, function(e) {
-                        console.log(e);
-                        app.methods.redirectTo('register-s4');
+                      console.log(e);
+                      app.methods.redirectTo('register-s4');
                     });
+                  });
                 });
 
                 $$('.web-cam').on('click', function() {
                     dynamicPopup.open();
-                    var btnHTML = '<div class="row">' +
-                        '<div class="col-100">' +
-                        '<a data-view=".view-main"  class="item-link list-button login-button tomar-foto">' +
-                        '<p>Tomar Foto </p>' +
-                        '<i class="material-icons">camera</i>' +
-                        '</a> ' +
-                        '</div>' +
-                        '</div>';
-                    $$('#takePhotoButton').html(btnHTML);
+
+
                     $$('.popup #takephoto').on('click', function() {
                         dynamicPopup.close();
 
+                        var btnHTML = '<div class="row">' +
+                            '<div class="col-100">' +
+                            '<a data-view=".view-main"  class="item-link list-button login-button tomar-foto">' +
+                            '<p>Tomar Foto </p>' +
+                            '<i class="material-icons">camera</i>' +
+                            '</a> ' +
+                            '</div>' +
+                            '</div>';
+                        $$('#takePhotoButton').html(btnHTML);
                         navigator.mediaDevices.getUserMedia({
                                 video: true
                             })
@@ -508,10 +512,9 @@ background: #ccc;
                         dataURL = canvas.toDataURL(fileType);
 
                         //sendFile(dataURL);
-                        console.log(dataURL);
                         var imgHtml = '<img id="web-img" src="' + dataURL + '" alt="">';
                         $$('.web-cam').html(imgHtml);
-                        var c = new croppie(document.getElementById('web-img'), {
+                        c = new croppie(document.getElementById('web-img'), {
                             viewport: {
                                 width: 200,
                                 height: 200
@@ -522,8 +525,6 @@ background: #ccc;
                             },
                             showZoomer: true,
                         });
-                        console.log(c);
-                        /* $$('.web-img').croppie(); */
                     };
 
                     image.onerror = function() {
@@ -535,10 +536,6 @@ background: #ccc;
                     var reader = new FileReader();
 
                     reader.onloadend = function() {
-                        // $$('.popup #uploadphoto').on('click', function() {
-                        //     console.log('procesing');
-
-                        // });
                         dynamicPopup.close();
                         processFile(reader.result, file.type);
                     }
@@ -589,16 +586,6 @@ background: #ccc;
                     // Events
                 });
 
-                // function onTakePhotoButtonClick() {
-                //   imageCapture.takePhoto()
-                //   .then(blob => createImageBitmap(blob))
-                //   .then(imageBitmap => {
-                //     const canvas = document.querySelector('#takePhotoCanvas');
-                //     drawCanvas(canvas, imageBitmap);
-                //   })
-                //   .catch(error => ChromeSamples.log(error));
-                // }
-
                 function onTakePhotoButtonClick() {
                     console.log('click');
                     $$('video').hide();
@@ -632,10 +619,9 @@ background: #ccc;
                     canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height,
                         x, y, img.width * ratio, img.height * ratio);
                     var imgBase64 = canvas.toDataURL();
-                    console.log(imgBase64);
                     var imgHtml = '<img  id="web-img" src="' + imgBase64 + '" alt="">';
                     $$('.web-cam').html(imgHtml);
-                    var c = new croppie(document.getElementById('web-img'), {
+                    c = new croppie(document.getElementById('web-img'), {
                         viewport: {
                             width: 200,
                             height: 200
@@ -646,7 +632,6 @@ background: #ccc;
                         },
                         showZoomer: true,
                     });
-                    console.log(c);
 
                 }
 

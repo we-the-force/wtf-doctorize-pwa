@@ -50,7 +50,14 @@ var app = new Framework7({
             app.views.main.router.navigate({
                 name: pathTo
             });
-        }
+        },
+        isEmpty: function(obj) {
+          for(var key in obj) {
+              if(obj.hasOwnProperty(key))
+                  return false;
+          }
+          return true;
+          }
     },
     // App routes
     routes: routes,

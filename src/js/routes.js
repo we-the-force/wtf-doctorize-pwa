@@ -11,6 +11,7 @@ import RecoverySentPage from '../pages/recovery-sent.f7.html';
 import AboutPage from '../pages/about.f7.html';
 import FormPage from '../pages/form.f7.html';
 import RecoveryPassPage from '../pages/recovery-pass.f7.html';
+import IntroSplash1 from '../pages/intro-splash-01.f7.html';
 
 import LeftPage1 from '../pages/left-page-1.f7.html';
 import LeftPage2 from '../pages/left-page-2.f7.html';
@@ -46,6 +47,11 @@ var routes = [
     name: 'register-s5',
     path: '/register-s5',
     component: RegisterS5Page,
+  },
+  {
+    name: 'intro-splash-01',
+    path: '/intro-splash-01',
+    component: IntroSplash1,
   },
   {
     path: '/about/',

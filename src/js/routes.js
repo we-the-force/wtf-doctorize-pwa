@@ -6,6 +6,7 @@ import RegisterS1Page from '../pages/register-step1.f7.html';
 import RegisterS2Page from '../pages/register-step2.f7.html';
 import RegisterS3Page from '../pages/register-step3.f7.html';
 import RegisterS4Page from '../pages/register-step4.f7.html';
+import RegisterS5Page from '../pages/register-step5.f7.html';
 import RecoverySentPage from '../pages/recovery-sent.f7.html';
 import AboutPage from '../pages/about.f7.html';
 import FormPage from '../pages/form.f7.html';
@@ -40,6 +41,11 @@ var routes = [
     name: 'register-s4',
     path: '/register-s4',
     component: RegisterS4Page,
+  },
+  {
+    name: 'register-s5',
+    path: '/register-s5',
+    component: RegisterS5Page,
   },
   {
     path: '/about/',

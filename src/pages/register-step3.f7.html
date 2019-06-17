@@ -378,26 +378,28 @@ background: #ccc;
                         displayValues: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
                     }]
                 });
-                var c;
-                var imageData;
-                var imageCapture;
+                var c,imageData,imageCapture,specialityID;
                 const input = document.querySelector('input[type="range"]');
                 
 
                 $$('#register-step3 .login-button').off('click');
                 $$('#register-step3 .login-button').on('click', function(e) {
-                  c.result('base64').then(function(blob){
-                    app.request.postJSON('http://api.mydoctorize.com/user/save', {
-                      "password": app.data.register.password,
-                      "name": app.data.register.username,
-                      "email": app.data.register.email,
-                      "cellphone": app.data.register.phone,
-                      "imageData": blob
-                    }, function(e) {
-                      console.log(e);
-                      app.methods.redirectTo('register-s4');
+                    specialityID = specialties.values.indexOf(picker.value[0]);
+                    c.result('base64').then(function(blob){
+                        app.request.postJSON('http://api.mydoctorize.com/user/save', {
+                        "password": app.data.register.password,
+                        "name": app.data.register.username,
+                        "email": app.data.register.email,
+                        "cellphone": app.data.register.phone,
+                        "imageData": blob,
+                        "specialty": {
+                            "id": specialityID
+                        }
+                        }, function(e) {
+                        console.log(e);
+                        app.methods.redirectTo('register-s4');
+                        });
                     });
-                  });
                 });
 
                 $$('.web-cam').on('click', function() {

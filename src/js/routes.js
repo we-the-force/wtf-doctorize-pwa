@@ -11,7 +11,9 @@ import RecoverySentPage from '../pages/recovery-sent.f7.html';
 import AboutPage from '../pages/about.f7.html';
 import FormPage from '../pages/form.f7.html';
 import RecoveryPassPage from '../pages/recovery-pass.f7.html';
-import AsistentesInvitar01 from '../pages/asistentes-invitar-01.f7.html';                
+import AsistentesInvitar01 from '../pages/asistentes-invitar-01.f7.html';   
+import AsistentesInvitar02 from '../pages/asistentes-invitar-02.f7.html';    
+import AsistentesInvitar03 from '../pages/asistentes-invitar-03.f7.html';               
 
 import LeftPage1 from '../pages/left-page-1.f7.html';
 import LeftPage2 from '../pages/left-page-2.f7.html';
@@ -49,9 +51,19 @@ var routes = [
     component: RegisterS5Page,
   },
   {
-    name: 'asistentes-Invitar-01',
-    path: '/asistentes-Invitar-01',
+    name: 'asistentes-invitar-01',
+    path: '/asistentes-invitar-01',
     component: AsistentesInvitar01,
+  },
+  {
+    name: 'asistentes-invitar-02',
+    path: '/asistentes-invitar-02',
+    component: AsistentesInvitar02,
+  },
+  {
+    name: 'asistentes-invitar-03',
+    path: '/asistentes-invitar-03',
+    component: AsistentesInvitar03,
   },
   {
     path: '/about/',

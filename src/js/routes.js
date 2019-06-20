@@ -13,7 +13,9 @@ import FormPage from '../pages/form.f7.html';
 import RecoveryPassPage from '../pages/recovery-pass.f7.html';
 import AsistentesInvitar01 from '../pages/asistentes-invitar-01.f7.html';   
 import AsistentesInvitar02 from '../pages/asistentes-invitar-02.f7.html';    
-import AsistentesInvitar03 from '../pages/asistentes-invitar-03.f7.html';               
+import AsistentesInvitar03 from '../pages/asistentes-invitar-03.f7.html';      
+import AsistentesInvitar04 from '../pages/asistentes-invitar-04.f7.html';              
+import AsistentesConfirmar from '../pages/asistentes-confirmar.f7.html';
 
 import LeftPage1 from '../pages/left-page-1.f7.html';
 import LeftPage2 from '../pages/left-page-2.f7.html';
@@ -64,6 +66,16 @@ var routes = [
     name: 'asistentes-invitar-03',
     path: '/asistentes-invitar-03',
     component: AsistentesInvitar03,
+  },
+  {
+    name: 'asistentes-invitar-04',
+    path: '/asistentes-invitar-04',
+    component: AsistentesInvitar04,
+  },
+  {
+    name: 'asistentes-confirmar',
+    path: '/asistentes-confirmar',
+    component: AsistentesConfirmar,
   },
   {
     path: '/about/',

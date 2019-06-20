@@ -1,5 +1,20 @@
 .page-content.login-screen-content
   background: radial-gradient(698.35px at 16.69% 17.13%, #F5F7FF 0%, #CCE4ED 100%)
+  &.grad-blue
+    background: radial-gradient(256.28px at 100% 100%, #00A1C5 0%, #2FCFBC 100%)  
+    h2,h4
+      font-weight: normal
+      color: #fff  
+      margin-block-start: 0px
+      margin-block-end: 0px
+      text-align: center
+    .asistente-img
+      //box-shadow: 0px 1.84211px 13.8158px rgba(16, 43, 200, 0.49);
+      display: block
+      margin-top: 35%  
+      margin-bottom: 35%
+      margin-left: auto
+      margin-right: auto  
 a.item-link
   display: flex
   align-items: center
@@ -17,11 +32,24 @@ a.item-link
   padding-bottom: var(--f7-list-item-padding-vertical)
   &.asistente-consultorio
     height: auto
+    .item-title
+      color: #2FCFBC
+    .item-text
+      color: #2F80ED
+    .item-subtitle
+      color: #7B8EFF
+  &.permisos-asistente
+    height: auto
+    color: #2F80ED
   input:-internal-autofill-selected
     background-color: transparent !important
 .item-input:not(.item-input-outline) .item-input-wrap:after, .input:not(.input-outline):after
   display: none
 
+.color-blue-toggle
+  --f7-toggle-active-color: #2FD8C4
+  //--f7-theme-color-shade: #0c82df
+  //--f7-theme-color-tint: #48a8f5
 
 .nav-bar-rect
   position: static
@@ -42,7 +70,6 @@ a.item-link
   --f7-checkbox-size: 30px
   --f7-checkbox-inactive-color: rgba(47, 207, 188, 0.7)
   --f7-checkbox-extra-margin: 0px;
-
 
 .item-input 
   transition: all 0.2s 
@@ -89,7 +116,6 @@ a.item-link
     background-image: none !important
     color: #7B8EFF !important
 
-
 .login-button
   height: 40px
   // width: 50%
@@ -101,8 +127,9 @@ a.item-link
   border-radius: 20px
   &.grey
     filter: saturate(0)
-
-
+  &.white-button
+    color: #2FCFBC
+    background: radial-gradient(1005.21px at 16.69% 17.13%, #F5F7FF 0%, #CCE4ED 100%)
 
 .login-screen-content 
   .list-button.login-recovery-button, .list-button.login-register-button

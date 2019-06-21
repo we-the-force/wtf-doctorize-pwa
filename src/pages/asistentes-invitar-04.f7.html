@@ -42,7 +42,7 @@
                                 </div>
                             </span>
                             <label class="toggle toggle-init color-blue-toggle">
-                                <input type="checkbox" style="display:none" checked>
+                                <input type="checkbox" name="chbx" value="Agenda" style="display:none" checked>
                                 <span class="toggle-icon"></span>
                             </label>                          
                         </li>  
@@ -53,7 +53,7 @@
                                 </div>
                             </span>
                             <label class="toggle toggle-init color-blue-toggle">
-                                <input type="checkbox" style="display:none" checked>
+                                <input type="checkbox" name="chbx" value="Pacientes" style="display:none" checked>
                                 <span class="toggle-icon"></span>
                             </label>                          
                         </li>  
@@ -64,7 +64,7 @@
                                 </div>
                             </span>
                             <label class="toggle toggle-init color-blue-toggle">
-                                <input type="checkbox" style="display:none" checked>
+                                <input type="checkbox" name="chbx" value="Expedientes" style="display:none" checked>
                                 <span class="toggle-icon"></span>
                             </label>                          
                         </li>  
@@ -75,7 +75,7 @@
                                 </div>
                             </span>
                             <label class="toggle toggle-init color-blue-toggle">
-                                <input type="checkbox" style="display:none" checked>
+                                <input type="checkbox" name="chbx" value="Pagos" style="display:none" checked>
                                 <span class="toggle-icon"></span>
                             </label>                          
                         </li>
@@ -106,5 +106,23 @@
 </template>
 <script>
     import $$ from 'dom7';
-    export default {}
+    export default {
+        on:{
+            pageInit: function(e, page) {
+                var self = this;
+                var app = self.$app;
+                var items; 
+                $$('#asistentes-invitar-04 .login-button').on('click', function(e){
+                    items = $$('[name="chbx"]');
+                    app.data.assistant.permisos = [];
+                    for(var i = 0; i < items.length; i++){
+                        if(items[i].checked == true){
+                            app.data.assistant.permisos.push(items[i].value);
+                        }
+                    }
+                    console.log(app.data.assistant.permisos);
+                });
+            }
+        }
+    }
 </script>

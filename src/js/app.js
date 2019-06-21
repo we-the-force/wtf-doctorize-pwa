@@ -26,16 +26,18 @@ var app = new Framework7({
                 values: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
                 displayValues: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
             },
-            user: {
-                firstName: 'John',
-                lastName: 'Doe',
-            },
             register: {
                 username: '',
                 password: '',
                 email: '',
                 phone: '',
             },
+            assistant:{
+              email: '',
+              consultorio: [],
+              permisos: [],
+            }
+
 
         };
     },

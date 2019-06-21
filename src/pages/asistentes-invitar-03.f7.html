@@ -45,7 +45,7 @@
                                         <div class="item-text">Blvd. Venustiano Carranza 4036, Virreyes Residencial, 25230 Saltillo, Coah.</div>
                                     </div>
 
-                                    <input type="checkbox">
+                                    <input type="checkbox" name="chbx" value="Consultorio conchita" checked>
                                     <i class="icon icon-checkbox"></i>
                                 </label>
                             </li>   
@@ -58,7 +58,7 @@
                                             <div class="item-text">Nazario Ortiz Garza s/n, Los Doctores, 25253 Saltillo, Coah.</div>
                                         </div>
     
-                                        <input type="checkbox">
+                                        <input type="checkbox" name="chbx" value="Consultorio del Niño" checked>
                                         <i class="icon icon-checkbox"></i>
                                     </label>
                                 </li>   
@@ -89,5 +89,23 @@
     </template>
     <script>
         import $$ from 'dom7';
-        export default {}
+        export default {
+            on:{
+                pageInit: function(e, page) {
+                    var self = this;
+                    var app = self.$app;
+                    var items; 
+                    $$('#asistentes-invitar-03 .login-button').on('click', function(e){
+                        items = $$('[name="chbx"]');
+                        app.data.assistant.consultorio = [];
+                        for(var i = 0; i < items.length; i++){
+                            if(items[i].checked == true){
+                                app.data.assistant.consultorio.push(items[i].value);
+                            }
+                        }
+                        console.log(app.data.assistant.consultorio);
+                    });
+                }
+            }
+        }
     </script>

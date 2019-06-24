@@ -77,7 +77,7 @@
 
               </div>
               <div class="col-50">
-                <a href="#" data-view=".view-main"  class="item-link list-button login-button">
+                <a href="#" data-view=".view-main"  class="item-link list-button login-button create-account">
                   <p>Guardar </p>
                   <i class="material-icons">chevron_right</i>
                 </a>
@@ -358,28 +358,37 @@ background: #ccc;
 <script>
     import $$ from 'dom7';
     import croppie from 'croppie';
+    import {
+        orderBy
+    } from 'lodash';
     export default {
         on: {
             pageInit: function(e) {
                 var self = this;
                 var app = self.$app;
                 var specialties = app.data.specialties;
-                _.orderBy(specialties, specialties.values, 'desc');
+                console.log(_.orderBy(specialties, specialties.values, 'desc'));
+
+
+                // console.log(specialties);
+
 
                 var picker = app.picker.create({
                     inputEl: '#specialty-picker',
                     cols: [{
-                        values: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
-                        displayValues: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
+                        values: specialties.values,
+                        displayValues: specialties.displayValues,
                     }]
                 });
                 var c, imageData, imageCapture, specialityID;
                 const input = document.querySelector('input[type="range"]');
 
 
-                $$('#register-step3 .login-button').off('click');
-                $$('#register-step3 .login-button').on('click', function(e) {
+
+                $$('#register-step3 .create-account').off('click');
+                $$('#register-step3 .create-account').on('click', function(e) {
                     specialityID = specialties.values.indexOf(picker.value[0]);
+                    specialityID++;
                     c.result('base64').then(function(blob) {
                         app.request.postJSON('http://api.mydoctorize.com/user/save', {
                             "password": app.data.register.password,
@@ -400,7 +409,7 @@ background: #ccc;
                 $$('.web-cam').on('click', function() {
                     ac.open();
 
-                    $$('.actions-group #cancel').on('click', function(){
+                    $$('.actions-group #cancel').on('click', function() {
                         ac.close();
                     });
 
@@ -414,7 +423,7 @@ background: #ccc;
                             '</a> ' +
                             '</div>' +
                             '</div>';
-                        $$('#takePhotoButton').html(btnHTML); 
+                        $$('#takePhotoButton').html(btnHTML);
                         navigator.mediaDevices.getUserMedia({
                                 video: true
                             })
@@ -548,83 +557,80 @@ background: #ccc;
                 }
 
                 var ac = app.actions.create({
-                    content: '<div class="actions-modal">'+
-                        '<div class="actions-group">'+
-                        '<label for="file-upload">'+
-                        '<div class="actions-button">'+
-                        '<i class="material-icons" style="margin-top: auto; margin-bottom: auto; width: 24px;">photo_alternate</i>'+ 
-                        '<div class="actions-button-text" style="margin-left: 10px;">'+
-                        'Subir Foto'+
-                        '</div>'+
-                        '</div>'+
-                        '</label>'+
-                        '<input id="file-upload" type="file" style="display: none;"/>'+
-                        '<div class="actions-button color-red" id="cancel">'+
-                        '<i class="material-icons" style="margin-top: auto; margin-bottom: auto; width: 24px;">cancel</i>'+ 
-                        '<div class="actions-button-text" style="margin-left: 10px;"> Cancel'+
-                        '</div>'+
-                        '</div>'+
+                    content: '<div class="actions-modal">' +
+                        '<div class="actions-group">' +
+                        '<label for="file-upload">' +
+                        '<div class="actions-button">' +
+                        '<i class="material-icons" style="margin-top: auto; margin-bottom: auto; width: 24px;">photo_alternate</i>' +
+                        '<div class="actions-button-text" style="margin-left: 10px;">' +
+                        'Subir Foto' +
+                        '</div>' +
+                        '</div>' +
+                        '</label>' +
+                        '<input id="file-upload" type="file" style="display: none;"/>' +
+                        '<div class="actions-button color-red" id="cancel">' +
+                        '<i class="material-icons" style="margin-top: auto; margin-bottom: auto; width: 24px;">cancel</i>' +
+                        '<div class="actions-button-text" style="margin-left: 10px;"> Cancel' +
+                        '</div>' +
+                        '</div>' +
                         '</div>',
-                    buttons: [
-                        {
-                        }
-                    ]
-                    
+                    buttons: [{}]
+
                 });
-                /* 
+                /*
                         '<a href="#" data-view=".view-main" id="takephoto" class="item-link list-button login-button">' +
                         'Tomar Foto' +
                         '<i class="material-icons">chevron_right</i>' +
                         '</a>' +
                 }); */
 
-/*                 function onTakePhotoButtonClick() {
-                    console.log('click');
-                    $$('video').hide();
-                    imageCapture.takePhoto()
-                        .then(blob => createImageBitmap(blob))
-                        .then(imageBitmap => {
-                            drawCanvas(imageBitmap);
-                            console.log(`Photo size is ${imageBitmap.width}x${imageBitmap.height}`);
-                            console.log(imageBitmap);
+                /*                 function onTakePhotoButtonClick() {
+                                    console.log('click');
+                                    $$('video').hide();
+                                    imageCapture.takePhoto()
+                                        .then(blob => createImageBitmap(blob))
+                                        .then(imageBitmap => {
+                                            drawCanvas(imageBitmap);
+                                            console.log(`Photo size is ${imageBitmap.width}x${imageBitmap.height}`);
+                                            console.log(imageBitmap);
 
-                        })
+                                        })
 
-                    .catch(error => console.log(error));
-                }
+                                    .catch(error => console.log(error));
+                                }
 
 
-                function drawCanvas(img) {
+                                function drawCanvas(img) {
 
-                    const canvas = document.querySelector('canvas');
-                    canvas.width = img.width;
-                    // canvas.width = getComputedStyle(canvas).width.split('px')[0];
-                    canvas.height = img.height;
-                    // canvas.height = getComputedStyle(canvas).height.split('px')[0];
-                    let ratio = Math.min(canvas.width / img.width, canvas.height / img.height);
-                    let x = (canvas.width - img.width * ratio) / 2;
-                    let y = (canvas.height - img.height * ratio) / 2;
-                    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-                    canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height,
-                        x, y, img.width * ratio, img.height * ratio);
-                    var imgBase64 = canvas.toDataURL();
-                    var imgHtml = '<img  id="web-img" src="' + imgBase64 + '" alt="">';
-                    $$('.web-cam').html(imgHtml);
-                    c = new croppie(document.getElementById('web-img'), {
-                        viewport: {
-                            width: 200,
-                            height: 200
-                        },
-                        boundary: {
-                            width: 200,
-                            height: 200
-                        },
-                        showZoomer: true,
-                    });
+                                    const canvas = document.querySelector('canvas');
+                                    canvas.width = img.width;
+                                    // canvas.width = getComputedStyle(canvas).width.split('px')[0];
+                                    canvas.height = img.height;
+                                    // canvas.height = getComputedStyle(canvas).height.split('px')[0];
+                                    let ratio = Math.min(canvas.width / img.width, canvas.height / img.height);
+                                    let x = (canvas.width - img.width * ratio) / 2;
+                                    let y = (canvas.height - img.height * ratio) / 2;
+                                    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+                                    canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height,
+                                        x, y, img.width * ratio, img.height * ratio);
+                                    var imgBase64 = canvas.toDataURL();
+                                    var imgHtml = '<img  id="web-img" src="' + imgBase64 + '" alt="">';
+                                    $$('.web-cam').html(imgHtml);
+                                    c = new croppie(document.getElementById('web-img'), {
+                                        viewport: {
+                                            width: 200,
+                                            height: 200
+                                        },
+                                        boundary: {
+                                            width: 200,
+                                            height: 200
+                                        },
+                                        showZoomer: true,
+                                    });
 
-                }
+                                }
 
-                document.querySelector('#takePhotoButton').addEventListener('click', onTakePhotoButtonClick); */
+                                document.querySelector('#takePhotoButton').addEventListener('click', onTakePhotoButtonClick); */
 
             }
         }

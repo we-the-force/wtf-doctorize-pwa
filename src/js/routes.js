@@ -49,7 +49,7 @@ var routes = [
     },
     {
         name: 'register-s5',
-        path: '/register-s5',
+        path: '/account/signup/confirmation',
         component: RegisterS5Page,
     },
     {

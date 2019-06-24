@@ -1,6 +1,6 @@
 import $$ from 'dom7';
 import Framework7 from 'framework7/framework7.esm.bundle.js';
-import { orderBy } from 'lodash';
+
 // Import F7 Styles
 import 'framework7/css/framework7.bundle.css';
 
@@ -32,10 +32,10 @@ var app = new Framework7({
                 email: '',
                 phone: '',
             },
-            assistant:{
-              email: '',
-              consultorio: [],
-              permisos: [],
+            assistant: {
+                email: '',
+                consultorio: [],
+                permisos: [],
             }
 
 
@@ -54,12 +54,12 @@ var app = new Framework7({
             });
         },
         isEmpty: function(obj) {
-          for(var key in obj) {
-              if(obj.hasOwnProperty(key))
-                  return false;
-          }
-          return true;
-          }
+            for (var key in obj) {
+                if (obj.hasOwnProperty(key))
+                    return false;
+            }
+            return true;
+        }
     },
     // App routes
     routes: routes,

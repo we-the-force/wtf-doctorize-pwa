@@ -26,6 +26,7 @@ import RequestAndLoad from '../pages/request-and-load.f7.html';
 var routes = [
 
     {
+        name: "root",
         path: '/',
         component: LoginPage,
     },

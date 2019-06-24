@@ -1,4 +1,3 @@
-
 <template>
 <div class="page recovery-sent-page" data-name="register-step4">
     <div class="page-content login-screen-content">
@@ -55,7 +54,7 @@
             <div class="row">
               <div class="col-30"></div>
               <div class="col-40">
-                <a href="/register-s5/" class="item-link list-button login-button aceptar-button">
+                <a href="/register-s5/" data-view=".view-main" class="item-link list-button login-button aceptar-button">
                   <p>Aceptar </p>
                   <i class="material-icons">chevron_right</i>
                 </a>
@@ -72,5 +71,15 @@
   </div>
 </template>
 <script>
-  export default {}
+    import $$ from 'dom7';
+    import Framework7 from 'framework7/framework7.esm.bundle.js';
+    export default {
+        on: {
+            pageInit: function(e, page) {
+                var self = this;
+                var app = self.$app;
+
+            }
+        }
+    }
 </script>

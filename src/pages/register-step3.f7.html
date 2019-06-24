@@ -22,11 +22,8 @@
         <ul>
           <li>
             <div class="row">
-              <div class="col-25"></div>
-              <div class="col-50">
-                <!-- <div id="takePhotoButton">
-                    <i class="material-icons">camera</i>
-                </div> -->
+              <div class="col-15"></div>
+              <div class="col-70">
                 <div class="web-cam" id="web-cam">
 
                   <video autoplay></video>
@@ -34,12 +31,10 @@
                 </div>
                 <div id="takePhotoButton">
 
-                    <!-- <i class="material-icons">camera</i> -->
                 </div>
-                <!-- <button id="takePhotoButton" disabled>Take Photo</button> -->
 
               </div>
-              <div class="col-25"></div>
+              <div class="col-15"></div>
             </div>
           </li>
 
@@ -403,11 +398,13 @@ background: #ccc;
                 });
 
                 $$('.web-cam').on('click', function() {
-                    dynamicPopup.open();
+                    ac.open();
 
+                    $$('.actions-group #cancel').on('click', function(){
+                        ac.close();
+                    });
 
-                    $$('.popup #takephoto').on('click', function() {
-                        dynamicPopup.close();
+                    /* $$('.popup #takephoto').on('click', function() {
 
                         var btnHTML = '<div class="row">' +
                             '<div class="col-100">' +
@@ -417,7 +414,7 @@ background: #ccc;
                             '</a> ' +
                             '</div>' +
                             '</div>';
-                        $$('#takePhotoButton').html(btnHTML);
+                        $$('#takePhotoButton').html(btnHTML); 
                         navigator.mediaDevices.getUserMedia({
                                 video: true
                             })
@@ -447,11 +444,10 @@ background: #ccc;
                         document.querySelector('video').addEventListener('play', function() {
                             document.querySelector('#takePhotoButton').disabled = false;
                         });
-                    });
+                    }); */
 
                     if (window.File && window.FileReader && window.FormData) {
                         var $inputField = $$('#file-upload');
-
                         $inputField.off('change');
                         $inputField.on('change', function(e) {
                             console.log('change');
@@ -541,7 +537,6 @@ background: #ccc;
                     var reader = new FileReader();
 
                     reader.onloadend = function() {
-                        dynamicPopup.close();
                         processFile(reader.result, file.type);
                     }
 
@@ -552,46 +547,38 @@ background: #ccc;
                     reader.readAsDataURL(file);
                 }
 
-                var dynamicPopup = app.popup.create({
-                    content: '<div class="popup">' +
-                        '<div class="block page-content login-screen-content">' +
-                        '<div class="list">' +
-                        '<div class="item-inner">' +
-                        '<div class="item-input-wrap">' +
-                        '<div class="row">' +
-                        '<div class="col-15"></div>' +
-                        '<div class="col-70">' +
+                var ac = app.actions.create({
+                    content: '<div class="actions-modal">'+
+                        '<div class="actions-group">'+
+                        '<label for="file-upload">'+
+                        '<div class="actions-button">'+
+                        '<i class="material-icons" style="margin-top: auto; margin-bottom: auto; width: 24px;">photo_alternate</i>'+ 
+                        '<div class="actions-button-text" style="margin-left: 10px;">'+
+                        'Subir Foto'+
+                        '</div>'+
+                        '</div>'+
+                        '</label>'+
+                        '<input id="file-upload" type="file" style="display: none;"/>'+
+                        '<div class="actions-button color-red" id="cancel">'+
+                        '<i class="material-icons" style="margin-top: auto; margin-bottom: auto; width: 24px;">cancel</i>'+ 
+                        '<div class="actions-button-text" style="margin-left: 10px;"> Cancel'+
+                        '</div>'+
+                        '</div>'+
+                        '</div>',
+                    buttons: [
+                        {
+                        }
+                    ]
+                    
+                });
+                /* 
                         '<a href="#" data-view=".view-main" id="takephoto" class="item-link list-button login-button">' +
                         'Tomar Foto' +
                         '<i class="material-icons">chevron_right</i>' +
                         '</a>' +
-                        '</div>' +
-                        '<div class="col-15"></div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '<div class="item-inner">' +
-                        '<div class="item-input-wrap">' +
-                        '<div class="row">' +
-                        '<div class="col-15"></div>' +
-                        '<div class="col-70">' +
-                        '<label for="file-upload" id="uploadphoto" class="item-link list-button login-button">' +
-                        'Subir Foto <i class="material-icons">chevron_right</i>' +
-                        '</label>' +
-                        '<input id="file-upload" type="file" style="display: none;"/>' +
-                        '</div>' +
-                        '<div class="col-15"></div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>',
-                    // Events
-                });
+                }); */
 
-                function onTakePhotoButtonClick() {
+/*                 function onTakePhotoButtonClick() {
                     console.log('click');
                     $$('video').hide();
                     imageCapture.takePhoto()
@@ -606,9 +593,6 @@ background: #ccc;
                     .catch(error => console.log(error));
                 }
 
-
-
-                /* Utils */
 
                 function drawCanvas(img) {
 
@@ -640,7 +624,7 @@ background: #ccc;
 
                 }
 
-                document.querySelector('#takePhotoButton').addEventListener('click', onTakePhotoButtonClick);
+                document.querySelector('#takePhotoButton').addEventListener('click', onTakePhotoButtonClick); */
 
             }
         }

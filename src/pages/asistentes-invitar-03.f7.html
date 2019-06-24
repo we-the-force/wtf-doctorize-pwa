@@ -1,0 +1,111 @@
+<template>
+        <div class="page" data-name="asistentes-invitar-03" id='asistentes-invitar-03'>
+            <div class="page-content login-screen-content">
+                <div class="login-screen-content nav-bar-rect">
+                    <div class="row">
+                        <div class="col-15">
+                            <a href='/asistentes-invitar-02' data-view=".view-main"  class="item-link list-button back-button" id="back">
+                                <i class="material-icons">chevron_left</i>
+                            </a>
+                        </div>
+                        <div class="col-85"></div>
+                    </div>             
+                    <div class="list">
+                        <ul>
+                            <li>
+                                <div class="row">
+                                    <div class="col-10"></div>
+                                    <div class="col-90">
+                                        <h1>Seleccionar Consultorio</h1>
+                                    </div>  
+                                </div>
+                            </li>
+                            <li>
+                                <div class="row">
+                                    <div class="col-10"></div>
+                                    <div class="col-80">
+                                        <h4>Administre sus asistentes disponibles o agregue uno nuevo.</h4>
+                                    </div>
+                                    <div class="col-10"></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>                                                  
+                </div>   
+                <div>
+                    <div class="list media-list">
+                        <ul>     
+                            <li>
+                                <label class="item-checkbox item-content">
+                                    <div class="item-inner asistente-consultorio">
+                                        <div class="item-title-row">
+                                        <div class="item-title">Consultorio Conchita</div>
+                                        </div>
+                                        <div class="item-subtitle">Hospital La Concepción</div>
+                                        <div class="item-text">Blvd. Venustiano Carranza 4036, Virreyes Residencial, 25230 Saltillo, Coah.</div>
+                                    </div>
+
+                                    <input type="checkbox" name="chbx" value="Consultorio conchita" checked>
+                                    <i class="icon icon-checkbox"></i>
+                                </label>
+                            </li>   
+                            <li>
+                                    <label class="item-checkbox item-content">
+                                        <div class="item-inner asistente-consultorio">
+                                            <div class="item-title-row">
+                                            <div class="item-title">Consultorio del Niño</div>
+                                            </div>
+                                            <div class="item-text">Nazario Ortiz Garza s/n, Los Doctores, 25253 Saltillo, Coah.</div>
+                                        </div>
+    
+                                        <input type="checkbox" name="chbx" value="Consultorio del Niño" checked>
+                                        <i class="icon icon-checkbox"></i>
+                                    </label>
+                                </li>   
+                        </ul>  
+                    </div>  
+                </div>   
+                <div>
+                    <div class="list">
+                        <ul>   
+                            <li>
+                                <div class="row">
+                                    <div class="col-50">
+                                        <a href="/asistentes-invitar-02" data-view=".view-main" class="item-link list-button login-register-button ">Cancelar</a>
+                                    </div>
+                                    <div class="col-50">
+                                    <a href="/asistentes-invitar-04" class="item-link list-button login-button asistente">
+                                        <p>Siguiente </p>
+                                        <i class="material-icons">chevron_right</i>
+                                    </a>
+                                    </div>
+                                </div>
+                            </li> 
+                        </ul>  
+                    </div> 
+                </div>                      
+            </div>                
+        </div>
+    </template>
+    <script>
+        import $$ from 'dom7';
+        export default {
+            on:{
+                pageInit: function(e, page) {
+                    var self = this;
+                    var app = self.$app;
+                    var items; 
+                    $$('#asistentes-invitar-03 .login-button').on('click', function(e){
+                        items = $$('[name="chbx"]');
+                        app.data.assistant.consultorio = [];
+                        for(var i = 0; i < items.length; i++){
+                            if(items[i].checked == true){
+                                app.data.assistant.consultorio.push(items[i].value);
+                            }
+                        }
+                        console.log(app.data.assistant.consultorio);
+                    });
+                }
+            }
+        }
+    </script>

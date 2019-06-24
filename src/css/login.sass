@@ -1,5 +1,20 @@
 .page-content.login-screen-content
   background: radial-gradient(698.35px at 16.69% 17.13%, #F5F7FF 0%, #CCE4ED 100%)
+  &.grad-blue
+    background: radial-gradient(256.28px at 100% 100%, #00A1C5 0%, #2FCFBC 100%)
+    h2,h4
+      font-weight: normal
+      color: #fff
+      margin-block-start: 0px
+      margin-block-end: 0px
+      text-align: center
+    .asistente-img
+      //box-shadow: 0px 1.84211px 13.8158px rgba(16, 43, 200, 0.49);
+      display: block
+      margin-top: 35%
+      margin-bottom: 35%
+      margin-left: auto
+      margin-right: auto
 a.item-link
   display: flex
   align-items: center
@@ -15,14 +30,50 @@ a.item-link
   align-items: flex-start
   border: none
   padding-bottom: var(--f7-list-item-padding-vertical)
+  &.asistente-consultorio
+    height: auto
+    .item-title
+      color: #2FCFBC
+    .item-text
+      color: #2F80ED
+    .item-subtitle
+      color: #7B8EFF
+  &.permisos-asistente
+    height: auto
+    color: #2F80ED
   input:-internal-autofill-selected
     background-color: transparent !important
 .item-input:not(.item-input-outline) .item-input-wrap:after, .input:not(.input-outline):after
   display: none
 
-.item-input 
-  transition: all 0.2s 
-       
+.color-blue-toggle
+  --f7-toggle-active-color: #2FD8C4
+  //--f7-theme-color-shade: #0c82df
+  //--f7-theme-color-tint: #48a8f5
+
+.nav-bar-rect
+  position: static
+  width: 100%
+  height: 210px
+  background: radial-gradient(256.28px at 100% 100%, #00A1C5 0%, #2FCFBC 100%)
+  h1,h4
+    color: #ffffff
+    margin-block-start: 0px
+    margin-block-end: 0px
+  .back-button
+    height: 50px
+
+.item-checkbox
+  --f7-checkbox-icon-color: #fff
+  --f7-checkbox-active-color: #2FCFBC
+  --f7-checkbox-border-radius: 50%
+  --f7-checkbox-size: 30px
+  --f7-checkbox-inactive-color: rgba(47, 207, 188, 0.7)
+  --f7-checkbox-extra-margin: 0px;
+
+.item-input
+  transition: all 0.2s
+
   .item-input-wrap
     background-color: #ffffff
     border-radius: 20px
@@ -30,13 +81,19 @@ a.item-link
     height: 40px
     transition: all 0.2s
     transform: scale(1)
+    &.asistentes-input
+      background-color: transparent
+      border-radius: none
+      box-shadow: none
   .item-title
     margin-bottom: 15px
   &.item-input-focused
-     
+
     .item-input-wrap
       transform: scale(1.01)
       box-shadow: -2px 2px 15px rgba(16, 43, 200, 0.2)
+      &.asistentes-input
+        box-shadow: none
       i
         color: #2F80ED
   i
@@ -73,8 +130,11 @@ a.item-link
   border-radius: 20px
   &.grey
     filter: saturate(0)
+  &.white-button
+    color: #2FCFBC
+    background: radial-gradient(1005.21px at 16.69% 17.13%, #F5F7FF 0%, #CCE4ED 100%)
 
-.login-screen-content 
+.login-screen-content
   .list-button.login-recovery-button, .list-button.login-register-button
     color: #2F80ED
     height: 40px
@@ -96,6 +156,9 @@ a.item-link
   // padding-right: 10px
   &.tomar-foto
     width: 100%
+  &.asistente
+    margin-left: auto
+    margin-right: auto
 
 .recovery-sent-page
   h1,h4
@@ -114,11 +177,11 @@ a.item-link
       border-radius: 50%
       -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%)
       background-image: url('/static/images/camera.svg')
-      background-repeat: no-repeat 
+      background-repeat: no-repeat
       background-size: contain
       background-position: 50% 50%
     video
-      
+
       //background-color: red
       height: 100%
       width: 100%

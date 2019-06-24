@@ -85,9 +85,13 @@
                 let code = query.code;
                 let email = query.email;
 
+
+
                 if (!app.methods.isEmpty(query)) {
+
                     makeRequest();
                 } else {
+
                     $$('#register-step5 .login-button').addClass('grey');
                     $$('#register-step5 .login-button').off('click');
                     $$(document).on('input:notempty', '#code', function(e) {
@@ -104,12 +108,16 @@
 
 
                 function makeRequest() {
+                    location.href = '/';
                     app.request.postJSON('http://api.mydoctorize.com/account/confirmation', {
                         "email": email,
                         "code": code
                     }, function(e) {
                         console.log(e);
-                        app.methods.redirectTo('/');
+                        location.href = '/';
+
+                    }, function(e) {
+                        app.dialog.alert(e);
                     });
                 }
             }

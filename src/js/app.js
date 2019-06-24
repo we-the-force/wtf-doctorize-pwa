@@ -47,7 +47,7 @@ var app = new Framework7({
             app.dialog.alert('Hello World!');
         },
         redirectTo: function(pathTo) {
-            console.log(pathTo);
+            // console.log(app);
 
             app.views.main.router.navigate({
                 name: pathTo

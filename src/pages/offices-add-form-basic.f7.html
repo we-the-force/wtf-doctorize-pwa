@@ -4,7 +4,7 @@
             <div class="login-screen-content nav-bar-rect">
                 <div class="row">
                     <div class="col-15">
-                        <a href='/asistentes-invitar-01' data-view=".view-main"  class="item-link list-button back-button" id="back">
+                        <a href='#' data-view=".view-main"  class="item-link list-button back-button" id="back">
                             <i class="material-icons">chevron_left</i>
                         </a>
                     </div>
@@ -94,23 +94,6 @@
                 var app = self.$app;
                 var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
-                $$('#asistentes-invitar-02 .login-button').addClass('grey');
-                $$('#asistentes-invitar-02 .login-button').off('click');
-                $$(document).on('input:notempty', '#email', function(e){
-                    app.data.assistant.email = $$('[name="email"]').val();
-                    if(regex.test(email))
-                    {
-                        $$('#asistentes-invitar-02 .login-button').removeClass('grey');
-                        $$('#asistentes-invitar-02 .login-button').off('click');
-                        $$('#asistentes-invitar-02 .login-button').on('click', function(e){
-                            console.log(app.data.assistant.email);
-
-                        });
-                    }else{
-                        $$('#asistentes-invitar-02 .login-button').addClass('grey');
-                        $$('#asistentes-invitar-02 .login-button').off('click');
-                    }
-                });
             }
         }
     }

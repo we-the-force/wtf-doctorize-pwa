@@ -1,0 +1,117 @@
+<template>
+    <div class="page" data-name="offices-add-form-map" id="offices-add-form-map">
+        <div class="page-content login-screen-content">
+            <div class="login-screen-content nav-bar-rect">
+                <div class="row">
+                    <div class="col-15">
+                        <a href='/asistentes-invitar-01' data-view=".view-main"  class="item-link list-button back-button" id="back">
+                            <i class="material-icons">chevron_left</i>
+                        </a>
+                    </div>
+                    <div class="col-85"></div>
+                </div>             
+                <div class="list">
+                    <ul>
+                        <li>
+                            <div class="row">
+                                <div class="col-10"></div>
+                                <div class="col-90">
+                                    <h2>Ubicación del Consultorio</h2>
+                                </div> 
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-10"></div>
+                                <div class="col-70">
+                                    <h4>Busca el Hospital y la dirección de tu consultorio</h4>
+                                </div>
+                                <div class="col-20"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>                                                  
+            </div>   
+            <div>
+                <div class="list no-hairlines-md">
+                    <ul>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-label blue">Hospital</div>
+                                <div class="item-input-wrap asistentes-input">
+                                <input type="text" name="hospital" id="hospital" placeholder="Hospital" required validate>
+                                <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                        <div class="item-inner">
+                            <div class="item-label blue">Dirección</div>
+                            <div class="item-input-wrap asistentes-input">
+                            <input type="text" name="direction" id="direction" placeholder="Dirección" required validate>
+                            <span class="input-clear-button"></span>
+                            </div>
+                        </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-label blue">Número de Consultorio</div>
+                                <div class="item-input-wrap asistentes-input">
+                                <input type="text" name="consultorio" id="consultorio" placeholder="Consultorio" required validate>
+                                <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="list">
+                    <ul>   
+                        <li>
+                            <div class="row">
+                                <div class="col-50">
+                                    <a href="/offices-add-form-basic" data-view=".view-main" class="item-link list-button login-register-button ">Cancelar</a>
+                                </div>
+                                <div class="col-50">
+                                <a href="#" class="item-link list-button login-button asistente">
+                                    <p>Siguiente </p>
+                                    <i class="material-icons">chevron_right</i>
+                                </a>
+                                </div>
+                            </div>
+                        </li> 
+                    </ul>  
+                </div> 
+            </div>                         
+        </div>                
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+    export default {
+        on:{
+            pageInit: function(e, page) {
+                var self = this;
+                var app = self.$app;
+                var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+                $$('#asistentes-invitar-02 .login-button').addClass('grey');
+                $$('#asistentes-invitar-02 .login-button').off('click');
+                $$(document).on('input:notempty', '#email', function(e){
+                    app.data.assistant.email = $$('[name="email"]').val();
+                    if(regex.test(email))
+                    {
+                        $$('#asistentes-invitar-02 .login-button').removeClass('grey');
+                        $$('#asistentes-invitar-02 .login-button').off('click');
+                        $$('#asistentes-invitar-02 .login-button').on('click', function(e){
+                            console.log(app.data.assistant.email);
+
+                        });
+                    }else{
+                        $$('#asistentes-invitar-02 .login-button').addClass('grey');
+                        $$('#asistentes-invitar-02 .login-button').off('click');
+                    }
+                });
+            }
+        }
+    }
+</script>

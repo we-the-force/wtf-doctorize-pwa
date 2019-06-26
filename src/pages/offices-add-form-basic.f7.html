@@ -4,7 +4,7 @@
             <div class="login-screen-content nav-bar-rect">
                 <div class="row">
                     <div class="col-15">
-                        <a href='#' data-view=".view-main"  class="item-link list-button back-button" id="back">
+                        <a href='/offices-show' data-view=".view-main"  class="item-link list-button back-button" id="back">
                             <i class="material-icons">chevron_left</i>
                         </a>
                     </div>
@@ -39,7 +39,7 @@
                             <div class="item-inner">
                                 <div class="item-label blue">Nombre del Consultorio</div>
                                 <div class="item-input-wrap asistentes-input">
-                                <input type="text" name="nombre" id="" placeholder="Nombre" required validate>
+                                <input type="text" name="nombre" id="nombre" placeholder="Nombre" required validate>
                                 <span class="input-clear-button"></span>
                                 </div>
                             </div>
@@ -93,6 +93,33 @@
                 var self = this;
                 var app = self.$app;
                 var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                var regex2 = /^([0-9]){10}$/;
+
+                $$('#offices-add-form-basic .login-button').addClass('grey');
+                $$('#offices-add-form-basic .login-button').off('click');
+
+                $$(document).on('input:notempty', '#nombre', function(e){
+                    $$(document).on('input:notempty', '#email', function(e){
+                        $$(document).on('input:notempty', '#phone', function(e){
+                            app.data.consultorio.nombre = $$('[name="nombre"]').val();
+                            app.data.consultorio.email = $$('[name="email"]').val();
+                            app.data.consultorio.phone = $$('[name="phone"]').val();
+                            if(regex.test(app.data.consultorio.email) && regex2.test(app.data.consultorio.phone))
+                            {
+                                $$('#offices-add-form-basic .login-button').removeClass('grey');
+                                $$('#offices-add-form-basic .login-button').off('click');
+                                $$('#offices-add-form-basic .login-button').on('click', function(e){
+                                    console.log(app.data.consultorio.nombre);
+                                    console.log(app.data.consultorio.email);
+                                    console.log(app.data.consultorio.phone);
+                                });
+                            }else{
+                                $$('#offices-add-form-basic .login-button').addClass('grey');
+                                $$('#offices-add-form-basic .login-button').off('click');
+                            }
+                        });
+                    });
+                });
 
             }
         }

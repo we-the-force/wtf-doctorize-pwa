@@ -1,0 +1,199 @@
+<template>
+    <div class="page" data-name="offices-add-form-schedule" id="offices-add-form-schedule">
+        <div class="page-content login-screen-content">
+            <div class="login-screen-content nav-bar-rect">
+                <div class="row">
+                    <div class="col-15">
+                        <a href='/offices-add-form-map' data-view=".view-main"  class="item-link list-button back-button" id="back">
+                            <i class="material-icons">chevron_left</i>
+                        </a>
+                    </div>
+                    <div class="col-85"></div>
+                </div>             
+                <div class="list">
+                    <ul>
+                        <li>
+                            <div class="row">
+                                <div class="col-10"></div>
+                                <div class="col-90">
+                                    <h2>Horarios</h2>
+                                </div>  
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-10"></div>
+                                <div class="col-70">
+                                    <h4>Selecciona los días de atención y sus respectivos horarios.</h4>
+                                </div>
+                                <div class="col-20"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>                                                  
+            </div>   
+            <div>
+                <div class="list">
+                    <ul>
+                        <li>
+                            <div class="row days-container">
+                                <label class="item-checkbox item-content days">
+                                    <input type="checkbox" name="chbx" value="1">
+                                    <i class="icon icon-checkbox days" id="01">L</i>
+                                </label>
+                                <label class="item-checkbox item-content days">
+                                    <input type="checkbox" name="chbx" value="2">
+                                    <i class="icon icon-checkbox days" id="02">M</i>
+                                </label>
+                                <label class="item-checkbox item-content days">
+                                    <input type="checkbox" name="chbx" value="3">
+                                    <i class="icon icon-checkbox days" id="03">M</i>
+                                </label>
+                                <label class="item-checkbox item-content days">
+                                    <input type="checkbox" name="chbx" value="4">
+                                    <i class="icon icon-checkbox days" id="04">J</i>
+                                </label>
+                                <label class="item-checkbox item-content days">
+                                    <input type="checkbox" name="chbx" value="5">
+                                    <i class="icon icon-checkbox days" id="05">V</i>
+                                </label>
+                                <label class="item-checkbox item-content days">
+                                    <input type="checkbox" name="chbx" value="6">
+                                    <i class="icon icon-checkbox days" id="06">S</i>
+                                </label>
+                                <label class="item-checkbox item-content days">
+                                    <input type="checkbox" name="chbx" value="7">
+                                    <i class="icon icon-checkbox days" id="07">D</i>
+                                </label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="list">
+                    <ul>
+                        <li class="item-content item-input">
+                        <div class="item-inner">
+                            <div class="item-label blue">Hora de Apertura</div>
+                            <div class="item-input-wrap asistentes-input">
+                            <input type="time" name="startTime" id="startTime" placeholder="Hora de Apertura" required validate>
+                            <span class="inpt-clear-button"></span>
+                            </div>
+                        </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-label blue">Hora de Cierre</div>
+                                <div class="item-input-wrap asistentes-input">
+                                <input type="time" name="closeTime" id="closeTime" placeholder="Hora de Cierre" required validate>
+                                <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="list">
+                    <ul>
+                        <li class="item-content item-input">
+                        <div class="item-inner">
+                            <div class="item-label blue">Hora de inicio de comida</div>
+                            <div class="item-input-wrap asistentes-input">
+                            <input type="time" name="lunchStartTime" id="lunchStartTime" placeholder="Hora de inicio de comida" required validate>
+                            <span class="input-clear-button"></span>
+                            </div>
+                        </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-label blue">Hora de fin de comida</div>
+                                <div class="item-input-wrap asistentes-input">
+                                <input type="time" name="lunchCloseTime" id="lunchCloseTime" placeholder="Hora de fin de comida" required validate>
+                                <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="list">
+                    <ul>   
+                        <li>
+                            <div class="row">
+                                <div class="col-50">
+                                    <a href="/offices-add-form-map" data-view=".view-main" class="item-link list-button login-register-button ">Cancelar</a>
+                                </div>
+                                <div class="col-50">
+                                <a href="#" class="item-link list-button login-button asistente">
+                                    <p>Siguiente </p>
+                                    <i class="material-icons">chevron_right</i>
+                                </a>
+                                </div>
+                            </div>
+                        </li> 
+                    </ul>  
+                </div> 
+            </div>                         
+        </div>                
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+    export default {
+        on:{
+            pageInit: function(e, page) {
+                var self = this;
+                var app = self.$app;
+                var days = $$('[name="chbx"]');
+                
+                $$('#offices-add-form-schedule .login-button').addClass('grey');
+                $$('#offices-add-form-schedule .login-button').off('click');
+
+                $$(document).on('input:notempty', '#startTime', function(e){
+                    $$(document).on('input:notempty', '#closeTime', function(e){
+                        $$(document).on('input:notempty', '#lunchStartTime', function(e){
+                            $$(document).on('input:notempty', '#lunchCloseTime', function(e){
+                                app.data.consultorio.startTime = $$('[name="startTime"]').val();
+                                app.data.consultorio.closeTime = $$('[name="closeTime"]').val();
+                                app.data.consultorio.lunchStartTime = $$('[name="lunchStartTime"]').val();
+                                app.data.consultorio.lunchCloseTime = $$('[name="lunchCloseTime"]').val();
+                                $$('#offices-add-form-schedule .login-button').removeClass('grey');
+                                $$('#offices-add-form-schedule .login-button').off('click');
+                                $$('#offices-add-form-schedule .login-button').on('click', function(e){
+                                    days = $$('[name="chbx"]');
+                                    app.data.consultorio.days = [];
+                                    for(var i = 0; i < days.length; i++){
+                                        if(days[i].checked == true){
+                                            app.data.consultorio.days.push(days[i].value);
+                                        }
+                                    }
+                                    console.log(app.data.consultorio.days);
+                                    console.log(app.data.consultorio.startTime);
+                                    console.log(app.data.consultorio.closeTime);
+                                    console.log(app.data.consultorio.lunchStartTime);
+                                    console.log(app.data.consultorio.lunchCloseTime);
+                                });
+                            });
+                        });
+                    });
+                });
+
+                $$('.days-container [id="01"]').on('click', function(e){changeColor(0);});
+                $$('.days-container [id="02"]').on('click', function(e){changeColor(1);});
+                $$('.days-container [id="03"]').on('click', function(e){changeColor(2);});
+                $$('.days-container [id="04"]').on('click', function(e){changeColor(3);});
+                $$('.days-container [id="05"]').on('click', function(e){changeColor(4);});
+                $$('.days-container [id="06"]').on('click', function(e){changeColor(5);});
+                $$('.days-container [id="07"]').on('click', function(e){changeColor(6);});
+
+                function changeColor(x){
+                    var z = x + 1;
+                    if(!days[x].checked){
+                        $$('.days-container [id="0'+ z +'"]').addClass('checked');
+                    }else{
+                        $$('.days-container [id="0'+ z +'"]').removeClass('checked');
+                    }
+                }
+
+
+            }
+        }
+    }
+</script>

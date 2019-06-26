@@ -19,7 +19,7 @@ import AsistentesConfirmar from '../pages/asistentes-confirmar.f7.html';
 import officesShow from '../pages/offices-show.f7.html';
 import officesAddFormBasic from '../pages/offices-add-form-basic.f7.html';
 import officesAddFormMap from '../pages/offices-add-form-map.f7.html';
-//import officesAddFormSchedule from '../pages/offices-add-form-schedule.f7.html';
+import officesAddFormSchedule from '../pages/offices-add-form-schedule.f7.html';
 
 import LeftPage1 from '../pages/left-page-1.f7.html';
 import LeftPage2 from '../pages/left-page-2.f7.html';
@@ -72,11 +72,11 @@ var routes = [
         path: '/offices-add-form-map',
         component: officesAddFormMap,
     },
-    /* {
+    {
         name: 'offices-add-form-schedule',
         path: '/offices-add-form-schedule',
         component: officesAddFormSchedule,
-    }, */
+    },
     {
         name: 'intro-splash-01',
         path: '/intro-splash-01',

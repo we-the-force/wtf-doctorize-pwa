@@ -45,7 +45,7 @@
             </div>   
             <div>
                 <div class="list">
-                    <ul>     
+                    <ul id="consultorios">     
                         <li>
                             <div class="row">
                                 <div class="card card-outline" style="width: 100%">
@@ -87,5 +87,15 @@
 </template>
 <script>
     import $$ from 'dom7';
-    export default {}
+    export default {
+        on:{
+            pageInit: function(e, page) {
+                var self = this;
+                var app = self.$app;
+                
+
+
+            }
+        }
+    }
 </script>

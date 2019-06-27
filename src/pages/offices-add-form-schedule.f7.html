@@ -75,7 +75,7 @@
                         <div class="item-inner">
                             <div class="item-label blue">Hora de Apertura</div>
                             <div class="item-input-wrap asistentes-input">
-                            <input type="time" name="startTime" id="startTime" placeholder="Hora de Apertura" required validate>
+                            <input type="time" name="startTime" id="startTime" required validate>
                             <span class="inpt-clear-button"></span>
                             </div>
                         </div>
@@ -84,7 +84,7 @@
                             <div class="item-inner">
                                 <div class="item-label blue">Hora de Cierre</div>
                                 <div class="item-input-wrap asistentes-input">
-                                <input type="time" name="closeTime" id="closeTime" placeholder="Hora de Cierre" required validate>
+                                <input type="time" name="closeTime" id="closeTime" required validate>
                                 <span class="input-clear-button"></span>
                                 </div>
                             </div>
@@ -97,7 +97,7 @@
                         <div class="item-inner">
                             <div class="item-label blue">Hora de inicio de comida</div>
                             <div class="item-input-wrap asistentes-input">
-                            <input type="time" name="lunchStartTime" id="lunchStartTime" placeholder="Hora de inicio de comida" required validate>
+                            <input type="time" name="lunchStartTime" id="lunchStartTime" required validate>
                             <span class="input-clear-button"></span>
                             </div>
                         </div>
@@ -106,7 +106,7 @@
                             <div class="item-inner">
                                 <div class="item-label blue">Hora de fin de comida</div>
                                 <div class="item-input-wrap asistentes-input">
-                                <input type="time" name="lunchCloseTime" id="lunchCloseTime" placeholder="Hora de fin de comida" required validate>
+                                <input type="time" name="lunchCloseTime" id="lunchCloseTime" required validate>
                                 <span class="input-clear-button"></span>
                                 </div>
                             </div>
@@ -150,13 +150,13 @@
                     $$(document).on('input:notempty', '#closeTime', function(e){
                         $$(document).on('input:notempty', '#lunchStartTime', function(e){
                             $$(document).on('input:notempty', '#lunchCloseTime', function(e){
-                                app.data.consultorio.startTime = $$('[name="startTime"]').val();
-                                app.data.consultorio.closeTime = $$('[name="closeTime"]').val();
-                                app.data.consultorio.lunchStartTime = $$('[name="lunchStartTime"]').val();
-                                app.data.consultorio.lunchCloseTime = $$('[name="lunchCloseTime"]').val();
                                 $$('#offices-add-form-schedule .login-button').removeClass('grey');
                                 $$('#offices-add-form-schedule .login-button').off('click');
                                 $$('#offices-add-form-schedule .login-button').on('click', function(e){
+                                    app.data.consultorio.startTime = $$('[name="startTime"]').val();
+                                    app.data.consultorio.closeTime = $$('[name="closeTime"]').val();
+                                    app.data.consultorio.lunchStartTime = $$('[name="lunchStartTime"]').val();
+                                    app.data.consultorio.lunchCloseTime = $$('[name="lunchCloseTime"]').val();
                                     days = $$('[name="chbx"]');
                                     app.data.consultorio.days = [];
                                     for(var i = 0; i < days.length; i++){
@@ -164,11 +164,26 @@
                                             app.data.consultorio.days.push(days[i].value);
                                         }
                                     }
-                                    console.log(app.data.consultorio.days);
-                                    console.log(app.data.consultorio.startTime);
-                                    console.log(app.data.consultorio.closeTime);
-                                    console.log(app.data.consultorio.lunchStartTime);
-                                    console.log(app.data.consultorio.lunchCloseTime);
+                                    console.log(app.data.consultorio)
+                                    app.request.postJSON('http://api.mydoctorize.com/doctorOffice/save', { 
+                                        "email": app.data.consultorio.email,
+                                        "name": app.data.consultorio.nombre,
+                                        "phone": app.data.consultorio.phone,
+                                        "hospital": app.data.consultorio.hospital,
+                                        "number": app.data.consultorio.number,
+                                        "address": app.data.consultorio.address,
+                                        "userId": 32,//mandar pedir el numero
+                                        "lat": 12.12,
+                                        "lng": 213.234,
+                                        "startTime": app.data.consultorio.startTime,
+                                        "closeTime": app.data.consultorio.closeTime,
+                                        "days": app.data.consultorio.days,
+                                        "lunchStartTime": app.data.consultorio.lunchStartTime,
+                                        "lunchCloseTime": app.data.consultorio.lunchCloseTime
+                                    }, function(e){
+                                        console.log(e);
+                                        location.href = '/#!/offices-show';                                        
+                                    });
                                 });
                             });
                         });

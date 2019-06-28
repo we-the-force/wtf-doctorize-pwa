@@ -34,8 +34,18 @@ var app = new Framework7({
             },
             assistant: {
               email: '',
-              consultorio: [],
+              consultorio: '',
               permisos: [],
+            },
+            doctor: {
+              id: '99',
+              email: '',
+              name: '',
+              cellphone: '',
+              specialty: {
+                id: '',
+                name: '',
+              },
             },
             consultorio: {
               nombre: '',

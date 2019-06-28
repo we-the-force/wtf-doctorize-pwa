@@ -165,25 +165,25 @@
                                         }
                                     }
                                     console.log(app.data.consultorio)
-                                    app.request.postJSON('http://api.mydoctorize.com/doctorOffice/save', { 
-                                        "email": app.data.consultorio.email,
-                                        "name": app.data.consultorio.nombre,
-                                        "phone": app.data.consultorio.phone,
-                                        "hospital": app.data.consultorio.hospital,
-                                        "number": app.data.consultorio.number,
-                                        "address": app.data.consultorio.address,
-                                        "userId": 32,//mandar pedir el numero
-                                        "lat": 12.12,
-                                        "lng": 213.234,
-                                        "startTime": app.data.consultorio.startTime,
-                                        "closeTime": app.data.consultorio.closeTime,
-                                        "days": app.data.consultorio.days,
-                                        "lunchStartTime": app.data.consultorio.lunchStartTime,
-                                        "lunchCloseTime": app.data.consultorio.lunchCloseTime
-                                    }, function(e){
-                                        console.log(e);
-                                        location.href = '/#!/offices-show';                                        
-                                    });
+                                        app.request.postJSON('http://api.mydoctorize.com/doctorOffice/save', { 
+                                            "email": app.data.consultorio.email,
+                                            "name": app.data.consultorio.nombre,
+                                            "phone": app.data.consultorio.phone,
+                                            "hospital": app.data.consultorio.hospital,
+                                            "number": app.data.consultorio.number,
+                                            "address": app.data.consultorio.address,
+                                            "userId": app.data.doctor.id,//mandar pedir el numero app.data.doctor.id,
+                                            "lat": 12.12,
+                                            "lng": 213.234,
+                                            "startTime": app.data.consultorio.startTime,
+                                            "closeTime": app.data.consultorio.closeTime,
+                                            "days": app.data.consultorio.days,
+                                            "lunchStartTime": app.data.consultorio.lunchStartTime,
+                                            "lunchCloseTime": app.data.consultorio.lunchCloseTime
+                                        }, function(e){
+                                            console.log(e);
+                                            app.methods.redirectTo('offices-show');                                       
+                                        });
                                 });
                             });
                         });

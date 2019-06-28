@@ -114,8 +114,8 @@
                         "code": code
                     }, function(e) {
                         console.log(e);
-                        location.href = '/';
-
+                        app.dialog.alert('Usuario Confirmado');
+                        // location.href = '/';
                     }, function(e) {
                         app.dialog.alert(e);
                     });

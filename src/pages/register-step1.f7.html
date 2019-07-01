@@ -68,7 +68,7 @@
 
               </div>
               <div class="col-50">
-                <a href="/register-s2/" data-view=".view-main"  class="item-link list-button login-button">
+                <a href="#" data-view=".view-main"  class="item-link list-button login-button">
                   <p>Siguiente </p>
                   <i class="material-icons">chevron_right</i>
                 </a>
@@ -90,6 +90,16 @@
         pageInit: function(e, page) {
           var self = this;
           var app = self.$app;
+
+          let urlParams = (new URL(document.location)).searchParams;
+          var query = app.utils.parseUrlQuery(window.location.href);
+          let code = query.code;
+          let email = query.email; 
+          
+          if(!app.methods.isEmpty(query)){
+            app.data.assistant.flag = true;
+          }
+
           $$('#register-step1 .login-button').addClass('grey');
           $$('#register-step1 .login-button').off('click');
           $$(document).on('input:notempty', '#username', function(e){
@@ -97,8 +107,17 @@
               $$('#register-step1 .login-button').removeClass('grey');
               $$('#register-step1 .login-button').off('click');
               $$('#register-step1 .login-button').on('click', function(e){
+                if(!app.data.assistant.flag){
                   app.data.register.username = $$('[name="fullname"]').val();
                   app.data.register.password = $$('[name="password"]').val();
+                  app.methods.redirectTo('register-s2');
+                }else{
+                  app.data.assistant.name = $$('[name="fullname"]').val();
+                  app.data.assistant.password = $$('[name="password"]').val();
+                  app.data.assistant.email = email;
+                  app.data.assistant.code = code;
+                  app.methods.redirectTo('register-s3');
+                }
               });
             });
           });

@@ -33,6 +33,10 @@ var app = new Framework7({
               phone: '',
             },
             assistant: {
+              flag: false,
+              code: '',
+              name: '',
+              password: '',
               email: '',
               consultorio: '',
               permisos: [],

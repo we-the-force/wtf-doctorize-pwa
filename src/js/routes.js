@@ -39,10 +39,12 @@ var routes = [
         component: RegisterS1Page,
     },
     {
+        name: 'register-s2',
         path: '/register-s2',
         component: RegisterS2Page,
     },
     {
+        name: 'register-s3',
         path: '/register-s3',
         component: RegisterS3Page,
 

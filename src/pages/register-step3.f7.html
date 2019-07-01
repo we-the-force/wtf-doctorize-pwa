@@ -43,7 +43,7 @@
       <div class="list">
         <ul>
           <li>
-            <div class="item-content item-input">
+            <div class="item-content item-input" id="picker">
               <div class="item-inner">
                 <div class="item-input-wrap">
                   <div class="row no-gap">
@@ -369,10 +369,6 @@ background: #ccc;
                 var specialties = app.data.specialties;
                 console.log(_.orderBy(specialties, specialties.values, 'desc'));
 
-
-                // console.log(specialties);
-
-
                 var picker = app.picker.create({
                     inputEl: '#specialty-picker',
                     cols: [{
@@ -381,29 +377,47 @@ background: #ccc;
                     }]
                 });
                 var c, imageData, imageCapture, specialityID;
-                const input = document.querySelector('input[type="range"]');
 
-
+                if(app.data.assistant.flag){
+                    $$('#picker').css("visibility", "hidden");
+                    $$('h1').text('Foto de Perfil');
+                    $$('h4').text('Agrega tu foto de perfil');
+                }
 
                 $$('#register-step3 .create-account').off('click');
                 $$('#register-step3 .create-account').on('click', function(e) {
-                    specialityID = specialties.values.indexOf(picker.value[0]);
-                    specialityID++;
-                    c.result('base64').then(function(blob) {
-                        app.request.postJSON('http://api.mydoctorize.com/user/save', {
-                            "password": app.data.register.password,
-                            "name": app.data.register.username,
-                            "email": app.data.register.email,
-                            "cellphone": app.data.register.phone,
-                            "imageData": blob,
-                            "specialty": {
-                                "id": specialityID
-                            }
-                        }, function(e) {
-                            console.log(e);
-                            app.methods.redirectTo('register-s4');
+                    if(app.data.assistant.flag){
+                        c.result('base64').then(function(blob) {
+                            app.request.postJSON('http://api.mydoctorize.com//account/confirmationAssistant', {
+                                "email": app.data.assistant.email,
+                                "code": app.data.assistant.code,
+                                "name": app.data.assistant.name,
+                                "password": app.data.assistant.password,
+                                "imageData": blob
+                            }, function(e) {
+                                console.log(e);
+                                app.methods.redirectTo('root');
+                            });
                         });
-                    });
+                    }else{
+                        specialityID = specialties.values.indexOf(picker.value[0]);
+                        specialityID++;
+                        c.result('base64').then(function(blob) {
+                            app.request.postJSON('http://api.mydoctorize.com/user/save', {
+                                "password": app.data.register.password,
+                                "name": app.data.register.username,
+                                "email": app.data.register.email,
+                                "cellphone": app.data.register.phone,
+                                "imageData": blob,
+                                "specialty": {
+                                    "id": specialityID
+                                }
+                            }, function(e) {
+                                console.log(e);
+                                app.methods.redirectTo('register-s4');
+                            });
+                        });
+                    }
                 });
 
                 $$('.web-cam').on('click', function() {

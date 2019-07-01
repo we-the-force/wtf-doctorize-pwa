@@ -27,15 +27,38 @@ var app = new Framework7({
                 displayValues: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
             },
             register: {
-                username: '',
-                password: '',
-                email: '',
-                phone: '',
+              username: '',
+              password: '',
+              email: '',
+              phone: '',
             },
             assistant: {
-                email: '',
-                consultorio: [],
-                permisos: [],
+              email: '',
+              consultorio: '',
+              permisos: [],
+            },
+            doctor: {
+              id: '99',
+              email: '',
+              name: '',
+              cellphone: '',
+              specialty: {
+                id: '',
+                name: '',
+              },
+            },
+            consultorio: {
+              nombre: '',
+              email: '',
+              phone: '',
+              hospital: '',
+              address: '',
+              number: '',
+              startTime: '',
+              closeTime: '',
+              lunchStartTime: '',
+              lunchCloseTime: '',
+              days: [],
             }
 
 

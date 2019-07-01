@@ -4,7 +4,7 @@
             <div class="login-screen-content nav-bar-rect">
                 <div class="row">
                     <div class="col-15">
-                        <a href='#' data-view=".view-main"  class="item-link list-button back-button" id="back">
+                        <a href='/offices-add-form-basic' data-view=".view-main"  class="item-link list-button back-button" id="back">
                             <i class="material-icons">chevron_left</i>
                         </a>
                     </div>
@@ -57,7 +57,7 @@
                             <div class="item-inner">
                                 <div class="item-label blue">Número de Consultorio</div>
                                 <div class="item-input-wrap asistentes-input">
-                                <input type="text" name="consultorio" id="consultorio" placeholder="Consultorio" required validate>
+                                <input type="text" name="consultorio" id="consultorio" placeholder="Consultorio" required validate pattern="[0-9]*" data-error-message="Only numbers please!">
                                 <span class="input-clear-button"></span>
                                 </div>
                             </div>
@@ -72,7 +72,7 @@
                                     <a href="/offices-add-form-basic" data-view=".view-main" class="item-link list-button login-register-button ">Cancelar</a>
                                 </div>
                                 <div class="col-50">
-                                <a href="#" class="item-link list-button login-button asistente">
+                                <a href="/offices-add-form-schedule" class="item-link list-button login-button asistente">
                                     <p>Siguiente </p>
                                     <i class="material-icons">chevron_right</i>
                                 </a>
@@ -92,6 +92,27 @@
             pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
+
+                $$('#offices-add-form-map .login-button').addClass('grey');
+                $$('#offices-add-form-map .login-button').off('click');
+
+                $$(document).on('input:notempty', '#hospital', function(e){
+                    $$(document).on('input:notempty', '#direction', function(e){
+                        $$(document).on('input:notempty', '#consultorio', function(e){
+                            app.data.consultorio.hospital = $$('[name="hospital"]').val();
+                            app.data.consultorio.address = $$('[name="direction"]').val();
+                            app.data.consultorio.number = $$('[name="consultorio"]').val();
+
+                                $$('#offices-add-form-map .login-button').removeClass('grey');
+                                $$('#offices-add-form-map .login-button').off('click');
+                                $$('#offices-add-form-map .login-button').on('click', function(e){
+                                    console.log(app.data.consultorio.hospital);
+                                    console.log(app.data.consultorio.address);
+                                    console.log(app.data.consultorio.number);
+                                });
+                        });
+                    });
+                });
             }
         }
     }

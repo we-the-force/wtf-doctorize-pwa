@@ -45,25 +45,8 @@
             </div>   
             <div>
                 <div class="list">
-                    <ul>     
-                        <li>
-                            <div class="row">
-                                <div class="card card-outline" style="width: 100%">
-                                    <div class="card-header">Hospital La Concepción</div>
-                                    <div class="card-content card-content-padding">Consultorio Conchita</div>
-                                    <div class="card-footer">Matutino</div>
-                                </div>
-                            </div>
-                        </li>   
-                        <li>
-                            <div class="row">
-                                <div class="card card-outline" style="width: 100%">
-                                    <div class="card-header">Hospital General Zona 2</div>
-                                    <div class="card-content card-content-padding">Consultorio Zona 2</div>
-                                    <div class="card-footer">Vespertino</div>
-                                </div>
-                            </div>
-                        </li>
+                    <ul id="consultorios">     
+                       
                     </ul>  
                 </div> 
                 <div class="list">
@@ -87,5 +70,29 @@
 </template>
 <script>
     import $$ from 'dom7';
-    export default {}
+    export default {
+        on:{
+            pageInit: function(e, page) {
+                var self = this;
+                var app = self.$app;
+                console.log(app.data.doctor.id)
+                app.request.get('http://api.mydoctorize.com/doctorOffice/getListByUserId?userId=' + app.data.doctor.id,//id=99 
+                function(e){
+                    var x = JSON.parse(e);
+                    for(var i = 0; i < x.length; i++){
+                        $$('<li>' +
+                        '<div class="row">' +
+                        '<div class="card card-outline" style="width: 100%">' +
+                        '<div class="card-header">' + x[i].hospital + '</div>' +
+                        '<div class="card-content card-content-padding">' + x[i].name + '</div>' +
+                        '<div class="card-footer">' + x[i].startTime + ' - ' + x[i].closeTime + '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</li>').appendTo("#consultorios");      
+                    }                      
+                });
+
+            }
+        }
+    }
 </script>

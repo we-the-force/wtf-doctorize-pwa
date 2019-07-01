@@ -24,7 +24,7 @@
                                 <div class="row">
                                     <div class="col-10"></div>
                                     <div class="col-80">
-                                        <h4>Administre sus asistentes disponibles o agregue uno nuevo.</h4>
+                                        <h4>Asigne un consultorio a su nuevo asistente.</h4>
                                     </div>
                                     <div class="col-10"></div>
                                 </div>
@@ -34,34 +34,32 @@
                 </div>   
                 <div>
                     <div class="list media-list">
-                        <ul>     
-                            <li>
-                                <label class="item-checkbox item-content">
+                        <ul id="consultorios">   
+                            <!-- <li>
+                                <label class="item-radio item-content">
                                     <div class="item-inner asistente-consultorio">
                                         <div class="item-title-row">
-                                        <div class="item-title">Consultorio Conchita</div>
+                                            <div class="item-title">Consultorio Conchita</div>
                                         </div>
                                         <div class="item-subtitle">Hospital La Concepción</div>
                                         <div class="item-text">Blvd. Venustiano Carranza 4036, Virreyes Residencial, 25230 Saltillo, Coah.</div>
                                     </div>
-
-                                    <input type="checkbox" name="chbx" value="Consultorio conchita" checked>
-                                    <i class="icon icon-checkbox"></i>
+                                    <input type="radio" name="demo-radio" value="Books" checked />
+                                    <i class="icon icon-radio"></i>
                                 </label>
-                            </li>   
+                            </li> 
                             <li>
-                                    <label class="item-checkbox item-content">
-                                        <div class="item-inner asistente-consultorio">
-                                            <div class="item-title-row">
+                                <label class="item-radio item-content">
+                                    <div class="item-inner asistente-consultorio">
+                                        <div class="item-title-row">
                                             <div class="item-title">Consultorio del Niño</div>
-                                            </div>
-                                            <div class="item-text">Nazario Ortiz Garza s/n, Los Doctores, 25253 Saltillo, Coah.</div>
                                         </div>
-    
-                                        <input type="checkbox" name="chbx" value="Consultorio del Niño" checked>
-                                        <i class="icon icon-checkbox"></i>
-                                    </label>
-                                </li>   
+                                        <div class="item-text">Nazario Ortiz Garza s/n, Los Doctores, 25253 Saltillo, Coah.</div>
+                                    </div>
+                                    <input type="radio" name="demo-radio" value="Movies"/>
+                                    <i class="icon icon-radio"></i>
+                                </label>
+                            </li> --> 
                         </ul>  
                     </div>  
                 </div>   
@@ -74,7 +72,7 @@
                                         <a href="/asistentes-invitar-02" data-view=".view-main" class="item-link list-button login-register-button ">Cancelar</a>
                                     </div>
                                     <div class="col-50">
-                                    <a href="/asistentes-invitar-04" class="item-link list-button login-button asistente">
+                                    <a href="#" class="item-link list-button login-button asistente">
                                         <p>Siguiente </p>
                                         <i class="material-icons">chevron_right</i>
                                     </a>
@@ -95,16 +93,55 @@
                     var self = this;
                     var app = self.$app;
                     var items; 
-                    $$('#asistentes-invitar-03 .login-button').on('click', function(e){
-                        items = $$('[name="chbx"]');
-                        app.data.assistant.consultorio = [];
+                    app.request.get('http://api.mydoctorize.com/doctorOffice/getListByUserId?userId=' + app.data.doctor.id,//id=99 
+                    function(e){
+                        var x = JSON.parse(e);
+                        for(var i = 0; i < x.length; i++){
+                            $$('<li>' +
+                            '<label class="item-radio item-content">' +
+                            '<div class="item-inner asistente-consultorio">' +
+                            '<div class="item-title-row">' + 
+                            '<div class="item-title">' + x[i].name + '</div>' +
+                            '</div>' +
+                            '<div class="item-subtitle">' + x[i].hospital + '</div>' +
+                            '<div class="item-text">' + x[i].address + '</div>' +
+                            '</div>' +
+                            '<input type="radio" name="demo-radio" value="' + x[i].id + '"/>' +
+                            '<i class="icon icon-radio"></i>' +
+                            '</label>' +
+                            '</li> ').appendTo("#consultorios");
+                        }                   
+                    });
+
+                    $$('#asistentes-invitar-03 .login-button').addClass('grey');
+                    $$('#asistentes-invitar-03 .login-button').off('click');
+
+                    $$('#consultorios').on('change', function(e){
+                        $$('#asistentes-invitar-03 .login-button').removeClass('grey');
+                        $$('#asistentes-invitar-03 .login-button').off('click');
+                        $$('#asistentes-invitar-03 .login-button').on('click', function(e){
+                            items = $$('[name="demo-radio"]');
+                            app.data.assistant.consultorio = '';
+                            for(var i = 0; i < items.length; i++){
+                                if(items[i].checked == true){
+                                    app.data.assistant.consultorio = items[i].value;
+                                    break;
+                                }
+                            }
+                            app.methods.redirectTo('asistentes-invitar-04'); 
+                        });
+                    });
+
+                    /* $$('#asistentes-invitar-03 .login-button').on('click', function(e){
+                        items = $$('[name="demo-radio"]');
+                        app.data.assistant.consultorio = '';
                         for(var i = 0; i < items.length; i++){
                             if(items[i].checked == true){
-                                app.data.assistant.consultorio.push(items[i].value);
+                                app.data.assistant.consultorio = items[i].value;
+                                break;
                             }
                         }
-                        console.log(app.data.assistant.consultorio);
-                    });
+                    }); */
                 }
             }
         }

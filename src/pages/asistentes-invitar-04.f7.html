@@ -42,7 +42,7 @@
                                 </div>
                             </span>
                             <label class="toggle toggle-init color-blue-toggle">
-                                <input type="checkbox" name="chbx" value="Agenda" style="display:none" checked>
+                                <input type="checkbox" name="chbx" value="1" style="display:none" checked>
                                 <span class="toggle-icon"></span>
                             </label>                          
                         </li>  
@@ -53,7 +53,7 @@
                                 </div>
                             </span>
                             <label class="toggle toggle-init color-blue-toggle">
-                                <input type="checkbox" name="chbx" value="Pacientes" style="display:none" checked>
+                                <input type="checkbox" name="chbx" value="2" style="display:none" checked>
                                 <span class="toggle-icon"></span>
                             </label>                          
                         </li>  
@@ -64,7 +64,7 @@
                                 </div>
                             </span>
                             <label class="toggle toggle-init color-blue-toggle">
-                                <input type="checkbox" name="chbx" value="Expedientes" style="display:none" checked>
+                                <input type="checkbox" name="chbx" value="3" style="display:none" checked>
                                 <span class="toggle-icon"></span>
                             </label>                          
                         </li>  
@@ -75,7 +75,7 @@
                                 </div>
                             </span>
                             <label class="toggle toggle-init color-blue-toggle">
-                                <input type="checkbox" name="chbx" value="Pagos" style="display:none" checked>
+                                <input type="checkbox" name="chbx" value="4" style="display:none" checked>
                                 <span class="toggle-icon"></span>
                             </label>                          
                         </li>
@@ -91,7 +91,7 @@
                                     <a href="/asistentes-invitar-03" data-view=".view-main" class="item-link list-button login-register-button ">Cancelar</a>
                                 </div>
                                 <div class="col-50">
-                                <a href="/asistentes-confirmar" class="item-link list-button login-button asistente">
+                                <a href="#" class="item-link list-button login-button asistente">
                                     <p>Guardar </p>
                                     <i class="material-icons">chevron_right</i>
                                 </a>
@@ -117,10 +117,22 @@
                     app.data.assistant.permisos = [];
                     for(var i = 0; i < items.length; i++){
                         if(items[i].checked == true){
-                            app.data.assistant.permisos.push(items[i].value);
+                            app.data.assistant.permisos.push({'id':items[i].value});
                         }
                     }
+                    console.log(app.data.assistant.email);
+                    console.log(app.data.doctor.id);
+                    console.log(app.data.assistant.consultorio);
                     console.log(app.data.assistant.permisos);
+                    app.request.postJSON('http://api.mydoctorize.com/user/inviteAssistant', { 
+                        "email": app.data.assistant.email,
+                        "doctorId": app.data.doctor.id,
+                        "doctorOfficeId": app.data.assistant.consultorio,
+                        "permissions": app.data.assistant.permisos
+                    }, function(e){
+                        console.log(e);
+                        app.methods.redirectTo('asistentes-confirmar');                                       
+                    });
                 });
             }
         }

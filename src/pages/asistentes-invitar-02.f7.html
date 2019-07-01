@@ -79,14 +79,13 @@
                     $$('#asistentes-invitar-02 .login-button').addClass('grey');
                     $$('#asistentes-invitar-02 .login-button').off('click');
                     $$(document).on('input:notempty', '#email', function(e){
-                        app.data.assistant.email = $$('[name="email"]').val();
+                        var email = $$('[name="email"]').val();
                         if(regex.test(email))
                         {
                             $$('#asistentes-invitar-02 .login-button').removeClass('grey');
                             $$('#asistentes-invitar-02 .login-button').off('click');
-                            $$('#asistentes-invitar-02 .login-button').on('click', function(e){
-                                console.log(app.data.assistant.email);
-
+                            $$('#asistentes-invitar-02 .login-button').on('click', function(e){ 
+                                app.data.assistant.email = $$('[name="email"]').val();
                             });
                         }else{
                             $$('#asistentes-invitar-02 .login-button').addClass('grey');

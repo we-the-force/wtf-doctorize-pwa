@@ -87,7 +87,8 @@ var routes = [
         name: 'intro-splash-01',
         path: '/intro-splash-01',
         component: IntroSplash1,
-    }, {
+    }, 
+    {
         name: 'asistentes-invitar-01',
         path: '/assistants-show',
         component: AsistentesInvitar01,

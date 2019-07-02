@@ -4,12 +4,12 @@
                 <div class="login-screen-content nav-bar-rect">
                     <div class="row">
                         <div class="col-15">
-                            <a href='/asistentes-invitar-01' data-view=".view-main"  class="item-link list-button back-button" id="back">
+                            <a href='/assistants-show' data-view=".view-main"  class="item-link list-button back-button" id="back">
                                 <i class="material-icons">chevron_left</i>
                             </a>
                         </div>
                         <div class="col-85"></div>
-                    </div>             
+                    </div>
                     <div class="list">
                         <ul>
                             <li>
@@ -17,7 +17,7 @@
                                     <div class="col-10"></div>
                                     <div class="col-90">
                                         <h1>Invitar nuevo asistente</h1>
-                                    </div>  
+                                    </div>
                                 </div>
                             </li>
                             <li>
@@ -30,8 +30,8 @@
                                 </div>
                             </li>
                         </ul>
-                    </div>                                                  
-                </div>   
+                    </div>
+                </div>
                 <div>
                     <div class="list no-hairlines-md">
                         <ul>
@@ -47,11 +47,11 @@
                         </ul>
                     </div>
                     <div class="list">
-                        <ul>   
+                        <ul>
                             <li>
                                 <div class="row">
                                     <div class="col-50">
-                                        <a href="/asistentes-invitar-01" data-view=".view-main" class="item-link list-button login-register-button ">Cancelar</a>
+                                        <a href="/assistants-show" data-view=".view-main" class="item-link list-button login-register-button ">Cancelar</a>
                                     </div>
                                     <div class="col-50">
                                     <a href="/asistentes-invitar-03" class="item-link list-button login-button asistente">
@@ -60,39 +60,38 @@
                                     </a>
                                     </div>
                                 </div>
-                            </li> 
-                        </ul>  
-                    </div> 
-                </div>                         
-            </div>                
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </template>
-    <script>
-        import $$ from 'dom7';
-        export default {
-            on:{
-                pageInit: function(e, page) {
-                    var self = this;
-                    var app = self.$app;
-                    var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+<script>
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageInit: function(e, page) {
+                var self = this;
+                var app = self.$app;
+                var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
-                    $$('#asistentes-invitar-02 .login-button').addClass('grey');
-                    $$('#asistentes-invitar-02 .login-button').off('click');
-                    $$(document).on('input:notempty', '#email', function(e){
-                        var email = $$('[name="email"]').val();
-                        if(regex.test(email))
-                        {
-                            $$('#asistentes-invitar-02 .login-button').removeClass('grey');
-                            $$('#asistentes-invitar-02 .login-button').off('click');
-                            $$('#asistentes-invitar-02 .login-button').on('click', function(e){ 
-                                app.data.assistant.email = $$('[name="email"]').val();
-                            });
-                        }else{
-                            $$('#asistentes-invitar-02 .login-button').addClass('grey');
-                            $$('#asistentes-invitar-02 .login-button').off('click');
-                        }
-                    });
-                }
+                $$('#asistentes-invitar-02 .login-button').addClass('grey');
+                $$('#asistentes-invitar-02 .login-button').off('click');
+                $$(document).on('input:notempty', '#email', function(e) {
+                    var email = $$('[name="email"]').val();
+                    if (regex.test(email)) {
+                        $$('#asistentes-invitar-02 .login-button').removeClass('grey');
+                        $$('#asistentes-invitar-02 .login-button').off('click');
+                        $$('#asistentes-invitar-02 .login-button').on('click', function(e) {
+                            app.data.assistant.email = $$('[name="email"]').val();
+                        });
+                    } else {
+                        $$('#asistentes-invitar-02 .login-button').addClass('grey');
+                        $$('#asistentes-invitar-02 .login-button').off('click');
+                    }
+                });
             }
         }
-    </script>
+    }
+</script>

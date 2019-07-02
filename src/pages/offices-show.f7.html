@@ -4,12 +4,12 @@
             <div class="login-screen-content nav-bar-rect">
                 <div class="row">
                     <div class="col-15">
-                        <a href='#' data-view=".view-main"  class="item-link list-button back-button" id="back">
+                        <a href='/' data-view=".view-main"  class="item-link list-button back-button" id="back">
                             <i class="material-icons">chevron_left</i>
                         </a>
                     </div>
                     <div class="col-85"></div>
-                </div>             
+                </div>
                 <div class="list">
                     <ul>
                         <li>
@@ -17,7 +17,7 @@
                                 <div class="col-10"></div>
                                 <div class="col-90">
                                     <h1>Consultorios</h1>
-                                </div>  
+                                </div>
                             </div>
                         </li>
                         <li>
@@ -31,24 +31,24 @@
                         </li>
                         <li>
                             <div class="row">
-                                <div class="item-inner">     
+                                <div class="item-inner">
                                     <div class="fab fab-right-middle color-lime">
                                         <a href="/offices-add-form-basic">
                                             <i class="material-icons">add</i>
                                         </a>
-                                    </div> 
-                                </div>                               
+                                    </div>
+                                </div>
                             </div>
-                        </li>  
+                        </li>
                     </ul>
-                </div>                                                  
-            </div>   
+                </div>
+            </div>
             <div>
                 <div class="list">
-                    <ul id="consultorios">     
-                       
-                    </ul>  
-                </div> 
+                    <ul id="consultorios">
+
+                    </ul>
+                </div>
                 <div class="list">
                     <ul>
                         <li>
@@ -61,36 +61,36 @@
                                 </a>
                                 </div>
                             </div>
-                        </li> 
+                        </li>
                     </ul>
-                </div>  
-            </div>                         
-        </div>                
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
     import $$ from 'dom7';
     export default {
-        on:{
+        on: {
             pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 console.log(app.data.doctor.id)
-                app.request.get('http://api.mydoctorize.com/doctorOffice/getListByUserId?userId=' + app.data.doctor.id,//id=99 
-                function(e){
-                    var x = JSON.parse(e);
-                    for(var i = 0; i < x.length; i++){
-                        $$('<li>' +
-                        '<div class="row">' +
-                        '<div class="card card-outline" style="width: 100%">' +
-                        '<div class="card-header">' + x[i].hospital + '</div>' +
-                        '<div class="card-content card-content-padding">' + x[i].name + '</div>' +
-                        '<div class="card-footer">' + x[i].startTime + ' - ' + x[i].closeTime + '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</li>').appendTo("#consultorios");      
-                    }                      
-                });
+                app.request.get('http://api.mydoctorize.com/doctorOffice/getListByUserId?userId=' + app.data.doctor.id, //id=99
+                    function(e) {
+                        var x = JSON.parse(e);
+                        for (var i = 0; i < x.length; i++) {
+                            $$('<li>' +
+                                '<div class="row">' +
+                                '<div class="card card-outline" style="width: 100%">' +
+                                '<div class="card-header">' + x[i].hospital + '</div>' +
+                                '<div class="card-content card-content-padding">' + x[i].name + '</div>' +
+                                '<div class="card-footer">' + x[i].startTime + ' - ' + x[i].closeTime + '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</li>').appendTo("#consultorios");
+                        }
+                    });
 
             }
         }

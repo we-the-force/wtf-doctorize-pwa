@@ -89,7 +89,7 @@ var routes = [
         component: IntroSplash1,
     }, {
         name: 'asistentes-invitar-01',
-        path: '/asistentes-invitar-01',
+        path: '/assistants-show',
         component: AsistentesInvitar01,
     },
     {

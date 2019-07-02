@@ -27,42 +27,42 @@ var app = new Framework7({
                 displayValues: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
             },
             register: {
-              username: '',
-              password: '',
-              email: '',
-              phone: '',
+                username: '',
+                password: '',
+                email: '',
+                phone: '',
             },
             assistant: {
-              flag: false,
-              code: '',
-              name: '',
-              password: '',
-              email: '',
-              consultorio: '',
-              permisos: [],
+                flag: false,
+                code: '',
+                name: '',
+                password: '',
+                email: '',
+                consultorio: '',
+                permisos: [],
             },
             doctor: {
-              id: '99',
-              email: '',
-              name: '',
-              cellphone: '',
-              specialty: {
-                id: '',
+                id: '99',
+                email: '',
                 name: '',
-              },
+                cellphone: '',
+                specialty: {
+                    id: '',
+                    name: '',
+                },
             },
             consultorio: {
-              nombre: '',
-              email: '',
-              phone: '',
-              hospital: '',
-              address: '',
-              number: '',
-              startTime: '',
-              closeTime: '',
-              lunchStartTime: '',
-              lunchCloseTime: '',
-              days: [],
+                nombre: '',
+                email: '',
+                phone: '',
+                hospital: '',
+                address: '',
+                number: '',
+                startTime: '',
+                closeTime: '',
+                lunchStartTime: '',
+                lunchCloseTime: '',
+                days: [],
             }
 
 
@@ -172,6 +172,7 @@ $$(document).on('input:notempty', '#username', function(e) {
             app.request.postJSON('http://api.mydoctorize.com/account/login', { "email": email_login, "password": password_login }, function(e) {
                 console.log(e);
                 dynamicPopup.open();
+                $$(".loggedin").removeClass('hide');
             }, function(e) {
                 errorPopup.open();
             });

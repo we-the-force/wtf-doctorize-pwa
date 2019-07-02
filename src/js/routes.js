@@ -35,6 +35,10 @@ var routes = [
         component: LoginPage,
     },
     {
+        path: '/account/assistant/confirmation',
+        component: RegisterS1Page,
+    },
+    {
         path: '/register-s1',
         component: RegisterS1Page,
     },

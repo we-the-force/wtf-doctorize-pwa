@@ -42,7 +42,7 @@ var app = new Framework7({
                 permisos: [],
             },
             doctor: {
-                id: '99',
+                id: '',
                 email: '',
                 name: '',
                 cellphone: '',
@@ -170,9 +170,15 @@ $$(document).on('input:notempty', '#username', function(e) {
             e.preventDefault();
             password_login = $$('[name="password"]').val();
             app.request.postJSON('http://api.mydoctorize.com/account/login', { "email": email_login, "password": password_login }, function(e) {
-                console.log(e);
-                dynamicPopup.open();
-                $$(".loggedin").removeClass('hide');
+                app.data.doctor.id = e.id;
+                app.data.doctor.email = e.email;
+                app.data.doctor.name = e.name;
+                app.data.doctor.cellphone = e.cellphone;
+                app.data.doctor.specialty = e.specialty;
+                console.log(app.data.doctor);
+                app.methods.redirectTo('home');
+                /* dynamicPopup.open();
+                $$(".loggedin").removeClass('hide'); */
             }, function(e) {
                 errorPopup.open();
             });

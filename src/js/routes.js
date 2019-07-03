@@ -20,6 +20,9 @@ import officesShow from '../pages/offices-show.f7.html';
 import officesAddFormBasic from '../pages/offices-add-form-basic.f7.html';
 import officesAddFormMap from '../pages/offices-add-form-map.f7.html';
 import officesAddFormSchedule from '../pages/offices-add-form-schedule.f7.html';
+import home from '../pages/home2.f7.html';
+import AgendarCita from '../pages/agendar-cita.f7.html';
+import CitaAgendada from '../pages/cita-agendada.f7.html';
 
 import LeftPage1 from '../pages/left-page-1.f7.html';
 import LeftPage2 from '../pages/left-page-2.f7.html';
@@ -33,6 +36,11 @@ var routes = [
         name: "root",
         path: '/',
         component: LoginPage,
+    },
+    {
+        name: "home",
+        path: '/home',
+        component: home,
     },
     {
         path: '/account/assistant/confirmation',
@@ -92,6 +100,16 @@ var routes = [
         name: 'asistentes-invitar-01',
         path: '/assistants-show',
         component: AsistentesInvitar01,
+    },
+    {
+        name: 'agendar-cita',
+        path: '/agendar-cita',
+        component: AgendarCita,
+    },
+    {
+        name: 'cita-agendada',
+        path: '/cita-agendada',
+        component: CitaAgendada,
     },
     {
         name: 'asistentes-invitar-02',

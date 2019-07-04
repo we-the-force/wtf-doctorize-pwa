@@ -5,7 +5,7 @@
                     <div class="row">
                         <div class="col-15">
                             <a href='/home' data-view=".view-main"  class="item-link list-button back-button" id="back">
-                                <i class="material-icons">chevron_left</i>
+                                <i class="material-icons">close</i>
                             </a>
                         </div>
                         <div class="col-85"></div>
@@ -66,7 +66,7 @@
                                     <div class="item-inner">
                                         <div class="item-label blue">Celular</div>
                                         <div class="item-input-wrap asistentes-input">
-                                        <input type="tel" name="phone" id="phone" placeholder="teléfono" required validate pattern="[0-9]*" data-error-message="Only numbers please!">
+                                        <input type="tel" name="phone" id="phone" placeholder="teléfono" required validate pattern="^([0-9]){10}$" data-error-message="Ingrese su telefono">
                                         <span class="input-clear-button"></span>
                                         </div>
                                     </div>
@@ -81,7 +81,7 @@
                                         <a href="/home" data-view=".view-main" class="item-link list-button login-register-button ">Cancelar</a>
                                     </div>
                                     <div class="col-50">
-                                    <a href="/cita-agendada" class="item-link list-button login-button asistente">
+                                    <a href="#" class="item-link list-button login-button asistente">
                                         <p>Agendar </p>
                                         <i class="material-icons">chevron_right</i>
                                     </a>
@@ -103,7 +103,7 @@
                     var app = self.$app;
                     var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
                     var regex2 = /^([0-9]){10}$/;
-                    var datatime,name,email,phone;
+                    var datetime,name,email,phone;
     
                     $$('#agendar-cita .login-button').addClass('grey');
                     $$('#agendar-cita .login-button').off('click');
@@ -112,8 +112,6 @@
                         $$(document).on('input:notempty', '#nombre', function(e){
                             $$(document).on('input:notempty', '#email', function(e){
                                 $$(document).on('input:notempty', '#phone', function(e){
-                                datatime = $$('[name="datatime"]').val();
-                                name = $$('[name="nombre"]').val();
                                 email = $$('[name="email"]').val();
                                 phone = $$('[name="phone"]').val();
                                 if(regex.test(email) && regex2.test(phone))
@@ -121,10 +119,13 @@
                                     $$('#agendar-cita .login-button').removeClass('grey');
                                     $$('#agendar-cita .login-button').off('click');
                                     $$('#agendar-cita .login-button').on('click', function(e){
-                                        console.log(datatime);
+                                        datetime = $$('#datetime').val();
+                                        name = $$('[name="nombre"]').val();
+                                        console.log(datetime);
                                         console.log(name);
                                         console.log(email);
                                         console.log(phone);
+                                        app.methods.redirectTo('cita-agendada');
                                     });
                                 }else{
                                     $$('#agendar-cita .login-button').addClass('grey');

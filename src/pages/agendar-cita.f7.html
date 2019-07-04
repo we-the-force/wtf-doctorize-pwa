@@ -33,7 +33,7 @@
                     </div>                                                  
                 </div>   
                 <div>
-                    <div class="list no-hairlines-md">
+                    <div class="list no-hairlines-md" id="inputs">
                         <ul>
                             <li class="item-content item-input">
                                 <div class="item-inner">
@@ -103,39 +103,86 @@
                     var app = self.$app;
                     var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
                     var regex2 = /^([0-9]){10}$/;
-                    var datetime,name,email,phone;
+                    var datetime = '';
+                    var name = '';
+                    var email = '';
+                    var phone = '';
     
-                    $$('#agendar-cita .login-button').addClass('grey');
-                    $$('#agendar-cita .login-button').off('click');
-    
-                    $$(document).on('input:notempty', '#datetime', function(e){
-                        $$(document).on('input:notempty', '#nombre', function(e){
-                            $$(document).on('input:notempty', '#email', function(e){
-                                $$(document).on('input:notempty', '#phone', function(e){
-                                email = $$('[name="email"]').val();
-                                phone = $$('[name="phone"]').val();
-                                if(regex.test(email) && regex2.test(phone))
-                                {
-                                    $$('#agendar-cita .login-button').removeClass('grey');
-                                    $$('#agendar-cita .login-button').off('click');
-                                    $$('#agendar-cita .login-button').on('click', function(e){
-                                        datetime = $$('#datetime').val();
-                                        name = $$('[name="nombre"]').val();
-                                        console.log(datetime);
-                                        console.log(name);
-                                        console.log(email);
-                                        console.log(phone);
-                                        app.methods.redirectTo('cita-agendada');
-                                    });
-                                }else{
-                                    $$('#agendar-cita .login-button').addClass('grey');
-                                    $$('#agendar-cita .login-button').off('click');
-                                }
-                            });
-                            });
-                        });
+                    disableButton();
+
+                    $$(document).on('input:notempty', '#datetime' , function(e){
+                        if(name != '' && email != '' && phone != ''){
+                            datetime = $$('#datetime').val();
+                            enableButton();
+                        }else{
+                            datetime = $$('#datetime').val();
+                        }
                     });
-    
+
+                    $$(document).on('input:notempty', '#nombre' , function(e){
+                        if(datetime != '' && email != '' && phone != ''){
+                            name = $$('#nombre').val();
+                            enableButton();
+                        }else{
+                            name = $$('#nombre').val();
+                        }
+                    });
+
+                    $$(document).on('input:notempty', '#email' , function(e){
+                        if(name != '' && datetime != '' && phone != ''){
+                            email = $$('#email').val();
+                            enableButton();
+                        }else{
+                            email = $$('#email').val();
+                        }
+                    });
+
+                    $$(document).on('input:notempty', '#phone' , function(e){
+                        if(name != '' && email != '' && datetime != ''){
+                            phone = $$('#phone').val();
+                            enableButton();
+                        }else{
+                            phone = $$('#phone').val();
+                        }
+                    });
+                    
+                    $$(document).on('input:empty', '#datetime', function(e){
+                        disableButton();
+                    });
+                    $$(document).on('input:empty', '#nombre', function(e){
+                        disableButton();
+                    });
+                    $$(document).on('input:empty', '#email', function(e){
+                        disableButton();
+                    });
+                    $$(document).on('input:empty', '#phone', function(e){
+                        disableButton();
+                    });
+
+                    function enableButton(){
+                        if(regex.test(email) && regex2.test(phone))
+                        {
+                            $$('#agendar-cita .login-button').removeClass('grey');
+                            $$('#agendar-cita .login-button').off('click');
+                            $$('#agendar-cita .login-button').on('click', function(e){
+                                console.log(datetime);
+                                console.log(name);
+                                console.log(email);
+                                console.log(phone);
+                                app.methods.redirectTo('cita-agendada');
+                            });
+                        }else{
+                            disableButton();
+                        }
+                    }
+
+                    function disableButton(){
+                        $$('#agendar-cita .login-button').addClass('grey');
+                        $$('#agendar-cita .login-button').off('click');
+                    }
+
+
+
                 }
             }
         }

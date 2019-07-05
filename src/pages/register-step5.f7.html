@@ -108,7 +108,7 @@
 
 
                 function makeRequest() {
-                    app.request.postJSON('http://api.mydoctorize.com/account/confirmation', {
+                    app.request.postJSON(app.data.url + '/account/confirmation', {
                         "email": email,
                         "code": code
                     }, function(e) {

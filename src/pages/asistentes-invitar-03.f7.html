@@ -93,7 +93,7 @@
                     var self = this;
                     var app = self.$app;
                     var items; 
-                    app.request.get('http://api.mydoctorize.com/doctorOffice/getListByUserId?userId=' + app.data.doctor.id,//id=99 
+                    app.request.get(app.data.url + '/doctorOffice/getListByUserId?userId=' + app.data.doctor.id,//id=99 
                     function(e){
                         var x = JSON.parse(e);
                         for(var i = 0; i < x.length; i++){

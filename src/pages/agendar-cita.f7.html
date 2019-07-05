@@ -112,10 +112,10 @@
 
                     $$(document).on('input:notempty', '#datetime' , function(e){
                         if(name != '' && email != '' && phone != ''){
-                            datetime = $$('#datetime').val();
+                            datetime = new Date($$('#datetime').val());
                             enableButton();
                         }else{
-                            datetime = $$('#datetime').val();
+                            datetime = new Date($$('#datetime').val());
                         }
                     });
 
@@ -160,17 +160,24 @@
                     });
 
                     function enableButton(){
-                        if(regex.test(email) && regex2.test(phone))
-                        {
+                        var today = new Date();
+                        var todayDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+                        var date = datetime.getFullYear()+'-'+(datetime.getMonth()+1)+'-'+datetime.getDate();
+                        var todayTime = (today.getHours()+1) + ":" + today.getMinutes();
+                        var time = datetime.getHours() + ":" + datetime.getMinutes();
+                        var dateTime = date+' '+time;
+                        if(date > todayDate || (date == todayDate && time >= todayTime)){
+                            if(regex.test(email) && regex2.test(phone))
+                            {
                             $$('#agendar-cita .login-button').removeClass('grey');
                             $$('#agendar-cita .login-button').off('click');
                             $$('#agendar-cita .login-button').on('click', function(e){
-                                console.log(datetime);
-                                console.log(name);
-                                console.log(email);
-                                console.log(phone);
-                                app.methods.redirectTo('cita-agendada');
+
+                                app.methods.redirectTo('cita-agendada'); 
                             });
+                            }else{
+                            disableButton();
+                            }
                         }else{
                             disableButton();
                         }

@@ -165,7 +165,7 @@
                                         }
                                     }
                                     console.log(app.data.consultorio)
-                                        app.request.postJSON('http://api.mydoctorize.com/doctorOffice/save', { 
+                                        app.request.postJSON(app.data.url + '/doctorOffice/save', { 
                                             "email": app.data.consultorio.email,
                                             "name": app.data.consultorio.nombre,
                                             "phone": app.data.consultorio.phone,

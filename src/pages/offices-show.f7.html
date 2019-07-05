@@ -75,7 +75,8 @@
             pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
-                console.log(app.data.doctor.id)
+                console.log(app.data.doctor.id);
+                app.preloader.show('blue');
                 app.request.get(app.data.url + '/doctorOffice/getListByUserId?userId=' + app.data.doctor.id, //id=99
                     function(e) {
                         var x = JSON.parse(e);
@@ -90,6 +91,9 @@
                                 '</div>' +
                                 '</li>').appendTo("#consultorios");
                         }
+                        app.preloader.hide();
+                    }, function(e){
+                        app.preloader.hide();                                       
                     });
 
             }

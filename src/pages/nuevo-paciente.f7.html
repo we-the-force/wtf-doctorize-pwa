@@ -1,5 +1,5 @@
 <template>
-    <div class="page" data-name="agendar-cita" id="agendar-cita">
+    <div class="page" data-name="nuevo-paciente" id="nuevo-paciente">
         <div class="page-content login-screen-content">
             <div class="login-screen-content nav-bar-rect">
                 <div class="row">
@@ -91,7 +91,7 @@
                             <div class="item-inner">
                                 <div class="item-label blue">Tipo de Sangre</div>
                                 <div class="item-input-wrap asistentes-input">
-                                <input type="text" name="blood" id="Estatura" placeholder="Tipo de Sangre" required validate>
+                                <input type="text" name="blood" id="blood" placeholder="Tipo de Sangre" required validate>
                                 <span class="input-clear-button"></span>
                                 </div>
                             </div>
@@ -142,7 +142,7 @@
                 var app = self.$app;
                 var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
                 var regex2 = /^([0-9]){10}$/;
-                var c;
+                var c, birthdate = '', civilStatus = '', weight = '', height = '', blood = '', pressure = '';
                 var ac = app.actions.create({
                     content: '<div class="actions-modal">' +
                         '<div class="actions-group">' +
@@ -163,6 +163,94 @@
                         '</div>',
                     buttons: [{}]
                 });
+
+                disableButton();
+
+                $$(document).on('input:notempty', '#birthdate' , function(e){
+                    if(civilStatus != '' && weight != '' && height != '' && blood != '' && pressure != ''){
+                        birthdate = new Date($$('#birthdate').val());
+                        enableButton();
+                    }else{
+                        birthdate = new Date($$('#birthdate').val());
+                    }
+                });
+
+                $$(document).on('input:notempty', '#civil-status' , function(e){
+                    if(birthdate != '' && weight != '' && height != '' && blood != '' && pressure != ''){
+                        civilStatus = new Date($$('#civil-status').val());
+                        enableButton();
+                    }else{
+                        civilStatus = new Date($$('#civil-status').val());
+                    }
+                });
+
+                $$(document).on('input:notempty', '#weight' , function(e){
+                    if(birthdate != '' &&  civilStatus != '' && height != '' && blood != '' && pressure != ''){
+                        weight = new Date($$('#weight').val());
+                        enableButton();
+                    }else{
+                        weight = new Date($$('#weight').val());
+                    }
+                });
+
+                $$(document).on('input:notempty', '#height' , function(e){
+                    if(birthdate != '' &&  civilStatus != '' && weight != '' && blood != '' && pressure != ''){
+                        height = new Date($$('#height').val());
+                        enableButton();
+                    }else{
+                        height = new Date($$('#height').val());
+                    }
+                });
+
+                $$(document).on('input:notempty', '#blood' , function(e){
+                    if(birthdate != '' &&  civilStatus != '' && weight != '' && height != '' && pressure != ''){
+                        blood = new Date($$('#blood').val());
+                        enableButton();
+                    }else{
+                        blood = new Date($$('#blood').val());
+                    }
+                });
+
+                $$(document).on('input:notempty', '#pressure' , function(e){
+                    if(birthdate != '' &&  civilStatus != '' && weight != '' && height != '' && blood != ''){
+                        pressure = new Date($$('#pressure').val());
+                        enableButton();
+                    }else{
+                        pressure = new Date($$('#pressure').val());
+                    }
+                });
+
+
+                $$(document).on('input:empty', '#birthdate', function(e){
+                    disableButton();
+                });
+                $$(document).on('input:empty', '#civil-status', function(e){
+                    disableButton();
+                });
+                $$(document).on('input:empty', '#weight', function(e){
+                    disableButton();
+                });
+                $$(document).on('input:empty', '#height', function(e){
+                    disableButton();
+                });$$(document).on('input:empty', '#blood', function(e){
+                    disableButton();
+                });
+                $$(document).on('input:empty', '#pressure', function(e){
+                    disableButton();
+                });
+
+                function enableButton(){
+                    $$('#nuevo-paciente .login-button').removeClass('grey');
+                    $$('#nuevo-paciente .login-button').off('click');
+                    $$('#nuevo-paciente .login-button').on('click', function(e){
+                        app.methods.redirectTo('home'); 
+                    });
+                }
+
+                function disableButton(){
+                    $$('#nuevo-paciente .login-button').addClass('grey');
+                    $$('#nuevo-paciente .login-button').off('click');
+                }
 
                 $$('.web-cam').on('click', function() {
                     ac.open();

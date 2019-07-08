@@ -64,6 +64,11 @@ var app = new Framework7({
                 lunchCloseTime: '',
                 days: [],
             },
+            paciente: {
+              nombre: '',
+              email: '',
+              phone: '',
+          },
             url: 'http://api.mydoctorize.com'
         };
     },

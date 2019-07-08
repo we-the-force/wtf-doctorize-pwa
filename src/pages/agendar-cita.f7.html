@@ -172,7 +172,9 @@
                             $$('#agendar-cita .login-button').removeClass('grey');
                             $$('#agendar-cita .login-button').off('click');
                             $$('#agendar-cita .login-button').on('click', function(e){
-
+                                app.data.paciente.nombre = name;
+                                app.data.paciente.email = email;
+                                app.data.paciente.phone = phone;
                                 app.methods.redirectTo('cita-agendada'); 
                             });
                             }else{
@@ -187,8 +189,6 @@
                         $$('#agendar-cita .login-button').addClass('grey');
                         $$('#agendar-cita .login-button').off('click');
                     }
-
-
 
                 }
             }

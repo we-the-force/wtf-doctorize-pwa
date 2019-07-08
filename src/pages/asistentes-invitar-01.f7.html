@@ -4,7 +4,7 @@
             <div class="login-screen-content nav-bar-rect">
                 <div class="row">
                     <div class="col-15">
-                        <a href='/' data-view=".view-main"  class="item-link list-button back-button" id="back">
+                        <a href='/home' data-view=".view-main"  class="item-link list-button back-button" id="back">
                             <i class="material-icons">chevron_left</i>
                         </a>
                     </div>
@@ -75,8 +75,9 @@
             pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
-                console.log(app.data.doctor.id)
-                app.request.get('http://api.mydoctorize.com/user/getListByDoctorId?doctorId=' + app.data.doctor.id, //id=99
+                console.log(app.data.doctor.id);
+                app.preloader.show('blue');
+                app.request.get(app.data.url + '/user/getListByDoctorId?doctorId=' + app.data.doctor.id, //id=99
                     function(e) {
                         var x = JSON.parse(e);
                         for (var i = 0; i < x.length; i++) {
@@ -90,6 +91,10 @@
                                 '</div>' +
                                 '</li>').appendTo("#asistentes");
                         }
+                        app.preloader.hide();
+                    }, 
+                    function(e) {
+                        app.preloader.hide();
                     });
 
             }

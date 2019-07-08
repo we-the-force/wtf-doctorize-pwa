@@ -99,13 +99,17 @@
                   $$('#recovery-pass .login-button').removeClass('grey');
                   $$('#recovery-pass .login-button').off('click');
                   $$('#recovery-pass .login-button').on('click', function(){
-                    app.request.postJSON('http://api.mydoctorize.com/account/password/confirmation', { 
+                    app.preloader.show('blue');  
+                    app.request.postJSON(app.data.url + '/account/password/confirmation', { 
                       "email": mail , 
                       "password": pass1 , 
                       "confirmPassword": pass2 , 
                       "code": code 
                     }, function(e){
-                      location.href = '/';
+                        app.preloader.hide();
+                        location.href = '/';
+                    }, function(e){
+                        app.preloader.hide();
                     });
                     
                   });

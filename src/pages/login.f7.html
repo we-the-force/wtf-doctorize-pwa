@@ -27,7 +27,6 @@
           </li>
           <li class="item-content item-input">
             <div class="item-inner">
-              <!-- <div class="item-title item-label">Password</div> -->
               <div class="item-input-wrap">
                 <div class="row no-gap">
                   <div class="col-10">
@@ -35,7 +34,7 @@
 
                   </div>
                   <div class="col-90">
-                    <input type="password" name="password" id="password" placeholder="contraseña">
+                    <input type="password" name="password" id="password" placeholder="contraseña" required validate>
 
                   </div>
                 </div>
@@ -46,7 +45,8 @@
           <li>
             <div class="row">
               <div class="col-60">
-                <a href="/account/password/reset" data-view=".view-main" class="item-link list-button login-recovery-button">Olvidé mi contraseña</a>
+                <a href="/account/password/reset" data-view=".view-main"
+                  class="item-link list-button login-recovery-button">Olvidé mi contraseña</a>
               </div>
             </div>
           </li>
@@ -56,7 +56,6 @@
       <div class="list">
         <ul>
           <li>
-
             <div class="row">
               <div class="col-50">
                 <a href="/register-s1/" data-view=".view-main"
@@ -69,36 +68,93 @@
                 </a>
               </div>
             </div>
-
-
-
           </li>
-        </ul>
-        <!-- <div class="block-footer">Some text about login information.<br>Click "Sign In" to close Login Screen</div> -->
-      </div>
-      <div class="list loggedin">
-        <ul>
-          <li>
-            <div class="row">
-              <div class="col">
-                <a href="/offices-show" data-view=".view-main"
-                class="item-link list-button login-register-button">Consultorios</a>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="row">
-              <div class="col">
-                <a href="/assistants-show" data-view=".view-main"
-                class="item-link list-button login-register-button">Asistentes</a>
-              </div>
-            </div>
-          </li>
+
         </ul>
       </div>
+
     </div>
   </div>
 </template>
 <script>
-    export default {}
+  import $$ from 'dom7';
+  export default {
+    on: {
+      pageInit: function (e, page) {
+        var self = this;
+        var app = self.$app;
+        var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        var email_login = '', password_login = ''             ;
+        var errorPopup = app.popup.create({
+          content: '<div class="popup popup-swipe-to-close">' +
+            '<div class="block text-align-center">' +
+            '<p>Tus datos de acceso son incorrectos. <br/><br/>Intenta nuevamente.</p>' +
+            '<div class="list"> <ul> <li><a class="item-link list-button popup-close" href="#">Cerrar</a></li> </ul> </div>' +
+            '</div>' +
+            '</div>'
+        });
+        
+        disableButton();
+
+        $$(document).on('input:notempty', '#username' , function(e){
+            if(password_login != ''){
+              email_login = $$('#username').val();
+              enableButton();
+            }else{
+              email_login = $$('#username').val();
+            }
+        });
+
+        $$(document).on('input:notempty', '#password' , function(e){
+            if(email_login != ''){
+              password_login = $$('#password').val();
+              enableButton();
+            }else{
+              password_login = $$('#password').val();
+            }
+        });
+
+        $$(document).on('input:empty', '#username', function(e){
+            disableButton();
+        });
+
+        $$(document).on('input:empty', '#password', function(e){
+            disableButton();
+        });
+
+        function enableButton(){
+          if (regex.test(email_login)) {
+                $$('#login .login-button').removeClass('grey');
+                $$('#login .login-button').off('click');
+                $$('#login .login-button').on('click', function(e) {
+                    e.preventDefault();
+                    app.preloader.show('blue');
+                    app.request.postJSON(app.data.url + '/account/login', { "email": email_login, "password": password_login }, 
+                    function(e) {
+                        app.preloader.hide();
+                        app.data.doctor.id = e.id;
+                        app.data.doctor.email = e.email;
+                        app.data.doctor.name = e.name;
+                        app.data.doctor.cellphone = e.cellphone;
+                        app.data.doctor.specialty = e.specialty;
+                        console.log(app.data.doctor);
+                        app.methods.redirectTo('home');
+                    }, 
+                    function(e) {
+                        app.preloader.hide();
+                        errorPopup.open();
+                    });
+                });
+            }else{
+              disableButton();
+            }
+        }
+
+        function disableButton(){
+          $$('#login .login-button').addClass('grey');
+          $$('#login .login-button').off('click');
+        }
+      }
+    }
+  }
 </script>

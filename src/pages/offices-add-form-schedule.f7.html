@@ -164,8 +164,9 @@
                                             app.data.consultorio.days.push(days[i].value);
                                         }
                                     }
-                                    console.log(app.data.consultorio)
-                                        app.request.postJSON('http://api.mydoctorize.com/doctorOffice/save', { 
+                                    console.log(app.data.consultorio);
+                                    app.preloader.show('blue');
+                                        app.request.postJSON(app.data.url + '/doctorOffice/save', { 
                                             "email": app.data.consultorio.email,
                                             "name": app.data.consultorio.nombre,
                                             "phone": app.data.consultorio.phone,
@@ -181,8 +182,10 @@
                                             "lunchStartTime": app.data.consultorio.lunchStartTime,
                                             "lunchCloseTime": app.data.consultorio.lunchCloseTime
                                         }, function(e){
-                                            console.log(e);
+                                            app.preloader.hide();
                                             app.methods.redirectTo('offices-show');                                       
+                                        }, function(e){
+                                            app.preloader.hide();                                       
                                         });
                                 });
                             });

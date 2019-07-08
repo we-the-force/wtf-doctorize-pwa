@@ -93,7 +93,8 @@
                     var self = this;
                     var app = self.$app;
                     var items; 
-                    app.request.get('http://api.mydoctorize.com/doctorOffice/getListByUserId?userId=' + app.data.doctor.id,//id=99 
+                    app.preloader.show('blue');
+                    app.request.get(app.data.url + '/doctorOffice/getListByUserId?userId=' + app.data.doctor.id,//id=99 
                     function(e){
                         var x = JSON.parse(e);
                         for(var i = 0; i < x.length; i++){
@@ -110,7 +111,11 @@
                             '<i class="icon icon-radio"></i>' +
                             '</label>' +
                             '</li> ').appendTo("#consultorios");
-                        }                   
+                        }         
+                        app.preloader.hide();          
+                    }, 
+                    function(e) {
+                        app.preloader.hide();
                     });
 
                     $$('#asistentes-invitar-03 .login-button').addClass('grey');
@@ -131,17 +136,6 @@
                             app.methods.redirectTo('asistentes-invitar-04'); 
                         });
                     });
-
-                    /* $$('#asistentes-invitar-03 .login-button').on('click', function(e){
-                        items = $$('[name="demo-radio"]');
-                        app.data.assistant.consultorio = '';
-                        for(var i = 0; i < items.length; i++){
-                            if(items[i].checked == true){
-                                app.data.assistant.consultorio = items[i].value;
-                                break;
-                            }
-                        }
-                    }); */
                 }
             }
         }

@@ -41,10 +41,14 @@
       margin-block-end: 0px
       text-align: center
     .asistente-img
-      //box-shadow: 0px 1.84211px 13.8158px rgba(16, 43, 200, 0.49);
       display: block
       margin-top: 35%
       margin-bottom: 35%
+      margin-left: auto
+      margin-right: auto
+    .done-img
+      display: block
+      margin-top: 80px
       margin-left: auto
       margin-right: auto
 a.item-link
@@ -75,6 +79,8 @@ a.item-link
     color: #2F80ED
   input:-internal-autofill-selected
     background-color: transparent !important
+  input[type="datetime-local"]
+    max-width: 60vw
 .item-input:not(.item-input-outline) .item-input-wrap:after, .input:not(.input-outline):after
   display: none
 

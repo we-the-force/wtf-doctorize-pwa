@@ -42,7 +42,7 @@ var app = new Framework7({
                 permisos: [],
             },
             doctor: {
-                id: '99',
+                id: '',
                 email: '',
                 name: '',
                 cellphone: '',
@@ -63,9 +63,8 @@ var app = new Framework7({
                 lunchStartTime: '',
                 lunchCloseTime: '',
                 days: [],
-            }
-
-
+            },
+            url: 'http://api.mydoctorize.com'
         };
     },
     // App root methods
@@ -105,7 +104,7 @@ var app = new Framework7({
 });
 
 
-//login
+/* //login
 var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 var email_login, password_login;
 var dynamicPopup = app.popup.create({
@@ -143,7 +142,7 @@ var errorPopup = app.popup.create({
             console.log('Popup opened');
         },
     }
-});
+}); */
 
 app.init(function() {
     console.log('init');
@@ -157,7 +156,7 @@ app.init(function() {
     });
 });
 
-
+/* 
 $$('#login .login-button').addClass('grey');
 $$('#login .login-button').off('click');
 
@@ -169,10 +168,14 @@ $$(document).on('input:notempty', '#username', function(e) {
         $$('#login .login-button').on('click', function(e) {
             e.preventDefault();
             password_login = $$('[name="password"]').val();
-            app.request.postJSON('http://api.mydoctorize.com/account/login', { "email": email_login, "password": password_login }, function(e) {
-                console.log(e);
-                dynamicPopup.open();
-                $$(".loggedin").removeClass('hide');
+            app.request.postJSON(app.data.url + '/account/login', { "email": email_login, "password": password_login }, function(e) {
+                app.data.doctor.id = e.id;
+                app.data.doctor.email = e.email;
+                app.data.doctor.name = e.name;
+                app.data.doctor.cellphone = e.cellphone;
+                app.data.doctor.specialty = e.specialty;
+                console.log(app.data.doctor);
+                app.methods.redirectTo('home');
             }, function(e) {
                 errorPopup.open();
             });
@@ -181,7 +184,7 @@ $$(document).on('input:notempty', '#username', function(e) {
 });
 
 
-
+ */
 
 //recuperar contrase
 $$(document).on('page:init', '.page[data-name="recovery"]', function(e) {
@@ -199,7 +202,7 @@ $$(document).on('page:init', '.page[data-name="recovery"]', function(e) {
             $$('#recovery .login-button').removeClass('grey');
             $$('#recovery .login-button').off('click');
             $$('#recovery .login-button').on('click', function() {
-                app.request.postJSON('http://api.mydoctorize.com/account/password/reset', { "email": email_recovery }, function(e) {
+                app.request.postJSON(app.data.url + '/account/password/reset', { "email": email_recovery }, function(e) {
                     console.log(e);
                 });
             });

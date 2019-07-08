@@ -388,22 +388,26 @@ background: #ccc;
                 $$('#register-step3 .create-account').on('click', function(e) {
                     if(app.data.assistant.flag){
                         c.result('base64').then(function(blob) {
-                            app.request.postJSON('http://api.mydoctorize.com//account/confirmationAssistant', {
+                            app.preloader.show('blue');
+                            app.request.postJSON(app.data.url + '/account/confirmationAssistant', {
                                 "email": app.data.assistant.email,
                                 "code": app.data.assistant.code,
                                 "name": app.data.assistant.name,
                                 "password": app.data.assistant.password,
                                 "imageData": blob
                             }, function(e) {
-                                console.log(e);
+                                app.preloader.hide();
                                 app.methods.redirectTo('root');
+                            }, function(e) {
+                                app.preloader.hide();
                             });
                         });
                     }else{
                         specialityID = specialties.values.indexOf(picker.value[0]);
                         specialityID++;
                         c.result('base64').then(function(blob) {
-                            app.request.postJSON('http://api.mydoctorize.com/user/save', {
+                            app.preloader.show('blue');
+                            app.request.postJSON(app.data.url + '/user/save', {
                                 "password": app.data.register.password,
                                 "name": app.data.register.username,
                                 "email": app.data.register.email,
@@ -413,8 +417,10 @@ background: #ccc;
                                     "id": specialityID
                                 }
                             }, function(e) {
-                                console.log(e);
+                                app.preloader.hide();
                                 app.methods.redirectTo('register-s4');
+                            }, function(e) {
+                                app.preloader.hide();
                             });
                         });
                     }

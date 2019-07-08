@@ -108,14 +108,16 @@
 
 
                 function makeRequest() {
-                    app.request.postJSON('http://api.mydoctorize.com/account/confirmation', {
+                    app.preloader.show('blue');
+                    app.request.postJSON(app.data.url + '/account/confirmation', {
                         "email": email,
                         "code": code
                     }, function(e) {
                         console.log(e);
-                        // app.dialog.alert('Usuario Confirmado');
+                        app.preloader.hide();
                         location.href = '/';
                     }, function(e) {
+                        app.preloader.hide();
                         app.dialog.alert(e);
                     });
                 }

@@ -124,14 +124,18 @@
                     console.log(app.data.doctor.id);
                     console.log(app.data.assistant.consultorio);
                     console.log(app.data.assistant.permisos);
-                    app.request.postJSON('http://api.mydoctorize.com/user/inviteAssistant', { 
+                    app.preloader.show('blue');
+                    app.request.postJSON(app.data.url + '/user/inviteAssistant', { 
                         "email": app.data.assistant.email,
                         "doctorId": app.data.doctor.id,
                         "doctorOfficeId": app.data.assistant.consultorio,
                         "permissions": app.data.assistant.permisos
                     }, function(e){
-                        console.log(e);
+                        app.preloader.hide();
                         app.methods.redirectTo('asistentes-confirmar');                                       
+                    }, 
+                    function(e) {
+                        app.preloader.hide();
                     });
                 });
             }

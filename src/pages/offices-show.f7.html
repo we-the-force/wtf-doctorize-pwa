@@ -46,7 +46,7 @@
             <div>
                 <div class="list">
                     <ul id="consultorios">
-                        <li>    
+                        <!-- <li>    
                             <div class="row">
                                 <div class="card card-outline elevation-3">
                                     <div class="rectangle"></div>
@@ -55,30 +55,15 @@
                                         <h4 class="purple-blue">Test Card</h4>
                                         <h3 class="blue">This is just a test</h3>
                                         <h4 class="light-blue">Ajoy</h4>
-                                    </div>
-                                    <a href="#" id="edith">
-                                        <i class="material-icons more">more_vert</i>
-                                    </a>
+                                    </div> 
+                                    <i class="material-icons more">more_vert
+                                        <a class="link dynamic-popover" href="#"></a>
+                                    </i>
                                 </div>
                             </div>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
-                <!-- <div class="list">
-                    <ul>
-                        <li>
-                            <div class="row">
-                                <div class="col-50"></div>
-                                <div class="col-50">
-                                <a href="#" class="item-link list-button login-button asistente">
-                                    <p>Guardar </p>
-                                    <i class="material-icons">chevron_right</i>
-                                </a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div> -->
             </div>
         </div>
     </div>
@@ -90,27 +75,82 @@
             pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
-                console.log(app.data.doctor.id);
                 app.preloader.show('blue');
                 app.request.get(app.data.url + '/doctorOffice/getListByUserId?userId=' + app.data.doctor.id, //id=99
-                    function(e) {
-                        var x = JSON.parse(e);
-                        for (var i = 0; i < x.length; i++) {
-                            $$('<li>' +
+                function(e) {
+                    var x = JSON.parse(e);
+                    for (var i = 0; i < x.length; i++) {
+                        $$('#consultorios').append('<li>' +
                                 '<div class="row">' +
-                                '<div class="card card-outline" style="width: 100%">' +
-                                '<div class="card-header">' + x[i].hospital + '</div>' +
-                                '<div class="card-content card-content-padding">' + x[i].name + '</div>' +
-                                '<div class="card-footer">' + x[i].startTime + ' - ' + x[i].closeTime + '</div>' +
+                                    '<div class="card card-outline elevation-3">' +
+                                        '<div class="rectangle"></div>' +
+                                        '<i class="material-icons icon">local_hospital</i>' +
+                                        '<div class="card-content card-content-padding">' + 
+                                            '<h4 class="purple-blue">' + x[i].hospital + '</h4>' +
+                                            '<h3 class="blue">' + x[i].name + '</h3>' +
+                                            '<h4 class="light-blue">' + x[i].startTime + ' - ' + x[i].closeTime + '</h4>' +
+                                        '</div>' +
+                                            '<i class="material-icons more">more_vert' + 
+                                                '<a class="link dynamic-popover" href="#"></a>' +
+                                            '</i>' +
+                                    '</div>' +
                                 '</div>' +
-                                '</div>' +
-                                '</li>').appendTo("#consultorios");
-                        }
-                        app.preloader.hide();
-                    }, function(e){
-                        app.preloader.hide();                                       
-                    });
+                            '</li>');
+                    }
+                    app.preloader.hide();
+                }, function(e){
+                    app.preloader.hide();                                       
+                });
 
+                var dynamicPopover = app.popover.create({
+                    targetEl: 'a.dynamic-popover',
+                    content: '<div class="popover elevation-3">'+
+                                '<div class="popover-inner">'+
+                                    '<div class="block">'+
+                                        '<div class="list">'+
+                                            '<ul id="consultorios">'+
+                                                '<li>'+    
+                                                    '<div class="row">'+
+                                                        '<h4 class="blue">Desactivar</h4>'+
+                                                        '<label class="toggle toggle-init color-blue-toggle">' +
+                                                            '<input type="checkbox" name="chbx" value="1" style="display:none" checked>' +
+                                                            '<span class="toggle-icon"></span>' +
+                                                        '</label>' + 
+                                                    '</div>'+
+                                                '<li>'+  
+                                                '<li>'+    
+                                                    '<div class="row">'+
+                                                        '<h4 class="blue">Editar</h4>'+
+                                                        '<a href="#" data-view=".view-main" class="item-link list-button">' +
+                                                            '<i class="icon material-icons blue">chevron_right</i>' +
+                                                        '</a>' +
+                                                    '</div>'+
+                                                '<li>'+  
+                                                '<li>'+    
+                                                    '<div class="row">'+
+                                                        '<a href="#" data-view=".view-main" class="item-link">' +
+                                                            '<h4 class="blue">Eliminar</h4>'+
+                                                        '</a>' +
+                                                    '</div>'+
+                                                '<li>'+ 
+                                            '</ul>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>',
+                    on: {
+                        open: function (popover) {
+                            console.log('Popover open');
+                        },
+                        opened: function (popover) {
+                            console.log('Popover opened');
+                        },
+                    }
+                });
+
+                $$('.more').on('click', function () {
+                    dynamicPopover.open();
+                });
             }
         }
     }

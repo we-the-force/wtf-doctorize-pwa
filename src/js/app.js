@@ -17,7 +17,7 @@ import register from './register.js';
 var app = new Framework7({
     root: '#app', // App root element
 
-    name: 'doctorize-pwa', // App name
+    name: 'Doctorize', // App name
     theme: 'auto', // Automatic theme detection
     // App root data
     data: function() {
@@ -42,7 +42,7 @@ var app = new Framework7({
                 permisos: [],
             },
             doctor: {
-                id: '',
+                id: 99,
                 email: '',
                 name: '',
                 cellphone: '',
@@ -156,7 +156,7 @@ app.init(function() {
     });
 });
 
-/* 
+/*
 $$('#login .login-button').addClass('grey');
 $$('#login .login-button').off('click');
 

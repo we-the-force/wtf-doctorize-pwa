@@ -37,6 +37,16 @@
                         <ul>
                             <li class="item-content item-input">
                                 <div class="item-inner">
+                                    <div class="item-label blue">Consultorio</div>
+                                    <div class="item-input-wrap asistentes-input">
+                                        <select name="consultorio" id="consultorio" placeholder="Please choose...">
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="item-content item-input">
+                                <div class="item-inner">
                                     <div class="item-label blue">Fecha y Hora</div>
                                     <div class="item-input-wrap asistentes-input">
                                     <input type="datetime-local" name="datetime" id="datetime" placeholder="Fecha y Hora" required validate>
@@ -103,19 +113,36 @@
                     var app = self.$app;
                     var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
                     var regex2 = /^([0-9]){10}$/;
+                    var appointment = '';
                     var datetime = '';
                     var name = '';
                     var email = '';
                     var phone = '';
     
+                    app.preloader.show('blue');
+                    app.request.get(app.data.url + '/doctorOffice/getListByUserId?userId=' + app.data.doctor.id,//id=99 
+                    function(e){
+                        var x = JSON.parse(e);
+                        for(var i = 0; i < x.length; i++){
+                            $$('<option value="'+ x[i].id +'">'+ x[i].name +'</option>').appendTo("#consultorio");
+                        }         
+                        app.preloader.hide();          
+                    }, 
+                    function(e) {
+                        app.preloader.hide();
+                    });
+
+
                     disableButton();
 
                     $$(document).on('input:notempty', '#datetime' , function(e){
                         if(name != '' && email != '' && phone != ''){
                             datetime = new Date($$('#datetime').val());
+                            /* appointment = $$('#datetime').val(); */
                             enableButton();
                         }else{
                             datetime = new Date($$('#datetime').val());
+                            /* appointment = $$('#datetime').val(); */
                         }
                     });
 
@@ -164,8 +191,7 @@
                         var todayDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
                         var date = datetime.getFullYear()+'-'+(datetime.getMonth()+1)+'-'+datetime.getDate();
                         var todayTime = (today.getHours()+1) + ":" + today.getMinutes();
-                        var time = datetime.getHours() + ":" + datetime.getMinutes();
-                        var dateTime = date+' '+time;
+                        var time = datetime.getHours() + ":" + datetime.getMinutes() + ":" + datetime.getSeconds();
                         if(date > todayDate || (date == todayDate && time >= todayTime)){
                             if(regex.test(email) && regex2.test(phone))
                             {
@@ -175,7 +201,30 @@
                                 app.data.paciente.nombre = name;
                                 app.data.paciente.email = email;
                                 app.data.paciente.phone = phone;
-                                app.methods.redirectTo('cita-agendada'); 
+                                var dateTime = $$('#datetime').val();
+                                var office = $$('#consultorio').val();
+                                console.log(office);
+                                console.log(app.data.paciente.email);
+                                console.log(app.data.doctor.id);
+                                console.log(app.data.paciente.nombre);
+                                console.log(app.data.paciente.phone);
+                                console.log(dateTime);
+                                
+                                app.preloader.show('blue');
+                                app.request.postJSON(app.data.url + '/medicalAppointment/save', { 
+                                    "email": app.data.paciente.email,
+                                    "doctorId": app.data.doctor.id,
+                                    "doctorOfficeId": office,
+                                    "name": app.data.paciente.nombre,
+                                    "phone": app.data.paciente.phone,
+                                    "date": dateTime,
+                                },function(e){
+                                    app.preloader.hide();
+                                    app.methods.redirectTo('cita-agendada');                                     
+                                }, 
+                                function(e) {
+                                    app.preloader.hide();
+                                });
                             });
                             }else{
                             disableButton();

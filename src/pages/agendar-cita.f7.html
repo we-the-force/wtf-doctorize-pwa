@@ -201,7 +201,7 @@
                                 app.data.paciente.nombre = name;
                                 app.data.paciente.email = email;
                                 app.data.paciente.phone = phone;
-                                var dateTime = $$('#datetime').val();
+                                var dateTime = new Date($$('#datetime').val());
                                 var office = $$('#consultorio').val();
                                 console.log(office);
                                 console.log(app.data.paciente.email);

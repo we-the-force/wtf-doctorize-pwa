@@ -42,7 +42,7 @@ var app = new Framework7({
                 permisos: [],
             },
             doctor: {
-                id: 99,
+                id: '',
                 email: '',
                 name: '',
                 cellphone: '',
@@ -63,6 +63,11 @@ var app = new Framework7({
                 lunchStartTime: '',
                 lunchCloseTime: '',
                 days: [],
+            },
+            paciente: {
+                nombre: '',
+                email: '',
+                phone: '',
             },
             url: 'http://api.mydoctorize.com'
         };

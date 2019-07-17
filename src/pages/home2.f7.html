@@ -36,7 +36,7 @@
                   </div>
                 </div>
               </li>
-              <li>
+              <!-- <li>
                 <div class="row">
                   <div class="col">
                     <a href="/offices-show" data-view=".view-main"
@@ -67,7 +67,7 @@
                     class="item-link list-button login-register-button">Nuevo Paciente</a>
                     </div>
                 </div>
-              </li>
+              </li> -->
               <li>
                   <div class="row">
                       <div class="col">
@@ -137,9 +137,45 @@
                               '<img src="/static/images/cancel_24px.svg" alt="" class="close">'+
                           '</div>'+
                           '<div class="sheet-modal-inner">'+
-                            '<div class="block">'+
-                              '<p>Sheet created dynamically.</p>'+
-                              '<p><a href="#" class="link sheet-close">Close me</a></p>'+
+                            '<div class="list">'+
+                              '<ul>'+
+                                '<li>'+
+                                  '<div class="row">'+
+                                    '<div class="col">'+
+                                      '<a href="/offices-show" data-view=".view-main" class="item-link list-button login-register-button">'+
+                                      '<i class="material-icons">local_hospital</i>'+
+                                      'Consultorios</a>'+     
+                                    '</div>'+
+                                  '</div>'+
+                                '</li>'+
+                                '<li>'+
+                                  '<div class="row">'+
+                                    '<div class="col">'+
+                                      '<a href="/assistants-show" data-view=".view-main" class="item-link list-button login-register-button">'+
+                                      '<i class="material-icons">headset_mic</i>'+
+                                      'Asistentes</a>'+     
+                                    '</div>'+
+                                  '</div>'+
+                                '</li>'+
+                                '<li>'+
+                                  '<div class="row">'+
+                                    '<div class="col">'+
+                                      '<a href="/agendar-cita" data-view=".view-main" class="item-link list-button login-register-button">'+
+                                      '<i class="material-icons">event</i>'+
+                                      'Nueva cita</a>'+     
+                                    '</div>'+
+                                  '</div>'+
+                                '</li>'+
+                                '<li>'+
+                                  '<div class="row">'+
+                                    '<div class="col">'+
+                                    '<a href="/nuevo-paciente" data-view=".view-main" class="item-link list-button login-register-button">'+
+                                      '<i class="material-icons">person_add</i>'+
+                                      'Nuevo Paciente</a>'+                                    
+                                    '</div>'+
+                                  '</div>'+
+                                '</li>'+ 
+                              '</ul>'+
                             '</div>'+
                           '</div>'+
                         '</div>',
@@ -149,6 +185,9 @@
                 },
                 opened: function (sheet) {
                   $$('.close').on('click', function(){
+                    dynamicSheet.close();
+                  });
+                  $$('a').on('click', function(){
                     dynamicSheet.close();
                   });
                 },

@@ -142,56 +142,86 @@
                 var self = this;
                 var app = self.$app;
                 var days = $$('[name="chbx"]');
-                
-                $$('#offices-add-form-schedule .login-button').addClass('grey');
-                $$('#offices-add-form-schedule .login-button').off('click');
+                var startTime = '', closeTime ='', lunchStartTime = '', lunchCloseTime = '';
 
-                $$(document).on('input:notempty', '#startTime', function(e){
-                    $$(document).on('input:notempty', '#closeTime', function(e){
-                        $$(document).on('input:notempty', '#lunchStartTime', function(e){
-                            $$(document).on('input:notempty', '#lunchCloseTime', function(e){
-                                $$('#offices-add-form-schedule .login-button').removeClass('grey');
-                                $$('#offices-add-form-schedule .login-button').off('click');
-                                $$('#offices-add-form-schedule .login-button').on('click', function(e){
-                                    app.data.consultorio.startTime = $$('[name="startTime"]').val();
-                                    app.data.consultorio.closeTime = $$('[name="closeTime"]').val();
-                                    app.data.consultorio.lunchStartTime = $$('[name="lunchStartTime"]').val();
-                                    app.data.consultorio.lunchCloseTime = $$('[name="lunchCloseTime"]').val();
-                                    days = $$('[name="chbx"]');
-                                    app.data.consultorio.days = [];
-                                    for(var i = 0; i < days.length; i++){
-                                        if(days[i].checked == true){
-                                            app.data.consultorio.days.push(days[i].value);
-                                        }
-                                    }
-                                    console.log(app.data.consultorio);
-                                    app.preloader.show('blue');
-                                        app.request.postJSON(app.data.url + '/doctorOffice/save', { 
-                                            "email": app.data.consultorio.email,
-                                            "name": app.data.consultorio.nombre,
-                                            "phone": app.data.consultorio.phone,
-                                            "hospital": app.data.consultorio.hospital,
-                                            "number": app.data.consultorio.number,
-                                            "address": app.data.consultorio.address,
-                                            "userId": app.data.doctor.id,//mandar pedir el numero app.data.doctor.id,
-                                            "lat": 12.12,
-                                            "lng": 213.234,
-                                            "startTime": app.data.consultorio.startTime,
-                                            "closeTime": app.data.consultorio.closeTime,
-                                            "days": app.data.consultorio.days,
-                                            "lunchStartTime": app.data.consultorio.lunchStartTime,
-                                            "lunchCloseTime": app.data.consultorio.lunchCloseTime
-                                        }, function(e){
-                                            app.preloader.hide();
-                                            app.methods.redirectTo('offices-show');                                       
-                                        }, function(e){
-                                            app.preloader.hide();                                       
-                                        });
-                                });
-                            });
-                        });
-                    });
+                disableButton();
+
+                $$(document).on('input:notempty', '#startTime' , function(e){
+                    if(lunchCloseTime != '' && closeTime !='' && lunchStartTime != ''){
+                        startTime = $$('#startTime').val();
+                        enableButton();
+                    }else{
+                        startTime = $$('#startTime').val();
+                    }
                 });
+
+                $$(document).on('input:notempty', '#closeTime' , function(e){
+                    if(lunchCloseTime != '' && startTime !='' && lunchStartTime != ''){
+                        closeTime = $$('#closeTime').val();
+                        enableButton();
+                    }else{
+                        closeTime = $$('#closeTime').val();
+                    }
+                });
+
+                $$(document).on('input:notempty', '#lunchCloseTime' , function(e){
+                    if(startTime != '' && closeTime !='' && lunchStartTime != ''){
+                        lunchCloseTime = $$('#lunchCloseTime').val();
+                        enableButton();
+                    }else{
+                        lunchCloseTime = $$('#lunchCloseTime').val();
+                    }
+                });
+
+                $$(document).on('input:notempty', '#lunchStartTime' , function(e){
+                    if(lunchCloseTime != '' && closeTime !='' && startTime != ''){
+                        lunchStartTime = $$('#lunchStartTime').val();
+                        enableButton();
+                    }else{
+                        lunchStartTime = $$('#lunchStartTime').val();
+                    }
+                });
+
+                function enableButton(){
+                    $$('#offices-add-form-schedule .login-button').removeClass('grey');
+                    $$('#offices-add-form-schedule .login-button').off('click');
+                    $$('#offices-add-form-schedule .login-button').on('click', function(e){
+                        app.data.consultorio.startTime = $$('[name="startTime"]').val();
+                        app.data.consultorio.closeTime = $$('[name="closeTime"]').val();
+                        app.data.consultorio.lunchStartTime = $$('[name="lunchStartTime"]').val();
+                        app.data.consultorio.lunchCloseTime = $$('[name="lunchCloseTime"]').val();
+                        days = $$('[name="chbx"]');
+                        app.data.consultorio.days = [];
+                        for(var i = 0; i < days.length; i++){
+                            if(days[i].checked == true){
+                                app.data.consultorio.days.push(days[i].value);
+                            }
+                        }
+                        console.log(app.data.consultorio);
+                        app.preloader.show('blue');
+                            app.request.postJSON(app.data.url + '/doctorOffice/save', { 
+                                "email": app.data.consultorio.email,
+                                "name": app.data.consultorio.nombre,
+                                "phone": app.data.consultorio.phone,
+                                "hospital": app.data.consultorio.hospital,
+                                "number": app.data.consultorio.number,
+                                "address": app.data.consultorio.address,
+                                "userId": app.data.doctor.id,//mandar pedir el numero app.data.doctor.id,
+                                "lat": 12.12,
+                                "lng": 213.234,
+                                "startTime": app.data.consultorio.startTime,
+                                "closeTime": app.data.consultorio.closeTime,
+                                "days": app.data.consultorio.days,
+                                "lunchStartTime": app.data.consultorio.lunchStartTime,
+                                "lunchCloseTime": app.data.consultorio.lunchCloseTime
+                            }, function(e){
+                                app.preloader.hide();
+                                app.methods.redirectTo('offices-show');                                       
+                            }, function(e){
+                                app.preloader.hide();                                       
+                            });
+                    });
+                };
 
                 $$('.days-container [id="01"]').on('click', function(e){changeColor(0);});
                 $$('.days-container [id="02"]').on('click', function(e){changeColor(1);});
@@ -210,7 +240,14 @@
                     }
                 }
 
+                $$(document).on('input:empty',function(e){
+                    disableButton();
+                });
 
+                function disableButton(){
+                    $$('#offices-add-form-schedule .login-button').addClass('grey');
+                    $$('#offices-add-form-schedule .login-button').off('click');
+                }
             }
         }
     }

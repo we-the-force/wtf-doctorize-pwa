@@ -101,10 +101,7 @@
                         }
                         app.preloader.hide();
                         $$('.dynamic-popover').on('click', function(e) {
-
-
                             var currentOffice = $$(this).data('officeId');
-
 
                             var dynamicPopover = app.popover.create({
                                 targetEl: this,
@@ -124,9 +121,10 @@
                                     '<li>' +
                                     '<li>' +
                                     '<div class="row">' +
-                                    '<h4 class="blue">Editar</h4>' +
-                                    '<a href="#" data-view=".view-main" class="item-link list-button">' +
+                                    '<a href="#" data-view=".view-main" class="item-link list-button edit-office">' +
+                                    '<h4 class="blue">Editar'+
                                     '<i class="icon material-icons blue">chevron_right</i>' +
+                                    '</h4>' +
                                     '</a>' +
                                     '</div>' +
                                     '<li>' +
@@ -143,11 +141,7 @@
                                     '</div>' +
                                     '</div>',
                                 on: {
-                                    open: function(popover) {
-                                        console.log('Popover open');
-
-
-                                    },
+                                    open: function(popover) {},
                                     opened: function(popover, officeId = currentOffice) {
                                         $$('.delete-office').on('click', function() {
 
@@ -165,7 +159,12 @@
                                             });
 
                                         });
-                                        console.log('Popover opened');
+                                        $$('.edit-office').on('click', function() {
+                                            console.log(officeId);
+                                            dynamicPopover.close();
+                                            location.href = "#!/offices-add-form-basic?id=" + officeId;
+                                            location.reload();
+                                        });
                                     },
                                 }
                             });
@@ -175,9 +174,6 @@
                     function(e) {
                         app.preloader.hide();
                     });
-
-
-
             }
         }
     }

@@ -52,6 +52,7 @@ var app = new Framework7({
                 },
             },
             consultorio: {
+                id: '',
                 nombre: '',
                 email: '',
                 phone: '',
@@ -63,6 +64,7 @@ var app = new Framework7({
                 lunchStartTime: '',
                 lunchCloseTime: '',
                 days: [],
+                edit: false,
             },
             url: 'http://api.mydoctorize.com'
         };

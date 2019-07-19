@@ -52,6 +52,7 @@ var app = new Framework7({
                 },
             },
             consultorio: {
+                id: '',
                 nombre: '',
                 email: '',
                 phone: '',
@@ -63,6 +64,12 @@ var app = new Framework7({
                 lunchStartTime: '',
                 lunchCloseTime: '',
                 days: [],
+                edit: false,
+            },
+            paciente: {
+                nombre: '',
+                email: '',
+                phone: '',
             },
             paciente: {
                 nombre: '',

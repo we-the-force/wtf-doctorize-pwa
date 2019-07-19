@@ -396,6 +396,7 @@ background: #ccc;
                                 "password": app.data.assistant.password,
                                 "imageData": blob
                             }, function(e) {
+                                app.data.assistant.flag = false;
                                 app.preloader.hide();
                                 app.methods.redirectTo('root');
                             }, function(e) {

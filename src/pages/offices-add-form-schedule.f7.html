@@ -146,6 +146,23 @@
 
                 disableButton();
 
+                if(app.data.consultorio.edit){
+                    $$('#startTime').val(app.data.consultorio.startTime);
+                    $$('#closeTime').val(app.data.consultorio.closeTime);
+                    $$('#lunchCloseTime').val(app.data.consultorio.lunchCloseTime);
+                    $$('#lunchStartTime').val(app.data.consultorio.lunchStartTime);
+                    startTime = app.data.consultorio.startTime;
+                    closeTime = app.data.consultorio.closeTime;
+                    lunchCloseTime = app.data.consultorio.lunchCloseTime;
+                    lunchStartTime = app.data.consultorio.lunchStartTime;                  
+                    app.data.consultorio.days.forEach(Element => {
+                        var z = Element - 1;
+                        days[z].checked = true;
+                        $$('.days-container [id="0'+ Element +'"]').addClass('checked');
+                    });
+                    enableButton();
+                }
+
                 $$(document).on('input:notempty', '#startTime' , function(e){
                     if(lunchCloseTime != '' && closeTime !='' && lunchStartTime != ''){
                         startTime = $$('#startTime').val();
@@ -197,29 +214,53 @@
                                 app.data.consultorio.days.push(days[i].value);
                             }
                         }
-                        console.log(app.data.consultorio);
                         app.preloader.show('blue');
-                            app.request.postJSON(app.data.url + '/doctorOffice/save', { 
-                                "email": app.data.consultorio.email,
-                                "name": app.data.consultorio.nombre,
-                                "phone": app.data.consultorio.phone,
-                                "hospital": app.data.consultorio.hospital,
-                                "number": app.data.consultorio.number,
-                                "address": app.data.consultorio.address,
-                                "userId": app.data.doctor.id,//mandar pedir el numero app.data.doctor.id,
-                                "lat": 12.12,
-                                "lng": 213.234,
-                                "startTime": app.data.consultorio.startTime,
-                                "closeTime": app.data.consultorio.closeTime,
-                                "days": app.data.consultorio.days,
-                                "lunchStartTime": app.data.consultorio.lunchStartTime,
-                                "lunchCloseTime": app.data.consultorio.lunchCloseTime
-                            }, function(e){
-                                app.preloader.hide();
-                                app.methods.redirectTo('offices-show');                                       
-                            }, function(e){
-                                app.preloader.hide();                                       
-                            });
+                            if(app.data.consultorio.edit){
+                                app.request.postJSON(app.data.url + '/doctorOffice/save', { 
+                                    "id": app.data.consultorio.id,
+                                    "email": app.data.consultorio.email,
+                                    "name": app.data.consultorio.nombre,
+                                    "phone": app.data.consultorio.phone,
+                                    "hospital": app.data.consultorio.hospital,
+                                    "number": app.data.consultorio.number,
+                                    "address": app.data.consultorio.address,
+                                    "userId": app.data.doctor.id,//mandar pedir el numero app.data.doctor.id,
+                                    "lat": 12.12,
+                                    "lng": 213.234,
+                                    "startTime": app.data.consultorio.startTime,
+                                    "closeTime": app.data.consultorio.closeTime,
+                                    "days": app.data.consultorio.days,
+                                    "lunchStartTime": app.data.consultorio.lunchStartTime,
+                                    "lunchCloseTime": app.data.consultorio.lunchCloseTime
+                                }, function(e){
+                                    app.preloader.hide();
+                                    app.methods.redirectTo('offices-show');                                       
+                                }, function(e){
+                                    app.preloader.hide();                                       
+                                });
+                            }else{
+                                app.request.postJSON(app.data.url + '/doctorOffice/save', { 
+                                    "email": app.data.consultorio.email,
+                                    "name": app.data.consultorio.nombre,
+                                    "phone": app.data.consultorio.phone,
+                                    "hospital": app.data.consultorio.hospital,
+                                    "number": app.data.consultorio.number,
+                                    "address": app.data.consultorio.address,
+                                    "userId": app.data.doctor.id,//mandar pedir el numero app.data.doctor.id,
+                                    "lat": 12.12,
+                                    "lng": 213.234,
+                                    "startTime": app.data.consultorio.startTime,
+                                    "closeTime": app.data.consultorio.closeTime,
+                                    "days": app.data.consultorio.days,
+                                    "lunchStartTime": app.data.consultorio.lunchStartTime,
+                                    "lunchCloseTime": app.data.consultorio.lunchCloseTime
+                                }, function(e){
+                                    app.preloader.hide();
+                                    app.methods.redirectTo('offices-show');                                       
+                                }, function(e){
+                                    app.preloader.hide();                                       
+                                });
+                            }
                     });
                 };
 

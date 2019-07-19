@@ -69,7 +69,7 @@
                         <li>
                             <div class="row">
                                 <div class="col-50">
-                                    <a href="/offices-add-form-basic" data-view=".view-main" class="item-link list-button login-register-button ">Cancelar</a>
+                                    <a href="#" data-view=".view-main" class="item-link list-button login-register-button" id="cancel">Cancelar</a>
                                 </div>
                                 <div class="col-50">
                                 <a href="#" class="item-link list-button login-button asistente">
@@ -101,9 +101,9 @@
                     $$('#hospital').val(app.data.consultorio.hospital);
                     $$('#direction').val(app.data.consultorio.address);
                     $$('#consultorio').val(app.data.consultorio.number);
-                    hospital = app.data.consultorio.hospital
-                    direction = app.data.consultorio.address
-                    consultorio = app.data.consultorio.number
+                    hospital = app.data.consultorio.hospital;
+                    direction = app.data.consultorio.address;
+                    consultorio = app.data.consultorio.number;
                     enableButton();
                 }
 
@@ -142,11 +142,14 @@
                         $$('#offices-add-form-map .login-button').removeClass('grey');
                         $$('#offices-add-form-map .login-button').off('click');
                         $$('#offices-add-form-map .login-button').on('click', function(e){
-                            console.log(app.data.consultorio);
                             app.methods.redirectTo('offices-add-form-schedule');
                         });
                     }
                 }
+
+                $$('#offices-add-form-map #cancel').on('click', function(e){
+                    app.methods.redirectTo('offices-add-form-basic');
+                });
 
                 $$(document).on('input:empty',function(e){
                     disableButton();

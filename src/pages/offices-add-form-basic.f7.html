@@ -103,29 +103,10 @@
                 disableButton();
 
                 if(!app.methods.isEmpty(query)){
-                    app.request.get(app.data.url + '/doctorOffice?doctorOfficeId=' + id,
-                    function(e) {
-                        var x = JSON.parse(e);
-                        app.data.consultorio.edit = true;
-                        app.data.consultorio.nombre = x.name;
-                        app.data.consultorio.email = x.email;
-                        app.data.consultorio.phone = x.phone;
-                        app.data.consultorio.hospital = x.hospital;
-                        app.data.consultorio.address = x.address;
-                        app.data.consultorio.number = x.number;
-                        app.data.consultorio.startTime = x.startTime;
-                        app.data.consultorio.closeTime = x.closeTime;
-                        app.data.consultorio.lunchStartTime = x.lunchStartTime;
-                        app.data.consultorio.lunchCloseTime = x.lunchCloseTime;
-                        app.data.consultorio.days = x.days;
-                        $$('#nombre').val(x.name);
-                        $$('#email').val(x.email);
-                        $$('#phone').val(x.phone);
-                        nombre = x.name;
-                        email = x.email;
-                        phone = x.phone;
-                        enableButton();
-                    });
+                    app.data.consultorio.id = id;
+                    edit();
+                }else if(app.data.consultorio.edit){
+                    edit();
                 }
 
                 $$(document).on('input:empty',function(e){
@@ -158,6 +139,32 @@
                         phone = $$('#phone').val();
                     }
                 });
+
+                function edit(){
+                    app.request.get(app.data.url + '/doctorOffice?doctorOfficeId=' + app.data.consultorio.id,
+                    function(e) {
+                        var x = JSON.parse(e);
+                        app.data.consultorio.edit = true;
+                        app.data.consultorio.nombre = x.name;
+                        app.data.consultorio.email = x.email;
+                        app.data.consultorio.phone = x.phone;
+                        app.data.consultorio.hospital = x.hospital;
+                        app.data.consultorio.address = x.address;
+                        app.data.consultorio.number = x.number;
+                        app.data.consultorio.startTime = x.startTime;
+                        app.data.consultorio.closeTime = x.closeTime;
+                        app.data.consultorio.lunchStartTime = x.lunchStartTime;
+                        app.data.consultorio.lunchCloseTime = x.lunchCloseTime;
+                        app.data.consultorio.days = x.days;
+                        $$('#nombre').val(x.name);
+                        $$('#email').val(x.email);
+                        $$('#phone').val(x.phone);
+                        nombre = x.name;
+                        email = x.email;
+                        phone = x.phone;
+                        enableButton();
+                    });
+                }
 
                 function enableButton(){
                     if(regex.test(email) && regex2.test(phone))

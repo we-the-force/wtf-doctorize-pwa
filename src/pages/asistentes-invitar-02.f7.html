@@ -108,6 +108,7 @@
                             '</div>'+
                         '</div>'+
                     '</li>');
+                    app.preloader.show('blue');
                     app.request.get(app.data.url + '/user/' + app.data.assistant.id,
                     function(e) {
                         var x = JSON.parse(e);
@@ -115,14 +116,16 @@
                         app.data.assistant.flag = true;
                         app.data.assistant.name = x.name;
                         app.data.assistant.email = x.email;
-                        /* app.data.assistant.consultorio =  */
+                        app.data.assistant.consultorio = x.doctorOfficeName;
                         app.data.assistant.permisos = x.permissions;
                         $$('#email').val(x.email);
                         email = x.email;
+                        app.preloader.hide();
                         enableButton();
+                    }, 
+                    function(e) {
+                        app.preloader.hide();
                     });
-                    enableButton();
-
                 }
                 
                 function enableButton(){

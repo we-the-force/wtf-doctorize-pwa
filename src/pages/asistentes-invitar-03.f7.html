@@ -11,7 +11,7 @@
                         <div class="col-85"></div>
                     </div>             
                     <div class="list">
-                        <ul>
+                        <ul class="header">
                             <li>
                                 <div class="row">
                                     <div class="col-10"></div>
@@ -69,7 +69,7 @@
                     var app = self.$app;
                     var items; 
                     app.preloader.show('blue');
-                    app.request.get(app.data.url + '/doctorOffice/getListByUserId?userId=' + app.data.doctor.id,//id=99 
+                    app.request.get(app.data.url + '/doctorOffices/getListByUserId?userId=' + app.data.doctor.id,//id=99 
                     function(e){
                         var x = JSON.parse(e);
                         for(var i = 0; i < x.length; i++){
@@ -82,12 +82,29 @@
                             '<div class="item-subtitle">' + x[i].hospital + '</div>' +
                             '<div class="item-text">' + x[i].address + '</div>' +
                             '</div>' +
-                            '<input type="radio" name="demo-radio" value="' + x[i].id + '"/>' +
+                            '<input type="radio" name="demo-radio" data-Name="'+ x[i].name +'" value="' + x[i].id + '"/>' +
                             '<i class="icon icon-radio"></i>' +
                             '</label>' +
                             '</li> ').appendTo("#consultorios");
                         }         
-                        app.preloader.hide();          
+                        app.preloader.hide();   
+                        
+                        if(app.data.assistant.flag){
+                            $$('.header').children('li')[2].remove();
+                            items = $$('[name="demo-radio"]');
+                            var z = false;
+                            items.forEach(element => {                                
+                                if(app.data.assistant.consultorio == $$(element).data('Name')){
+                                    element.checked = true;
+                                    z = true;
+                                }                    
+                            });
+                                       
+                            if(z){
+                                enableButton();
+                            } 
+
+                        }       
                     }, 
                     function(e) {
                         app.preloader.hide();
@@ -97,6 +114,10 @@
                     $$('#asistentes-invitar-03 .login-button').off('click');
 
                     $$('#consultorios').on('change', function(e){
+                        enableButton();
+                    });
+
+                    function enableButton(){
                         $$('#asistentes-invitar-03 .login-button').removeClass('grey');
                         $$('#asistentes-invitar-03 .login-button').off('click');
                         $$('#asistentes-invitar-03 .login-button').on('click', function(e){
@@ -110,7 +131,7 @@
                             }
                             app.methods.redirectTo('asistentes-invitar-04'); 
                         });
-                    });
+                    }
                 }
             }
         }

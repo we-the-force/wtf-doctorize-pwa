@@ -80,8 +80,7 @@
                 var app = self.$app;
                 console.log(app.data.doctor.id);
                 app.preloader.show('blue');
-                app.request.get(app.data.url + '/user/getListByDoctorId?doctorId=' + app.data.doctor.id, //id=99
-                function(e) {
+                app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/assistants',                 function(e) {
                     var x = JSON.parse(e);
                     console.log(x);
                     
@@ -94,7 +93,7 @@
                                     '<img src="'+ app.data.url +'/' + x[i].photo + '"/50.png>'+
                                 '</div>'+
                                 '<div class="card-content card-content-padding">'+
-                                    '<h4 class="blue">'+ x[i].name +'</h4>'+
+                                    '<h4 class="blue">'+ x[i].doctorOfficeName +'</h4>'+
                                     '<h3 class="light-blue2">'+ x[i].name +'</h3>'+
                                 '</div>'+
                                 '<div class="link dynamic-popover" data-AssistantId="' + x[i].id + '">' +
@@ -149,18 +148,21 @@
                                 open: function(popover) {},
                                 opened: function(popover, AssisstantId = currentAssistant) {
                                     $$('.delete-assistant').on('click', function() {
-
-                                        // officeId es el id del consultorio a eliminar mediante el endpoint
                                         console.log(AssisstantId);
                                         dynamicPopover.close();
                                         app.dialog.confirm('¿Estás seguro que deseas eliminar el consultorio?', function() {
-                                            // poner el request al endpoint de eliminar
-                                            // agregar el preloader mientras se ejecuta el request
-                                            // quitar el preloader on succes or on error
-                                            // mostrar dialog success si se completa
-                                            // mostrar dialog error on error
-
-                                            app.dialog.alert('Se eliminó el consultorio.');
+                                            ///assistant/21/delete
+                                            app.preloader.show('blue');
+                                            app.request.get(app.data.url + '/assistant/' + app.data.assistant.id + '/delete',
+                                            function(e) {
+                                                app.preloader.hide();
+                                                app.dialog.alert('Se eliminó el consultorio.');
+                                                location.reload();
+                                            }, 
+                                            function(e) {
+                                                app.preloader.hide();
+                                                app.dialog.alert('Ha ocurrido un error elminando el consultorio');
+                                            });
                                         });
 
                                     });

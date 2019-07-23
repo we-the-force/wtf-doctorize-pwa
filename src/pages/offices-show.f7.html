@@ -76,7 +76,7 @@
                 var self = this;
                 var app = self.$app;
                 app.preloader.show('blue');
-                app.request.get(app.data.url + '/doctorOffice/getListByUserId?userId=' + app.data.doctor.id, //id=99
+                app.request.get(app.data.url + '/doctorOffices/getListByUserId?userId=' + app.data.doctor.id, //id=99
                     function(e) {
                         var x = JSON.parse(e);
                         for (var i = 0; i < x.length; i++) {
@@ -149,13 +149,18 @@
                                             console.log(officeId);
                                             dynamicPopover.close();
                                             app.dialog.confirm('¿Estás seguro que deseas eliminar el consultorio?', function() {
-                                                // poner el request al endpoint de eliminar
-                                                // agregar el preloader mientras se ejecuta el request
-                                                // quitar el preloader on succes or on error
-                                                // mostrar dialog success si se completa
-                                                // mostrar dialog error on error
-
-                                                app.dialog.alert('Se eliminó el consultorio.');
+                                                ///assistant/21/delete
+                                                app.preloader.show('blue');
+                                                app.request.get(app.data.url + '/doctorOffices/' + officeId + '/delete',
+                                                function(e) {
+                                                    app.preloader.hide();
+                                                    app.dialog.alert('Se eliminó el consultorio.');
+                                                    location.reload();
+                                                }, 
+                                                function(e) {
+                                                    app.preloader.hide();
+                                                    app.dialog.alert('Ha ocurrido un error elminando el consultorio');
+                                                });
                                             });
 
                                         });

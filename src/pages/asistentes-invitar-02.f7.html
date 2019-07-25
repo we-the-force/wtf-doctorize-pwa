@@ -111,8 +111,7 @@
                     app.preloader.show('blue');
                     app.request.get(app.data.url + '/user/' + app.data.assistant.id,
                     function(e) {
-                        var x = JSON.parse(e);
-                        console.log(x);                        
+                        var x = JSON.parse(e);                       
                         app.data.assistant.flag = true;
                         app.data.assistant.name = x.name;
                         app.data.assistant.email = x.email;

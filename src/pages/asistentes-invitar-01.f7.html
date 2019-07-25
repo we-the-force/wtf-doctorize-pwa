@@ -153,15 +153,20 @@
                                         app.dialog.confirm('¿Estás seguro que deseas eliminar el consultorio?', function() {
                                             ///assistant/21/delete
                                             app.preloader.show('blue');
-                                            app.request.post(app.data.url + '/assistant/' + AssisstantId  + '/delete', 
-                                            function(e) {
-                                                app.preloader.hide();
-                                                app.dialog.alert('Se eliminó al asistente.');
-                                                location.reload();
-                                            }, 
-                                            function(e) {
-                                                app.preloader.hide();
-                                                app.dialog.alert('Ha ocurrido un error elminando al asistente');
+                                            app.request({
+                                                url: app.data.url + '/assistant/' + AssisstantId + '/delete',
+                                                method: "DELETE",
+                                                crossDomain: true,
+                                                success: function(e){
+                                                    app.preloader.hide();
+                                                    app.dialog.alert('Se eliminó al asistente.', function(){
+                                                        location.reload();
+                                                    });                                                    
+                                                },
+                                                error: function(e){
+                                                    app.preloader.hide();
+                                                    app.dialog.alert('Ha ocurrido un error elminando al asistente');
+                                                }
                                             });
                                         });
 

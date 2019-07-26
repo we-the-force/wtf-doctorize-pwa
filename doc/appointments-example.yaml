@@ -1,0 +1,398 @@
+openapi: 3.0.0
+info:
+  description: Csc 8711 - Databases and the Web - Open API for Web Services.
+  version: "1.0.0"
+  title: Project 4
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: mkoritala1@student.gsu.edu
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+host: tinman.cs.gsu.edu:5016
+basePath: /
+tags:
+- name: Physicians
+  description: Physicians Information
+- name: Patients
+  description: Patients Information
+- name: Appointments
+  description: Appointments Information
+schemes:
+- http
+paths:
+  /physicians:
+    get:
+      tags:
+      - Physicians
+      summary: Fetches every physician details
+      operationId: get_physicians
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: displays every physician details
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Physicians'
+        400:
+          description: Something went wrong
+  /physicians/{Speciality}:
+    get:
+      tags:
+      - Physicians
+      summary: Given a speciality, fetches physicians details
+      description: Returns physicians for given speciality
+      operationId: get_speciality
+      produces:
+      - application/json
+      parameters:
+      - name: Speciality
+        in: path
+        description: Speciality of a physician
+        required: true
+        type: string
+      responses:
+        200:
+          description: Given a speciality, displays physicians details
+          schema:
+            $ref: '#/definitions/Physicians'
+        400:
+          description: Invalid Speciality
+        404:
+          description: Speciality not found
+  /patients:
+    get:
+      tags:
+      - Patients
+      summary: Fetches patients details
+      operationId: get_patients
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: Fetches patients details
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Patients'
+        400:
+          description: Something went wrong
+    post:
+      tags:
+      - Patients
+      summary: Insert a new patient
+      operationId: insert_patients
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Body
+        description: patient details
+        required: true
+        schema:
+          $ref: '#/definitions/insertPatient'
+      responses:
+        200:
+          description: 1 record inserted.
+          schema:
+            $ref: '#/definitions/Patients'
+        400:
+          description: Invalid Input
+    put:
+      tags:
+      - Patients
+      summary: Updates patient details
+      description: To update patient's phone and address details.
+      operationId: update_patients
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Body
+        description: Update patient object
+        required: true
+        schema:
+          $ref: '#/definitions/Update'
+      responses:
+        200:
+          description: Patient Details Updated
+        404:
+          description: Patient not found
+  /appointments/{Id}:
+    get:
+      tags:
+      - Appointments
+      summary: Given a physician ID, fetches all the appointments
+      description: Displays appointments for a given physician ID
+      operationId: get_appointments
+      produces:
+      - application/json
+      parameters:
+      - name: Id
+        in: path
+        description: Input Physician ID
+        required: true
+        type: integer
+        minimum: 100
+      responses:
+        200:
+          description: Successfull Operation
+          schema:
+            $ref: '#/definitions/Appointments'
+        400:
+          description: Invalid physician ID
+        404:
+          description: No Appointments
+    delete:
+      tags:
+      - Appointments
+      summary: Deletes appointment for a given appointmentID
+      description: Deletes appointment for a given appointment ID.
+      operationId: delete_appointments
+      produces:
+      - application/json
+      parameters:
+      - name: Id
+        in: path
+        description: Input Appointment ID
+        required: true
+        type: string
+      responses:
+        200:
+          description: Appointment deleted
+        400:
+          description: Invalid appointment ID
+        404:
+          description: Appointment not found
+  /appointments/{PhysicianID}/{Date}:
+    get:
+      tags:
+      - Appointments
+      summary: Given a PhysicianID and Date, fetches all the appointments
+      description: Displays appointments for a given physician ID and date
+      operationId: get_appointmentsgivendateandid
+      produces:
+      - application/json
+      parameters:
+      - name: PhysicianID
+        in: path
+        description: Input PhysicianID
+        required: true
+        type: integer
+        minimum: 100
+      - name: Date
+        in: path
+        description: Input Date
+        required: true
+        type: string
+      responses:
+        200:
+          description: Details found
+          schema:
+            $ref: '#/definitions/Appointments'
+        400:
+          description: Invalid details
+        404:
+          description: No Appointments for a given physicianID and Date.
+  /appointments:
+    post:
+      tags:
+      - Appointments
+      summary: Book an appointment for a patient
+      description: To book an appointment for a patient.
+      operationId: insert_appointments
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Body
+        description: Insert appointment details of the patient
+        required: true
+        schema:
+          $ref: '#/definitions/insertAppointment'
+      responses:
+        200:
+          description: Appointment details inserted
+          schema:
+            $ref: '#/definitions/insertAppointment'
+        400:
+          description: Invalid Input
+definitions:
+  Physicians:
+    type: object
+    required:
+    - First_Name
+    - Last_Name
+    - Physician_ID
+    - Speciality
+    properties:
+      Physician_ID:
+        type: integer
+        format: int64
+        example: 101
+        minimum: 100
+      Last_Name:
+        type: string
+        example: Koritala
+      First_Name:
+        type: string
+        example: Mounika
+      Speciality:
+        type: string
+        example: Cardiology
+  Patients:
+    type: object
+    required:
+    - Contact_Number
+    - First_Name
+    - Last_Name
+    - Patient_ID
+    properties:
+      Contact_Number:
+        $ref: '#/definitions/Phone'
+      First_Name:
+        type: string
+        example: Jacob
+      Last_Name:
+        type: string
+        example: Jones
+      Patient_ID:
+        type: integer
+        format: int64
+        example: 1000
+        minimum: 1000
+  insertPatient:
+    type: object
+    required:
+    - lname
+    - fname
+    - phone
+    - address
+    properties:
+      lname:
+        type: string
+        example: Satwik
+      fname:
+        type: string
+        example: Surapaneni
+      phone:
+        $ref: '#/definitions/Phone'
+      address:
+        $ref: '#/definitions/Address'
+  Phone:
+    type: object
+    required:
+    - home
+    - mobile
+    - office
+    properties:
+      home:
+        type: string
+        example: 111-1234
+      mobile:
+        type: string
+        example: 777-8888
+      office:
+        type: string
+        example: 111-2121
+  Address:
+    type: object
+    required:
+    - address
+    - city
+    - state
+    - zip
+    properties:
+      address:
+        type: string
+        example: 23-43 Nandamuri Street
+      city:
+        type: string
+        example: Vijayawada
+      state:
+        type: string
+        example: AP
+      zip:
+        type: string
+        example: "34876"
+  Update:
+    type: object
+    required:
+    - email
+    - phone
+    - address
+    properties:
+      email:
+        type: string
+        example: Satwik1@gmail.com
+      phone:
+        $ref: '#/definitions/Phone'
+      address:
+        $ref: '#/definitions/Address'
+  Appointments:
+    type: object
+    required:
+    - appointmentID
+    - physicianID
+    - patientID
+    - date
+    - time
+    - type
+    properties:
+      appointmentID:
+        type: integer
+        format: int64
+        example: 1
+      physicianID:
+        type: integer
+        format: int64
+        example: 101
+        minimum: 100
+      patientID:
+        type: integer
+        format: int64
+        example: 1001
+        minimum: 1000
+      date:
+        type: string
+        example: 12-10-2018
+      time:
+        type: string
+        example: "10:00"
+      type:
+        type: string
+        example: new patient
+  insertAppointment:
+    type: object
+    required:
+    - physicianId
+    - patientId
+    - date
+    - time
+    - type
+    properties:
+      physicianId:
+        type: integer
+        format: int64
+        example: 101
+        minimum: 100
+      patientId:
+        type: integer
+        format: int64
+        example: 1001
+        minimum: 1000
+      date:
+        type: string
+        example: 05-24-2019
+      time:
+        type: string
+        example: "10:00"
+      type:
+        type: string
+        enum:
+        - regular patient
+        - new patient

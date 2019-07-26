@@ -1,0 +1,2920 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Auto Sales Quoting V1
+  description: >
+    Nationwide Auto Sales Quoting API. This API provides a list of operations
+    that support the Personal Auto Quoting Process.
+
+
+    This API allows a consumer to create a quote, update a quote, rate and bind a quote and then issue a policy.  This API provides the core
+
+    operations of the PolicyCenter Auto application. To create a quote, the consumer must provide personal information about the prospective policyholder
+
+    such as Name, Address, Date of Birth, etc. In addition, vehicle information must be provided.  This API will then make the necessary calls to retrieve
+
+    geographic information, vehicle information, current insurance carrier, and credit history reports in order to rate and bind a quote accurately.
+  contact:
+    name: Digital Sales Platform Support
+    email: NWLine-Wildlings@nationwide.com
+tags:
+  - name: Quotes
+    description: >
+      A quote represents the model of all of the data for a quote process.
+
+
+      Creating a quote here will begin the quoting process. Minimal information is required to begin this process.
+
+
+      This resource is used to update quote information, provide a quote rate, or provide a bindable quote rate preparing the quote to be purchased.
+
+
+      If a quote is bound and ready to purchase, pay for the policy by calling the Nationwide Billing API followed by calling the Nationwide Digital Sales Policies API.
+  - name: Drivers
+    description: >
+      A driver represents the model of all driver information needed when adding
+      a driver to a quote.
+
+
+      This model includes personal information as well as the Drivers License information and relationships between drivers.
+
+
+      This resource is used to add a driver, update an existing driver, delete an existing driver, get information for all drivers on a quote or get information for only a single driver.
+
+
+      This information is required for a quote to be rated.
+  - name: Additional Interest
+    description: >
+      An additional interest represents the model of a lessor or lienholder on a
+      vehicle being added to a quote.
+
+
+      **Note:** The additional interest must be a company.
+
+
+      This resource is used to add an additional interest, update an existing additional interest, get an individual or all additional interests, or delete an existing additional interest.
+  - name: Filings
+    description: >
+      A filing represents the model for any additional requirement needed for a
+      driver to own and drive a vehicle.
+
+
+      This resource is used to add a filing, get an individual filing, update an individual filing or remove an individual filing.
+  - name: Incidents
+    description: >
+      An incident represents the model for driving infractions in a drivers
+      record that are added to a quote.
+
+
+      This resource is used to add an incident, get an individual incident or all incidents, update an incident or remove an incident.
+  - name: Vehicles
+    description: >
+      A vehicle respresents the model for all information about the vehicle
+      being insured in a quote.
+
+
+      **Note:** If VIN is provided, only vehicleType is required, other vehicle information will be automatically populated.
+
+
+      **Note:** There are other fields that are required based on certain conditions, these are noted in each fields description.
+
+
+      This resource includes the operations to add, get, and/or modify a vehicle on a quote.
+
+
+      This information is required for a quote to be rated.
+  - name: Policy Holders
+    description: >
+      A policy holder represents the model for the policy holder being used on a
+      quote.
+
+
+      This resource includes the operations to add a policyholder, get all or an individual policyholder, modify an existing policyholder or delete an existing policyholder.
+  - name: Coverages
+    description: >
+      The coverage model includes all coverages that a quote is eligible for.
+
+
+      **Note:** The eligible coverages are shown in the response whether the quote is including them or not.
+
+
+      **Note:** The selected value field will be false if the coverage is not included in the quote.
+
+
+      This resource includes the operation to update an existing coverage or get all eligible coverages on a quote.
+  - name: Eligible Discounts
+    description: >
+      The eligible discounts model includes all discounts that a quote is
+      eligible for.
+
+
+      **Note:** The eligible discounts are shown in the response whether the quote is including them or not.
+
+
+      **Note:** The isDiscountApplied field will be false if the discount is not applied in the quote.
+
+
+      This resource is used to add an eligible discount or modify an existing eligible discounts on both a policy and vehicle level.
+  - name: Current Carrier
+    description: >
+      The current carrier model includes the information about the existing
+      insurance provider that the prospective policyholder currently utilizing.
+
+
+      This resource is used to get a current carrier or update a current carrier on a quote.
+security:
+  - MyAPIKey: []
+  - nw_auth_external: []
+  - nw_auth_internal: []
+paths:
+  /quotes:
+    post:
+      summary: Begin a quote process or get a premium
+      description: >
+        This operation creates a quote based on the Policyholder, Producer and
+        Location information.
+
+        **Note:** Use the query param ?rate=quote to request a quote or ?rate=bind to begin the purchasing process.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/rate_action"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/PostQuoteRequest"
+        description: Quote object that to be used to start the quoting process or get a
+          premium
+        required: true
+      tags:
+        - Quotes
+      responses:
+        "201":
+          description: Successfully created the resource.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PostQuoteResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+  "/quotes/{quote_id}":
+    get:
+      summary: Retrieve a quote based on search criteria.
+      description: >
+        This operation retrieves a quote based on the quote ID passed in as a
+        path parameter.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - name: lastName
+          in: query
+          required: true
+          description: Last name of policyholder of this quote.
+          schema:
+            type: string
+        - name: postalCode
+          in: query
+          required: true
+          description: Postal code of primary address of this quote.
+          schema:
+            type: string
+      tags:
+        - Quotes
+      responses:
+        "200":
+          description: Successful retrieval of requested resource instance(s).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetQuoteResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+    patch:
+      summary: Update, rate or re-rate the quote
+      description: >
+        This operation will rate or re-rate a single quote based on the quoteId
+        after adding and/or updating quote information from the request.
+
+        **Note:** Use the query param ?rate=quote to request a quote rating or ?rate=bind to begin the purchasing process.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/rate_action"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatchQuoteRequest"
+        required: true
+      tags:
+        - Quotes
+      responses:
+        "200":
+          description: Successfully rated the quote.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PatchQuoteResponse"
+        "204":
+          description: Successfully updated the resource. No content is returned as the
+            result of the call.
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+  "/quotes/{quote_id}/drivers":
+    post:
+      summary: Add a new driver
+      description: >
+        This operation will add a single new driver to a single existing quote
+        based on the quote ID.
+
+
+        **Note:** Multiple fields being passed in have validation conditions attached in their descriptions.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostDriverRequest"
+        description: Driver to be added to the quote
+        required: true
+      tags:
+        - Drivers
+      responses:
+        "201":
+          description: Successfully created the Driver.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PostDriverResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+    get:
+      summary: Get all drivers for a quote
+      description: >
+        This operation will get all the drivers attached to a single quote based
+        on the quoteID passed in.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+      tags:
+        - Drivers
+      responses:
+        "200":
+          description: Successful retrieval of drivers collection.
+          headers:
+            x-Total-Count:
+              description: Total number of records available
+              schema:
+                type: number
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetDriversResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+  "/quotes/{quote_id}/drivers/{driver_id}":
+    put:
+      summary: Update a driver for a quote
+      description: >
+        This operation updates a single driver on a single quote based on the
+        quoteID and driverID.
+
+
+        **Note:** Various Driver fields have validation rules attached in their descriptions.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_driver_id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutDriverRequest"
+        description: Driver to be updated on the quote
+        required: true
+      tags:
+        - Drivers
+      responses:
+        "204":
+          description: Successfully updated the resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PutDriverResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+    get:
+      summary: Get a driver for a quote
+      description: >
+        This operation gets a single driver based on QuoteId and DriverId passed
+        in.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_driver_id"
+      tags:
+        - Drivers
+      responses:
+        "200":
+          description: Successful retrieval of requested resource instance(s).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetDriverResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+    delete:
+      summary: Delete a driver from a quote
+      description: >
+        This operation deletes a single driver from a quote based on the QuoteId
+        and DriverId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_driver_id"
+      tags:
+        - Drivers
+      responses:
+        "204":
+          description: Successfully updated the resource. No content is returned as the
+            result of the call.
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+  "/quotes/{quote_id}/vehicles/{vehicle_id}/third-party-lien-holders":
+    post:
+      summary: Add a lien holder to the vehicle
+      description: >
+        This operation adds a single additional Interest to a single vehicle on
+        a single quote based on the QuoteId and VehicleId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_vehicle_id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostAdditionalInterestsRequest"
+        description: Lien holder to be added to the vehicle
+        required: true
+      tags:
+        - Additional Interest
+      responses:
+        "201":
+          description: Successfully created the lien holder.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PostAdditionalInterestsResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+    get:
+      summary: Get the vehicle's lien holders.
+      description: >
+        This operation gets all lien holders on a single vehicle on a single
+        quote based on the quoteID and VehicleID.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_vehicle_id"
+      tags:
+        - Additional Interest
+      responses:
+        "200":
+          description: Successful retrieval of lien holder collection.
+          headers:
+            x-Total-Count:
+              description: Total number of records available
+              schema:
+                type: number
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetAllAdditionalInterestsResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+  "/quotes/{quote_id}/vehicles/{vehicle_id}/third-party-lien-holders/{additional_interest_id}":
+    put:
+      summary: Update a vehicle's lien holder
+      description: >
+        This operation updates a single lien holder on a single vehicle on a
+        single quote based on quoteId, vehicleId and AdditionalInterestId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_vehicle_id"
+        - $ref: "#/components/parameters/path_additional_interest_id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdditionalInterestsRequest"
+        description: Lien holder record to update.
+        required: true
+      tags:
+        - Additional Interest
+      responses:
+        "204":
+          description: Successfully updated the resource. No content is returned as the
+            result of the call.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PutAdditionalInterestsResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+    get:
+      summary: Get a lien holder for a vehicle.
+      description: >
+        This operation gets a single lien holder on a single vehicle on a single
+        quote based on quoteId, vehicleId and additionalInterestId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_vehicle_id"
+        - $ref: "#/components/parameters/path_additional_interest_id"
+      tags:
+        - Additional Interest
+      responses:
+        "200":
+          description: Successful retrieval of requested resource instance(s).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetAdditionalInterestsResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+    delete:
+      summary: Delete a vehicle's lien holder
+      description: >
+        This operation deletes a single lien holder on a single vehicle on a
+        single quote based on quoteId, vehicleId, and additionalInterestId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_vehicle_id"
+        - $ref: "#/components/parameters/path_additional_interest_id"
+      tags:
+        - Additional Interest
+      responses:
+        "204":
+          description: Successfully deleted the resource. No content is returned as the
+            result of the call.
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+  "/quotes/{quote_id}/drivers/{driver_id}/filings":
+    post:
+      summary: Add a new filing to the driver
+      description: >
+        This operation adds a single new filing to a single driver on a single
+        quote based on quoteId and driverId.
+
+
+        **Note:** This operation returns a filingId that will be linked with this individual filing.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_driver_id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostFilingRequest"
+        description: Filing to be added to the driver
+        required: true
+      tags:
+        - Filings
+      responses:
+        "201":
+          description: Successfully created the filing.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PostFilingResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+    get:
+      summary: Get all filings of the driver
+      description: >
+        This operation gets all filings on a single driver on a single quote
+        based on quoteId and driverId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_driver_id"
+      tags:
+        - Filings
+      responses:
+        "200":
+          description: Successful retrieval of filings
+          headers:
+            x-Total-Count:
+              description: Total number of records available
+              schema:
+                type: number
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetFilingsResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+  "/quotes/{quote_id}/drivers/{driver_id}/filings/{filing_id}":
+    put:
+      summary: Update a filing for a driver
+      description: >
+        This operation updates a single filing on a single driver on a single
+        quote based on quoteId, driverId and filingId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_driver_id"
+        - $ref: "#/components/parameters/path_filing_id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutFilingRequest"
+        description: Filing to be updated on the driver
+        required: true
+      tags:
+        - Filings
+      responses:
+        "204":
+          description: Successfully updated the resource. No content is returned as the
+            result of the call.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PutFilingResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+    get:
+      summary: Get a filing for a driver
+      description: >
+        This operation gets a single filing for a single driver on a single
+        quote based on quoteId, driverId and filingId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_driver_id"
+        - $ref: "#/components/parameters/path_filing_id"
+      tags:
+        - Filings
+      responses:
+        "200":
+          description: Successful retrieval of requested resource instance(s).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetFilingResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+    delete:
+      summary: Delete filing for a driver
+      description: >
+        This operation deletes a single filing for a single driver on a single
+        quote based on quoteId, driverId and filingId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_driver_id"
+        - $ref: "#/components/parameters/path_filing_id"
+      tags:
+        - Filings
+      responses:
+        "204":
+          description: Successfully deleted the resource. No content is returned as the
+            result of the call.
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+  "/quotes/{quote_id}/drivers/{driver_id}/incidents":
+    post:
+      summary: Add a new incident for a driver
+      description: >
+        This operation adds a single new incident for a single driver on a
+        single quote based on quoteId and driverId
+
+
+        **Note:** This operation returns an infractionId that identifies this single incident.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_driver_id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostIncidentRequest"
+        description: Incident to be added to the driver
+        required: true
+      tags:
+        - Incidents
+      responses:
+        "201":
+          description: Successfully created the incident.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PostIncidentResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+    get:
+      summary: Get all incidents of the driver
+      description: >
+        This operation gets all incidents for a single driver on a single quote
+        based on quoteId and driverId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_driver_id"
+      tags:
+        - Incidents
+      responses:
+        "200":
+          description: Successful retrieval of incidents
+          headers:
+            x-Total-Count:
+              description: Total number of records available
+              schema:
+                type: number
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetIncidentsResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+    delete:
+      summary: Delete all incidents for a driver
+      description: >
+        This operation deletes all incidents for a single driver on a single
+        quote based on quoteId and driverId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_driver_id"
+      tags:
+        - Incidents
+      responses:
+        "204":
+          description: Successfully deleted the resource. No content is returned as the
+            result of the call.
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+  "/quotes/{quote_id}/drivers/{driver_id}/incidents/{incident_id}":
+    put:
+      summary: Update an incident for a driver
+      description: >
+        This operation updates a single incident for a single driver on a single
+        quote based on quoteId, driverId and incidentId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_driver_id"
+        - $ref: "#/components/parameters/path_incident_id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutIncidentRequest"
+        description: Incident to be updated on the driver
+        required: true
+      tags:
+        - Incidents
+      responses:
+        "204":
+          description: Successfully updated the resource. No content is returned as the
+            result of the call.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PutIncidentResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+    get:
+      summary: Get an incident for a driver
+      description: >
+        This operation gets a single incident for a single driver on a single
+        quote based on quoteId, driverId and incidentId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_driver_id"
+        - $ref: "#/components/parameters/path_incident_id"
+      tags:
+        - Incidents
+      responses:
+        "200":
+          description: Successful retrieval of requested resource instance(s)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetIncidentResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+    delete:
+      summary: Delete an incident for a driver
+      description: >
+        This operation deletes a single incident for a single driver on a single
+        quote based on quoteId, driverId and incidentId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_driver_id"
+        - $ref: "#/components/parameters/path_incident_id"
+      tags:
+        - Incidents
+      responses:
+        "204":
+          description: Successfully deleted the resource. No content is returned as the
+            result of the call.
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+  "/quotes/{quote_id}/vehicles":
+    post:
+      summary: Add a new vehicle
+      description: >
+        This operation adds a single new vehicle to a single quote based on
+        quoteId.
+
+
+        **Note:** This operation returns a vehicleId which can be used to identify this single vehicle.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostVehicleRequest"
+        description: Vehicle to be added to the quote
+        required: true
+      tags:
+        - Vehicles
+      responses:
+        "201":
+          description: Successfully created the Vehicle
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PostVehicleResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+    get:
+      summary: Get all vehicles for a quote
+      description: >
+        This operation gets all vehicles for a single quote based on the quoteId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+      tags:
+        - Vehicles
+      responses:
+        "200":
+          description: Successful retrieval of vehicles collection
+          headers:
+            x-Total-Count:
+              description: Total number of records available
+              schema:
+                type: number
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetVehiclesResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+  "/quotes/{quote_id}/vehicles/{vehicle_id}":
+    put:
+      summary: Update a vehicle for a quote
+      description: >
+        This operation updates a single vehicle for a single quote based on the
+        quoteId and vehicleId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_vehicle_id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutVehicleRequest"
+        description: Vehicle to be updated on the quote
+        required: true
+      tags:
+        - Vehicles
+      responses:
+        "200":
+          description: Successfully updated the resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PutVehicleResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+    get:
+      summary: Get a vehicle for a quote
+      description: >
+        This operation gets a single vehicle for a quote based on the quoteId
+        and vehicleId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_vehicle_id"
+      tags:
+        - Vehicles
+      responses:
+        "200":
+          description: Successful retrieval of requested resource instance(s)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetVehicleResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+    delete:
+      summary: Delete a vehicle for a quote
+      description: >
+        This operation deletes a single vehicle for a quote based on quoteId and
+        vehicleId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_vehicle_id"
+      tags:
+        - Vehicles
+      responses:
+        "204":
+          description: Successfully deleted the resource. No content is returned as the
+            result of the call.
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+  "/quotes/{quote_id}/policy-holders":
+    get:
+      summary: Get all policy holders for a quote
+      description: >
+        This operation gets all policy holders for a single quote based on
+        quoteId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+      tags:
+        - Policy Holders
+      responses:
+        "200":
+          description: Successful retrieval of policy holders collection
+          headers:
+            x-Total-Count:
+              description: Total number of records available
+              schema:
+                type: number
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GetPolicyHolderResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+  "/quotes/{quote_id}/policy-holders/{policy_holder_id}":
+    put:
+      summary: Update a policy holder for a quote
+      description: >
+        This operation updates a single policy holder for a single quote based
+        on quoteId and policyholderId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_policy_holder_id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                policyHolder:
+                  $ref: "#/components/schemas/PutPolicyHolderRequest"
+        description: Policy Holder to be updated on the quote
+        required: true
+      tags:
+        - Policy Holders
+      responses:
+        "204":
+          description: Successfully updated the resource. No content is returned as the
+            result of the call.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PutPolicyHolderResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+    get:
+      summary: Get a policy holder for a quote
+      description: >
+        This operation gets a single policy holder for a single quote based on
+        quoteId and policyholderId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_policy_holder_id"
+      tags:
+        - Policy Holders
+      responses:
+        "200":
+          description: Successful retrieval of requested resource instance(s)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetPolicyHolderResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+  "/quotes/{quote_id}/coverages":
+    patch:
+      summary: Update coverages for a quote
+      description: >
+        This operation can update multiple coverages for a single quote based on
+        the quoteId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutCoveragesRequest"
+        description: Coverages to be updated on the quote
+        required: true
+      tags:
+        - Coverages
+      responses:
+        "200":
+          description: Successful retrieval of requested resource instance(s).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PutCoveragesResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+    get:
+      summary: Get all coverages for a quote
+      description: >
+        This operation gets all coverage for a single quote based on the quoteId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+      tags:
+        - Coverages
+      responses:
+        "200":
+          description: Successful retrieval of requested resource instance(s)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetCoveragesResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+  "/quotes/{quote_id}/current-carrier/primary":
+    get:
+      summary: Get the Current Carrier information for the Quote
+      description: >
+        This operation will get all the current carrier information for a single
+        quote based on the quoteId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+      tags:
+        - Current Carrier
+      responses:
+        "200":
+          description: Successful retrieval of requested resource instance(s)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetCurrentCarrierResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+    put:
+      summary: Update Current Carrier information
+      description: >
+        This operation updates the current carrier information for a single
+        quote based on quoteId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutCurrentCarrierRequest"
+        description: Current Carrier information to update on the quote
+        required: true
+      tags:
+        - Current Carrier
+      responses:
+        "200":
+          description: Successful update of requested resource instance(s)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PutCurrentCarrierResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+  "/quotes/{quote_id}/eligible-discounts":
+    get:
+      summary: Get all the eligible discounts of the quote
+      description: >
+        This operation gets all eligible discounts for a single quote based on
+        quoteId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+      tags:
+        - Eligible Discounts
+      responses:
+        "200":
+          description: Successful retrieval of eligible discounts.
+          headers:
+            x-Total-Count:
+              description: Total number of records available
+              schema:
+                type: number
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetEligibleDiscountsResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+  "/quotes/{quote_id}/eligible-discounts/{eligibleDiscountId}":
+    put:
+      summary: Update a policy eligible discount
+      description: >
+        This operation updates a single policy eligible discount for a single
+        quote based on quoteId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_eligible_discount_id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateEligibleDiscountRequest"
+        description: Eligible discount to be updated on the policy
+        required: true
+      tags:
+        - Eligible Discounts
+      responses:
+        "204":
+          description: Successful update of Eligible Discount.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateEligibleDiscountResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+  "/quotes/{quote_id}/drivers/{driver_id}/eligible-discounts":
+    get:
+      summary: Get all the eligible discounts of the driver
+      description: >
+        This operation gets all eligible discounts for a single driver on a
+        single quote based on the quoteId and driverId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_driver_id"
+      tags:
+        - Eligible Discounts
+      responses:
+        "200":
+          description: Successful retrieval of eligible discounts.
+          headers:
+            x-Total-Count:
+              description: Total number of records available
+              schema:
+                type: number
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetEligibleDiscountsResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+  "/quotes/{quote_id}/drivers/{driver_id}/eligible-discounts/{eligibleDiscountId}":
+    put:
+      summary: Update a driver eligible discount
+      description: >
+        This operation updates a single discount on a single driver on a single
+        quote based on driverId, quoteId and eligibleDiscountId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_driver_id"
+        - $ref: "#/components/parameters/path_eligible_discount_id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateEligibleDiscountRequest"
+        description: Eligible discount to be updated on the driver
+        required: true
+      tags:
+        - Eligible Discounts
+      responses:
+        "204":
+          description: Successfully updated the resource. No content is returned as the
+            result of the call.
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+  "/quotes/{quote_id}/vehicles/{vehicle_id}/eligible-discounts":
+    get:
+      summary: Get all the eligible discounts for the vehicle
+      description: >
+        This operation gets all eligible discounts for a single vehicle on a
+        single quote based on vehicleId and quoteId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_vehicle_id"
+      tags:
+        - Eligible Discounts
+      responses:
+        "200":
+          description: Successful retrieval of eligible discounts.
+          headers:
+            x-Total-Count:
+              description: Total number of records available
+              schema:
+                type: number
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetEligibleDiscountsResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+  "/quotes/{quote_id}/vehicles/{vehicle_id}/eligible-discounts/{eligibleDiscountId}":
+    put:
+      summary: Update a vehicle eligible discount
+      description: >
+        This operation updates a single eligible discount on a single vehicle on
+        a single quote based on eligibleDiscountId, vehicleId and quoteId.
+      parameters:
+        - $ref: "#/components/parameters/message_id_header"
+        - $ref: "#/components/parameters/client_id_header"
+        - $ref: "#/components/parameters/funnel_id_header"
+        - $ref: "#/components/parameters/session_id_header"
+        - $ref: "#/components/parameters/path_quote_id"
+        - $ref: "#/components/parameters/path_vehicle_id"
+        - $ref: "#/components/parameters/path_eligible_discount_id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateEligibleDiscountRequest"
+        description: Eligible discount to be updated for the vehicle
+        required: true
+      tags:
+        - Eligible Discounts
+      responses:
+        "200":
+          $ref: "#/components/responses/SuccessResponse"
+        "400":
+          $ref: "#/components/responses/ClientErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthenticatedResponse"
+        "403":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/RuleViolationResponse"
+        "429":
+          $ref: "#/components/responses/RateLimitResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+servers:
+  - url: https://api.nationwide.com/customer-acquisition/auto-sales-quoting/v1
+components:
+  parameters:
+    message_id_header:
+      name: X-NW-Message-ID
+      in: header
+      required: true
+      description: A unique identification number for each transaction
+      schema:
+        type: string
+    client_id_header:
+      name: client_id
+      in: header
+      required: true
+      description: The api key of the application
+      schema:
+        type: string
+    session_id_header:
+      name: session-id
+      in: header
+      description: ID of the current session of the quote process
+      required: true
+      schema:
+        type: string
+    funnel_id_header:
+      name: Distribution-Partner-Id
+      in: header
+      description: ID of distribution partner associated with this API
+      required: true
+      schema:
+        type: string
+    rate_action:
+      name: rate
+      in: query
+      required: false
+      description: >
+        The rate type ('quote' or 'bind')
+
+        'quote' rate will provide a rated premium for the quote.
+
+        'bind' rate will provide a bindable premium for the quote and set the quote as ready to be purchased.
+      schema:
+        type: string
+    path_quote_id:
+      name: quote_id
+      in: path
+      description: ID of quote to reference
+      required: true
+      schema:
+        type: string
+    path_driver_id:
+      name: driver_id
+      in: path
+      description: ID of driver
+      required: true
+      schema:
+        type: string
+    path_vehicle_id:
+      name: vehicle_id
+      in: path
+      description: ID of vehicle
+      required: true
+      schema:
+        type: string
+    path_policy_holder_id:
+      name: policy_holder_id
+      in: path
+      description: ID of policy holder
+      required: true
+      schema:
+        type: string
+    path_additional_interest_id:
+      name: additional_interest_id
+      in: path
+      description: ID of third party lien holder
+      required: true
+      schema:
+        type: string
+    path_filing_id:
+      name: filing_id
+      in: path
+      description: ID of filing
+      required: true
+      schema:
+        type: string
+    path_incident_id:
+      name: incident_id
+      in: path
+      description: ID of incident
+      required: true
+      schema:
+        type: string
+    path_eligible_discount_id:
+      name: eligibleDiscountId
+      in: path
+      description: ID of an eligible discount
+      required: true
+      schema:
+        type: string
+  responses:
+    SuccessResponse:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/StandardMessage"
+    ClientErrorResponse:
+      description: Error validating input.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/StandardMessage"
+    UnauthenticatedResponse:
+      description: Proper user authentication credentials were not provided.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/StandardMessage"
+    UnauthorizedResponse:
+      description: The user is not authorized to make this request.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/StandardMessage"
+    NotFoundResponse:
+      description: Requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/StandardMessage"
+    RuleViolationResponse:
+      description: Requested resource violated a business validation rule.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/StandardMessage"
+    RateLimitResponse:
+      description: Too many requests within a defined time period (rate limited).
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/StandardMessage"
+    InternalErrorResponse:
+      description: There was a problem with either the network or the server. Please see
+        the included message for more details.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/StandardMessage"
+  securitySchemes:
+    MyAPIKey:
+      type: apiKey
+      in: header
+      name: client_id
+    nw_auth_external:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://api.nationwide.com/security/userAuthentication/v1/authorize
+          scopes: {}
+    nw_auth_internal:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://api.nwie.net/security/userAuthentication/v1/authorize
+          scopes: {}
+  schemas:
+    PostQuoteRequest:
+      allOf:
+        - $ref: "#/components/schemas/QuoteRequest"
+      required:
+        - policyHolders
+        - producer
+        - effectiveDate
+        - creditConsent
+    PostQuoteResponse:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/QuoteResponse"
+    GetQuoteResponse:
+      $ref: "#/components/schemas/RatedQuoteResponse"
+    PatchQuoteResponse:
+      $ref: "#/components/schemas/RatedQuoteResponse"
+    PostDriverRequest:
+      type: object
+      properties:
+        driver:
+          $ref: "#/components/schemas/DriverRequest"
+    PostDriverResponse:
+      $ref: "#/components/schemas/DriverResponse"
+    GetDriversResponse:
+      type: array
+      items:
+        $ref: "#/components/schemas/DriverResponse"
+    GetDriverResponse:
+      $ref: "#/components/schemas/DriverResponse"
+    PutDriverRequest:
+      type: object
+      properties:
+        driver:
+          $ref: "#/components/schemas/DriverRequest"
+    PutDriverResponse:
+      $ref: "#/components/schemas/DriverResponse"
+    PostVehicleRequest:
+      type: object
+      properties:
+        vehicle:
+          $ref: "#/components/schemas/VehicleRequest"
+    PostVehicleResponse:
+      $ref: "#/components/schemas/VehicleResponse"
+    GetVehiclesResponse:
+      type: array
+      items:
+        $ref: "#/components/schemas/VehicleResponse"
+    GetVehicleResponse:
+      $ref: "#/components/schemas/VehicleResponse"
+    PutVehicleRequest:
+      type: object
+      properties:
+        vehicle:
+          $ref: "#/components/schemas/VehicleResponse"
+    PutVehicleResponse:
+      $ref: "#/components/schemas/VehicleResponse"
+    GetPolicyHolderResponse:
+      $ref: "#/components/schemas/PolicyHolderResponse"
+    PutPolicyHolderRequest:
+      $ref: "#/components/schemas/PolicyHolderRequest"
+    PutPolicyHolderResponse:
+      $ref: "#/components/schemas/PolicyHolderResponse"
+    GetCoveragesResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          packageName:
+            type: string
+          coverages:
+            type: array
+            items:
+              $ref: "#/components/schemas/Coverage"
+    PutCoveragesRequest:
+      type: object
+      properties:
+        coverages:
+          type: array
+          items:
+            allOf:
+              - $ref: "#/components/schemas/Coverage"
+            required:
+              - coverageId
+              - coverageLevel
+              - selectedValue
+    PutCoveragesResponse:
+      type: object
+      properties:
+        coverages:
+          type: array
+          items:
+            allOf:
+              - $ref: "#/components/schemas/Coverage"
+    PostAdditionalInterestsRequest:
+      type: object
+      properties:
+        additionalInterest:
+          $ref: "#/components/schemas/AdditionalInterestRequest"
+    PostAdditionalInterestsResponse:
+      $ref: "#/components/schemas/AdditionalInterestResponse"
+    GetAdditionalInterestsResponse:
+      $ref: "#/components/schemas/AdditionalInterestResponse"
+    GetAllAdditionalInterestsResponse:
+      type: array
+      items:
+        $ref: "#/components/schemas/AdditionalInterestResponse"
+    PutAdditionalInterestsRequest:
+      type: object
+      properties:
+        additionalInterest:
+          $ref: "#/components/schemas/AdditionalInterestRequest"
+    PutAdditionalInterestsResponse:
+      $ref: "#/components/schemas/AdditionalInterestResponse"
+    PostFilingRequest:
+      type: object
+      properties:
+        filing:
+          $ref: "#/components/schemas/FilingRequest"
+    PostFilingResponse:
+      $ref: "#/components/schemas/FilingResponse"
+    GetFilingsResponse:
+      type: array
+      items:
+        $ref: "#/components/schemas/FilingResponse"
+    GetFilingResponse:
+      $ref: "#/components/schemas/FilingResponse"
+    PutFilingRequest:
+      type: object
+      properties:
+        filing:
+          $ref: "#/components/schemas/FilingRequest"
+    PutFilingResponse:
+      $ref: "#/components/schemas/FilingResponse"
+    PostIncidentRequest:
+      type: object
+      properties:
+        infraction:
+          allOf:
+            - $ref: "#/components/schemas/Incident"
+          required:
+            - infractionType
+            - infractionDesc
+            - occurrenceDate
+    PostIncidentResponse:
+      $ref: "#/components/schemas/Incident"
+    GetIncidentsResponse:
+      type: array
+      items:
+        $ref: "#/components/schemas/Incident"
+    GetIncidentResponse:
+      $ref: "#/components/schemas/Incident"
+    PutIncidentRequest:
+      type: object
+      properties:
+        infraction:
+          allOf:
+            - $ref: "#/components/schemas/Incident"
+          required:
+            - infractionType
+            - infractionDesc
+            - occurrenceDate
+    PutIncidentResponse:
+      $ref: "#/components/schemas/Incident"
+    PutCurrentCarrierRequest:
+      type: object
+      properties:
+        currentCarrier:
+          allOf:
+            - $ref: "#/components/schemas/CurrentCarrier"
+          required:
+            - currentCarrierName
+            - coverageLapse
+            - currentBodilyInjuryLimit
+            - currentCarrierTerms
+    PutCurrentCarrierResponse:
+      $ref: "#/components/schemas/CurrentCarrier"
+    GetCurrentCarrierResponse:
+      $ref: "#/components/schemas/CurrentCarrier"
+    StandardMessage:
+      type: object
+      properties:
+        userMessage:
+          type: string
+          description: User-friendly message for the Warning/Error
+        developerMessage:
+          type: string
+          description: Developer information on the Warning/Error
+        MessageId:
+          type: string
+          description: NW Message ID provided in the header and used in the API log. This
+            id should be included in any user messaging to assist in
+            troubleshooting.
+        code:
+          type: string
+          description: Code generated by the API to identify the specific error
+        source:
+          type: string
+          description: The field or resource which triggered the message
+        docs:
+          type: string
+          description: The URL to documentation that will provide more information
+    QuoteRequest:
+      type: object
+      properties:
+        policyHolders:
+          type: array
+          description: List of policy holders on the quote (1 or 2 allowed)
+          items:
+            allOf:
+              - $ref: "#/components/schemas/PolicyHolderRequest"
+        producer:
+          allOf:
+            - $ref: "#/components/schemas/Producer"
+          required:
+            - producerCode
+            - type
+        effectiveDate:
+          type: string
+          format: date-time
+          description: Effective date of current quote
+        creditConsent:
+          type: boolean
+          description: Boolean to indicated that credit consent is checked
+        policyAddress:
+          allOf:
+            - $ref: "#/components/schemas/Address"
+          required:
+            - addressLine1
+            - city
+            - state
+            - postalCode
+          description: PolicyAddress specifies the risk location address
+        quoteId:
+          readOnly: true
+          type: string
+          description: ID of current quote
+        policyHolderId:
+          readOnly: true
+          type: string
+          description: ID of policyholder returned after quote is created
+        termType:
+          readOnly: true
+          type: string
+          description: Type of Policy Term - Annual, HalfYear, Other, ThreeYear
+        sessionId:
+          readOnly: true
+          type: string
+          description: ID of created Session
+    PatchQuoteRequest:
+      type: object
+      properties:
+        effectiveDate:
+          type: string
+          format: date-time
+          description: Effective date of current quote
+        policyAddress:
+          $ref: "#/components/schemas/Address"
+    QuoteResponse:
+      type: object
+      properties:
+        policyHolders:
+          type: array
+          description: List of policy holders on the quote (1 or 2 allowed)
+          items:
+            $ref: "#/components/schemas/PolicyHolderResponse"
+        producer:
+          allOf:
+            - $ref: "#/components/schemas/Producer"
+        effectiveDate:
+          type: string
+          format: date-time
+          description: Effective date of current quote
+        creditConsent:
+          type: boolean
+          description: Boolean to indicated that credit consent is checked
+        policyAddress:
+          allOf:
+            - $ref: "#/components/schemas/Address"
+          description: PolicyAddress specifies the risk location address
+        quoteStatus:
+          type: string
+        quoteId:
+          readOnly: true
+          type: string
+          description: ID of Current Quote
+        policyHolderId:
+          readOnly: true
+          type: string
+          description: ID of policyholder returned after quote is created
+        termType:
+          readOnly: true
+          type: string
+          description: Type of Policy Term - Annual, HalfYear, Other, ThreeYear
+        sessionId:
+          readOnly: true
+          type: string
+          description: Session ID of created Session
+    RatedQuoteResponse:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/QuoteResponse"
+        - type: object
+          properties:
+            currentCarrier:
+              $ref: "#/components/schemas/CurrentCarrier"
+            drivers:
+              type: array
+              items:
+                $ref: "#/components/schemas/DriverResponse"
+            vehicles:
+              type: array
+              items:
+                $ref: "#/components/schemas/VehicleResponse"
+            offeredQuotes:
+              type: array
+              items:
+                $ref: "#/components/schemas/Offering"
+            discounts:
+              type: array
+              items:
+                $ref: "#/components/schemas/Discount"
+            informationalMessages:
+              type: array
+              items:
+                $ref: "#/components/schemas/InformationalMessage"
+    Producer:
+      type: object
+      properties:
+        producerCode:
+          type: string
+        type:
+          type: string
+        agencyCode:
+          type: string
+    Address:
+      type: object
+      properties:
+        addressLine1:
+          type: string
+        addressLine2:
+          type: string
+        aptNumber:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        postalCode:
+          type: string
+    PolicyHolderRequest:
+      type: object
+      description: Someone who will have primary or secondary ownership of the quote/policy
+      required:
+        - policyHolderType
+      properties:
+        person:
+          description: Not required if Policyholder is a Company
+          allOf:
+            - $ref: "#/components/schemas/Person"
+          required:
+            - firstName
+            - lastName
+        address:
+          allOf:
+            - $ref: "#/components/schemas/Address"
+        emailAddress:
+          type: string
+          description: Required if PolicyholderType is PolicyPriNamedInsured
+        homeNumber:
+          type: string
+        policyHolderType:
+          type: string
+          description: Describes whether the policyholder is the primary, secondary, or
+            additionally named insured. Every policy should have exactly one
+            primary named insured.
+        companyName:
+          description: Not required if Policyholder is a Person
+          type: boolean
+    PolicyHolderResponse:
+      type: object
+      description: Someone who will have primary or secondary ownership of the quote/policy
+      properties:
+        person:
+          $ref: "#/components/schemas/Person"
+        address:
+          $ref: "#/components/schemas/Address"
+        policyHolderId:
+          type: integer
+          description: ID of Returned Policyholder
+        emailAddress:
+          type: string
+        homeNumber:
+          type: string
+        policyHolderType:
+          type: string
+          description: Describes whether the policyholder is the primary, secondary, or
+            additionally named insured. Every policy should have exactly one
+            primary named insured.
+        companyName:
+          description: Name of company if policyholder is a company.
+          type: boolean
+    DriverRequest:
+      type: object
+      description: An individual driver to be covered on policy.
+      required:
+        - person
+        - driverType
+        - relationToPNI
+        - isFinancialFilingReq
+      properties:
+        person:
+          allOf:
+            - $ref: "#/components/schemas/Person"
+          required:
+            - firstName
+            - lastName
+        driverType:
+          type: string
+          description: Driver, nondriver, etc.
+        relationToPNI:
+          type: string
+          description: Spouse, child, etc.
+        isFinancialFilingReq:
+          type: boolean
+          description: true, false (defaulted to false during add driver)
+        licenseNumber:
+          type: string
+        licenseState:
+          type: string
+          description: required if DriverType is Driver and IsInternationalLicense is false
+            and driver age > 14
+        driverNumber:
+          type: integer
+        isLicenseInSameStateForThreeYrsMandatory:
+          type: boolean
+        reasonNonDriver:
+          type: string
+          description: required if DriverType is NonDriver or Excluded
+        isGraduatedFromCollege:
+          type: boolean
+          description: required if driverType is Driver and driver's age < 25
+        isLvngWthParentNWInsd:
+          type: boolean
+          description: required if driverType is Driver and driver's age < 25  or years
+            licensed is < 3
+        isNewlyAddedDriver:
+          type: boolean
+        eligibleDiscounts:
+          type: array
+          description: List of eligible discounts for driver
+          items:
+            $ref: "#/components/schemas/EligibleDiscount"
+    DriverResponse:
+      type: object
+      description: Anyone who could drive to be covered on the quote/policy
+      properties:
+        driverId:
+          type: integer
+        person:
+          $ref: "#/components/schemas/Person"
+        driverType:
+          type: string
+          description: Driver, nondriver, etc.
+        relationToPNI:
+          type: string
+          description: Spouse, child, etc.
+        isFinancialFilingReq:
+          type: boolean
+        licenseNumber:
+          type: string
+        licenseState:
+          type: string
+        driverNumber:
+          type: integer
+        isLicenseInSameStateForThreeYrsMandatory:
+          type: boolean
+        reasonNonDriver:
+          type: string
+        isGraduatedFromCollege:
+          type: boolean
+        isLvngWthParentNWInsd:
+          type: boolean
+        isNewlyAddedDriver:
+          type: boolean
+        eligibleDiscounts:
+          type: array
+          description: List of eligible discounts for driver
+          items:
+            $ref: "#/components/schemas/EligibleDiscount"
+    AdditionalInterestRequest:
+      type: object
+      required:
+        - additionalInterestType
+        - companyName
+        - address
+        - expirationDate
+      properties:
+        expirationDate:
+          type: string
+          format: date-time
+        additionalInterestType:
+          type: string
+          description: Lessor or Lien
+        companyName:
+          type: string
+        address:
+          allOf:
+            - $ref: "#/components/schemas/Address"
+          required:
+            - addressLine1
+            - city
+            - state
+            - postalCode
+    AdditionalInterestResponse:
+      type: object
+      properties:
+        expirationDate:
+          type: string
+          format: date-time
+        additionalInterestType:
+          type: string
+        additionalInterestId:
+          type: number
+          readOnly: true
+        companyName:
+          type: string
+        address:
+          $ref: "#/components/schemas/Address"
+    Incident:
+      type: object
+      description: Accidents, Claims and/or Violations
+      properties:
+        infractionType:
+          type: string
+          description: Please call the metadata API for all valid values such as 'Accident
+            - At Fault' or 'Speeding'
+        occurrenceDate:
+          type: string
+          format: date-time
+        infractionDesc:
+          type: string
+          description: Infraction Description
+        infractionId:
+          type: string
+          readOnly: true
+    FilingRequest:
+      type: object
+      description: Financial filing of a driver
+      required:
+        - finResFilingState
+        - finResFilingType
+      properties:
+        filingId:
+          type: integer
+          readOnly: true
+        finResFilingState:
+          type: string
+        finResFilingType:
+          type: string
+        FinResCaseNum:
+          type: string
+    FilingResponse:
+      type: object
+      description: Financial filing of a driver
+      properties:
+        filingId:
+          type: integer
+        finResFilingState:
+          type: string
+        finResFilingType:
+          type: string
+    VehicleRequest:
+      type: object
+      required:
+        - vehicleType
+      properties:
+        year:
+          type: integer
+          description: required if VIN is null
+        make:
+          type: string
+          description: required if VIN is null
+        model:
+          type: string
+          description: required if VIN is null
+        bodyType:
+          type: string
+          description: required if VIN is null
+        bodyStyle:
+          type: string
+          description: required if VIN is null
+        vin:
+          type: string
+          description: required if any of the following are not sent year make model
+            bodystyle bodytype
+        primaryUse:
+          type: string
+          description: required if vehicleType is auto
+        vehicleType:
+          type: string
+        IsPurchasedNew:
+          type: boolean
+          description: required if the vehicle year is 3 years less than or equals to
+            current year and one year more or equal to the current year
+        PurchasedNewDate:
+          type: string
+          description: required when isPurchasedNew is true
+        garageLocation:
+          allOf:
+            - $ref: "#/components/schemas/Address"
+          required:
+            - addressLine1
+            - city
+            - state
+            - postalCode
+          description: Only needed if the garaging address is separate from the policy
+            holder address
+        costNew:
+          $ref: "#/components/schemas/CostNew"
+        antiTheftDevice:
+          description: Type of anti-theft device on vehicle
+          type: string
+        antiTheftDevices:
+          description: List of anti-theft device on vehicle
+          type: array
+          items:
+            $ref: "#/components/schemas/AntiTheftDevices"
+        eligibleDiscounts:
+          type: array
+          description: List of eligible discounts for vehicle
+          items:
+            $ref: "#/components/schemas/EligibleDiscount"
+    VehicleResponse:
+      type: object
+      properties:
+        year:
+          type: integer
+        make:
+          type: string
+        model:
+          type: string
+        bodyType:
+          type: string
+        bodyStyle:
+          type: string
+        vin:
+          type: string
+        primaryUse:
+          type: string
+        vehicleType:
+          type: string
+        vehicleId:
+          type: number
+        garageLocation:
+          $ref: "#/components/schemas/Address"
+        costNew:
+          $ref: "#/components/schemas/CostNew"
+        antiTheftDevice:
+          type: string
+        antiTheftDevices:
+          description: List of anti-theft device on vehicle
+          type: array
+          items:
+            $ref: "#/components/schemas/AntiTheftDevices"
+        eligibleDiscounts:
+          type: array
+          description: List of eligible discounts for vehicle
+          items:
+            $ref: "#/components/schemas/EligibleDiscount"
+    AntiTheftDevices:
+      type: object
+      properties:
+        displayName:
+          type: string
+        selected:
+          type: boolean
+        mandatory:
+          type: boolean
+        deviceType:
+          type: string
+    CostNew:
+      type: object
+      properties:
+        amount:
+          type: integer
+        currency:
+          type: string
+    Discount:
+      type: object
+      properties:
+        description:
+          type: string
+        isDiscountApplied:
+          type: boolean
+          description: States whether discount is applied on the quote
+        category:
+          type: string
+        coverableId:
+          type: string
+    InformationalMessage:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/RuleMessage"
+        warnings:
+          type: array
+          items:
+            $ref: "#/components/schemas/RuleMessage"
+        problematicEntity:
+          $ref: "#/components/schemas/ProblematicEntity"
+    ProblematicEntity:
+      type: object
+      properties:
+        entity:
+          type: string
+        fixedId:
+          type: number
+        displayName:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date-time
+        vin:
+          type: string
+        coverageCode:
+          type: string
+        coverableType:
+          type: string
+    RuleMessage:
+      type: object
+      properties:
+        ruleId:
+          type: string
+          description: ID of Applicable Rule
+        message:
+          type: string
+    Offering:
+      type: object
+      properties:
+        packageName:
+          type: string
+        hasBlockingUWIssues:
+          type: boolean
+        premium:
+          $ref: "#/components/schemas/Premium"
+        coverages:
+          type: array
+          items:
+            allOf:
+              - $ref: "#/components/schemas/Coverage"
+    Coverage:
+      type: object
+      properties:
+        name:
+          type: string
+          readOnly: true
+        description:
+          type: string
+          readOnly: true
+        coverageId:
+          type: string
+          description: ID of Selected Coverage
+        coverableId:
+          type: number
+          description: This is required if coverageType = "Driver". This will be the
+            corresponding driverId. Similar for if coverageType = "Vehicle", it
+            will be the corresponding vehicleId.
+        coverageLevel:
+          type: string
+          description: This will be Driver, Vehicle, or Policy indicating what level of
+            coverage this coverage is for.
+        amount:
+          $ref: "#/components/schemas/Amount"
+        selectedValue:
+          type: array
+          description: Must be equal to an available term option code for the coverage
+          items:
+            $ref: "#/components/schemas/SelectedValue"
+        terms:
+          type: array
+          description: List of available options for the given coverage. This can include a
+            list of limits, deductibles, or options list. The coverage can
+            either be accepted or declined if this list is empty by changing the
+            SelectedValue.selectedValue boolean flag.
+          readOnly: true
+          items:
+            $ref: "#/components/schemas/Term"
+    SelectedValue:
+      type: object
+      required:
+        - code
+        - value
+      description: This is the selected value for any of the applicable term options on the
+        coverage.
+      properties:
+        code:
+          type: string
+        value:
+          type: string
+    Premium:
+      type: object
+      properties:
+        total:
+          $ref: "#/components/schemas/Amount"
+        fees:
+          $ref: "#/components/schemas/Amount"
+        taxes:
+          $ref: "#/components/schemas/Amount"
+        totalBeforeTaxes:
+          $ref: "#/components/schemas/Amount"
+        termMonths:
+          type: number
+    Amount:
+      type: object
+      properties:
+        amount:
+          type: number
+        currency:
+          type: string
+    Term:
+      type: object
+      properties:
+        termType:
+          type: string
+          description: This will be "Limit", "Deductible", or "Option".
+        options:
+          type: array
+          description: List of available coverage choices for the term type.
+          items:
+            $ref: "#/components/schemas/Option"
+    Option:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name
+        code:
+          type: string
+          description: Code
+    Person:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: First Name
+        middleName:
+          type: string
+          description: Middle Name
+        lastName:
+          type: string
+          description: Last Name
+        suffix:
+          type: string
+          description: Suffix
+        prefix:
+          type: string
+          description: Prefix
+        gender:
+          type: string
+          description: Gender
+        maritalStatus:
+          type: string
+          description: Please call the metadata API for all valid values such as 'Married'
+            or 'Civil Union'
+        dateOfBirth:
+          type: string
+          format: date-time
+          description: Date of Birth
+        ssn:
+          type: string
+          description: Social Security Number
+        emailAddress:
+          type: string
+          description: Email Address
+        age:
+          type: integer
+          description: Age
+    GetEligibleDiscountsResponse:
+      type: array
+      items:
+        $ref: "#/components/schemas/EligibleDiscount"
+    UpdateEligibleDiscountRequest:
+      type: object
+      properties:
+        eligibleDiscount:
+          allOf:
+            - $ref: "#/components/schemas/EligibleDiscount"
+    UpdateEligibleDiscountResponse:
+      $ref: "#/components/schemas/EligibleDiscount"
+    EligibleDiscount:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+          description: State selected for current eligible discount
+        eligibleDiscountId:
+          type: string
+          readOnly: true
+        dataType:
+          type: string
+          description: Denotes the type of data (boolean, string, etc.) of the eligible
+            discount
+        selected:
+          type: boolean
+          description: Denotes if the eligible discount is opted or not
+        date:
+          type: string
+          description: MM/YYYY
+          format: date-time
+        associateNumber:
+          type: number
+          description: Associate Number when code is 'PAAssociateDiscount_Ext'
+        trainingCourseCompletionDate:
+          type: string
+          format: date-time
+          description: Course completed date when code is 'PATrainedDriverDiscount_Ext',
+        antiTheftDevices:
+          description: List of anti-theft device on vehicle. Required when code is
+            'PAAntiTheftMod_Ext'
+          type: array
+          items:
+            $ref: "#/components/schemas/AntiTheftDevices"
+    CurrentCarrier:
+      type: object
+      properties:
+        currentCarrierName:
+          type: string
+          description: Name of Current Insurance Provider
+        coverageLapse:
+          type: string
+          description: Length of Coverage Lapse.  Ex. 0days
+        currentBodilyInjuryLimit:
+          type: string
+          description: Bodily Injury Limit of Current Insurance Policy
+        currentCarrierTerms:
+          type: integer
+          description: Number of Terms that Policyholder has had their current policy
+        isNationwideWinBack:
+          type: boolean

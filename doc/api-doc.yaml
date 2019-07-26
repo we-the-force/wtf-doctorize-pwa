@@ -29,6 +29,61 @@ tags:
   - name: appointments
     description: Appointments search and
 paths:
+
+  /doctors:
+    post:
+      tags: 
+        - doctors
+      summary: Create a doctor
+      operationId: addDoctor
+      description: Creates a doctor
+      responses: 
+        200:
+          description: doctor created
+          content: 
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserCreated'
+        400:
+          description: bad input parameter
+        409:
+          description: the doctor already exists
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Doctor'
+        description: Doctor to add 
+
+  /doctors/{id}:
+    get:
+      tags:
+        - doctors
+      description: return the details of a doctor
+      summary: search a doctor
+      parameters:
+        - in: path
+          name: id
+          required:  true
+          description: Doctor id
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: search results matching criteria
+          content: 
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/UserShow'
+        400:
+          description: bad input parameter
+
   /account/login:
     post:
       tags:
@@ -216,6 +271,7 @@ paths:
             schema:
               $ref: '#/components/schemas/User'
         description: User to add
+        
   /user/inviteAssistant:
     post:
       tags:

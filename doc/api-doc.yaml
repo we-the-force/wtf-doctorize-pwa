@@ -38,15 +38,15 @@ tags:
 paths:
   /doctors:
     post:
-      tags: 
+      tags:
         - doctors
       summary: Create a doctor
       operationId: addDoctor
       description: Creates a doctor
-      responses: 
+      responses:
         200:
           description: doctor created
-          content: 
+          content:
             application/json:
               schema:
                 type: array
@@ -62,7 +62,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Doctor'
-        description: Doctor to add 
+        description: Doctor to add
 
   /doctors/{id}:
     get:
@@ -82,11 +82,11 @@ paths:
       responses:
         200:
           description: search results matching criteria
-          content: 
+          content:
             application/json:
               schema:
                 type: array
-                items: 
+                items:
                   $ref: '#/components/schemas/Doctor'
         400:
           description: bad input parameter
@@ -139,12 +139,12 @@ paths:
             schema:
               $ref: '#/components/schemas/Doctor'
         description: edit a doctor
-              
-        
+
+
   /doctors/{id}/offices:
-    get:  
+    get:
       tags:
-        - doctors 
+        - doctors
           - offices
       description: List doctor's offices
       summary: List doctor's offices
@@ -160,7 +160,7 @@ paths:
       responses:
         200:
           description: List of doctor's offices
-          content: 
+          content:
             application/json:
               schema:
                 type: array
@@ -188,7 +188,7 @@ paths:
       responses:
         200:
           description: office created
-          content: 
+          content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Office'
@@ -202,7 +202,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Office'
-        description: Office to add 
+        description: Office to add
 
   /doctors/{id}/offices/{officeId}:
     get:
@@ -230,7 +230,7 @@ paths:
       responses:
         200:
           description: search results matching criteria
-          content: 
+          content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Office'
@@ -264,7 +264,7 @@ paths:
         400:
           description: Invalid parameters
         404:
-          description: office not found    
+          description: office not found
     patch:
       tags:
         - doctors
@@ -320,7 +320,7 @@ paths:
       responses:
         200:
           description: List of doctor's appointments
-          content: 
+          content:
             application/json:
               schema:
                 type: array
@@ -348,7 +348,7 @@ paths:
       responses:
         200:
           description: appointment created
-          content: 
+          content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Appointment'
@@ -362,9 +362,9 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Appointment'
-        description: appointment to add 
-        
-  
+        description: appointment to add
+
+
   /doctors/{id}/appoinments/{appointmentId}:
     get:
       tags:
@@ -391,7 +391,7 @@ paths:
       responses:
         200:
           description: search results matching criteria
-          content: 
+          content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Appointment'
@@ -413,7 +413,7 @@ paths:
             type: integer
             format: int64
         - in: path
-          name: officeId
+          name: appointmentId
           required: true
           description: appointment id
           schema:
@@ -425,7 +425,7 @@ paths:
         400:
           description: Invalid parameters
         404:
-          description: appointment not found   
+          description: appointment not found
     patch:
       tags:
         - doctors
@@ -442,7 +442,7 @@ paths:
             type: integer
             format: int64
         - in: path
-          name: officeId
+          name: appointmentId
           required: true
           description: appointment id
           schema:
@@ -461,7 +461,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Appointment'
-        description: edit appointment 
+        description: edit appointment
 
   /doctors/{id}/patients:
     get:
@@ -482,7 +482,7 @@ paths:
       responses:
         200:
           description: List of doctor's patients
-          content: 
+          content:
             application/json:
               schema:
                 type: array
@@ -510,7 +510,7 @@ paths:
       responses:
         200:
           description: patient created
-          content: 
+          content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Patient'
@@ -524,8 +524,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Patient'
-        description: patient to add 
-             
+        description: patient to add
+
   /doctors/{id}/patients/{patientId}:
     get:
       tags:
@@ -552,7 +552,7 @@ paths:
       responses:
         200:
           description: search results matching criteria
-          content: 
+          content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Patient'
@@ -586,7 +586,7 @@ paths:
         400:
           description: Invalid parameters
         404:
-          description: patient not found 
+          description: patient not found
     patch:
       tags:
         - doctors
@@ -622,7 +622,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Patient'
-        description: edit patient 
+        description: edit patient
 
   /doctors/{id}/assistants:
     get:
@@ -643,7 +643,7 @@ paths:
       responses:
         200:
           description: List of doctor's assistants
-          content: 
+          content:
             application/json:
               schema:
                 type: array
@@ -677,7 +677,7 @@ paths:
       responses:
         200:
           description: patient created
-          content: 
+          content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Assistant'
@@ -719,7 +719,7 @@ paths:
       responses:
         200:
           description: search results matching criteria
-          content: 
+          content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Assistant'
@@ -753,7 +753,7 @@ paths:
         400:
           description: Invalid parameters
         404:
-          description: assistant not found 
+          description: assistant not found
     patch:
       tags:
         - doctors
@@ -789,7 +789,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Assistant'
-        description: edit assistant 
+        description: edit assistant
 
   /account/login:
     post:
@@ -852,7 +852,7 @@ paths:
         400:
           description: Account confirmation failed
 
-  
+
   /account/confirmation/assistant:
     post:
       tags:
@@ -924,7 +924,7 @@ paths:
         400:
           description: bad input parameter
 
-  
+
 components:
   schemas:
 
@@ -985,7 +985,7 @@ components:
                 properties:
                   id:
                     type: integer
-    
+
     Appointment:
       required:
         - doctorId
@@ -1014,7 +1014,7 @@ components:
           type: string
           format: date-time
           example: '2018-11-16T15:31:46.437-06'
-    
+
     Office:
       type: object
       required:
@@ -1061,8 +1061,8 @@ components:
         lunchStartTime:
           type: string
         lunchCloseTime:
-          type: string 
-          
+          type: string
+
     Patient:
       allOf:     # Combines the BasicErrorModel and the inline model
         - $ref: '#/components/schemas/User'

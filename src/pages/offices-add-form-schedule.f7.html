@@ -233,6 +233,7 @@
                                     "lunchStartTime": app.data.consultorio.lunchStartTime,
                                     "lunchCloseTime": app.data.consultorio.lunchCloseTime
                                 }, function(e){
+                                    app.data.consultorio.edit = false;
                                     app.preloader.hide();
                                     app.methods.redirectTo('offices-show');                                       
                                 }, function(e){

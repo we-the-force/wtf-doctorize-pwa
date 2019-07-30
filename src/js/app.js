@@ -71,6 +71,12 @@ var app = new Framework7({
                 nombre: '',
                 email: '',
                 phone: '',
+                birthdate: '',
+                civilStatus: '',
+                weight: '',
+                height: '',
+                blood: '',
+                pressure: '',
             },
             paciente: {
                 nombre: '',

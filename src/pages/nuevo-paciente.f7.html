@@ -221,29 +221,23 @@
                 });
 
 
-                $$(document).on('input:empty', '#birthdate', function(e){
-                    disableButton();
-                });
-                $$(document).on('input:empty', '#civil-status', function(e){
-                    disableButton();
-                });
-                $$(document).on('input:empty', '#weight', function(e){
-                    disableButton();
-                });
-                $$(document).on('input:empty', '#height', function(e){
-                    disableButton();
-                });$$(document).on('input:empty', '#blood', function(e){
-                    disableButton();
-                });
-                $$(document).on('input:empty', '#pressure', function(e){
+                $$(document).on('input:empty', function(e){
                     disableButton();
                 });
 
                 function enableButton(){
+                    app.data.paciente.birthdate = birthdate;
+                    app.data.paciente.civilStatus = civilStatus;
+                    app.data.paciente.weight = weight;
+                    app.data.paciente.height = height;
+                    app.data.paciente.blood = blood;
+                    app.data.paciente.pressure = pressure;
                     $$('#nuevo-paciente .login-button').removeClass('grey');
                     $$('#nuevo-paciente .login-button').off('click');
                     $$('#nuevo-paciente .login-button').on('click', function(e){
-                        app.methods.redirectTo('home'); 
+                        console.log(app.data.paciente);
+                        app.methods.redirectTo('home');
+                        
                     });
                 }
 

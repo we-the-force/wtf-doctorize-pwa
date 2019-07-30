@@ -46,24 +46,27 @@
             <div>
                 <div class="list">
                     <ul id="asistentes">
-
-                    </ul>
-                </div>
-                <!-- <div class="list">
-                    <ul>
-                        <li>
+                        <!-- <li>
                             <div class="row">
-                                <div class="col-50"></div>
-                                <div class="col-50">
-                                <a href="#" class="item-link list-button login-button asistente">
-                                    <p>Guardar </p>
-                                    <i class="material-icons">chevron_right</i>
-                                </a>
+                                <div class="card card-outline elevation-3 asistentes">
+                                    <div class="rectangle"></div>
+                                    <div class="avatar">
+                                        <img src="https://cdn.framework7.io/placeholder/fashion-88x88-6.jpg"/>
+                                    </div>
+                                    <div class="card-content card-content-padding">
+                                        <h4 class="blue">Test Card</h4>
+                                        <h3 class="light-blue2">This is just a test</h3>
+                                        <h4></h4>
+                                    </div>
+                                    <div class="link dynamic-popover" data-officeId="">
+                                        <i class="material-icons more">more_vert
+                                        </i>
+                                    </div>
                                 </div>
                             </div>
-                        </li>
+                        </li> -->
                     </ul>
-                </div> -->
+                </div>
             </div>
         </div>
     </div>
@@ -77,26 +80,112 @@
                 var app = self.$app;
                 console.log(app.data.doctor.id);
                 app.preloader.show('blue');
-                app.request.get(app.data.url + '/user/getListByDoctorId?doctorId=' + app.data.doctor.id, //id=99
-                    function(e) {
-                        var x = JSON.parse(e);
-                        for (var i = 0; i < x.length; i++) {
-                            $$('<li>' +
+                app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/assistants',                 function(e) {
+                    var x = JSON.parse(e);
+                    console.log(x);
+                    
+                    for (var i = 0; i < x.length; i++) {
+                        $$('#asistentes').append('<li>'+
+                        '<div class="row">'+
+                            '<div class="card card-outline elevation-3 asistentes">'+
+                                '<div class="rectangle"></div>'+
+                                '<div class="avatar">'+
+                                    '<img src="'+ app.data.url +'/' + x[i].photo + '"/50.png>'+
+                                '</div>'+
+                                '<div class="card-content card-content-padding">'+
+                                    '<h4 class="blue">'+ x[i].doctorOfficeName +'</h4>'+
+                                    '<h3 class="light-blue2">'+ x[i].name +'</h3>'+
+                                '</div>'+
+                                '<div class="link dynamic-popover" data-AssistantId="' + x[i].id + '">' +
+                                    '<i class="material-icons more">more_vert</i>' +
+                                '</div>'+
+                            '</div>'+
+                        '</div>'+
+                        '</li>');
+                    }
+                    app.preloader.hide();
+                    $$('.dynamic-popover').on('click', function(e) {
+                        var currentAssistant = $$(this).data('AssistantId');
+                        
+                        var dynamicPopover = app.popover.create({
+                            targetEl: this,
+                            content: '<div class="popover elevation-3">' +
+                                '<div class="popover-inner">' +
+                                '<div class="block">' +
+                                '<div class="list">' +
+                                '<ul id="consultorios">' +
+                                '<li>' +
                                 '<div class="row">' +
-                                '<div class="card card-outline" style="width: 100%">' +
-                                '<div class="card-header">' + x[i].name + '</div>' +
-                                '<div class="card-content card-content-padding">' + x[i].email + '</div>' +
+                                '<h4 class="blue">Desactivar</h4>' +
+                                '<label class="toggle toggle-init color-blue-toggle">' +
+                                '<input type="checkbox" name="chbx" value="1" style="display:none" checked>' +
+                                '<span class="toggle-icon"></span>' +
+                                '</label>' +
+                                '</div>' +
+                                '<li>' +
+                                '<li>' +
+                                '<div class="row">' +
+                                '<a href="#" data-view=".view-main" class="item-link list-button edit-assistant">' +
+                                '<h4 class="blue">Editar'+
+                                '<i class="icon material-icons blue">chevron_right</i>' +
+                                '</h4>' +
+                                '</a>' +
+                                '</div>' +
+                                '<li>' +
+                                '<li>' +
+                                '<div class="row">' +
+                                '<div  class="item-link delete-assistant">' +
+                                '<h4 class="blue">Eliminar</h4>' +
+                                '</div>' +
+                                '</div>' +
+                                '<li>' +
+                                '</ul>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>',
+                            on: {
+                                open: function(popover) {},
+                                opened: function(popover, AssisstantId = currentAssistant) {
+                                    $$('.delete-assistant').on('click', function() {
+                                        console.log(AssisstantId);
+                                        dynamicPopover.close();
+                                        app.dialog.confirm('¿Estás seguro que deseas eliminar el consultorio?', function() {
+                                            ///assistant/21/delete
+                                            app.preloader.show('blue');
+                                            app.request({
+                                                url: app.data.url + '/assistant/' + AssisstantId + '/delete',
+                                                method: "DELETE",
+                                                crossDomain: true,
+                                                success: function(e){
+                                                    app.preloader.hide();
+                                                    app.dialog.alert('Se eliminó al asistente.', function(){
+                                                        location.reload();
+                                                    });                                                    
+                                                },
+                                                error: function(e){
+                                                    app.preloader.hide();
+                                                    app.dialog.alert('Ha ocurrido un error elminando al asistente');
+                                                }
+                                            });
+                                        });
 
-                                '</div>' +
-                                '</div>' +
-                                '</li>').appendTo("#asistentes");
-                        }
-                        app.preloader.hide();
-                    }, 
-                    function(e) {
-                        app.preloader.hide();
+                                    });
+                                    $$('.edit-assistant').on('click', function() {
+                                        console.log(AssisstantId);
+                                        dynamicPopover.close();
+                                        location.href = "#!/asistentes-invitar-02?id=" + AssisstantId;
+                                        location.reload();
+                                    });
+                                },
+                            }
+                        });
+                        dynamicPopover.open();
                     });
-
+                }, 
+                function(e) {
+                    app.preloader.hide();
+                });
             }
         }
     }

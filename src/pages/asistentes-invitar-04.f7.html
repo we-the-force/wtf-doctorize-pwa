@@ -11,7 +11,7 @@
                     <div class="col-85"></div>
                 </div>             
                 <div class="list">
-                    <ul>
+                    <ul class="header">
                         <li>
                             <div class="row">
                                 <div class="col-10"></div>
@@ -112,6 +112,24 @@
                 var self = this;
                 var app = self.$app;
                 var items; 
+
+                if(app.data.assistant.flag){
+                    $$('.header').children('li')[2].remove();
+                    items = $$('[name="chbx"]');
+                    items.forEach(x => {  
+                        var z = false;                      
+                        app.data.assistant.permisos.forEach(element => {
+                            if(element.id == x.value){
+                                x.checked = true;
+                                z = true;
+                            }
+                        });
+                        if(!z){
+                            x.checked = false;
+                        }
+                    });
+                }
+
                 $$('#asistentes-invitar-04 .login-button').on('click', function(e){
                     items = $$('[name="chbx"]');
                     app.data.assistant.permisos = [];
@@ -120,23 +138,39 @@
                             app.data.assistant.permisos.push({'id':items[i].value});
                         }
                     }
-                    console.log(app.data.assistant.email);
-                    console.log(app.data.doctor.id);
-                    console.log(app.data.assistant.consultorio);
-                    console.log(app.data.assistant.permisos);
                     app.preloader.show('blue');
-                    app.request.postJSON(app.data.url + '/user/inviteAssistant', { 
-                        "email": app.data.assistant.email,
-                        "doctorId": app.data.doctor.id,
-                        "doctorOfficeId": app.data.assistant.consultorio,
-                        "permissions": app.data.assistant.permisos
-                    }, function(e){
+                    
+                    if(app.data.assistant.flag){                        
+                        //integrar endpoint asistente update
+                        app.request.postJSON(app.data.url + '/user/save', { 
+                            "id": app.data.assistant.id,
+                            "email": app.data.assistant.email,
+                            "doctorId": app.data.doctor.id,
+                            "doctorOfficeId": app.data.assistant.consultorio,
+                            "permissions": app.data.assistant.permisos
+                        }, function(e){
+                            app.data.assistant.flag = false;
+                            app.preloader.hide();
+                            app.methods.redirectTo('asistentes-invitar-01');                                       
+                        }, 
+                        function(e) {
+                            app.preloader.hide();
+                        });
                         app.preloader.hide();
-                        app.methods.redirectTo('asistentes-confirmar');                                       
-                    }, 
-                    function(e) {
-                        app.preloader.hide();
-                    });
+                    }else{
+                        app.request.postJSON(app.data.url + '/user/inviteAssistant', { 
+                            "email": app.data.assistant.email,
+                            "doctorId": app.data.doctor.id,
+                            "doctorOfficeId": app.data.assistant.consultorio,
+                            "permissions": app.data.assistant.permisos
+                        }, function(e){
+                            app.preloader.hide();
+                            app.methods.redirectTo('asistentes-confirmar');                                       
+                        }, 
+                        function(e) {
+                            app.preloader.hide();
+                        });
+                    }
                 });
             }
         }

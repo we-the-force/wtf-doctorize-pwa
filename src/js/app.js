@@ -33,6 +33,7 @@ var app = new Framework7({
                 phone: '',
             },
             assistant: {
+                id: '',
                 flag: false,
                 code: '',
                 name: '',
@@ -42,7 +43,7 @@ var app = new Framework7({
                 permisos: [],
             },
             doctor: {
-                id: '',
+                id: '99',
                 email: '',
                 name: '',
                 cellphone: '',

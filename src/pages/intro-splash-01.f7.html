@@ -183,6 +183,9 @@
                     
                     $$('#intro-splash .login-button').on('click', function(){
                         var swiper = app.swiper.get('.swiper-container');
+                        if(swiper.isEnd){
+                            app.methods.redirectTo('home');
+                        }
                         swiper.slideNext();
                     });
                 }

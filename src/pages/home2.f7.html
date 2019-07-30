@@ -1,54 +1,203 @@
 <template>
     <div class="page" data-name="login" id="login">
-      <div class="page-content login-screen-content">
-        <div class="list">
-          <ul>
-            <li>
-              <div class="row">
-                <div class="col">
-                  <a href="/offices-show" data-view=".view-main"
-                  class="item-link list-button login-register-button">Consultorios</a>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="row">
-                <div class="col">
-                  <a href="/assistants-show" data-view=".view-main"
-                  class="item-link list-button login-register-button">Asistentes</a>
-                </div>
-              </div>
-            </li>
-            <li>
-                <div class="row">
-                    <div class="col">
-                    <a href="/agendar-cita" data-view=".view-main"
-                    class="item-link list-button login-register-button">Agendar cita</a>
-                    </div>
-                </div>
-            </li>
-            <li>
-              <div class="row">
-                  <div class="col">
-                  <a href="/nuevo-paciente" data-view=".view-main"
-                  class="item-link list-button login-register-button">Nuevo Paciente</a>
-                  </div>
-              </div>
-            </li>
-            <li>
-                <div class="row">
-                    <div class="col">
-                    <a href="/" data-view=".view-main"
-                    class="item-link list-button login-register-button">Salir</a>
-                    </div>
-                </div>
-            </li>
-            
-          </ul>
+      <div class="toolbar tabbar tabbar-labels toolbar-bottom">
+        <div class="toolbar-inner">
+          <a href="#tab-1" class="tab-link tab-link-active">
+            <!-- Different icons for iOS and MD themes -->
+            <i class="icon material-icons">home</i>
+          </a>
+          <a href="#tab-2" class="tab-link">
+            <i class="icon material-icons">today</i>
+          </a>
+          <a href="#" class="tab-link">
+          </a>
+          <a href="#tab-4" class="tab-link">
+              <i class="icon material-icons">monetization_on</i>
+            </a>
+            <a href="#tab-5" class="tab-link">
+                <i class="icon material-icons">settings</i>
+              </a>
         </div>
+      </div>
+      <div class="add-circle">
+          <a >
+              <img src="/static/images/add_circle_24px.svg" class="dynamic-sheet" alt="" >
+          </a>
+      </div>
+      <div class="tabs">
+        <div class="page-content login-screen-content tab tab-active"  id="tab-1">
+          <div class="list">
+            <ul>
+              <li>
+                <div class="row">
+                  <div class="col">
+                    <a href="/intro-splash-01" data-view=".view-main"
+                    class="item-link list-button login-register-button">Intro</a>
+                  </div>
+                </div>
+              </li>
+              <!-- <li>
+                <div class="row">
+                  <div class="col">
+                    <a href="/offices-show" data-view=".view-main"
+                    class="item-link list-button login-register-button">Consultorios</a>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="row">
+                  <div class="col">
+                    <a href="/assistants-show" data-view=".view-main"
+                    class="item-link list-button login-register-button">Asistentes</a>
+                  </div>
+                </div>
+              </li>
+              <li>
+                  <div class="row">
+                      <div class="col">
+                      <a href="/agendar-cita" data-view=".view-main"
+                      class="item-link list-button login-register-button">Agendar cita</a>
+                      </div>
+                  </div>
+              </li>
+              <li>
+                <div class="row">
+                    <div class="col">
+                    <a href="/nuevo-paciente" data-view=".view-main"
+                    class="item-link list-button login-register-button">Nuevo Paciente</a>
+                    </div>
+                </div>
+              </li> -->
+              <li>
+                  <div class="row">
+                      <div class="col">
+                      <a href="/" data-view=".view-main"
+                      class="item-link list-button login-register-button">Salir</a>
+                      </div>
+                  </div>
+              </li>            
+            </ul>
+          </div>
+        </div>
+        <div class="page-content login-screen-content tab"  id="tab-2">
+            <div class="list">
+              <ul>
+                <li>
+                  <div class="row">
+                    <div class="col">
+                      <a href="#" data-view=".view-main"
+                      class="item-link list-button login-register-button">Agenda</a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="page-content login-screen-content tab"  id="tab-4">
+              <div class="list">
+                <ul>
+                  <li>
+                    <div class="row">
+                      <div class="col">
+                        <a href="#" data-view=".view-main"
+                        class="item-link list-button login-register-button">Money</a>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="page-content login-screen-content tab"  id="tab-5">
+                <div class="list">
+                  <ul>
+                    <li>
+                      <div class="row">
+                        <div class="col">
+                          <a href="#" data-view=".view-main"
+                          class="item-link list-button login-register-button">Settings</a>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
       </div>
     </div>
   </template>
   <script>
-      export default {}
+    import $$ from 'dom7';
+    export default {  
+      on: {
+        pageInit: function(e, page) {
+            var self = this;
+            var app = self.$app;
+            var dynamicSheet = app.sheet.create({
+              content: '<div class="sheet-modal">'+
+                          '<div class="close-sheet">'+
+                              '<img src="/static/images/cancel_24px.svg" alt="" class="close">'+
+                          '</div>'+
+                          '<div class="sheet-modal-inner">'+
+                            '<div class="list">'+
+                              '<ul>'+
+                                '<li>'+
+                                  '<div class="row">'+
+                                    '<div class="col">'+
+                                      '<a href="/offices-show" data-view=".view-main" class="item-link list-button login-register-button">'+
+                                      '<i class="material-icons">local_hospital</i>'+
+                                      'Consultorios</a>'+     
+                                    '</div>'+
+                                  '</div>'+
+                                '</li>'+
+                                '<li>'+
+                                  '<div class="row">'+
+                                    '<div class="col">'+
+                                      '<a href="/assistants-show" data-view=".view-main" class="item-link list-button login-register-button">'+
+                                      '<i class="material-icons">headset_mic</i>'+
+                                      'Asistentes</a>'+     
+                                    '</div>'+
+                                  '</div>'+
+                                '</li>'+
+                                '<li>'+
+                                  '<div class="row">'+
+                                    '<div class="col">'+
+                                      '<a href="/agendar-cita" data-view=".view-main" class="item-link list-button login-register-button">'+
+                                      '<i class="material-icons">event</i>'+
+                                      'Nueva cita</a>'+     
+                                    '</div>'+
+                                  '</div>'+
+                                '</li>'+
+                                '<li>'+
+                                  '<div class="row">'+
+                                    '<div class="col">'+
+                                    '<a href="/nuevo-paciente" data-view=".view-main" class="item-link list-button login-register-button">'+
+                                      '<i class="material-icons">person_add</i>'+
+                                      'Nuevo Paciente</a>'+                                    
+                                    '</div>'+
+                                  '</div>'+
+                                '</li>'+ 
+                              '</ul>'+
+                            '</div>'+
+                          '</div>'+
+                        '</div>',
+              on: {
+                open: function (sheet) {
+                  console.log('Sheet open');
+                },
+                opened: function (sheet) {
+                  $$('.close').on('click', function(){
+                    dynamicSheet.close();
+                  });
+                  $$('a').on('click', function(){
+                    dynamicSheet.close();
+                  });
+                },
+              }
+            });
+            
+            $$('.dynamic-sheet').on('click', function(){
+              dynamicSheet.open();
+            });
+        }
+      }
+    }
   </script>

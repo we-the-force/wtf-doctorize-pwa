@@ -69,7 +69,7 @@
                     var app = self.$app;
                     var items; 
                     app.preloader.show('blue');
-                    app.request.get(app.data.url + '/doctorOffices/getListByUserId?userId=' + app.data.doctor.id,//id=99 
+                    app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/offices',//id=99 
                     function(e){
                         var x = JSON.parse(e);
                         for(var i = 0; i < x.length; i++){

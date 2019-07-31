@@ -389,7 +389,7 @@ background: #ccc;
                     if(app.data.assistant.flag){
                         c.result('base64').then(function(blob) {
                             app.preloader.show('blue');
-                            app.request.postJSON(app.data.url + '/account/confirmationAssistant', {
+                            app.request.postJSON(app.data.url + '/account/confirmation/assistant', {
                                 "email": app.data.assistant.email,
                                 "code": app.data.assistant.code,
                                 "name": app.data.assistant.name,
@@ -408,7 +408,7 @@ background: #ccc;
                         specialityID++;
                         c.result('base64').then(function(blob) {
                             app.preloader.show('blue');
-                            app.request.postJSON(app.data.url + '/user/save', {
+                            app.request.postJSON(app.data.url + '/doctors', {
                                 "password": app.data.register.password,
                                 "name": app.data.register.username,
                                 "email": app.data.register.email,

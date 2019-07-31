@@ -141,7 +141,7 @@
                 });
 
                 function edit(){
-                    app.request.get(app.data.url + '/doctorOffice?doctorOfficeId=' + app.data.consultorio.id,
+                    app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/offices/' + app.data.consultorio.id,
                     function(e) {
                         var x = JSON.parse(e);
                         app.data.consultorio.edit = true;

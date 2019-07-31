@@ -120,7 +120,7 @@
                     var phone = '';
     
                     app.preloader.show('blue');
-                    app.request.get(app.data.url + '/doctorOffice/getListByUserId?userId=' + app.data.doctor.id,//id=99 
+                    app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/offices',//id=99 
                     function(e){
                         var x = JSON.parse(e);
                         for(var i = 0; i < x.length; i++){
@@ -211,10 +211,10 @@
                                 console.log(dateTime);
                                 
                                 app.preloader.show('blue');
-                                app.request.postJSON(app.data.url + '/medicalAppointment/save', { 
+                                app.request.postJSON(app.data.url + '/doctors/' + app.data.doctor.id + '/appointments', { 
                                     "email": app.data.paciente.email,
                                     "doctorId": app.data.doctor.id,
-                                    "doctorOfficeId": office,
+                                    "officeId": office,
                                     "name": app.data.paciente.nombre,
                                     "phone": app.data.paciente.phone,
                                     "date": dateTime,

@@ -300,7 +300,7 @@ paths:
               $ref: '#/components/schemas/Office'
         description: edit office
 
-  /doctors/{id}/appoinments:
+  /doctors/{id}/appointments:
     get:
       tags:
         - doctors
@@ -363,7 +363,7 @@ paths:
         description: appointment to add
 
 
-  /doctors/{id}/appoinments/{appointmentId}:
+  /doctors/{id}/appointments/{appointmentId}:
     get:
       tags:
         - doctors
@@ -816,6 +816,10 @@ paths:
       responses:
         200:
           description: Account Login Succesfuly
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Doctor'
 
         400:
           description: bad input parameter
@@ -1127,14 +1131,14 @@ components:
       required:
         - email
         - doctorId
-        - OfficeId
+        - officeId
         - permissions
       properties:
         email:
           type: string
         doctorId:
           type: integer
-        OfficeId:
+        officeId:
           type: integer
         permissions:
           type: array

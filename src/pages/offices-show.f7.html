@@ -76,7 +76,7 @@
                 var self = this;
                 var app = self.$app;
                 app.preloader.show('blue');
-                app.request.get(app.data.url + '/doctorOffices/getListByUserId?userId=' + app.data.doctor.id, //id=99
+                app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/offices', //id=99
                     function(e) {
                         var x = JSON.parse(e);
                         for (var i = 0; i < x.length; i++) {
@@ -150,15 +150,20 @@
                                             app.dialog.confirm('¿Estás seguro que deseas eliminar el consultorio?', function() {
                                                 ///assistant/21/delete
                                                 app.preloader.show('blue');
-                                                app.request.get(app.data.url + '/doctorOffices/' + officeId + '/delete',
-                                                function(e) {
+                                                app.request({
+                                                url: app.data.url + '/doctors/' + app.data.doctor.id + '/offices/' + officeId,
+                                                method: "DELETE",
+                                                crossDomain: true,
+                                                success: function(e){
                                                     app.preloader.hide();
-                                                    app.dialog.alert('Se eliminó el consultorio.');
-                                                    location.reload();
-                                                }, 
-                                                function(e) {
+                                                    app.dialog.alert('Se eliminó el consultorio.', function(){
+                                                        location.reload();
+                                                    });                                                    
+                                                },
+                                                error: function(e){
                                                     app.preloader.hide();
-                                                    app.dialog.alert('Ha ocurrido un error elminando el consultorio');
+                                                    app.dialog.alert('Ha ocurrido un error elminando el consultorio.');
+                                                }
                                                 });
                                             });
 

@@ -90,10 +90,10 @@
                             '<div class="card card-outline elevation-3 asistentes">'+
                                 '<div class="rectangle"></div>'+
                                 '<div class="avatar">'+
-                                    '<img src="'+ app.data.url +'/' + x[i].photo + '"/50.png>'+
+                                    '<img src="'+ app.data.url +'/' + x[i].imageData + '"/50.png>'+
                                 '</div>'+
                                 '<div class="card-content card-content-padding">'+
-                                    '<h4 class="blue">'+ x[i].doctorOfficeName +'</h4>'+
+                                    '<h4 class="blue">'+ x[i].offices[0].officeName +'</h4>'+
                                     '<h3 class="light-blue2">'+ x[i].name +'</h3>'+
                                 '</div>'+
                                 '<div class="link dynamic-popover" data-AssistantId="' + x[i].id + '">' +
@@ -154,7 +154,7 @@
                                             ///assistant/21/delete
                                             app.preloader.show('blue');
                                             app.request({
-                                                url: app.data.url + '/assistant/' + AssisstantId + '/delete',
+                                                url: app.data.url + '/doctors/' + app.data.doctor.id + '/assistants/' + AssisstantId,
                                                 method: "DELETE",
                                                 crossDomain: true,
                                                 success: function(e){

@@ -109,14 +109,14 @@
                         '</div>'+
                     '</li>');
                     app.preloader.show('blue');
-                    app.request.get(app.data.url + '/user/' + app.data.assistant.id,
+                    app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/assistants/' + app.data.assistant.id,
                     function(e) {
                         var x = JSON.parse(e);                       
                         app.data.assistant.flag = true;
                         app.data.assistant.name = x.name;
                         app.data.assistant.email = x.email;
-                        app.data.assistant.consultorio = x.doctorOfficeName;
-                        app.data.assistant.permisos = x.permissions;
+                        app.data.assistant.consultorio = x.offices[0].officeName;
+                        app.data.assistant.permisos = x.offices[0].permissions;
                         $$('#email').val(x.email);
                         email = x.email;
                         app.preloader.hide();

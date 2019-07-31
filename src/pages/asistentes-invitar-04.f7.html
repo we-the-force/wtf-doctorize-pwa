@@ -142,26 +142,34 @@
                     
                     if(app.data.assistant.flag){                        
                         //integrar endpoint asistente update
-                        app.request.postJSON(app.data.url + '/user/save', { 
-                            "id": app.data.assistant.id,
-                            "email": app.data.assistant.email,
-                            "doctorId": app.data.doctor.id,
-                            "doctorOfficeId": app.data.assistant.consultorio,
-                            "permissions": app.data.assistant.permisos
-                        }, function(e){
-                            app.data.assistant.flag = false;
-                            app.preloader.hide();
-                            app.methods.redirectTo('asistentes-invitar-01');                                       
-                        }, 
-                        function(e) {
-                            app.preloader.hide();
+                        app.request({
+                            url: app.data.url + '/doctors/' + app.data.doctor.id + '/assistants/' + app.data.assistant.id,
+                            method: "PATCH",
+                            crossDomain: true,
+                            data: {
+                                "id": app.data.assistant.id,
+                                "email": app.data.assistant.email,
+                                "doctorId": app.data.doctor.id,
+                                "offices": [{
+                                    "officeId": app.data.assistant.consultorio,
+                                    "permissions": app.data.assistant.permisos   
+                                }]
+                                
+                            },
+                            success: function(e){
+                                app.data.assistant.flag = false;
+                                app.preloader.hide();
+                                app.methods.redirectTo('asistentes-invitar-01');                                          
+                            },
+                            error: function(e){
+                                app.preloader.hide();
+                            }
                         });
-                        app.preloader.hide();
                     }else{
-                        app.request.postJSON(app.data.url + '/user/inviteAssistant', { 
+                        app.request.postJSON(app.data.url + '/doctors/' + app.data.doctor.id + '/assistants', { 
                             "email": app.data.assistant.email,
                             "doctorId": app.data.doctor.id,
-                            "doctorOfficeId": app.data.assistant.consultorio,
+                            "officeId": app.data.assistant.consultorio,
                             "permissions": app.data.assistant.permisos
                         }, function(e){
                             app.preloader.hide();

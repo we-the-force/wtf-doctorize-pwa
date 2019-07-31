@@ -85,9 +85,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Doctor'
+                $ref: '#/components/schemas/Doctor'
         400:
           description: bad input parameter
     delete:
@@ -959,6 +957,8 @@ components:
           required:
             - speciality
           properties:
+            id: 
+              type: integer
             speciality:
               type: object
               properties:
@@ -971,23 +971,30 @@ components:
         - type: object
           required:
             - doctorId
-            - officeId
-            - officeName
+            - offices
             - permissions
           properties:
+            id:
+              type: integer
             doctorId:
               type: integer
-            officeId:
-              type: integer
-            officeName:
-              type: string
-            permissions:
+            offices:
               type: array
-              items:
+              items: 
                 type: object
                 properties:
-                  id:
+                  officeId:
                     type: integer
+                  officeName:
+                    type: string
+                  permissions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+              
 
     Appointment:
       required:
@@ -998,6 +1005,8 @@ components:
         - email
         - phone
       properties:
+        id: 
+          type: integer
         email:
           type: string
           example: cristof_tb@hotmail.com
@@ -1034,6 +1043,8 @@ components:
         - lunchStartTime
         - lunchCloseTime
       properties:
+        id:
+          type: integer
         email:
           type: string
         userId:
@@ -1071,6 +1082,8 @@ components:
         - $ref: '#/components/schemas/User'
         - type: object
           properties:
+            id:
+              type: integer
             birthdate:
               type: string
               format: date-time

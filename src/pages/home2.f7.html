@@ -131,7 +131,9 @@
         pageInit: function(e, page) {
             var self = this;
             var app = self.$app;
-            var dynamicSheet = app.sheet.create({
+            
+            $$('.dynamic-sheet').on('click', function(){
+              var dynamicSheet = app.sheet.create({
               content: '<div class="sheet-modal">'+
                           '<div class="close-sheet">'+
                               '<img src="/static/images/cancel_24px.svg" alt="" class="close">'+
@@ -192,9 +194,7 @@
                   });
                 },
               }
-            });
-            
-            $$('.dynamic-sheet').on('click', function(){
+              });
               dynamicSheet.open();
             });
         }

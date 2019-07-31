@@ -1025,7 +1025,7 @@ components:
         - name
         - phone
         - address
-        - id
+        - userId
         - lat
         - lng
         - startTime
@@ -1036,7 +1036,7 @@ components:
       properties:
         email:
           type: string
-        id:
+        userId:
           type: integer
         name:
           type: string

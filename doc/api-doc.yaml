@@ -477,6 +477,16 @@ paths:
           schema:
             type: integer
             format: int64
+        - in: query
+          name: filter
+          description: 'filtrar por el campo...'
+          schema:
+            type: string
+        - in: query
+          name: search
+          description: 'que contenga la siguiente búsqueda...'
+          schema:
+            type: string
       responses:
         200:
           description: List of doctor's patients
@@ -961,7 +971,7 @@ components:
           required:
             - speciality
           properties:
-            id: 
+            id:
               type: integer
             speciality:
               type: object
@@ -984,7 +994,7 @@ components:
               type: integer
             offices:
               type: array
-              items: 
+              items:
                 type: object
                 properties:
                   officeId:
@@ -998,7 +1008,7 @@ components:
                       properties:
                         id:
                           type: integer
-              
+
 
     Appointment:
       required:
@@ -1009,7 +1019,7 @@ components:
         - email
         - phone
       properties:
-        id: 
+        id:
           type: integer
         email:
           type: string

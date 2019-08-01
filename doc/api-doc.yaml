@@ -1080,6 +1080,20 @@ components:
           type: string
         lunchCloseTime:
           type: string
+        assistant:
+          type: object
+          properties:
+            assistantId:
+              type: integer
+            assistantName:
+              type: integer
+            permissions:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
 
     Patient:
       allOf:     # Combines the BasicErrorModel and the inline model

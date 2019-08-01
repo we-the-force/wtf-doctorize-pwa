@@ -217,6 +217,7 @@
                         app.preloader.show('blue');
                             if(app.data.consultorio.edit){
                                 // patch put
+                                console.log(app.data.consultorio);
                                 app.request({
                                     url: app.data.url + '/doctors/' + app.data.doctor.id + '/offices/' + app.data.consultorio.id,
                                     method: "PATCH",

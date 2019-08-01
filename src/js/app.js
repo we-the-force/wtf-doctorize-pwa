@@ -14,6 +14,10 @@ import routes from './routes.js';
 
 import register from './register.js';
 
+Framework7.request.setup({
+  contentType: "application/json"
+});
+
 var app = new Framework7({
     root: '#app', // App root element
 
@@ -121,7 +125,6 @@ var app = new Framework7({
     }
 
 });
-
 
 /* //login
 var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;

@@ -4,7 +4,7 @@
             <div class="login-screen-content nav-bar-rect">
                 <div class="row">
                     <div class="col-15">
-                        <a href='/offices-show' data-view=".view-main"  class="item-link list-button back-button" id="back">
+                        <a href='/offices-show' data-view=".view-main"  class="item-link list-button back-button" id="cancel">
                             <i class="material-icons">chevron_left</i>
                         </a>
                     </div>
@@ -69,7 +69,7 @@
                         <li>
                             <div class="row">
                                 <div class="col-50">
-                                    <a href="/offices-show" data-view=".view-main" class="item-link list-button login-register-button ">Cancelar</a>
+                                    <a href="/offices-show" data-view=".view-main" class="item-link list-button login-register-button" id="cancel">Cancelar</a>
                                 </div>
                                 <div class="col-50">
                                 <a href="#" class="item-link list-button login-button asistente">
@@ -186,6 +186,11 @@
                     $$('#offices-add-form-basic .login-button').addClass('grey');
                     $$('#offices-add-form-basic .login-button').off('click');
                 }
+
+                $$('#offices-add-form-basic #cancel').on('click', function(e){
+                    app.data.consultorio.edit = false;
+                    app.methods.redirectTo('offices-show');
+                });
 
             }
         }

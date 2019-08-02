@@ -32,11 +32,55 @@ tags:
     description: Basic operations for doctor's appointments
   - name: doctors - patients
     description: Basic operations for doctor's patients
+  - name: assistants
+    description: Basic assistants operations
+  - name: patients
+    description: Basic patients operations
   - name: account
     description: Basic account operations
 
 paths:
   /doctors:
+    get:
+      tags:
+        - doctors
+      description: List doctors
+      summary: List doctors
+      operationId: showDoctors
+      parameters:
+        - in: query
+          name: filter
+          description: 'filtrar por el campo...'
+          schema:
+            type: string
+        - in: query
+          name: search
+          description: 'que contenga la siguiente búsqueda...'
+          schema:
+            type: string
+        - in: query
+          name: offset
+          schema:
+            type: integer
+          description: The number of items to skip before starting to collect the result set
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: The numbers of items to return
+      responses:
+        200:
+          description: List of doctors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Doctor'
+        400:
+          description: bad input parameters
+        404:
+          description: Officess not found
     post:
       tags:
         - doctors
@@ -155,6 +199,26 @@ paths:
           schema:
             type: integer
             format: int64
+        - in: query
+          name: filter
+          description: 'filtrar por el campo...'
+          schema:
+            type: string
+        - in: query
+          name: search
+          description: 'que contenga la siguiente búsqueda...'
+          schema:
+            type: string
+        - in: query
+          name: offset
+          schema:
+            type: integer
+          description: The number of items to skip before starting to collect the result set
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: The numbers of items to return
       responses:
         200:
           description: List of doctor's offices
@@ -315,6 +379,26 @@ paths:
           schema:
             type: integer
             format: int64
+        - in: query
+          name: filter
+          description: 'filtrar por el campo...'
+          schema:
+            type: string
+        - in: query
+          name: search
+          description: 'que contenga la siguiente búsqueda...'
+          schema:
+            type: string
+        - in: query
+          name: offset
+          schema:
+            type: integer
+          description: The number of items to skip before starting to collect the result set
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: The numbers of items to return
       responses:
         200:
           description: List of doctor's appointments
@@ -487,6 +571,16 @@ paths:
           description: 'que contenga la siguiente búsqueda...'
           schema:
             type: string
+        - in: query
+          name: offset
+          schema:
+            type: integer
+          description: The number of items to skip before starting to collect the result set
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: The numbers of items to return
       responses:
         200:
           description: List of doctor's patients
@@ -648,6 +742,26 @@ paths:
           schema:
             type: integer
             format: int64
+        - in: query
+          name: filter
+          description: 'filtrar por el campo...'
+          schema:
+            type: string
+        - in: query
+          name: search
+          description: 'que contenga la siguiente búsqueda...'
+          schema:
+            type: string
+        - in: query
+          name: offset
+          schema:
+            type: integer
+          description: The number of items to skip before starting to collect the result set
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: The numbers of items to return
       responses:
         200:
           description: List of doctor's assistants
@@ -798,6 +912,90 @@ paths:
             schema:
               $ref: '#/components/schemas/Assistant'
         description: edit assistant
+
+  /assistants:
+    get:
+      tags:
+        - assistants
+      description: List assistants
+      summary: List assistants
+      operationId: showAssistants
+      parameters:
+        - in: query
+          name: filter
+          description: 'filtrar por el campo...'
+          schema:
+            type: string
+        - in: query
+          name: search
+          description: 'que contenga la siguiente búsqueda...'
+          schema:
+            type: string
+        - in: query
+          name: offset
+          schema:
+            type: integer
+          description: The number of items to skip before starting to collect the result set
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: The numbers of items to return
+      responses:
+        200:
+          description: List of assistants
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Assistant'
+        400:
+          description: bad input parameters
+        404:
+          description: assistants not found
+
+  /patients:
+    get:
+      tags:
+        - patients
+      description: List patients
+      summary: List patients
+      operationId: showPatients
+      parameters:
+        - in: query
+          name: filter
+          description: 'filtrar por el campo...'
+          schema:
+            type: string
+        - in: query
+          name: search
+          description: 'que contenga la siguiente búsqueda...'
+          schema:
+            type: string
+        - in: query
+          name: offset
+          schema:
+            type: integer
+          description: The number of items to skip before starting to collect the result set
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: The numbers of items to return
+      responses:
+        200:
+          description: List of patients
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Patient'
+        400:
+          description: bad input parameters
+        404:
+          description: patients not found
 
   /account/login:
     post:

@@ -212,13 +212,6 @@ paths:
       operationId: searchOffice
       parameters:
         - in: path
-          name: id
-          required: true
-          description: doctor id
-          schema:
-            type: integer
-            format: int64
-        - in: path
           name: officeId
           required: true
           description: office id
@@ -243,13 +236,6 @@ paths:
       operationId: deleteOffice
       parameters:
         - in: path
-          name: id
-          required: true
-          description: doctor id
-          schema:
-            type: integer
-            format: int64
-        - in: path
           name: officeId
           required: true
           description: office id
@@ -271,13 +257,6 @@ paths:
       summary: edit office info
       operationId: editOffice
       parameters:
-        - in: path
-          name: id
-          required: true
-          description: doctor id
-          schema:
-            type: integer
-            format: int64
         - in: path
           name: officeId
           required: true
@@ -373,13 +352,6 @@ paths:
       operationId: searchAppointment
       parameters:
         - in: path
-          name: id
-          required: true
-          description: doctor id
-          schema:
-            type: integer
-            format: int64
-        - in: path
           name: appointmentId
           required: true
           description: appointment id
@@ -404,13 +376,6 @@ paths:
       operationId: deleteAppointment
       parameters:
         - in: path
-          name: id
-          required: true
-          description: doctor id
-          schema:
-            type: integer
-            format: int64
-        - in: path
           name: appointmentId
           required: true
           description: appointment id
@@ -432,13 +397,6 @@ paths:
       summary: edit appointment info
       operationId: editAppointment
       parameters:
-        - in: path
-          name: id
-          required: true
-          description: doctor id
-          schema:
-            type: integer
-            format: int64
         - in: path
           name: appointmentId
           required: true
@@ -544,13 +502,6 @@ paths:
       operationId: searchPatient
       parameters:
         - in: path
-          name: id
-          required: true
-          description: doctor id
-          schema:
-            type: integer
-            format: int64
-        - in: path
           name: patientId
           required: true
           description: patient id
@@ -575,13 +526,6 @@ paths:
       operationId: deletePatient
       parameters:
         - in: path
-          name: id
-          required: true
-          description: doctor id
-          schema:
-            type: integer
-            format: int64
-        - in: path
           name: patientId
           required: true
           description: patients id
@@ -603,13 +547,6 @@ paths:
       summary: edit patient info
       operationId: editPatient
       parameters:
-        - in: path
-          name: id
-          required: true
-          description: doctor id
-          schema:
-            type: integer
-            format: int64
         - in: path
           name: patientId
           required: true
@@ -711,13 +648,6 @@ paths:
       operationId: searchAssistant
       parameters:
         - in: path
-          name: id
-          required: true
-          description: doctor id
-          schema:
-            type: integer
-            format: int64
-        - in: path
           name: assistantId
           required: true
           description: assistant id
@@ -742,13 +672,6 @@ paths:
       operationId: deleteAssistant
       parameters:
         - in: path
-          name: id
-          required: true
-          description: doctor id
-          schema:
-            type: integer
-            format: int64
-        - in: path
           name: assistantId
           required: true
           description: assistant id
@@ -770,13 +693,6 @@ paths:
       summary: edit assistant info
       operationId: editAssistant
       parameters:
-        - in: path
-          name: id
-          required: true
-          description: doctor id
-          schema:
-            type: integer
-            format: int64
         - in: path
           name: assistantId
           required: true

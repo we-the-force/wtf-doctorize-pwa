@@ -1,16 +1,67 @@
 <template>
-    <div class="page" data-name="schedule" id="schedule">
+    <div class="page schedule" data-name="schedule" id="schedule">
 
         <!--Nav bar-->
-        <div class="navbar">
+        <div class="navbar" id="nav1">
             <div class="navbar-inner sliding">
                 <div class="left">
-                    <a class="link back">
-                        <i class="icon icon-back"></i>
-                        <span class="if-not-md">Back</span>
-                    </a>
+                    <div class="fab fab-left-middle color-white profile">
+                        <a href="#">
+                            <i class="icon material-icons md-only">photo</i>
+                        </a>
+                    </div>
                 </div>
-                <div class="title">Hide On Scroll</div>
+                <div class="right">
+                    <div class="fab fab-right-middle color-white search">
+                        <a href="#">
+                            <i class="icon material-icons md-only">search</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="subnavbar">
+                    <div class="subnavbar-inner">
+                        <div class="toolbar tabbar tabbar-scrollable toolbar-top" id='scrolltoolbar'>
+                            <div class="toolbar-inner">
+                                <a href="#tab-1" class="tab-link tab-link-active">
+                                    <p>04</p>
+                                    <p>DEC</p>
+                                </a>
+                                <a href="#tab-2" class="tab-link tab-link-today">
+                                    <p>05</p>
+                                    <p>DEC</p>
+                                </a>
+                                <a href="#tab-3" class="tab-link">
+                                    <p>06</p>
+                                    <p>DEC</p>
+                                </a>
+                                <a href="#tab-4" class="tab-link">
+                                    <p>07</p>
+                                    <p>DEC</p>
+                                </a>
+                                <a href="#tab-5" class="tab-link">
+                                    <p>08</p>
+                                    <p>DEC</p>
+                                </a>
+                                <a href="#tab-6" class="tab-link">
+                                    <p>09</p>
+                                    <p>DEC</p>
+                                </a>
+                                <a href="#tab-7" class="tab-link">
+                                    <p>10</p>
+                                    <p>DEC</p>
+                                </a>
+                                <a href="#tab-8" class="tab-link">
+                                    <p>11</p>
+                                    <p>DEC</p>
+                                </a>
+                                <a href="#tab-9" class="tab-link">
+                                    <p>12</p>
+                                    <p>DEC</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -34,16 +85,17 @@
                     <i class="icon material-icons">settings</i>
                 </a>
             </div>
+            <div class="add-circle">
+                <a>
+                    <img src="/static/images/add_circle_24px.svg" class="dynamic-sheet" alt="">
+                </a>
+            </div>
         </div>
-        <div class="add-circle">
-            <a>
-                <img src="/static/images/add_circle_24px.svg" class="dynamic-sheet" alt="">
-            </a>
-        </div>
+
 
 
         <!--tab bar-->
-        <div class="toolbar tabbar tabbar-scrollable toolbar-top" id='scrolltoolbar'>
+        <!--         <div class="toolbar tabbar tabbar-scrollable toolbar-top" id='scrolltoolbar'>
             <div class="toolbar-inner">
                 <a href="#tab-1" class="tab-link tab-link-active">Tab 1</a>
                 <a href="#tab-2" class="tab-link">Tab 2</a>
@@ -56,64 +108,72 @@
                 <a href="#tab-9" class="tab-link">Tab 9</a>
             </div>
         </div>
-
+ -->
         <!--tabs-->
         <div class="tabs">
             <div id="tab-1" class="page-content login-screen-content tab hide-navbar-on-scroll tab-active">
                 <div class="list">
                     <ul>
+                        <li class="item-divider">
+                            <i class="icon material-icons md-only">watch_later</i>
+                            12:00 PM
+                            <hr>
+                        </li>
                         <li>
-                            <div class="block">
-                                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
-                                    iste
-                                    eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea
-                                    ipsa
-                                    temporibus dicta architecto saepe.</p>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="fab fab-center-center item-fab">
+                                        <a href="#">
+                                            <i class="icon material-icons md-only">add</i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-divider">
+                            <i class="icon material-icons md-only">watch_later</i>
+                            12:30 PM
+                            <hr>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="card card-expandable">
+                                    <div class="rectangle"></div>
+                                    <div class="card-content card-content-padding">
+                                        <h4 class="purple-blue">asdfsdgsdfg</h4>
+                                        <h3 class="blue">sdfgdsfgsdfg</h3>
+
+                                        <h4 class="light-blue">sdfgsdfgsdfg</h4>
+
+                                    </div>
+                                </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <p>Quis omnis.</p>
+                                </div>
                             </div>
                         </li>
                         <li>
-                            <div class="block">
-                                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
-                                    iste
-                                    eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea
-                                    ipsa
-                                    temporibus dicta architecto saepe.</p>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <p>Quis omnis,</p>
+                                </div>
                             </div>
                         </li>
                         <li>
-                            <div class="block">
-                                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
-                                    iste
-                                    eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea
-                                    ipsa
-                                    temporibus dicta architecto saepe.</p>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <p>Quis omnis, qu</p>
+                                </div>
                             </div>
                         </li>
                         <li>
-                            <div class="block">
-                                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
-                                    iste
-                                    eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea
-                                    ipsa
-                                    temporibus dicta architecto saepe.</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="block">
-                                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
-                                    iste
-                                    eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea
-                                    ipsa
-                                    temporibus dicta architecto saepe.</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="block">
-                                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
-                                    iste
-                                    eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea
-                                    ipsa
-                                    temporibus dicta architecto saepe.</p>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <p>Quis omnis, quam .</p>
+                                </div>
                             </div>
                         </li>
                         <li>
@@ -190,11 +250,22 @@
                 var self = this;
                 var app = self.$app;
 
-                $$('.tab-active').scroll(function() {      
-                    console.log('ahoy');
-                    $$('#scrolltoolbar').css('top','0');
-                                 
-                }); 
+                /* $$(document).on('navbar:hide', '.navbar', function(e) {
+                    console.log('ahoy');                    
+                }); */
+
+                /*                 $$('.navbar').change(function (e) {
+                                    console.log('ahoy');
+                                });
+                
+                                $$('.navbar').prop({
+                
+                                }); */
+
+                /* $$('.tab-active').scroll(function(){
+                    app.navbar.hide('.navbar');
+                    $$('#scrolltoolbar').css('top', '0');                                 
+                });  */
 
                 $$('.dynamic-sheet').on('click', function () {
                     var dynamicSheet = app.sheet.create({

@@ -202,7 +202,7 @@ paths:
               $ref: '#/components/schemas/Office'
         description: Office to add
 
-  /doctors/{id}/offices/{officeId}:
+  /offices/{officeId}:
     get:
       tags:
         - doctors
@@ -363,7 +363,7 @@ paths:
         description: appointment to add
 
 
-  /doctors/{id}/appointments/{appointmentId}:
+  /appointments/{appointmentId}:
     get:
       tags:
         - doctors
@@ -534,7 +534,7 @@ paths:
               $ref: '#/components/schemas/Patient'
         description: patient to add
 
-  /doctors/{id}/patients/{patientId}:
+  /patients/{patientId}:
     get:
       tags:
         - doctors
@@ -701,7 +701,7 @@ paths:
               $ref: '#/components/schemas/InviteAssistant'
         description: Assistant to add
 
-  /doctors/{id}/assistants/{assistantId}:
+  /assistants/{assistantId}:
     get:
       tags:
         - doctors

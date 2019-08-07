@@ -7,6 +7,7 @@
         background: linear-gradient(271deg, #F5F7FF, #CCE4ED)
         -webkit-animation: AnimationName 11s ease infinite
         animation: AnimationName 11s ease infinite
+
         .navbar-inner
             .search
                 --f7-fab-size: 45px
@@ -19,13 +20,13 @@
                 i
                     color: #102BC8
         .subnavbar
-            z-index: 0
             background: -webkit-linear-gradient(179deg, #F5F7FF, #CCE4ED)
             background: linear-gradient(271deg, #F5F7FF, #CCE4ED)
             -webkit-animation: AnimationName 11s ease infinite
             animation: AnimationName 11s ease infinite
             .subnavbar-inner
             .toolbar
+                position: relative
                 background: inherit
                 font-size: 12px
                 p
@@ -47,7 +48,10 @@
                     border-color: #2FCFBC
                     border-width: 2px
                     border-style: solid
+
+
     .list
+        z-index: 100
         .item-divider
             height: 15px
             background: transparent
@@ -65,10 +69,11 @@
                 margin-block-end: 0px
                 margin-left: 15px
         .item-fab
+            z-index: 99
             --f7-fab-size: 40px
             --f7-fab-box-shadow: none
             opacity: 0.4
             color: #7B8EFF
             i
                 font-size: 35px
-                
+

@@ -20,7 +20,7 @@
                 </div>
                 <div class="subnavbar">
                     <div class="subnavbar-inner">
-                        <div class="toolbar tabbar tabbar-scrollable toolbar-top" id='scrolltoolbar'>
+                        <div class="toolbar tabbar tabbar-scrollable toolbar-top" id='subnavtoolbar'>
                             <div class="toolbar-inner">
                                 <a href="#tab-1" class="tab-link tab-link-active">
                                     <p>04</p>
@@ -92,23 +92,6 @@
             </div>
         </div>
 
-
-
-        <!--tab bar-->
-        <!--         <div class="toolbar tabbar tabbar-scrollable toolbar-top" id='scrolltoolbar'>
-            <div class="toolbar-inner">
-                <a href="#tab-1" class="tab-link tab-link-active">Tab 1</a>
-                <a href="#tab-2" class="tab-link">Tab 2</a>
-                <a href="#tab-3" class="tab-link">Tab 3</a>
-                <a href="#tab-4" class="tab-link">Tab 4</a>
-                <a href="#tab-5" class="tab-link">Tab 5</a>
-                <a href="#tab-6" class="tab-link">Tab 6</a>
-                <a href="#tab-7" class="tab-link">Tab 7</a>
-                <a href="#tab-8" class="tab-link">Tab 8</a>
-                <a href="#tab-9" class="tab-link">Tab 9</a>
-            </div>
-        </div>
- -->
         <!--tabs-->
         <div class="tabs">
             <div id="tab-1" class="page-content login-screen-content tab hide-navbar-on-scroll tab-active">
@@ -137,42 +120,95 @@
                         </li>
                         <li>
                             <div class="row">
-                                <div class="card card-expandable">
-                                    <div class="rectangle"></div>
-                                    <div class="card-content card-content-padding">
-                                        <h4 class="purple-blue">asdfsdgsdfg</h4>
-                                        <h3 class="blue">sdfgdsfgsdfg</h3>
+                                <div class="card card-expandable" id='cita01'>
+                                    <div class="rectangle card-opened-fade-out"></div>
+                                    <div class="card-content">
 
-                                        <h4 class="light-blue">sdfgsdfgsdfg</h4>
+                                        <div class="card-header display-block">
+                                            <h6 class="light-blue2 card-opened-fade-out">CONSULTA</h6>
+                                            <h3 class="blue card-opened-fade-out">Aglaee Alvarez</h3>
+                                            <h5 class="light-blue card-opened-fade-out">Hospital General Zona 2</h5>
+                                            <h4 class="purple-blue card-opened-fade-out">
+                                                <i class="icon material-icons md-only time">watch_later</i>12:00PM -
+                                                12:30PM</h4>
+                                            <a href="#" class="link card-close card-opened-fade-in color-white">
+                                                <i class="icon material-icons white">close</i>
+                                                <h3 class="label">CERRAR</h3>
+                                            </a>
+                                            <div class="item-content card-opened-fade-in">
+                                                    <div class="fab fab-left-middle color-white profile">
+                                                            <a href="#">
+                                                                <i class="icon material-icons md-only">photo</i>
+                                                            </a>
+                                                        </div>
+                                                <ul>
+                                                    <li>
+                                                        <div class="item-inner">
+                                                        </div>
+                                                    </li>
+                                                    <li>
 
+                                                        <div class="item-inner">
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+
+                                        </div>
+                                        <i class="icon f7-icons chevron card-opened-fade-out">chevron_right</i>
+                                        <div class="card-content-padding">
+                                            <p>Framework7 - is a free and open source HTML mobile framework to
+                                                develop
+                                                hybrid mobile apps or web apps with iOS or Android (Material) native
+                                                look and feel. It is also an indispensable prototyping apps tool to
+                                                show
+                                                working app prototype as soon as possible in case you need to.</p>
+                                        </div>
                                     </div>
                                 </div>
+                        </li>
+                        <li class="item-divider">
+                            <i class="icon material-icons md-only">watch_later</i>
+                            1:00 PM
+                            <hr>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="fab fab-center-center item-fab">
+                                        <a href="#">
+                                            <i class="icon material-icons md-only">add</i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-divider">
+                            <i class="icon material-icons md-only">watch_later</i>
+                            1:30 PM
+                            <hr>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="fab fab-center-center item-fab">
+                                        <a href="#">
+                                            <i class="icon material-icons md-only">add</i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-divider">
+                            <i class="icon material-icons md-only">watch_later</i>
+                            1:30 PM
+                            <hr>
                         </li>
                         <li>
                             <div class="item-content">
                                 <div class="item-inner">
                                     <p>Quis omnis.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item-content">
-                                <div class="item-inner">
-                                    <p>Quis omnis,</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item-content">
-                                <div class="item-inner">
-                                    <p>Quis omnis, qu</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item-content">
-                                <div class="item-inner">
-                                    <p>Quis omnis, quam .</p>
                                 </div>
                             </div>
                         </li>
@@ -250,10 +286,22 @@
                 var self = this;
                 var app = self.$app;
 
-                /* $$(document).on('navbar:hide', '.navbar', function(e) {
+                /* $$(document).on('card:beforeopen', '#cita01', function(e) {
                     console.log('ahoy');                    
                 }); */
 
+                $$(document).on('card:open', function (e) {
+                    $$('.subnavbar').hide();
+                    $$('.add-circle').hide();
+                    $$(e.srcElement).find('.card-header').addClass('header-rect');
+
+                });
+
+                $$(document).on('card:close', function (e) {
+                    $$('.subnavbar').show();
+                    $$('.add-circle').show();
+                    $$(e.srcElement).find('.card-header').removeClass('header-rect');
+                });
                 /*                 $$('.navbar').change(function (e) {
                                     console.log('ahoy');
                                 });

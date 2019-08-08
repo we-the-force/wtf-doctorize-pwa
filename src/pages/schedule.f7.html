@@ -1,0 +1,385 @@
+<template>
+    <div class="page schedule" data-name="schedule" id="schedule">
+
+        <!--Nav bar-->
+        <div class="navbar" id="nav1">
+            <div class="navbar-inner sliding">
+                <div class="left">
+                    <div class="fab fab-left-middle color-white profile">
+                        <a href="#">
+                            <i class="icon material-icons md-only">photo</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="fab fab-right-middle color-white search">
+                        <a href="#">
+                            <i class="icon material-icons md-only">search</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="subnavbar">
+                    <div class="subnavbar-inner">
+                        <div class="toolbar tabbar tabbar-scrollable toolbar-top" id='subnavtoolbar'>
+                            <div class="toolbar-inner">
+                                <a href="#tab-1" class="tab-link tab-link-active">
+                                    <p>04</p>
+                                    <p>DEC</p>
+                                </a>
+                                <a href="#tab-2" class="tab-link tab-link-today">
+                                    <p>05</p>
+                                    <p>DEC</p>
+                                </a>
+                                <a href="#tab-3" class="tab-link">
+                                    <p>06</p>
+                                    <p>DEC</p>
+                                </a>
+                                <a href="#tab-4" class="tab-link">
+                                    <p>07</p>
+                                    <p>DEC</p>
+                                </a>
+                                <a href="#tab-5" class="tab-link">
+                                    <p>08</p>
+                                    <p>DEC</p>
+                                </a>
+                                <a href="#tab-6" class="tab-link">
+                                    <p>09</p>
+                                    <p>DEC</p>
+                                </a>
+                                <a href="#tab-7" class="tab-link">
+                                    <p>10</p>
+                                    <p>DEC</p>
+                                </a>
+                                <a href="#tab-8" class="tab-link">
+                                    <p>11</p>
+                                    <p>DEC</p>
+                                </a>
+                                <a href="#tab-9" class="tab-link">
+                                    <p>12</p>
+                                    <p>DEC</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--tool bar-->
+        <div class="toolbar tabbar tabbar-labels toolbar-bottom menu">
+            <div class="toolbar-inner">
+                <a href="/home" class="tab-link">
+                    <!-- Different icons for iOS and MD themes -->
+                    <i class="icon material-icons">home</i>
+                </a>
+                <a href="/schedule" class="tab-link  tab-link-active">
+                    <i class="icon material-icons">today</i>
+                </a>
+                <a href="#" class="tab-link">
+                </a>
+                <a href="#" class="tab-link">
+                    <i class="icon material-icons">monetization_on</i>
+                </a>
+                <a href="#" class="tab-link">
+                    <i class="icon material-icons">settings</i>
+                </a>
+            </div>
+            <div class="add-circle">
+                <a>
+                    <img src="/static/images/add_circle_24px.svg" class="dynamic-sheet" alt="">
+                </a>
+            </div>
+        </div>
+
+        <!--tabs-->
+        <div class="tabs">
+            <div id="tab-1" class="page-content login-screen-content tab hide-navbar-on-scroll tab-active">
+                <div class="list">
+                    <ul>
+                        <li class="item-divider">
+                            <i class="icon material-icons md-only">watch_later</i>
+                            12:00 PM
+                            <hr>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="fab fab-center-center item-fab">
+                                        <a href="#">
+                                            <i class="icon material-icons md-only">add</i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-divider">
+                            <i class="icon material-icons md-only">watch_later</i>
+                            12:30 PM
+                            <hr>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="card card-expandable" id='cita01'>
+                                    <div class="rectangle card-opened-fade-out"></div>
+                                    <div class="card-content">
+
+                                        <div class="card-header display-block">
+                                            <h6 class="light-blue2 card-opened-fade-out">CONSULTA</h6>
+                                            <h3 class="blue card-opened-fade-out">Aglaee Alvarez</h3>
+                                            <h5 class="light-blue card-opened-fade-out">Hospital General Zona 2</h5>
+                                            <h4 class="purple-blue card-opened-fade-out">
+                                                <i class="icon material-icons md-only time">watch_later</i>12:00PM -
+                                                12:30PM</h4>
+                                            <a href="#" class="link card-close card-opened-fade-in color-white">
+                                                <i class="icon material-icons white">close</i>
+                                                <h3 class="label">CERRAR</h3>
+                                            </a>
+                                            <div class="item-content card-opened-fade-in">
+                                                <ul>
+                                                    <li>
+                                                        <div class="item-inner">
+                                                        </div>
+                                                    </li>
+                                                    <li>
+
+                                                        <div class="item-inner">
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+
+                                        </div>
+                                        <i class="icon f7-icons chevron card-opened-fade-out">chevron_right</i>
+                                        <div class="card-content-padding">
+                                            <p>Framework7 - is a free and open source HTML mobile framework to
+                                                develop
+                                                hybrid mobile apps or web apps with iOS or Android (Material) native
+                                                look and feel. It is also an indispensable prototyping apps tool to
+                                                show
+                                                working app prototype as soon as possible in case you need to.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                        </li>
+                        <li class="item-divider">
+                            <i class="icon material-icons md-only">watch_later</i>
+                            1:00 PM
+                            <hr>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="fab fab-center-center item-fab">
+                                        <a href="#">
+                                            <i class="icon material-icons md-only">add</i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-divider">
+                            <i class="icon material-icons md-only">watch_later</i>
+                            1:30 PM
+                            <hr>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="fab fab-center-center item-fab">
+                                        <a href="#">
+                                            <i class="icon material-icons md-only">add</i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-divider">
+                            <i class="icon material-icons md-only">watch_later</i>
+                            1:30 PM
+                            <hr>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <p>Quis omnis.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <br>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="tab-2" class="page-content login-screen-content tab hide-navbar-on-scroll tab">
+                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
+                    iste
+                    eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea
+                    ipsa
+                    temporibus dicta architecto saepe.</p>
+                ...
+            </div>
+            <div id="tab-3" class="page-content login-screen-content tab hide-navbar-on-scroll tab">
+                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
+                    iste
+                    eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea
+                    ipsa
+                    temporibus dicta architecto saepe.</p>...
+            </div>
+            <div id="tab-4" class="page-content login-screen-content tab hide-navbar-on-scroll tab">
+                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
+                    iste
+                    eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea
+                    ipsa
+                    temporibus dicta architecto saepe.</p>...
+            </div>
+            <div id="tab-5" class="page-content login-screen-content tab hide-navbar-on-scroll tab">
+                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
+                    iste
+                    eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea
+                    ipsa
+                    temporibus dicta architecto saepe.</p>...
+            </div>
+            <div id="tab-6" class="page-content login-screen-content tab hide-navbar-on-scroll tab">
+                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
+                    iste
+                    eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea
+                    ipsa
+                    temporibus dicta architecto saepe.</p>...
+            </div>
+            <div id="tab-7" class="page-content login-screen-content tab hide-navbar-on-scroll tab">
+                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
+                    iste
+                    eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea
+                    ipsa
+                    temporibus dicta architecto saepe.</p>...
+            </div>
+            <div id="tab-8" class="page-content login-screen-content tab hide-navbar-on-scroll tab">
+                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
+                    iste
+                    eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea
+                    ipsa
+                    temporibus dicta architecto saepe.</p>...
+            </div>
+            <div id="tab-9" class="page-content login-screen-content tab hide-navbar-on-scroll tab">
+                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
+                    iste
+                    eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea
+                    ipsa
+                    temporibus dicta architecto saepe.</p>...
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+
+                /* $$(document).on('card:beforeopen', '#cita01', function(e) {
+                    console.log('ahoy');                    
+                }); */
+
+                $$(document).on('card:open', function (e) {
+                    $$('.subnavbar').hide();
+                    $$('.add-circle').hide();
+                    $$(e.srcElement).find('.card-header').addClass('header-rect');
+
+                });
+
+                $$(document).on('card:close', function (e) {
+                    $$('.subnavbar').show();
+                    $$('.add-circle').show();
+                    $$(e.srcElement).find('.card-header').removeClass('header-rect');
+                });
+                /*                 $$('.navbar').change(function (e) {
+                                    console.log('ahoy');
+                                });
+                
+                                $$('.navbar').prop({
+                
+                                }); */
+
+                /* $$('.tab-active').scroll(function(){
+                    app.navbar.hide('.navbar');
+                    $$('#scrolltoolbar').css('top', '0');                                 
+                });  */
+
+                $$('.dynamic-sheet').on('click', function () {
+                    var dynamicSheet = app.sheet.create({
+                        content: '<div class="sheet-modal">' +
+                            '<div class="close-sheet">' +
+                            '<img src="/static/images/cancel_24px.svg" alt="" class="close">' +
+                            '</div>' +
+                            '<div class="sheet-modal-inner">' +
+                            '<div class="list">' +
+                            '<ul>' +
+                            '<li>' +
+                            '<div class="row">' +
+                            '<div class="col">' +
+                            '<a href="/offices-show" data-view=".view-main" class="item-link list-button login-register-button">' +
+                            '<i class="material-icons">local_hospital</i>' +
+                            'Consultorios</a>' +
+                            '</div>' +
+                            '</div>' +
+                            '</li>' +
+                            '<li>' +
+                            '<div class="row">' +
+                            '<div class="col">' +
+                            '<a href="/assistants-show" data-view=".view-main" class="item-link list-button login-register-button">' +
+                            '<i class="material-icons">headset_mic</i>' +
+                            'Asistentes</a>' +
+                            '</div>' +
+                            '</div>' +
+                            '</li>' +
+                            '<li>' +
+                            '<div class="row">' +
+                            '<div class="col">' +
+                            '<a href="/agendar-cita" data-view=".view-main" class="item-link list-button login-register-button">' +
+                            '<i class="material-icons">event</i>' +
+                            'Nueva cita</a>' +
+                            '</div>' +
+                            '</div>' +
+                            '</li>' +
+                            '<li>' +
+                            '<div class="row">' +
+                            '<div class="col">' +
+                            '<a href="/nuevo-paciente" data-view=".view-main" class="item-link list-button login-register-button">' +
+                            '<i class="material-icons">person_add</i>' +
+                            'Nuevo Paciente</a>' +
+                            '</div>' +
+                            '</div>' +
+                            '</li>' +
+                            '</ul>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>',
+                        on: {
+                            open: function (sheet) {
+                                console.log('Sheet open');
+                            },
+                            opened: function (sheet) {
+                                $$('.close').on('click', function () {
+                                    dynamicSheet.close();
+                                });
+                                $$('a').on('click', function () {
+                                    dynamicSheet.close();
+                                });
+                            },
+                        }
+                    });
+                    dynamicSheet.open();
+                });
+
+
+
+
+            }
+        }
+    }
+</script>

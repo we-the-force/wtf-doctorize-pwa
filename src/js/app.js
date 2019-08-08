@@ -122,8 +122,10 @@ var app = new Framework7({
     },
     view: {
         pushState: true
+    },
+    navbar:{
+      showOnPageScrollEnd: false
     }
-
 });
 
 /* //login

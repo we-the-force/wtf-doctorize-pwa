@@ -24,6 +24,7 @@ import home from '../pages/home2.f7.html';
 import AgendarCita from '../pages/agendar-cita.f7.html';
 import CitaAgendada from '../pages/cita-agendada.f7.html';
 import NuevoPaciente from '../pages/nuevo-paciente.f7.html';
+import schedule from '../pages/schedule.f7.html';
 
 import LeftPage1 from '../pages/left-page-1.f7.html';
 import LeftPage2 from '../pages/left-page-2.f7.html';
@@ -42,6 +43,11 @@ var routes = [
         name: "home",
         path: '/home',
         component: home,
+    },
+    {
+        name: "schedule",
+        path: '/schedule',
+        component: schedule,
     },
     {
         path: '/account/assistant/confirmation',

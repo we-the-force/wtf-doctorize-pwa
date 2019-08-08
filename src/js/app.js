@@ -38,12 +38,16 @@ var app = new Framework7({
             },
             assistant: {
                 id: '',
-                flag: false,
+                edit: false,
+                addOffice: false,
                 code: '',
                 name: '',
                 password: '',
                 email: '',
-                consultorio: '',
+                consultorio: {
+                  id: '',
+                  name: '',
+                },
                 permisos: [],
             },
             doctor: {
@@ -127,7 +131,6 @@ var app = new Framework7({
       showOnPageScrollEnd: false
     }
 });
-
 /* //login
 var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 var email_login, password_login;

@@ -16,6 +16,7 @@ import AsistentesInvitar02 from '../pages/asistentes-invitar-02.f7.html';
 import AsistentesInvitar03 from '../pages/asistentes-invitar-03.f7.html';
 import AsistentesInvitar04 from '../pages/asistentes-invitar-04.f7.html';
 import AsistentesConfirmar from '../pages/asistentes-confirmar.f7.html';
+import AsistentesOffices from '../pages/asistentes-offices.f7.html';
 import officesShow from '../pages/offices-show.f7.html';
 import officesAddFormBasic from '../pages/offices-add-form-basic.f7.html';
 import officesAddFormMap from '../pages/offices-add-form-map.f7.html';
@@ -109,11 +110,6 @@ var routes = [
         component: IntroSplash1,
     }, 
     {
-        name: 'asistentes-invitar-01',
-        path: '/assistants-show',
-        component: AsistentesInvitar01,
-    },
-    {
         name: 'agendar-cita',
         path: '/agendar-cita',
         component: AgendarCita,
@@ -122,6 +118,16 @@ var routes = [
         name: 'cita-agendada',
         path: '/cita-agendada',
         component: CitaAgendada,
+    },
+    {
+        name: 'asistentes-invitar-01',
+        path: '/assistants-show',
+        component: AsistentesInvitar01,
+    },
+    {
+        name: 'assistants-offices',
+        path: '/assistants-offices',
+        component: AsistentesOffices,
     },
     {
         name: 'asistentes-invitar-02',

@@ -1,0 +1,111 @@
+<template>
+    <div class="page" data-name="asistentes-offices" id='asistentes-offices'>
+        <div class="page-content login-screen-content">
+            <div class="login-screen-content nav-bar-rect">
+                <div class="row">
+                    <div class="col-15">
+                        <a href='/assistants-show' data-view=".view-main"  class="item-link list-button back-button" id="back">
+                            <i class="material-icons">chevron_left</i>
+                        </a>
+                    </div>
+                    <div class="col-85"></div>
+                </div>
+                <div class="list">
+                    <ul>
+                        <li>
+                            <div class="row">
+                                <div class="col-10"></div>
+                                <div class="col-90">
+                                    <h2>Consultorios del asistente</h2>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-10"></div>
+                                <div class="col-70">
+                                    <br>
+                                </div>
+                                <div class="col-20"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="item-inner">
+                                    <div class="fab fab-right-middle color-lime" style="top:45px;">
+                                        <a href="#">
+                                            <i class="material-icons">add</i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div class="list">
+                    <ul id="offices">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageInit: function(e, page) {
+                var self = this;
+                var app = self.$app;
+                console.log(app.data.assistant.id);                
+                app.preloader.show('blue');
+                app.request.get(app.data.url + '/assistants/' + app.data.assistant.id,function(e) {
+                    var x = JSON.parse(e);
+                    console.log(x);
+                    app.data.assistant.name = x.name;
+                    for (var i = 0; i < x.offices.length; i++) {
+                        //si doctor id es igual lo hace
+                        $$('#offices').append('<li>'+
+                        '<div class="row">'+
+                            '<div class="card card-outline elevation-3 assistants-office" data-OfficeId="' + x.offices[i].officeId + '">'+
+                                '<div class="rectangle blue"></div>'+
+                                '<i class="material-icons icon assistant-office blue2">local_hospital</i>'+
+                                '<div class="card-content card-content-padding">'+
+                                    '<h3 class="blue2">'+ x.offices[i].officeName +'</h3>'+
+                                '</div>'+
+                                '<div class="link permissions-link">' +
+                                    '<i class="material-icons next">chevron_right</i>' +
+                                '</div>'+
+                            '</div>'+
+                        '</div>'+
+                        '</li>');
+                    }
+                    app.preloader.hide();
+                    $$('.assistants-office').on('click', function(e) {
+                        var officeId = $$(this).data('OfficeId');
+                        for (var i = 0; i < x.offices.length; i++) {
+                            if(x.offices[i].officeId == officeId){
+                                app.data.assistant.consultorio.id = x.offices[i].officeId;
+                                app.data.assistant.consultorio.name = x.offices[i].officeName;
+                                app.data.assistant.permisos = x.offices[i].permissions;
+                                app.data.assistant.edit = true;
+                                break;
+                            }
+                        }
+                        app.methods.redirectTo('asistentes-invitar-04'); 
+                    });
+                }, 
+                function(e) {
+                    app.preloader.hide();
+                });
+
+                $$('.fab').on('click', function(e) {
+                    app.data.assistant.addOffice = true;
+                    app.methods.redirectTo('asistentes-invitar-03'); 
+                });
+            }
+        }
+    }
+</script>

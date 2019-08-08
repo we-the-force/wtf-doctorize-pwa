@@ -4,7 +4,7 @@
                 <div class="login-screen-content nav-bar-rect">
                     <div class="row">
                         <div class="col-15">
-                            <a href='/asistentes-invitar-02' data-view=".view-main"  class="item-link list-button back-button" id="back">
+                            <a href='#' data-view=".view-main"  class="item-link list-button back-button" id="cancel">
                                 <i class="material-icons">chevron_left</i>
                             </a>
                         </div>
@@ -44,7 +44,7 @@
                             <li>
                                 <div class="row">
                                     <div class="col-50">
-                                        <a href="/asistentes-invitar-02" data-view=".view-main" class="item-link list-button login-register-button ">Cancelar</a>
+                                        <a href="#" data-view=".view-main" class="item-link list-button login-register-button" id="cancel">Cancelar</a>
                                     </div>
                                     <div class="col-50">
                                     <a href="#" class="item-link list-button login-button asistente">
@@ -68,6 +68,7 @@
                     var self = this;
                     var app = self.$app;
                     var items; 
+
                     app.preloader.show('blue');
                     app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/offices',//id=99 
                     function(e){
@@ -87,19 +88,17 @@
                             '</label>' +
                             '</li> ').appendTo("#consultorios");
                         }         
-                        app.preloader.hide();   
-                        
-                        if(app.data.assistant.flag){
-                            $$('.header').children('li')[2].remove();
+                        app.preloader.hide();                          
+                        if(app.data.assistant.addOffice){
+                            $$('.header').find('h4').text('Asigne un nuevo consultorio a su asistente.');
                             items = $$('[name="demo-radio"]');
                             var z = false;
                             items.forEach(element => {                                
-                                if(app.data.assistant.consultorio == $$(element).data('Name')){
+                                if(app.data.assistant.consultorio.name == $$(element).data('Name')){
                                     element.checked = true;
                                     z = true;
                                 }                    
-                            });
-                                       
+                            });                                       
                             if(z){
                                 enableButton();
                             } 
@@ -108,6 +107,15 @@
                     }, 
                     function(e) {
                         app.preloader.hide();
+                    });
+
+                    $$('#asistentes-invitar-03 #cancel').on('click', function(e){
+                        if(app.data.assistant.addOffice){
+                            app.data.assistant.addOffice = false;
+                            app.methods.redirectTo('assistants-offices');
+                        }else{
+                            app.methods.redirectTo('asistentes-invitar-02'); 
+                        }
                     });
 
                     $$('#asistentes-invitar-03 .login-button').addClass('grey');
@@ -122,10 +130,10 @@
                         $$('#asistentes-invitar-03 .login-button').off('click');
                         $$('#asistentes-invitar-03 .login-button').on('click', function(e){
                             items = $$('[name="demo-radio"]');
-                            app.data.assistant.consultorio = '';
+                            app.data.assistant.consultorio.id = '';
                             for(var i = 0; i < items.length; i++){
                                 if(items[i].checked == true){
-                                    app.data.assistant.consultorio = items[i].value;
+                                    app.data.assistant.consultorio.id = items[i].value;
                                     break;
                                 }
                             }

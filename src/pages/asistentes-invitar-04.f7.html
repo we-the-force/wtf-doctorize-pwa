@@ -4,7 +4,7 @@
             <div class="login-screen-content nav-bar-rect">
                 <div class="row">
                     <div class="col-15">
-                        <a href='/asistentes-invitar-03' data-view=".view-main"  class="item-link list-button back-button" id="back">
+                        <a href='#' data-view=".view-main"  class="item-link list-button back-button" id="cancel">
                             <i class="material-icons">chevron_left</i>
                         </a>
                     </div>
@@ -88,7 +88,7 @@
                         <li>
                             <div class="row">
                                 <div class="col-50">
-                                    <a href="/asistentes-invitar-03" data-view=".view-main" class="item-link list-button login-register-button ">Cancelar</a>
+                                    <a href="#" data-view=".view-main" class="item-link list-button login-register-button " id="cancel">Cancelar</a>
                                 </div>
                                 <div class="col-50">
                                 <a href="#" class="item-link list-button login-button asistente">
@@ -113,8 +113,18 @@
                 var app = self.$app;
                 var items; 
 
-                if(app.data.assistant.flag){
-                    $$('.header').children('li')[2].remove();
+                $$('#asistentes-invitar-04 #cancel').on('click', function(e){
+                    if(app.data.assistant.edit){
+                        app.data.assistant.edit = false;
+                        app.methods.redirectTo('assistants-offices');
+                    }else{
+                        app.methods.redirectTo('asistentes-invitar-03'); 
+                    }
+                });
+
+                if(app.data.assistant.edit){
+                    $$('.header').find('h1').text(app.data.assistant.consultorio.name);
+                    $$('.header').find('h4').text('Permisos del Asistente');
                     items = $$('[name="chbx"]');
                     items.forEach(x => {  
                         var z = false;                      
@@ -139,37 +149,43 @@
                         }
                     }
                     app.preloader.show('blue');
+                    console.log(app.data.assistant);
+                    console.log(app.data.doctor.id);
                     
-                    if(app.data.assistant.flag){                        
-                        //integrar endpoint asistente update
+                    if(app.data.assistant.edit || app.data.assistant.addOffice){                        
+                        //agregar endpoint
                         app.request({
-                            url: app.data.url + '/doctors/' + app.data.doctor.id + '/assistants/' + app.data.assistant.id,
+                            url: app.data.url +'/assistants/' + app.data.assistant.id,
                             method: "PATCH",
                             crossDomain: true,
                             data: {
-                                "id": app.data.assistant.id,
-                                "email": app.data.assistant.email,
-                                "doctorId": app.data.doctor.id,
+                                "id": app.data.assistant.id,                              
                                 "offices": [{
-                                    "officeId": app.data.assistant.consultorio,
+                                    "doctorId": app.data.doctor.id,
+                                    "officeName": app.data.assistant.consultorio.name,
+                                    "officeId": app.data.assistant.consultorio.id,
                                     "permissions": app.data.assistant.permisos   
                                 }]
                                 
                             },
                             success: function(e){
-                                app.data.assistant.flag = false;
+                                app.data.assistant.addOffice = false;
+                                app.data.assistant.edit = false;
                                 app.preloader.hide();
-                                app.methods.redirectTo('asistentes-invitar-01');                                          
+                                app.methods.redirectTo('assistants-offices');                                          
                             },
                             error: function(e){
+                                app.data.assistant.edit = false;
+                                app.data.assistant.addOffice = false;
                                 app.preloader.hide();
+                                app.methods.redirectTo('assistants-offices');
                             }
                         });
                     }else{
                         app.request.postJSON(app.data.url + '/doctors/' + app.data.doctor.id + '/assistants', { 
                             "email": app.data.assistant.email,
                             "doctorId": app.data.doctor.id,
-                            "officeId": app.data.assistant.consultorio,
+                            "officeId": app.data.assistant.consultorio.id,
                             "permissions": app.data.assistant.permisos
                         }, function(e){
                             app.preloader.hide();

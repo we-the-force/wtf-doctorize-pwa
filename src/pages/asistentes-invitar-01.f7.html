@@ -46,25 +46,6 @@
             <div>
                 <div class="list">
                     <ul id="asistentes">
-                        <!-- <li>
-                            <div class="row">
-                                <div class="card card-outline elevation-3 asistentes">
-                                    <div class="rectangle"></div>
-                                    <div class="avatar">
-                                        <img src="https://cdn.framework7.io/placeholder/fashion-88x88-6.jpg"/>
-                                    </div>
-                                    <div class="card-content card-content-padding">
-                                        <h4 class="blue">Test Card</h4>
-                                        <h3 class="light-blue2">This is just a test</h3>
-                                        <h4></h4>
-                                    </div>
-                                    <div class="link dynamic-popover" data-officeId="">
-                                        <i class="material-icons more">more_vert
-                                        </i>
-                                    </div>
-                                </div>
-                            </div>
-                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -80,7 +61,7 @@
                 var app = self.$app;
                 console.log(app.data.doctor.id);
                 app.preloader.show('blue');
-                app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/assistants',                 function(e) {
+                app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/assistants',function(e) {
                     var x = JSON.parse(e);
                     console.log(x);
                     
@@ -90,10 +71,9 @@
                             '<div class="card card-outline elevation-3 asistentes">'+
                                 '<div class="rectangle"></div>'+
                                 '<div class="avatar">'+
-                                    '<img src="'+ app.data.url +'/' + x[i].photo + '"/50.png>'+
+                                    '<img src="'+ app.data.url +'/' + x[i].photo + '/200.png">'+
                                 '</div>'+
                                 '<div class="card-content card-content-padding">'+
-                                    '<h4 class="blue">'+ x[i].officeName +'</h4>'+
                                     '<h3 class="light-blue2">'+ x[i].name +'</h3>'+
                                 '</div>'+
                                 '<div class="link dynamic-popover" data-AssistantId="' + x[i].id + '">' +
@@ -154,7 +134,7 @@
                                             ///assistant/21/delete
                                             app.preloader.show('blue');
                                             app.request({
-                                                url: app.data.url + '/doctors/' + app.data.doctor.id + '/assistants/' + AssisstantId,
+                                                url: app.data.url + '/assistants/' + AssisstantId,
                                                 method: "DELETE",
                                                 crossDomain: true,
                                                 success: function(e){
@@ -174,8 +154,10 @@
                                     $$('.edit-assistant').on('click', function() {
                                         console.log(AssisstantId);
                                         dynamicPopover.close();
-                                        location.href = "#!/asistentes-invitar-02?id=" + AssisstantId;
-                                        location.reload();
+                                        app.data.assistant.id = AssisstantId;
+                                        app.methods.redirectTo('assistants-offices');
+                                        /* location.href = "#!/?id=" + AssisstantId;
+                                        location.reload(); */
                                     });
                                 },
                             }

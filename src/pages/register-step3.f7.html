@@ -378,7 +378,7 @@ background: #ccc;
                 });
                 var c, imageData, imageCapture, specialityID;
 
-                if(app.data.assistant.flag){
+                if (app.data.assistant.flag) {
                     $$('#picker').css("visibility", "hidden");
                     $$('h1').text('Foto de Perfil');
                     $$('h4').text('Agrega tu foto de perfil');
@@ -386,7 +386,7 @@ background: #ccc;
 
                 $$('#register-step3 .create-account').off('click');
                 $$('#register-step3 .create-account').on('click', function(e) {
-                    if(app.data.assistant.flag){
+                    if (app.data.assistant.flag) {
                         c.result('base64').then(function(blob) {
                             app.preloader.show('blue');
                             app.request.postJSON(app.data.url + '/account/confirmation/assistant', {
@@ -403,11 +403,13 @@ background: #ccc;
                                 app.preloader.hide();
                             });
                         });
-                    }else{
+                    } else {
                         specialityID = specialties.values.indexOf(picker.value[0]);
                         specialityID++;
                         c.result('base64').then(function(blob) {
                             app.preloader.show('blue');
+                            console.log(blob);
+
                             app.request.postJSON(app.data.url + '/doctors', {
                                 "password": app.data.register.password,
                                 "name": app.data.register.username,
@@ -551,19 +553,19 @@ background: #ccc;
 
                 function sendFile(dataURL) {
                     var imgHtml = '<img id="web-img" src="' + dataURL + '" alt="">';
-                        $$('.web-cam').html(imgHtml);
-                        c = new croppie(document.getElementById('web-img'), {
-                            viewport: {
-                                width: 200,
-                                height: 200,
-                                type: 'circle'
-                            },
-                            boundary: {
-                                width: 200,
-                                height: 200
-                            },
-                            showZoomer: false,
-                        });
+                    $$('.web-cam').html(imgHtml);
+                    c = new croppie(document.getElementById('web-img'), {
+                        viewport: {
+                            width: 200,
+                            height: 200,
+                            type: 'circle'
+                        },
+                        boundary: {
+                            width: 200,
+                            height: 200
+                        },
+                        showZoomer: false,
+                    });
                 }
 
                 function readFile(file) {

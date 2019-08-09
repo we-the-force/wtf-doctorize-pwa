@@ -95,17 +95,18 @@
                 var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
                 var regex2 = /^([0-9]){10}$/;
                 var nombre = '', email = '', phone = '';
-
+/* 
                 let urlParams = (new URL(document.location)).searchParams;
                 var query = app.utils.parseUrlQuery(window.location.href);
-                let id = query.id;
+                let id = query.id; */
 
                 disableButton();
 
-                if(!app.methods.isEmpty(query)){
+                /* if(!app.methods.isEmpty(query)){
                     app.data.consultorio.id = id;
                     edit();
-                }else if(app.data.consultorio.edit){
+                }else  */
+                if(app.data.consultorio.edit){
                     edit();
                 }
 
@@ -141,10 +142,9 @@
                 });
 
                 function edit(){
-                    app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/offices/' + app.data.consultorio.id,
+                    app.request.get(app.data.url + '/offices/' + app.data.consultorio.id,
                     function(e) {
                         var x = JSON.parse(e);
-                        app.data.consultorio.edit = true;
                         app.data.consultorio.nombre = x.name;
                         app.data.consultorio.email = x.email;
                         app.data.consultorio.phone = x.phone;

@@ -219,7 +219,7 @@
                                 // patch put
                                 console.log(app.data.consultorio);
                                 app.request({
-                                    url: app.data.url + '/doctors/' + app.data.doctor.id + '/offices/' + app.data.consultorio.id,
+                                    url: app.data.url + '/offices/' + app.data.consultorio.id,
                                     method: "PATCH",
                                     crossDomain: true,
                                     data: {

@@ -151,7 +151,7 @@
                                                 ///assistant/21/delete
                                                 app.preloader.show('blue');
                                                 app.request({
-                                                url: app.data.url + '/doctors/' + app.data.doctor.id + '/offices/' + officeId,
+                                                url: app.data.url + '/offices/' + officeId,
                                                 method: "DELETE",
                                                 crossDomain: true,
                                                 success: function(e){
@@ -171,8 +171,12 @@
                                         $$('.edit-office').on('click', function() {
                                             console.log(officeId);
                                             dynamicPopover.close();
-                                            location.href = "#!/offices-add-form-basic?id=" + officeId;
-                                            location.reload();
+                                            app.data.consultorio.id = officeId;
+                                            app.data.consultorio.edit = true;
+                                            app.methods.redirectTo('offices-add-form-basic');
+                                            /* location.href = "#!/offices-add-form-basic?id=" + officeId;
+                                            location.reload(); */
+
                                         });
                                     },
                                 }

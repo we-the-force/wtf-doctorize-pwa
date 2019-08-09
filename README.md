@@ -5,7 +5,8 @@
 
 * node
 * npm
-* [Framework7 Core Documentation](https://framework7.io/docs/)
+* Framework7 Core - [Documentation](https://framework7.io/docs/)
+* localForage - [Documentation](https://localforage.github.io/localForage/)
 
 
 ## Installation

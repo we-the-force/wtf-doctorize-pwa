@@ -134,7 +134,7 @@
                                             ///assistant/21/delete
                                             app.preloader.show('blue');
                                             app.request({
-                                                url: app.data.url + '/assistants/' + AssisstantId,
+                                                url: app.data.url + '/doctors/' + app.data.doctor.id + '/assistants/' + AssisstantId,
                                                 method: "DELETE",
                                                 crossDomain: true,
                                                 success: function(e){

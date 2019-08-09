@@ -61,7 +61,7 @@
                 var app = self.$app;
                 console.log(app.data.assistant.id);                
                 app.preloader.show('blue');
-                app.request.get(app.data.url + '/assistants/' + app.data.assistant.id,function(e) {
+                app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/assistants/' + app.data.assistant.id,function(e) {
                     var x = JSON.parse(e);
                     console.log(x);
                     app.data.assistant.name = x.name;

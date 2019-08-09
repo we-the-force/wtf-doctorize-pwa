@@ -155,7 +155,7 @@
                     if(app.data.assistant.edit || app.data.assistant.addOffice){                        
                         //agregar endpoint
                         app.request({
-                            url: app.data.url +'/assistants/' + app.data.assistant.id,
+                            url: app.data.url + '/doctors/' + app.data.doctor.id + '/assistants/' + app.data.assistant.id,
                             method: "PATCH",
                             crossDomain: true,
                             data: {

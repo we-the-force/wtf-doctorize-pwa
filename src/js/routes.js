@@ -55,6 +55,7 @@ var routes = [
         component: RegisterS1Page,
     },
     {
+        name: 'register-s1',
         path: '/register-s1',
         component: RegisterS1Page,
     },

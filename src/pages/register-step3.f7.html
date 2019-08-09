@@ -73,7 +73,7 @@
           <li>
             <div class="row">
               <div class="col-50">
-                <a href="/register-s2/" data-view=".view-main" class="item-link list-button login-register-button">Regresar</a>
+                <a href="#" data-view=".view-main" class="item-link list-button login-register-button" id="cancel">Regresar</a>
 
               </div>
               <div class="col-50">
@@ -424,6 +424,14 @@ background: #ccc;
                                 app.preloader.hide();
                             });
                         });
+                    }
+                });
+
+                $$('#register-step3 #cancel').on('click', function(e){
+                    if(app.data.assistant.flag){
+                        app.methods.redirectTo('register-s1');
+                    }else{
+                        app.methods.redirectTo('register-s2'); 
                     }
                 });
 

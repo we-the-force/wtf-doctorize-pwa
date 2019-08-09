@@ -64,7 +64,7 @@
           <li>
             <div class="row">
               <div class="col-50">
-                <a href="/" data-view=".view-main" class="item-link list-button login-register-button">Cancelar</a>
+                <a href="#" data-view=".view-main" class="item-link list-button login-register-button" id="cancel">Cancelar</a>
 
               </div>
               <div class="col-50">
@@ -99,6 +99,11 @@
           if(!app.methods.isEmpty(query)){
             app.data.assistant.flag = true;
           }
+
+          $$('#register-step1 #cancel').on('click', function(e){
+            app.data.assistant.flag = false;
+            pp.methods.redirectTo('root');
+          });
 
           $$('#register-step1 .login-button').addClass('grey');
           $$('#register-step1 .login-button').off('click');

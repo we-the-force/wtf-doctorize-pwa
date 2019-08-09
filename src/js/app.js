@@ -38,6 +38,7 @@ var app = new Framework7({
             },
             assistant: {
                 id: '',
+                flag: false,
                 edit: false,
                 addOffice: false,
                 code: '',

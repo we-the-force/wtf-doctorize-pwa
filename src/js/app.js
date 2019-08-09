@@ -15,7 +15,7 @@ import routes from './routes.js';
 import register from './register.js';
 
 Framework7.request.setup({
-  contentType: "application/json"
+    contentType: "application/json"
 });
 
 var app = new Framework7({
@@ -46,13 +46,13 @@ var app = new Framework7({
                 password: '',
                 email: '',
                 consultorio: {
-                  id: '',
-                  name: '',
+                    id: '',
+                    name: '',
                 },
                 permisos: [],
             },
             doctor: {
-                id: '99',
+                id: '',
                 email: '',
                 name: '',
                 cellphone: '',
@@ -128,8 +128,8 @@ var app = new Framework7({
     view: {
         pushState: true
     },
-    navbar:{
-      showOnPageScrollEnd: false
+    navbar: {
+        showOnPageScrollEnd: false
     }
 });
 /* //login

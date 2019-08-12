@@ -4,12 +4,12 @@
             <div class="login-screen-content nav-bar-rect">
                 <div class="row">
                     <div class="col-15">
-                        <a href='#' data-view=".view-main"  class="item-link list-button back-button" id="cancel">
+                        <a href='#' data-view=".view-main" class="item-link list-button back-button" id="cancel">
                             <i class="material-icons">chevron_left</i>
                         </a>
                     </div>
                     <div class="col-85"></div>
-                </div>             
+                </div>
                 <div class="list">
                     <ul class="header">
                         <li>
@@ -17,7 +17,7 @@
                                 <div class="col-10"></div>
                                 <div class="col-90">
                                     <h1>Permisos de Asistente</h1>
-                                </div>  
+                                </div>
                             </div>
                         </li>
                         <li>
@@ -30,11 +30,11 @@
                             </div>
                         </li>
                     </ul>
-                </div>                                                  
-            </div>   
+                </div>
+            </div>
             <div>
                 <div class="list simple-list">
-                    <ul>     
+                    <ul>
                         <li>
                             <span>
                                 <div class="item-inner permisos-asistente">
@@ -44,8 +44,8 @@
                             <label class="toggle toggle-init color-blue-toggle">
                                 <input type="checkbox" name="chbx" value="1" style="display:none" checked>
                                 <span class="toggle-icon"></span>
-                            </label>                          
-                        </li>  
+                            </label>
+                        </li>
                         <li>
                             <span>
                                 <div class="item-inner permisos-asistente">
@@ -55,8 +55,8 @@
                             <label class="toggle toggle-init color-blue-toggle">
                                 <input type="checkbox" name="chbx" value="2" style="display:none" checked>
                                 <span class="toggle-icon"></span>
-                            </label>                          
-                        </li>  
+                            </label>
+                        </li>
                         <li>
                             <span>
                                 <div class="item-inner permisos-asistente">
@@ -66,8 +66,8 @@
                             <label class="toggle toggle-init color-blue-toggle">
                                 <input type="checkbox" name="chbx" value="3" style="display:none" checked>
                                 <span class="toggle-icon"></span>
-                            </label>                          
-                        </li>  
+                            </label>
+                        </li>
                         <li>
                             <span>
                                 <div class="item-inner permisos-asistente">
@@ -77,125 +77,138 @@
                             <label class="toggle toggle-init color-blue-toggle">
                                 <input type="checkbox" name="chbx" value="4" style="display:none" checked>
                                 <span class="toggle-icon"></span>
-                            </label>                          
+                            </label>
                         </li>
-                    </ul>  
-                </div>  
-            </div>   
+                    </ul>
+                </div>
+            </div>
             <div>
                 <div class="list">
-                    <ul>   
+                    <ul>
                         <li>
                             <div class="row">
                                 <div class="col-50">
-                                    <a href="#" data-view=".view-main" class="item-link list-button login-register-button " id="cancel">Cancelar</a>
+                                    <a href="#" data-view=".view-main"
+                                        class="item-link list-button login-register-button " id="cancel">Cancelar</a>
                                 </div>
                                 <div class="col-50">
-                                <a href="#" class="item-link list-button login-button asistente">
-                                    <p>Guardar </p>
-                                    <i class="material-icons">chevron_right</i>
-                                </a>
+                                    <a href="#" class="item-link list-button login-button asistente">
+                                        <p>Guardar </p>
+                                        <i class="material-icons">chevron_right</i>
+                                    </a>
                                 </div>
                             </div>
-                        </li> 
-                    </ul>  
-                </div> 
-            </div>                      
-        </div>                
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
     import $$ from 'dom7';
     export default {
-        on:{
-            pageInit: function(e, page) {
+        on: {
+            pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
-                var items; 
+                var items;
+                app.data.store.getItem('doctor').then(function (value) {
+                    app.data.doctor = value;
+                    app.data.store.getItem('assistant').then(function (assistantValue) {
+                        app.data.assistant = assistantValue;
+                        console.log(assistantValue);
+                        
 
-                $$('#asistentes-invitar-04 #cancel').on('click', function(e){
-                    if(app.data.assistant.edit){
-                        app.data.assistant.edit = false;
-                        app.methods.redirectTo('assistants-offices');
-                    }else{
-                        app.methods.redirectTo('asistentes-invitar-03'); 
-                    }
-                });
-
-                if(app.data.assistant.edit){
-                    $$('.header').find('h1').text(app.data.assistant.consultorio.name);
-                    $$('.header').find('h4').text('Permisos del Asistente');
-                    items = $$('[name="chbx"]');
-                    items.forEach(x => {  
-                        var z = false;                      
-                        app.data.assistant.permisos.forEach(element => {
-                            if(element.id == x.value){
-                                x.checked = true;
-                                z = true;
-                            }
-                        });
-                        if(!z){
-                            x.checked = false;
-                        }
-                    });
-                }
-
-                $$('#asistentes-invitar-04 .login-button').on('click', function(e){
-                    items = $$('[name="chbx"]');
-                    app.data.assistant.permisos = [];
-                    for(var i = 0; i < items.length; i++){
-                        if(items[i].checked == true){
-                            app.data.assistant.permisos.push({'id':items[i].value});
-                        }
-                    }
-                    app.preloader.show('blue');
-                    console.log(app.data.assistant);
-                    console.log(app.data.doctor.id);
-                    
-                    if(app.data.assistant.edit || app.data.assistant.addOffice){                        
-                        //agregar endpoint
-                        app.request({
-                            url: app.data.url + '/doctors/' + app.data.doctor.id + '/assistants/' + app.data.assistant.id,
-                            method: "PATCH",
-                            crossDomain: true,
-                            data: {
-                                "id": app.data.assistant.id,                              
-                                "offices": [{
-                                    "doctorId": app.data.doctor.id,
-                                    "officeName": app.data.assistant.consultorio.name,
-                                    "officeId": app.data.assistant.consultorio.id,
-                                    "permissions": app.data.assistant.permisos   
-                                }]
-                                
-                            },
-                            success: function(e){
-                                app.data.assistant.addOffice = false;
+                        $$('#asistentes-invitar-04 #cancel').on('click', function (e) {
+                            if (app.data.assistant.edit) {
                                 app.data.assistant.edit = false;
-                                app.preloader.hide();
-                                app.methods.redirectTo('assistants-offices');                                          
-                            },
-                            error: function(e){
-                                app.data.assistant.edit = false;
-                                app.data.assistant.addOffice = false;
-                                app.preloader.hide();
                                 app.methods.redirectTo('assistants-offices');
+                            } else {
+                                app.methods.redirectTo('asistentes-invitar-03');
                             }
                         });
-                    }else{
-                        app.request.postJSON(app.data.url + '/doctors/' + app.data.doctor.id + '/assistants', { 
-                            "email": app.data.assistant.email,
-                            "doctorId": app.data.doctor.id,
-                            "officeId": app.data.assistant.consultorio.id,
-                            "permissions": app.data.assistant.permisos
-                        }, function(e){
-                            app.preloader.hide();
-                            app.methods.redirectTo('asistentes-confirmar');                                       
-                        }, 
-                        function(e) {
+
+                        if (app.data.assistant.edit) {
+                            $$('.header').find('h1').text(app.data.assistant.consultorio.name);
+                            $$('.header').find('h4').text('Permisos del Asistente');
+                            items = $$('[name="chbx"]');
+                            items.forEach(x => {
+                                var z = false;
+                                app.data.assistant.permisos.forEach(element => {
+                                    if (element.id == x.value) {
+                                        x.checked = true;
+                                        z = true;
+                                    }
+                                });
+                                if (!z) {
+                                    x.checked = false;
+                                }
+                            });
+                        }
+
+                        $$('#asistentes-invitar-04 .login-button').on('click', function (e) {
+                            items = $$('[name="chbx"]');
+                            app.data.assistant.permisos = [];
+                            for (var i = 0; i < items.length; i++) {
+                                if (items[i].checked == true) {
+                                    app.data.assistant.permisos.push({ 'id': items[i].value });
+                                }
+                            }
+                            app.preloader.show('blue');
+                            console.log(app.data.assistant);
+                            console.log(app.data.doctor.id);
+
+                            if (app.data.assistant.edit || app.data.assistant.addOffice) {
+                                //agregar endpoint
+                                app.request({
+                                    url: app.data.url + '/doctors/' + app.data.doctor.id + '/assistants/' + app.data.assistant.id,
+                                    method: "PATCH",
+                                    crossDomain: true,
+                                    data: {
+                                        "id": app.data.assistant.id,
+                                        "offices": [{
+                                            "doctorId": app.data.doctor.id,
+                                            "officeName": app.data.assistant.consultorio.name,
+                                            "officeId": app.data.assistant.consultorio.id,
+                                            "permissions": app.data.assistant.permisos
+                                        }]
+
+                                    },
+                                    success: function (e) {
+                                        redirectOffices();
+                                    },
+                                    error: function (e) {
+                                        redirectOffices();
+                                    }
+                                });
+                            } else {
+                                app.request.postJSON(app.data.url + '/doctors/' + app.data.doctor.id + '/assistants', {
+                                    "email": app.data.assistant.email,
+                                    "doctorId": app.data.doctor.id,
+                                    "officeId": app.data.assistant.consultorio.id,
+                                    "permissions": app.data.assistant.permisos
+                                }, function (e) {
+                                    app.preloader.hide();
+                                    app.methods.redirectTo('asistentes-confirmar');
+                                },
+                                    function (e) {
+                                        app.preloader.hide();
+                                    });
+                            }
+                        });
+                    });
+                });
+
+                function redirectOffices() {
+                    app.data.assistant.addOffice = false;
+                    app.data.assistant.edit = false;
+                    app.data.store.setItem("assistant", app.data.assistant)
+                        .then(function (value) {
+                            app.methods.redirectTo('assistants-offices');
                             app.preloader.hide();
                         });
-                    }
-                });
+                }
             }
         }
     }

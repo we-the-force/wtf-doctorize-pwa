@@ -1,146 +1,161 @@
 <template>
-        <div class="page" data-name="asistentes-invitar-03" id='asistentes-invitar-03'>
-            <div class="page-content login-screen-content">
-                <div class="login-screen-content nav-bar-rect">
-                    <div class="row">
-                        <div class="col-15">
-                            <a href='#' data-view=".view-main"  class="item-link list-button back-button" id="cancel">
-                                <i class="material-icons">chevron_left</i>
-                            </a>
-                        </div>
-                        <div class="col-85"></div>
-                    </div>             
-                    <div class="list">
-                        <ul class="header">
-                            <li>
-                                <div class="row">
-                                    <div class="col-10"></div>
-                                    <div class="col-90">
-                                        <h1>Seleccionar Consultorio</h1>
-                                    </div>  
+    <div class="page" data-name="asistentes-invitar-03" id='asistentes-invitar-03'>
+        <div class="page-content login-screen-content">
+            <div class="login-screen-content nav-bar-rect">
+                <div class="row">
+                    <div class="col-15">
+                        <a href='#' data-view=".view-main" class="item-link list-button back-button" id="cancel">
+                            <i class="material-icons">chevron_left</i>
+                        </a>
+                    </div>
+                    <div class="col-85"></div>
+                </div>
+                <div class="list">
+                    <ul class="header">
+                        <li>
+                            <div class="row">
+                                <div class="col-10"></div>
+                                <div class="col-90">
+                                    <h1>Seleccionar Consultorio</h1>
                                 </div>
-                            </li>
-                            <li>
-                                <div class="row">
-                                    <div class="col-10"></div>
-                                    <div class="col-80">
-                                        <h4>Asigne un consultorio a su nuevo asistente.</h4>
-                                    </div>
-                                    <div class="col-10"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-10"></div>
+                                <div class="col-80">
+                                    <h4>Asigne un consultorio a su nuevo asistente.</h4>
                                 </div>
-                            </li>
-                        </ul>
-                    </div>                                                  
-                </div>   
-                <div>
-                    <div class="list media-list">
-                        <ul id="consultorios">   
-                        </ul>  
-                    </div>  
-                </div>   
-                <div>
-                    <div class="list">
-                        <ul>   
-                            <li>
-                                <div class="row">
-                                    <div class="col-50">
-                                        <a href="#" data-view=".view-main" class="item-link list-button login-register-button" id="cancel">Cancelar</a>
-                                    </div>
-                                    <div class="col-50">
+                                <div class="col-10"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div class="list media-list">
+                    <ul id="consultorios">
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div class="list">
+                    <ul>
+                        <li>
+                            <div class="row">
+                                <div class="col-50">
+                                    <a href="#" data-view=".view-main"
+                                        class="item-link list-button login-register-button" id="cancel">Cancelar</a>
+                                </div>
+                                <div class="col-50">
                                     <a href="#" class="item-link list-button login-button asistente">
                                         <p>Siguiente </p>
                                         <i class="material-icons">chevron_right</i>
                                     </a>
-                                    </div>
                                 </div>
-                            </li> 
-                        </ul>  
-                    </div> 
-                </div>                      
-            </div>                
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </template>
-    <script>
-        import $$ from 'dom7';
-        export default {
-            on:{
-                pageInit: function(e, page) {
-                    var self = this;
-                    var app = self.$app;
-                    var items; 
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                var items;
 
-                    app.preloader.show('blue');
-                    app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/offices',//id=99 
-                    function(e){
-                        var x = JSON.parse(e);
-                        for(var i = 0; i < x.length; i++){
-                            $$('<li>' +
-                            '<label class="item-radio item-content">' +
-                            '<div class="item-inner asistente-consultorio">' +
-                            '<div class="item-title-row">' + 
-                            '<div class="item-title">' + x[i].name + '</div>' +
-                            '</div>' +
-                            '<div class="item-subtitle">' + x[i].hospital + '</div>' +
-                            '<div class="item-text">' + x[i].address + '</div>' +
-                            '</div>' +
-                            '<input type="radio" name="demo-radio" data-Name="'+ x[i].name +'" value="' + x[i].id + '"/>' +
-                            '<i class="icon icon-radio"></i>' +
-                            '</label>' +
-                            '</li> ').appendTo("#consultorios");
-                        }         
-                        app.preloader.hide();                          
-                        if(app.data.assistant.addOffice){
-                            $$('.header').find('h4').text('Asigne un nuevo consultorio a su asistente.');
-                            items = $$('[name="demo-radio"]');
-                            var z = false;
-                            items.forEach(element => {                                
-                                if(app.data.assistant.consultorio.name == $$(element).data('Name')){
-                                    element.checked = true;
-                                    z = true;
-                                }                    
-                            });                                       
-                            if(z){
-                                enableButton();
-                            } 
+                $$('#asistentes-invitar-03 .login-button').addClass('grey');
+                $$('#asistentes-invitar-03 .login-button').off('click');
 
-                        }       
-                    }, 
-                    function(e) {
-                        app.preloader.hide();
-                    });
-
-                    $$('#asistentes-invitar-03 #cancel').on('click', function(e){
-                        if(app.data.assistant.addOffice){
-                            app.data.assistant.addOffice = false;
-                            app.methods.redirectTo('assistants-offices');
-                        }else{
-                            app.methods.redirectTo('asistentes-invitar-02'); 
-                        }
-                    });
-
-                    $$('#asistentes-invitar-03 .login-button').addClass('grey');
-                    $$('#asistentes-invitar-03 .login-button').off('click');
-
-                    $$('#consultorios').on('change', function(e){
-                        enableButton();
-                    });
-
-                    function enableButton(){
-                        $$('#asistentes-invitar-03 .login-button').removeClass('grey');
-                        $$('#asistentes-invitar-03 .login-button').off('click');
-                        $$('#asistentes-invitar-03 .login-button').on('click', function(e){
-                            items = $$('[name="demo-radio"]');
-                            app.data.assistant.consultorio.id = '';
-                            for(var i = 0; i < items.length; i++){
-                                if(items[i].checked == true){
-                                    app.data.assistant.consultorio.id = items[i].value;
-                                    break;
+                app.preloader.show('blue');
+                app.data.store.getItem('doctor').then(function (value) {
+                    app.data.doctor = value;
+                    app.data.store.getItem('assistant').then(function (assistantValue) {
+                        app.data.assistant = assistantValue;
+                        console.log(assistantValue);
+                        
+                        app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/offices',
+                            function (e) {
+                                var x = JSON.parse(e);
+                                for (var i = 0; i < x.length; i++) {
+                                    $$('<li>' +
+                                        '<label class="item-radio item-content">' +
+                                        '<div class="item-inner asistente-consultorio">' +
+                                        '<div class="item-title-row">' +
+                                        '<div class="item-title">' + x[i].name + '</div>' +
+                                        '</div>' +
+                                        '<div class="item-subtitle">' + x[i].hospital + '</div>' +
+                                        '<div class="item-text">' + x[i].address + '</div>' +
+                                        '</div>' +
+                                        '<input type="radio" name="demo-radio" data-Name="' + x[i].name + '" value="' + x[i].id + '"/>' +
+                                        '<i class="icon icon-radio"></i>' +
+                                        '</label>' +
+                                        '</li> ').appendTo("#consultorios");
                                 }
+                                app.preloader.hide();
+                                if (app.data.assistant.addOffice) {
+                                    $$('.header').find('h4').text('Asigne un nuevo consultorio a su asistente.');
+                                    items = $$('[name="demo-radio"]');
+                                    var z = false;
+                                    items.forEach(element => {
+                                        if (app.data.assistant.consultorio.name == $$(element).data('Name')) {
+                                            element.checked = true;
+                                            z = true;
+                                        }
+                                    });
+                                    if (z) {
+                                        enableButton();
+                                    }
+
+                                }
+                            },
+                            function (e) {
+                                app.preloader.hide();
+                            });
+
+                        $$('#asistentes-invitar-03 #cancel').on('click', function (e) {
+                            if (app.data.assistant.addOffice) {
+                                app.data.assistant.addOffice = false;
+                                app.data.store.setItem("assistant", app.data.assistant)
+                                    .then(function (value) {
+                                        app.methods.redirectTo('assistants-offices');
+                                    });
+                            } else {
+                                app.methods.redirectTo('asistentes-invitar-02');
                             }
-                            app.methods.redirectTo('asistentes-invitar-04'); 
                         });
-                    }
+
+                        $$('#consultorios').on('change', function (e) {
+                            enableButton();
+                        });
+                    });
+                });
+
+                function enableButton() {
+                    $$('#asistentes-invitar-03 .login-button').removeClass('grey');
+                    $$('#asistentes-invitar-03 .login-button').off('click');
+                    $$('#asistentes-invitar-03 .login-button').on('click', function (e) {
+                        items = $$('[name="demo-radio"]');
+                        app.data.assistant.consultorio.id = '';
+                        for (var i = 0; i < items.length; i++) {
+                            if (items[i].checked == true) {
+                                app.data.assistant.consultorio.id = items[i].value;
+                                break;
+                            }
+                        }
+                        app.data.store.setItem("assistant", app.data.assistant)
+                            .then(function (value) {
+                                app.methods.redirectTo('asistentes-invitar-04');
+                            });
+                    });
                 }
             }
         }
-    </script>
+    }
+</script>

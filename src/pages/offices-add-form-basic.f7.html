@@ -4,12 +4,13 @@
             <div class="login-screen-content nav-bar-rect">
                 <div class="row">
                     <div class="col-15">
-                        <a href='/offices-show' data-view=".view-main"  class="item-link list-button back-button" id="cancel">
+                        <a href='/offices-show' data-view=".view-main" class="item-link list-button back-button"
+                            id="cancel">
                             <i class="material-icons">chevron_left</i>
                         </a>
                     </div>
                     <div class="col-85"></div>
-                </div>             
+                </div>
                 <div class="list">
                     <ul>
                         <li>
@@ -17,7 +18,7 @@
                                 <div class="col-10"></div>
                                 <div class="col-90">
                                     <h2>Agregar Consultorio</h2>
-                                </div>  
+                                </div>
                             </div>
                         </li>
                         <li>
@@ -30,8 +31,8 @@
                             </div>
                         </li>
                     </ul>
-                </div>                                                  
-            </div>   
+                </div>
+            </div>
             <div>
                 <div class="list no-hairlines-md">
                     <ul>
@@ -39,159 +40,170 @@
                             <div class="item-inner">
                                 <div class="item-label blue">Nombre del Consultorio</div>
                                 <div class="item-input-wrap asistentes-input">
-                                <input type="text" name="nombre" id="nombre" placeholder="Nombre" required validate>
-                                <span class="input-clear-button"></span>
+                                    <input type="text" name="nombre" id="nombre" placeholder="Nombre" required validate>
+                                    <span class="input-clear-button"></span>
                                 </div>
                             </div>
                         </li>
                         <li class="item-content item-input">
-                        <div class="item-inner">
-                            <div class="item-label blue">Correo Electrónico</div>
-                            <div class="item-input-wrap asistentes-input">
-                            <input type="email" name="email" id="email" placeholder="Correo Electrónico" required validate>
-                            <span class="input-clear-button"></span>
+                            <div class="item-inner">
+                                <div class="item-label blue">Correo Electrónico</div>
+                                <div class="item-input-wrap asistentes-input">
+                                    <input type="email" name="email" id="email" placeholder="Correo Electrónico"
+                                        required validate>
+                                    <span class="input-clear-button"></span>
+                                </div>
                             </div>
-                        </div>
                         </li>
                         <li class="item-content item-input">
                             <div class="item-inner">
                                 <div class="item-label blue">Telefono</div>
                                 <div class="item-input-wrap asistentes-input">
-                                <input type="text" name="phone" id="phone" placeholder="teléfono" required validate pattern="[0-9]*" data-error-message="Only numbers please!">
-                                <span class="input-clear-button"></span>
+                                    <input type="text" name="phone" id="phone" placeholder="teléfono" required validate
+                                        pattern="[0-9]*" data-error-message="Only numbers please!">
+                                    <span class="input-clear-button"></span>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </div>
                 <div class="list">
-                    <ul>   
+                    <ul>
                         <li>
                             <div class="row">
                                 <div class="col-50">
-                                    <a href="/offices-show" data-view=".view-main" class="item-link list-button login-register-button" id="cancel">Cancelar</a>
+                                    <a href="/offices-show" data-view=".view-main"
+                                        class="item-link list-button login-register-button" id="cancel">Cancelar</a>
                                 </div>
                                 <div class="col-50">
-                                <a href="#" class="item-link list-button login-button asistente">
-                                    <p>Siguiente </p>
-                                    <i class="material-icons">chevron_right</i>
-                                </a>
+                                    <a href="#" class="item-link list-button login-button asistente">
+                                        <p>Siguiente </p>
+                                        <i class="material-icons">chevron_right</i>
+                                    </a>
                                 </div>
                             </div>
-                        </li> 
-                    </ul>  
-                </div> 
-            </div>                         
-        </div>                
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
     import $$ from 'dom7';
     export default {
-        on:{
-            pageInit: function(e, page) {
+        on: {
+            pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
                 var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
                 var regex2 = /^([0-9]){10}$/;
                 var nombre = '', email = '', phone = '';
-/* 
-                let urlParams = (new URL(document.location)).searchParams;
-                var query = app.utils.parseUrlQuery(window.location.href);
-                let id = query.id; */
 
-                disableButton();
-
-                /* if(!app.methods.isEmpty(query)){
-                    app.data.consultorio.id = id;
-                    edit();
-                }else  */
-                if(app.data.consultorio.edit){
-                    edit();
-                }
-
-                $$(document).on('input:empty',function(e){
+                app.data.store.getItem('office').then(function (value) {
+                    app.data.consultorio = value;
+                    console.log(value);
+                    
                     disableButton();
-                });
 
-                $$(document).on('input:notempty', '#nombre' , function(e){
-                    if(email != '' && phone != ''){
-                        nombre = $$('#nombre').val();
-                        enableButton();
-                    }else{
-                        nombre = $$('#nombre').val();
+                    if (app.data.consultorio.edit) {
+                        edit();
                     }
-                });
 
-                $$(document).on('input:notempty', '#email' , function(e){
-                    if(nombre != '' && phone != ''){
-                        email = $$('#email').val();
-                        enableButton();
-                    }else{
-                        email = $$('#email').val();
-                    }
-                });
-
-                $$(document).on('input:notempty', '#phone' , function(e){
-                    if(email != '' && nombre != ''){
-                        phone = $$('#phone').val();
-                        enableButton();
-                    }else{
-                        phone = $$('#phone').val();
-                    }
-                });
-
-                function edit(){
-                    app.request.get(app.data.url + '/offices/' + app.data.consultorio.id,
-                    function(e) {
-                        var x = JSON.parse(e);
-                        app.data.consultorio.nombre = x.name;
-                        app.data.consultorio.email = x.email;
-                        app.data.consultorio.phone = x.phone;
-                        app.data.consultorio.hospital = x.hospital;
-                        app.data.consultorio.address = x.address;
-                        app.data.consultorio.number = x.number;
-                        app.data.consultorio.startTime = x.startTime;
-                        app.data.consultorio.closeTime = x.closeTime;
-                        app.data.consultorio.lunchStartTime = x.lunchStartTime;
-                        app.data.consultorio.lunchCloseTime = x.lunchCloseTime;
-                        app.data.consultorio.days = x.days;
-                        $$('#nombre').val(x.name);
-                        $$('#email').val(x.email);
-                        $$('#phone').val(x.phone);
-                        nombre = x.name;
-                        email = x.email;
-                        phone = x.phone;
-                        enableButton();
+                    $$(document).on('input:empty', function (e) {
+                        disableButton();
                     });
+
+                    $$(document).on('input:notempty', '#nombre', function (e) {
+                        if (email != '' && phone != '') {
+                            nombre = $$('#nombre').val();
+                            enableButton();
+                        } else {
+                            nombre = $$('#nombre').val();
+                        }
+                    });
+
+                    $$(document).on('input:notempty', '#email', function (e) {
+                        if (nombre != '' && phone != '') {
+                            email = $$('#email').val();
+                            enableButton();
+                        } else {
+                            email = $$('#email').val();
+                        }
+                    });
+
+                    $$(document).on('input:notempty', '#phone', function (e) {
+                        if (email != '' && nombre != '') {
+                            phone = $$('#phone').val();
+                            enableButton();
+                        } else {
+                            phone = $$('#phone').val();
+                        }
+                    });
+
+
+                    $$('#offices-add-form-basic #cancel').on('click', function (e) {
+                        app.data.consultorio.edit = false;
+                        app.data.store.setItem("office", app.data.consultorio)
+                            .then(function (value) {
+                                app.methods.redirectTo('offices-show');
+                            })
+                            .catch(function (err) {
+                                console.log(err);
+                            });
+                    });
+                });
+
+                function edit() {
+                    app.request.get(app.data.url + '/offices/' + app.data.consultorio.id,
+                        function (e) {
+                            var x = JSON.parse(e);
+                            app.data.consultorio.nombre = x.name;
+                            app.data.consultorio.email = x.email;
+                            app.data.consultorio.phone = x.phone;
+                            app.data.consultorio.hospital = x.hospital;
+                            app.data.consultorio.address = x.address;
+                            app.data.consultorio.number = x.number;
+                            app.data.consultorio.startTime = x.startTime;
+                            app.data.consultorio.closeTime = x.closeTime;
+                            app.data.consultorio.lunchStartTime = x.lunchStartTime;
+                            app.data.consultorio.lunchCloseTime = x.lunchCloseTime;
+                            app.data.consultorio.days = x.days;
+                            $$('#nombre').val(x.name);
+                            $$('#email').val(x.email);
+                            $$('#phone').val(x.phone);
+                            nombre = x.name;
+                            email = x.email;
+                            phone = x.phone;
+                            enableButton();
+                        });
                 }
 
-                function enableButton(){
-                    if(regex.test(email) && regex2.test(phone))
-                    {
+                function enableButton() {
+                    if (regex.test(email) && regex2.test(phone)) {
                         app.data.consultorio.nombre = nombre;
                         app.data.consultorio.email = email;
                         app.data.consultorio.phone = phone;
                         $$('#offices-add-form-basic .login-button').removeClass('grey');
                         $$('#offices-add-form-basic .login-button').off('click');
-                        $$('#offices-add-form-basic .login-button').on('click', function(e){
-                            app.methods.redirectTo('offices-add-form-map');
+                        $$('#offices-add-form-basic .login-button').on('click', function (e) {
+                            app.data.store.setItem("office", app.data.consultorio)
+                                .then(function (value) {
+                                    app.methods.redirectTo('offices-add-form-map');
+                                })
+                                .catch(function (err) {
+                                    console.log(err);
+                                });
                         });
-                    }else{
+                    } else {
                         disableButton();
                     }
                 }
 
-                function disableButton(){
+                function disableButton() {
                     $$('#offices-add-form-basic .login-button').addClass('grey');
                     $$('#offices-add-form-basic .login-button').off('click');
                 }
-
-                $$('#offices-add-form-basic #cancel').on('click', function(e){
-                    app.data.consultorio.edit = false;
-                    app.methods.redirectTo('offices-show');
-                });
-
             }
         }
     }

@@ -40,85 +40,14 @@
               <li>
                   <div class="row">
                       <div class="col">
-                      <a href="/" data-view=".view-main"
-                      class="item-link list-button login-register-button">Salir</a>
+                      <a href="#" data-view=".view-main"
+                      class="item-link list-button login-register-button logout">Salir</a>
                       </div>
                   </div>
               </li>            
             </ul>
           </div>
         </div>
-<!-- 
-
-        <div class="page-content login-screen-content tab hide-navbar-on-scroll"  id="tab-2">
-          <div class="list">
-            <ul>
-              <li>
-                <div class="row">
-                  <div class="col">
-                    <a href="#" data-view=".view-main"
-                    class="item-link list-button login-register-button">Agenda</a>
-                  </div>
-                </div>
-              </li>
-              <li>
-                  <div class="block">
-                      <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor iste eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea ipsa temporibus dicta architecto saepe.</p>
-                      ...
-                      <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor iste eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea ipsa temporibus dicta architecto saepe.</p>
-                      ...
-                      <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor iste eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea ipsa temporibus dicta architecto saepe.</p>
-                      ...
-                      <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor iste eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea ipsa temporibus dicta architecto saepe.</p>
-                      ...
-                      <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor iste eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea ipsa temporibus dicta architecto saepe.</p>
-                      ...
-                      <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor iste eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea ipsa temporibus dicta architecto saepe.</p>
-                      ...
-                      <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor iste eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea ipsa temporibus dicta architecto saepe.</p>
-                      ...
-                      <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor iste eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea ipsa temporibus dicta architecto saepe.</p>
-                      ...
-
-                    </div>
-                </li>
-            </ul>
-          </div>
-        </div>
-
-
-
-        <div class="page-content login-screen-content tab"  id="tab-4">
-          <div class="list">
-            <ul>
-              <li>
-                <div class="row">
-                  <div class="col">
-                    <a href="#" data-view=".view-main"
-                    class="item-link list-button login-register-button">Money</a>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-
-
-        <div class="page-content login-screen-content tab"  id="tab-5">
-          <div class="list">
-            <ul>
-              <li>
-                <div class="row">
-                  <div class="col">
-                    <a href="#" data-view=".view-main"
-                    class="item-link list-button login-register-button">Settings</a>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div> -->
     </div>
   </template>
   <script>
@@ -128,6 +57,11 @@
         pageInit: function(e, page) {
           var self = this;
           var app = self.$app;
+
+          $$('.logout').click(function (params) {
+            app.data.store.clear();
+            app.methods.redirectTo('root');
+          });
 
           $$('.dynamic-sheet').on('click', function(){
             var dynamicSheet = app.sheet.create({

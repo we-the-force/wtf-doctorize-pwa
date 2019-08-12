@@ -145,78 +145,80 @@
                 var app = self.$app;
                 var days = $$('[name="chbx"]');
                 var startTime = '', closeTime = '', lunchStartTime = '', lunchCloseTime = '';
+                app.data.store.getItem('doctor').then(function (value) {
+                    app.data.doctor = value;
+                    app.data.store.getItem('office').then(function (value) {
+                        app.data.consultorio = value;
 
-                app.data.store.getItem('office').then(function (value) {
-                    app.data.consultorio = value;
-
-                    disableButton();
-
-                    if (app.data.consultorio.edit) {
-                        $$('#startTime').val(app.data.consultorio.startTime);
-                        $$('#closeTime').val(app.data.consultorio.closeTime);
-                        $$('#lunchCloseTime').val(app.data.consultorio.lunchCloseTime);
-                        $$('#lunchStartTime').val(app.data.consultorio.lunchStartTime);
-                        startTime = app.data.consultorio.startTime;
-                        closeTime = app.data.consultorio.closeTime;
-                        lunchCloseTime = app.data.consultorio.lunchCloseTime;
-                        lunchStartTime = app.data.consultorio.lunchStartTime;
-                        app.data.consultorio.days.forEach(Element => {
-                            var z = Element - 1;
-                            days[z].checked = true;
-                            $$('.days-container [id="0' + Element + '"]').addClass('checked');
-                        });
-                        enableButton();
-                    }
-
-                    $$(document).on('input:notempty', '#startTime', function (e) {
-                        if (lunchCloseTime != '' && closeTime != '' && lunchStartTime != '') {
-                            startTime = $$('#startTime').val();
-                            enableButton();
-                        } else {
-                            startTime = $$('#startTime').val();
-                        }
-                    });
-
-                    $$(document).on('input:notempty', '#closeTime', function (e) {
-                        if (lunchCloseTime != '' && startTime != '' && lunchStartTime != '') {
-                            closeTime = $$('#closeTime').val();
-                            enableButton();
-                        } else {
-                            closeTime = $$('#closeTime').val();
-                        }
-                    });
-
-                    $$(document).on('input:notempty', '#lunchCloseTime', function (e) {
-                        if (startTime != '' && closeTime != '' && lunchStartTime != '') {
-                            lunchCloseTime = $$('#lunchCloseTime').val();
-                            enableButton();
-                        } else {
-                            lunchCloseTime = $$('#lunchCloseTime').val();
-                        }
-                    });
-
-                    $$(document).on('input:notempty', '#lunchStartTime', function (e) {
-                        if (lunchCloseTime != '' && closeTime != '' && startTime != '') {
-                            lunchStartTime = $$('#lunchStartTime').val();
-                            enableButton();
-                        } else {
-                            lunchStartTime = $$('#lunchStartTime').val();
-                        }
-                    });
-
-
-                    $$('.days-container [id="01"]').on('click', function (e) { changeColor(0); });
-                    $$('.days-container [id="02"]').on('click', function (e) { changeColor(1); });
-                    $$('.days-container [id="03"]').on('click', function (e) { changeColor(2); });
-                    $$('.days-container [id="04"]').on('click', function (e) { changeColor(3); });
-                    $$('.days-container [id="05"]').on('click', function (e) { changeColor(4); });
-                    $$('.days-container [id="06"]').on('click', function (e) { changeColor(5); });
-                    $$('.days-container [id="07"]').on('click', function (e) { changeColor(6); });
-
-                    $$(document).on('input:empty', function (e) {
                         disableButton();
-                    });
 
+                        if (app.data.consultorio.edit) {
+                            $$('#startTime').val(app.data.consultorio.startTime);
+                            $$('#closeTime').val(app.data.consultorio.closeTime);
+                            $$('#lunchCloseTime').val(app.data.consultorio.lunchCloseTime);
+                            $$('#lunchStartTime').val(app.data.consultorio.lunchStartTime);
+                            startTime = app.data.consultorio.startTime;
+                            closeTime = app.data.consultorio.closeTime;
+                            lunchCloseTime = app.data.consultorio.lunchCloseTime;
+                            lunchStartTime = app.data.consultorio.lunchStartTime;
+                            app.data.consultorio.days.forEach(Element => {
+                                var z = Element - 1;
+                                days[z].checked = true;
+                                $$('.days-container [id="0' + Element + '"]').addClass('checked');
+                            });
+                            enableButton();
+                        }
+
+                        $$(document).on('input:notempty', '#startTime', function (e) {
+                            if (lunchCloseTime != '' && closeTime != '' && lunchStartTime != '') {
+                                startTime = $$('#startTime').val();
+                                enableButton();
+                            } else {
+                                startTime = $$('#startTime').val();
+                            }
+                        });
+
+                        $$(document).on('input:notempty', '#closeTime', function (e) {
+                            if (lunchCloseTime != '' && startTime != '' && lunchStartTime != '') {
+                                closeTime = $$('#closeTime').val();
+                                enableButton();
+                            } else {
+                                closeTime = $$('#closeTime').val();
+                            }
+                        });
+
+                        $$(document).on('input:notempty', '#lunchCloseTime', function (e) {
+                            if (startTime != '' && closeTime != '' && lunchStartTime != '') {
+                                lunchCloseTime = $$('#lunchCloseTime').val();
+                                enableButton();
+                            } else {
+                                lunchCloseTime = $$('#lunchCloseTime').val();
+                            }
+                        });
+
+                        $$(document).on('input:notempty', '#lunchStartTime', function (e) {
+                            if (lunchCloseTime != '' && closeTime != '' && startTime != '') {
+                                lunchStartTime = $$('#lunchStartTime').val();
+                                enableButton();
+                            } else {
+                                lunchStartTime = $$('#lunchStartTime').val();
+                            }
+                        });
+
+
+                        $$('.days-container [id="01"]').on('click', function (e) { changeColor(0); });
+                        $$('.days-container [id="02"]').on('click', function (e) { changeColor(1); });
+                        $$('.days-container [id="03"]').on('click', function (e) { changeColor(2); });
+                        $$('.days-container [id="04"]').on('click', function (e) { changeColor(3); });
+                        $$('.days-container [id="05"]').on('click', function (e) { changeColor(4); });
+                        $$('.days-container [id="06"]').on('click', function (e) { changeColor(5); });
+                        $$('.days-container [id="07"]').on('click', function (e) { changeColor(6); });
+
+                        $$(document).on('input:empty', function (e) {
+                            disableButton();
+                        });
+
+                    });
                 });
 
                 function enableButton() {

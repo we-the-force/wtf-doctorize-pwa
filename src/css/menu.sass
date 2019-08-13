@@ -1,0 +1,56 @@
+.menu
+    --f7-tabbar-icon-size: 28px
+    border-top-left-radius: 12.8px
+    border-top-right-radius: 12.8px
+    box-shadow: -2.56075px 2.56075px 19.2056px rgba(16, 43, 200, 0.2)
+    .toolbar-inner
+        .tab-link-highlight
+            display: none
+        a.tab-link
+            padding-top: 12px
+            padding-bottom: 12px
+    
+.toolbar-bottom::after
+    display: none   
+
+.add-circle
+    position: absolute
+    z-index: 1500
+    margin-bottom: 0px
+    bottom: 0px
+    left: 50%
+    transform: translateX(-50%)
+    img:active
+
+.sheet-modal
+    --f7-sheet-bg-color: #fff;
+    border-top-left-radius: 12.8px
+    border-top-right-radius: 12.8px
+    box-shadow: -2.56075px 2.56075px 19.2056px rgba(16, 43, 200, 0.2)
+    .close-sheet
+        top: -56px
+        position: absolute
+        left: 50%
+        transform: translateX(-50%)
+    .list
+        margin-top: 50px
+        margin-left: 20px
+        margin-right: 20px
+        .item-link
+            color: #102BC8
+        ul:before,ul:after
+            content: none
+
+    i
+        display: inline
+        line-height: 40px
+        margin-left: 3%
+        margin-right: 5%
+        width: 25px
+        text-align: center
+        padding-top: 0px
+        vertical-align: middle
+        color: #102BC8
+
+.sheet-modal:before
+    content: none

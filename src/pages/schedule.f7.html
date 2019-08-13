@@ -2,8 +2,8 @@
     <div class="page schedule" data-name="schedule" id="schedule">
 
         <!--Nav bar-->
-        <div class="navbar" id="nav1">
-            <div class="navbar-inner sliding">
+        <div class="navbar schedule" id="nav1">
+            <div class="navbar-inner sliding schedule">
                 <div class="left">
                     <div class="fab fab-left-middle color-white profile">
                         <a href="#">
@@ -18,7 +18,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="subnavbar">
+                <div class="subnavbar schedule">
                     <div class="subnavbar-inner">
                         <div class="toolbar tabbar tabbar-scrollable toolbar-top" id='subnavtoolbar'>
                             <div class="toolbar-inner">
@@ -125,32 +125,77 @@
                                     <div class="card-content">
 
                                         <div class="card-header display-block">
+
                                             <h6 class="light-blue2 card-opened-fade-out">CONSULTA</h6>
                                             <h3 class="blue card-opened-fade-out">Aglaee Alvarez</h3>
                                             <h5 class="light-blue card-opened-fade-out">Hospital General Zona 2</h5>
                                             <h4 class="purple-blue card-opened-fade-out">
-                                                <i class="icon material-icons time">watch_later</i>12:00PM -
-                                                12:30PM</h4>
+                                                <i class="icon material-icons time">watch_later</i>
+                                                12:00PM - 12:30PM
+                                            </h4>
+
                                             <a href="#" class="link card-close card-opened-fade-in color-white">
                                                 <i class="icon material-icons white">close</i>
                                                 <h3 class="label">CERRAR</h3>
                                             </a>
-                                            <div class="item-content card-opened-fade-in">
+                                            <div class="item-content card-opened-fade-in details-event">
+                                                <div class="fab fab-left-middle color-white photo">
+                                                    <a href="#">
+                                                        <i class="icon material-icons">photo</i>
+                                                    </a>
+                                                </div>
                                                 <ul>
                                                     <li>
                                                         <div class="item-inner">
+                                                            <h2 class="white">Anahi Aglaee Alvarez</h2>
                                                         </div>
                                                     </li>
                                                     <li>
-
                                                         <div class="item-inner">
+                                                            <div class="fab fab-middle color-white contact comment">
+                                                                <a href="#">
+                                                                    <i class="icon material-icons">comment</i>
+                                                                </a>
+                                                            </div>
+                                                            <div class="fab fab-middle color-white contact email">
+                                                                <a href="#">
+                                                                    <i class="icon material-icons">email</i>
+                                                                </a>
+                                                            </div>
+                                                            <div class="fab fab-middle color-white contact phone">
+                                                                <a href="#">
+                                                                    <i class="icon material-icons">local_phone</i>
+                                                                </a>
+                                                            </div>
+                                                            <div class="stars">
+                                                                <i class="icon material-icons" style="left:0px">star</i>
+                                                                <i class="icon material-icons" style="left:20px">star</i>
+                                                                <i class="icon material-icons" style="left:40px">star</i>
+                                                                <i class="icon material-icons" style="left:60px">star</i>
+                                                                <i class="icon material-icons" style="left:80px">star_half</i>
+                                                            </div>
                                                         </div>
+                                                        <!-- <div class="stars">
+                                                                <i class="icon material-icons star">star</i>
+                                                        </div>
+                                                        <div class="stars">
+                                                                <i class="icon material-icons star">star</i>
+                                                        </div>
+                                                        <div class="stars">
+                                                                <i class="icon material-icons star">star</i>
+                                                        </div>
+                                                        <div class="stars">
+                                                                <i class="icon material-icons star">star</i>
+                                                        </div>
+                                                        <div class="stars">
+                                                                <i class="icon material-icons star">star</i>
+                                                        </div> -->
                                                     </li>
                                                 </ul>
                                             </div>
 
-
                                         </div>
+
                                         <i class="icon f7-icons chevron card-opened-fade-out">chevron_right</i>
                                         <div class="card-content-padding">
                                             <p>Framework7 - is a free and open source HTML mobile framework to
@@ -281,10 +326,6 @@
                 var self = this;
                 var app = self.$app;
 
-                /* $$(document).on('card:beforeopen', '#cita01', function(e) {
-                    console.log('ahoy');                    
-                }); */
-
                 $$(document).on('card:open', function (e) {
                     $$('.subnavbar').hide();
                     $$('.add-circle').hide();
@@ -297,18 +338,6 @@
                     $$('.add-circle').show();
                     $$(e.srcElement).find('.card-header').removeClass('header-rect');
                 });
-                /*                 $$('.navbar').change(function (e) {
-                                    console.log('ahoy');
-                                });
-                
-                                $$('.navbar').prop({
-                
-                                }); */
-
-                /* $$('.tab-active').scroll(function(){
-                    app.navbar.hide('.navbar');
-                    $$('#scrolltoolbar').css('top', '0');                                 
-                });  */
 
                 $$('.dynamic-sheet').on('click', function () {
                     var dynamicSheet = app.sheet.create({
@@ -365,9 +394,6 @@
                             },
                             opened: function (sheet) {
                                 $$('.close').on('click', function () {
-                                    dynamicSheet.close();
-                                });
-                                $$('a').on('click', function () {
                                     dynamicSheet.close();
                                 });
                             },

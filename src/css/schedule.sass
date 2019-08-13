@@ -1,13 +1,13 @@
-.page.schedule
-    --f7-toolbar-height: 60px
-    --f7-subnavbar-height: 60px
-    --f7-navbar-height: 60px
+.view
     .navbar
+        --f7-toolbar-height: 60px
+        --f7-subnavbar-height: 60px
+        --f7-navbar-height: 60px
         background: -webkit-linear-gradient(179deg, #F5F7FF, #CCE4ED)
         background: linear-gradient(271deg, #F5F7FF, #CCE4ED)
         -webkit-animation: AnimationName 11s ease infinite
         animation: AnimationName 11s ease infinite
-        .navbar-inner
+        .navbar-inner.schedule
             .search
                 --f7-fab-size: 45px
                 --f7-fab-box-shadow: 0px 2.93571px 22.0179px rgba(16, 43, 200, 0.2);
@@ -18,7 +18,7 @@
                 --f7-fab-box-shadow: 0px 2.93571px 22.0179px rgba(16, 43, 200, 0.2);
                 i
                     color: #102BC8
-        .subnavbar
+        .subnavbar.schedule
             background: -webkit-linear-gradient(179deg, #F5F7FF, #CCE4ED)
             background: linear-gradient(271deg, #F5F7FF, #CCE4ED)
             -webkit-animation: AnimationName 11s ease infinite
@@ -29,6 +29,9 @@
                 font-size: 12px
                 p
                     margin: 0px
+                .tab-link
+                    width: 55px
+                    height: 55px
                 .tab-link-highlight
                     display: none
                 .tab-link-active
@@ -46,30 +49,34 @@
                     border-color: #2FCFBC
                     border-width: 2px
                     border-style: solid
-
+    .navbar:before,.navbar:after
+        content: none
+.page.schedule
+    .page-content
+        padding-top: 120px
     .list
         z-index: 100
-        .item-divider
-            height: 15px
-            background: transparent
+    .item-divider
+        height: 15px
+        background: transparent
+        font-size: 15px
+        color: #7B8EFF
+        i 
             font-size: 15px
             color: #7B8EFF
-            i 
-                font-size: 15px
-                color: #7B8EFF
-            hr
-                width: 100%
-                height: 2px
-                background-color: #7b8eff
-                border: none
-                margin-block-start: 0px
-                margin-block-end: 0px
-                margin-left: 15px
-        .item-fab
-            z-index: 99
-            --f7-fab-size: 40px
-            --f7-fab-box-shadow: none
-            opacity: 0.4
-            color: #7B8EFF
-            i
-                font-size: 35px
+        hr
+            width: 100%
+            height: 2px
+            background-color: #7b8eff
+            border: none
+            margin-block-start: 0px
+            margin-block-end: 0px
+            margin-left: 15px
+    .item-fab
+        z-index: 99
+        --f7-fab-size: 40px
+        --f7-fab-box-shadow: none
+        opacity: 0.4
+        color: #7B8EFF
+        i
+            font-size: 35px

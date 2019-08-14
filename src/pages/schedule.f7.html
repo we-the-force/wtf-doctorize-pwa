@@ -69,19 +69,19 @@
         <!--tool bar-->
         <div class="toolbar tabbar tabbar-labels toolbar-bottom menu">
             <div class="toolbar-inner">
-                <a href="/home" class="tab-link">
+                <a href="/home" class="tab-link" id='tab1'>
                     <!-- Different icons for iOS and MD themes -->
                     <i class="icon material-icons">home</i>
                 </a>
-                <a href="/schedule" class="tab-link  tab-link-active">
+                <a href="/schedule" class="tab-link  tab-link-active" id='tab2'>
                     <i class="icon material-icons">today</i>
                 </a>
                 <a href="#" class="tab-link">
                 </a>
-                <a href="#" class="tab-link">
+                <a href="#" class="tab-link" id='tab3'>
                     <i class="icon material-icons">monetization_on</i>
                 </a>
-                <a href="#" class="tab-link">
+                <a href="#" class="tab-link" id='tab4'>
                     <i class="icon material-icons">settings</i>
                 </a>
             </div>
@@ -231,7 +231,7 @@
                                                 </li>
                                                 <li>
                                                     <div class="row">
-                                                        <div class="col-55">                                                
+                                                        <div class="col-55">
                                                         </div>
                                                         <div class="col-45">
                                                             <a href="#" class="item-link list-button login-button">
@@ -390,7 +390,7 @@
                             '<li>' +
                             '<div class="row">' +
                             '<div class="col">' +
-                            '<a href="/offices-show" data-view=".view-main" class="item-link list-button login-register-button">' +
+                            '<a href="#" data-view=".view-main" class="item-link list-button login-register-button consultorios">' +
                             '<i class="material-icons">local_hospital</i>' +
                             'Consultorios</a>' +
                             '</div>' +
@@ -399,7 +399,7 @@
                             '<li>' +
                             '<div class="row">' +
                             '<div class="col">' +
-                            '<a href="/assistants-show" data-view=".view-main" class="item-link list-button login-register-button">' +
+                            '<a href="#" data-view=".view-main" class="item-link list-button login-register-button asistentes">' +
                             '<i class="material-icons">headset_mic</i>' +
                             'Asistentes</a>' +
                             '</div>' +
@@ -408,7 +408,7 @@
                             '<li>' +
                             '<div class="row">' +
                             '<div class="col">' +
-                            '<a href="/agendar-cita" data-view=".view-main" class="item-link list-button login-register-button">' +
+                            '<a href="#" data-view=".view-main" class="item-link list-button login-register-button cita">' +
                             '<i class="material-icons">event</i>' +
                             'Nueva cita</a>' +
                             '</div>' +
@@ -417,7 +417,7 @@
                             '<li>' +
                             '<div class="row">' +
                             '<div class="col">' +
-                            '<a href="/nuevo-paciente" data-view=".view-main" class="item-link list-button login-register-button">' +
+                            '<a href="#" data-view=".view-main" class="item-link list-button login-register-button paciente">' +
                             '<i class="material-icons">person_add</i>' +
                             'Nuevo Paciente</a>' +
                             '</div>' +
@@ -432,10 +432,26 @@
                                 console.log('Sheet open');
                             },
                             opened: function (sheet) {
-                                $$('.close').on('click', function () {
+                                $$('.sheet-modal .close').on('click', function () {
                                     dynamicSheet.close();
                                 });
-                            },
+                                $$('.sheet-modal .consultorios').click(function () {
+                                    dynamicSheet.close();
+                                    app.methods.redirectTo('offices-show');
+                                });
+                                $$('.sheet-modal .asistentes').click(function () {
+                                    dynamicSheet.close();
+                                    app.methods.redirectTo('asistentes-invitar-01');
+                                });
+                                $$('.sheet-modal .cita').click(function () {
+                                    dynamicSheet.close();
+                                    app.methods.redirectTo('agendar-cita');
+                                });
+                                $$('.sheet-modal .paciente').click(function () {
+                                    dynamicSheet.close();
+                                    app.methods.redirectTo('nuevo-paciente');
+                                });
+                            }, 
                         }
                     });
                     dynamicSheet.open();

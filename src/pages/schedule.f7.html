@@ -22,18 +22,6 @@
                     <div class="subnavbar-inner">
                         <div class="toolbar tabbar tabbar-scrollable toolbar-top" id='subnavtoolbar'>
                             <div class="toolbar-inner" id="subnavtoolbar-inner">
-                                <!--  <a href="#tab-1" class="tab-link tab-link-active">
-                                            <p>04</p>
-                                            <p>DEC</p>
-                                        </a>
-                                        <a href="#tab-2" class="tab-link tab-link-today">
-                                            <p>05</p>
-                                            <p>DEC</p>
-                                        </a>
-                                        <a href="#tab-3" class="tab-link">
-                                            <p>06</p>
-                                            <p>DEC</p>
-                                        </a> -->
                             </div>
                         </div>
                     </div>
@@ -85,7 +73,11 @@
                 var moment = require('moment');
                 moment().format();
 
-                app.preloader.show('blue');
+                app.preloader.show('blue');/* abre preloader */
+
+                /*
+                    crea la subnavbar con los 30 dias a partir de hoy
+                */
                 z = moment(), today = moment(), y = moment(z).add(1, 'M'), i = 1;
                 while (z.isBefore(y)) {
                     $$('#subnavtoolbar-inner').append(
@@ -109,13 +101,17 @@
                     i++;
                     z.add(1, 'd')
                 }
+                /*--------------------------------------------------------------------------------*/
 
+                /* llena pagina 1 cuando inicia */
                 fillPage('#tab-1');
 
+                /* llena la pagina a donde se le de click */
                 $$('.tab-link').click(function (e) {
                     fillPage($$($$(this).attr('href')));
                 });
 
+                /* esconde la subnavbar y el icono de la toolbar cuando una carta se expande */
                 $$(document).on('card:open', function (e) {
                     $$('.subnavbar').hide();
                     $$('.add-circle').hide();
@@ -123,12 +119,14 @@
 
                 });
 
+                /* regresa la subnavbar y el icono de la tool bar cuando la carta se comprime */
                 $$(document).on('card:close', function (e) {
                     $$('.subnavbar').show();
                     $$('.add-circle').show();
                     $$(e.srcElement).find('.card-header').removeClass('header-rect');
                 });
 
+                /* abre la lista de la toolbar */
                 $$('.dynamic-sheet').on('click', function () {
                     var dynamicSheet = app.sheet.create({
                         content: '<div class="sheet-modal">' +
@@ -183,6 +181,7 @@
                                 console.log('Sheet open');
                             },
                             opened: function (sheet) {
+                                /* cierra la lista antes de redireccionar */
                                 $$('.sheet-modal .close').on('click', function () {
                                     dynamicSheet.close();
                                 });
@@ -208,191 +207,232 @@
                     dynamicSheet.open();
                 });
 
+                /* funcion para llenar la pagina dinamicamente */
                 function fillPage(x) {
-                    var orderByDate = [], flag;
+                    let flag = true;
                     //app.data.store.getItem('doctor').then(function (value) {
                     //app.data.doctor = value;
+                    /* limpia la pagina antes de poner algo */
                     $$(x).children('.list').children('ul').empty();
                     app.preloader.hide();
+                    /* trae las citas del doctor */ //cmabiar por el endpoint para traer solo las citas del dia
                     app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/appointments',
                         function (e) {
                             var z = JSON.parse(e);
+                            //quitar el finltro cuando sea por dia
                             z = z.filter(element => moment(element.date).isValid());
+                            //cambiar de checar por hora a checar cual es mas grande cuando agrege el endpoint
                             z.sort(function (a, b) {
                                 if (moment(a.date).hour() < moment(b.date).hour()) {
                                     return -1;
-                                }else if(moment(a.date).hour() > moment(b.date).hour()){
+                                } else if (moment(a.date).hour() > moment(b.date).hour()) {
                                     return 1;
-                                }else{
-                                    return 0;
                                 }
+                                return 0;
                             });
-                            z.forEach(element => {
-                                console.log(moment(element.date).hour() +' '+moment(element.date).minute());
-                                
+                            //dejar de checar cuando se arregle la pantalla de cita
+                            z.forEach(e => {
+                                let i = moment(e.date);
+                                if (i.minute() >= 30) {
+                                    i.minute(30);
+                                } else {
+                                    i.minute(0);
+                                }
+                                e.date = +i;
                             });
-                            /* 
+
+                            /* comienza a llenar la pagina */
                             for (let i in z) {
-                                var date = moment(z[i].date);
-                                if(date.isValid()) {
-                                    orderByDate.push(z[i]);
-                                    console.log(moment(z[i].date).hour());
-                                }
-                            } 
-                            for (let i in orderByDate){
-                                console.log(moment(orderByDate[i].date).hour());
-                            } */
-                            z.forEach(element => {
-                                var date = moment(element.date);
-                                if (date.isValid()) {
+                                let j = moment(z[i].date); /* convierte el elemento en moment */
+                                let k = eval(i) + 1;
+                                let minute = '00';
+                                let minute2 = '00';
+
+                                /* pone la linea de la hora si es el primer elemento */
+                                if (flag) {
+                                    if (j.minute() >= 30) minute = '30';
                                     $$(x).children('.list').children('ul').append(
                                         '<li class="item-divider">' +
                                         '<i class="icon material-icons">watch_later</i>' +
-                                        '00:30 AM' +
+                                        j.hour() + ':' + minute +
                                         '<hr>' +
-                                        '</li>' +
-                                        '<li>' +
-                                        '<div class="row">' +
-                                        '<div class="card card-expandable" id="cita01">' +
-                                        '<div class="rectangle card-opened-fade-out"></div>' +
-                                        '<div class="card-content">' +
-                                        '<div class="card-header display-block">' +
-                                        '<h6 class="light-blue2 card-opened-fade-out">CONSULTA</h6>' +
-                                        '<h3 class="blue card-opened-fade-out">Aglaee Alvarez</h3>' +
-                                        '<h5 class="light-blue card-opened-fade-out">Hospital General Zona 2</h5>' +
-                                        '<h4 class="purple-blue card-opened-fade-out">' +
-                                        '<i class="icon material-icons time">watch_later</i>' +
-                                        '12:00PM - 12:30PM' +
-                                        '</h4>' +
-                                        '<a href="#" class="link card-close card-opened-fade-in color-white">' +
-                                        '<i class="icon material-icons white">close</i>' +
-                                        '<h3 class="label">CERRAR</h3>' +
-                                        '</a>' +
-                                        '<div class="row">' +
-                                        '<div class="col-5"></div>' +
-                                        '<div class="col-90">' +
-                                        '<div class="item-content card-opened-fade-in details-event">' +
-                                        '<div class="fab fab-left-middle color-white photo">' +
-                                        '<a href="#">' +
-                                        '<i class="icon material-icons">photo</i>' +
-                                        '</a>' +
-                                        '</div>' +
-                                        '<ul>' +
-                                        '<li>' +
-                                        '<div class="item-inner">' +
-                                        '<h2 class="white">Anahi Aglaee Alvarez</h2>' +
-                                        '</div>' +
-                                        '</li>' +
-                                        '<li>' +
-                                        '<div class="item-inner">' +
-                                        '<div class="fab fab-middle color-white contact comment">' +
-                                        '<a href="#">' +
-                                        '<i class="icon material-icons">comment</i>' +
-                                        '</a>' +
-                                        '</div>' +
-                                        '<div class="fab fab-middle color-white contact email">' +
-                                        '<a href="#">' +
-                                        '<i class="icon material-icons">email</i>' +
-                                        '</a>' +
-                                        '</div>' +
-                                        '<div class="fab fab-middle color-white contact phone">' +
-                                        '<a href="#">' +
-                                        '<i class="icon material-icons">local_phone</i>' +
-                                        '</a>' +
-                                        '</div>' +
-                                        '<div class="stars">' +
-                                        '<i class="icon material-icons"' +
-                                        'style="left:0px">star</i>' +
-                                        '<i class="icon material-icons"' +
-                                        'style="left:20px">star</i>' +
-                                        '<i class="icon material-icons"' +
-                                        'style="left:40px">star</i>' +
-                                        '<i class="icon material-icons"' +
-                                        'style="left:60px">star</i>' +
-                                        '<i class="icon material-icons"' +
-                                        'style="left:80px">star_half</i>' +
-                                        '</div>' +
-                                        '</div>' +
-                                        '</li>' +
-                                        '</ul>' +
-                                        '</div>' +
-                                        '</div>' +
-                                        '<div class="col-5"></div>' +
-                                        '</div>' +
-                                        '</div>' +
-                                        '<i class="icon f7-icons chevron card-opened-fade-out">chevron_right</i>' +
-                                        '<div class="card-content-padding list">' +
-                                        '<ul>' +
-                                        '<li>' +
-                                        '<div class="row">' +
-                                        '<div class="col-70">' +
-                                        '<h2 class="blue2">CONSULTA</h2>' +
-                                        '</div>' +
-                                        '<div class="col-30">' +
-                                        '<h2 class="blue2">$500</h2>' +
-                                        '</div>' +
-                                        '</div>' +
-                                        '</li>' +
-                                        '<li>' +
-                                        '<div class="row">' +
-                                        '<div class="col-5">' +
-                                        '<i class="icon material-icons time light-blue2">watch_later</i>' +
-                                        '</div>' +
-                                        '<div class="col-95">' +
-                                        '<h3 class="light-blue2">12:00PM - 12:30PM</h3>' +
-                                        '</div>' +
-                                        '</div>' +
-                                        '</li>' +
-                                        '<li>' +
-                                        '<div class="row">' +
-                                        '<div class="col-60">' +
-                                        '<h3 class="blue2">Centro Hospitalario la Concepción</h3>' +
-                                        '</div>' +
-                                        '<div class="col-40"></div>' +
-                                        '</div>' +
-                                        '</li>' +
-                                        '<li>' +
-                                        '<div class="row">' +
-                                        '<div class="col-55">' +
-                                        '</div>' +
-                                        '<div class="col-45">' +
-                                        '<a href="#" class="item-link list-button login-button">' +
-                                        '<p>Navegar</p>' +
-                                        '<i class="material-icons">directions</i>' +
-                                        '</a>' +
-                                        '</div>' +
-                                        '</div> ' +
-                                        '</li>' +
-                                        '</ul>' +
-                                        '</div>' +
-                                        '</div>' +
-                                        '</div>' +
-                                        '</div>' +
-                                        '</li>' +
-                                        '<li class="item-divider">' +
-                                        '<i class="icon material-icons">watch_later</i>' +
-                                        '01:00 AM' +
-                                        '<hr>' +
-                                        '</li>' +
-                                        '<li>' +
-                                        '<div class="item-content">' +
-                                        '<div class="item-inner">' +
-                                        '<div class="fab fab-center-center item-fab">' +
-                                        '<a href="#">' +
-                                        '<i class="icon material-icons">add</i>' +
-                                        '</a>' +
-                                        '</div>' +
-                                        '</div>' +
-                                        '</div>' +
                                         '</li>');
                                 }
-                            });
+
+                                let n = moment(j).add(30, 'm');
+
+                                if (n.minute() >= 30) {
+                                    minute = '30';
+                                    minute2 = '00';
+                                } else {
+                                    minute = '00';
+                                    minute2 = '30';
+                                }
+                                /* pone la carta de la cita */
+                                $$(x).children('.list').children('ul').append(
+                                    '<li>' +
+                                    '<div class="row">' +
+                                    '<div class="card card-expandable" id="cita01">' +
+                                    '<div class="rectangle card-opened-fade-out"></div>' +
+                                    '<div class="card-content">' +
+                                    '<div class="card-header display-block">' +
+                                    '<h6 class="light-blue2 card-opened-fade-out">CONSULTA</h6>' +
+                                    '<h3 class="blue card-opened-fade-out">' + z[i].name + '</h3>' +
+                                    '<h5 class="light-blue card-opened-fade-out">Hospital General Zona 2</h5>' +/* agregar nombre del consultorio */
+                                    '<h4 class="purple-blue card-opened-fade-out">' +
+                                    '<i class="icon material-icons time">watch_later</i>' +
+                                    j.hour() + ':' + minute2 + ' - ' + n.hour() + ':' + minute +
+                                    '</h4>' +
+                                    '<a href="#" class="link card-close card-opened-fade-in color-white">' +
+                                    '<i class="icon material-icons white">close</i>' +
+                                    '<h3 class="label">CERRAR</h3>' +
+                                    '</a>' +
+                                    '<div class="row">' +
+                                    '<div class="col-5"></div>' +
+                                    '<div class="col-90">' +
+                                    '<div class="item-content card-opened-fade-in details-event">' +
+                                    '<div class="fab fab-left-middle color-white photo">' +
+                                    '<a href="#">' +
+                                    '<i class="icon material-icons">photo</i>' +
+                                    '</a>' +
+                                    '</div>' +
+                                    '<ul>' +
+                                    '<li>' +
+                                    '<div class="item-inner">' +
+                                    '<h2 class="white">' + z[i].name + '</h2>' +
+                                    '</div>' +
+                                    '</li>' +
+                                    '<li>' +
+                                    '<div class="item-inner">' +
+                                    '<div class="fab fab-middle color-white contact comment">' +
+                                    '<a href="#">' +
+                                    '<i class="icon material-icons">comment</i>' +
+                                    '</a>' +
+                                    '</div>' +
+                                    '<div class="fab fab-middle color-white contact email">' +
+                                    '<a href="#">' +
+                                    '<i class="icon material-icons">email</i>' +
+                                    '</a>' +
+                                    '</div>' +
+                                    '<div class="fab fab-middle color-white contact phone">' +
+                                    '<a href="#">' +
+                                    '<i class="icon material-icons">local_phone</i>' +
+                                    '</a>' +
+                                    '</div>' +
+                                    '<div class="stars">' +
+                                    '<i class="icon material-icons"' +
+                                    'style="left:0px">star</i>' +
+                                    '<i class="icon material-icons"' +
+                                    'style="left:20px">star</i>' +
+                                    '<i class="icon material-icons"' +
+                                    'style="left:40px">star</i>' +
+                                    '<i class="icon material-icons"' +
+                                    'style="left:60px">star</i>' +
+                                    '<i class="icon material-icons"' +
+                                    'style="left:80px">star_half</i>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</li>' +
+                                    '</ul>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '<div class="col-5"></div>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '<i class="icon f7-icons chevron card-opened-fade-out">chevron_right</i>' +
+                                    '<div class="card-content-padding list">' +
+                                    '<ul>' +
+                                    '<li>' +
+                                    '<div class="row">' +
+                                    '<div class="col-70">' +
+                                    '<h2 class="blue2">CONSULTA</h2>' +
+                                    '</div>' +
+                                    '<div class="col-30">' +
+                                    '<h2 class="blue2">$500</h2>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</li>' +
+                                    '<li>' +
+                                    '<div class="row">' +
+                                    '<div class="col-5">' +
+                                    '<i class="icon material-icons time light-blue2">watch_later</i>' +
+                                    '</div>' +
+                                    '<div class="col-95">' +
+                                    '<h3 class="light-blue2">' + j.hour() + ':' + minute2 + ' - ' + n.hour() + ':' + minute + '</h3>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</li>' +
+                                    '<li>' +
+                                    '<div class="row">' +
+                                    '<div class="col-60">' +
+                                    '<h3 class="blue2">Centro Hospitalario la Concepción</h3>' +/* agregar nombre del consultorio */
+                                    '</div>' +
+                                    '<div class="col-40"></div>' +
+                                    '</div>' +
+                                    '</li>' +
+                                    '<li>' +
+                                    '<div class="row">' +
+                                    '<div class="col-55">' +
+                                    '</div>' +
+                                    '<div class="col-45">' +
+                                    '<a href="#" class="item-link list-button login-button">' +
+                                    '<p>Navegar</p>' +
+                                    '<i class="material-icons">directions</i>' +
+                                    '</a>' +
+                                    '</div>' +
+                                    '</div> ' +
+                                    '</li>' +
+                                    '</ul>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</li>'
+                                );
+
+                                /* checa cuando cerrar la lista y cuando no */
+                                if (k < z.length) {
+                                    if (!moment(z[k].date).isSame(n)) { /* si el elemento no precede a otro cierra la lista */
+                                        closeList(n)
+                                    } else { /* si el elemento tiene un sucesor sigue con la lista */
+                                        flag = false;
+                                    }
+                                } else { /* si el elemento es el ultimo cierra la lista */
+                                    closeList(n)
+                                }
+                            }
                         });
 
-
                     //});
-                }
 
+                    function closeList(n) {
+                        let minute;
+                        flag = true;
+                        if (n.minute() >= 30) {
+                            minute = '30';
+                        } else {
+                            minute = '00'
+                        }
+                        $$(x).children('.list').children('ul').append(
+                            '<li class="item-divider">' +
+                            '<i class="icon material-icons">watch_later</i>' +
+                            n.hour() + ':' + minute +
+                            '<hr>' +
+                            '</li>' +
+                            '<li>' +
+                            '<div class="item-content">' +
+                            '<div class="item-inner">' +
+                            '<div class="fab fab-center-center item-fab">' +
+                            '<a href="#">' +
+                            '<i class="icon material-icons">add</i>' +
+                            '</a>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</li>'
+                        );
+                    }
+                }
 
             }
         }

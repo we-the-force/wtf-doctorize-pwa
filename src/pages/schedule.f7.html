@@ -404,7 +404,6 @@
                                     }
                                 }
                             } else {
-                                console.log('ahoy');
                                 let hour = moment(), minute;
                                 flag = true;
                                 if (hour.minute() >= 30) {
@@ -433,7 +432,7 @@
                                     '<div class="col-15"></div>' +
                                     '<div class="col-70">' +
                                     '<h4 style="text-align: center;">' +
-                                    'No cuentas con citas el día de hoy. <br> Agrega una.' +
+                                    'No cuentas con citas este dia. <br> Agrega una.' +
                                     '</h4>' +
                                     '</div>' +
                                     '<div class="col-15"></div>' +
@@ -451,8 +450,14 @@
                                     '</li>'
                                 );
                             }
-
+                            $$('.item-fab').click(function (e) {
+                                app.methods.redirectTo('agendar-cita');
+                            });
                         });
+
+
+
+
                     /* 
                                         }); */
 

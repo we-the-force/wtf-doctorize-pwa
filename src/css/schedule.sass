@@ -55,6 +55,18 @@
 .page.schedule
     .page-content
         padding-top: 120px
+        .schedule-icon
+            width: 64px
+            height: 64px
+            text-align: center
+            img
+                width: inherit
+                height: inherit
+                position: absolute
+                left: 50%
+                top: 50%
+                transform: translate3d(-50%, -50%, 0) rotate(0deg) scale(1)
+                opacity: 0.5
     .list
         z-index: 100
     .item-divider
@@ -81,6 +93,8 @@
         color: #7B8EFF
         i
             font-size: 35px
+
+
 
 .ios
     .page:not(.schedule)

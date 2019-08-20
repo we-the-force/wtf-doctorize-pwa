@@ -8,6 +8,8 @@
         -webkit-animation: AnimationName 11s ease infinite
         animation: AnimationName 11s ease infinite
         .navbar-inner.schedule
+            display: block
+            top: 50%
             .search
                 --f7-fab-size: 45px
                 --f7-fab-box-shadow: 0px 2.93571px 22.0179px rgba(16, 43, 200, 0.2);
@@ -18,37 +20,46 @@
                 --f7-fab-box-shadow: 0px 2.93571px 22.0179px rgba(16, 43, 200, 0.2);
                 i
                     color: #102BC8
-        .subnavbar.schedule
-            background: -webkit-linear-gradient(179deg, #F5F7FF, #CCE4ED)
-            background: linear-gradient(271deg, #F5F7FF, #CCE4ED)
-            -webkit-animation: AnimationName 11s ease infinite
-            animation: AnimationName 11s ease infinite
-            .subnavbar-inner
-            .toolbar
-                background: inherit
-                font-size: 12px
-                p
-                    margin: 0px
-                .tab-link
-                    width: 55px
-                    height: 55px
-                .tab-link-highlight
-                    display: none
-                .tab-link-active
-                    width: 55px
-                    height: 55px
-                    border-radius: 50%
-                    background: radial-gradient(77.47px at 12.12% -12.84%, #102BC8 0%, #3FC1ED 100%)
-                    box-shadow: 0px 2.56875px 19.2656px rgba(16, 43, 200, 0.49);
+            .subnavbar.schedule
+                top: 50%
+                background: -webkit-linear-gradient(179deg, #F5F7FF, #CCE4ED)
+                background: linear-gradient(271deg, #F5F7FF, #CCE4ED)
+                -webkit-animation: AnimationName 11s ease infinite
+                animation: AnimationName 11s ease infinite
+                .subnavbar-inner
+                    display: contents
+                .toolbar
+                    background: inherit
+                    font-size: 12px
                     p
-                        color: #fff
-                .tab-link-today
-                    width: 55px
-                    height: 55px
-                    border-radius: 50%
-                    border-color: #2FCFBC
-                    border-width: 2px
-                    border-style: solid
+                        margin: 0px
+                    .tab-link
+                        width: 55px
+                        height: 55px
+                    .tab-link-highlight
+                        display: none
+                    .tab-link-active
+                        width: 55px
+                        height: 55px
+                        border-radius: 50%
+                        background: radial-gradient(77.47px at 12.12% -12.84%, #102BC8 0%, #3FC1ED 100%)
+                        box-shadow: 0px 2.56875px 19.2656px rgba(16, 43, 200, 0.49);
+                        p
+                            color: #fff
+                    .tab-link-today
+                        width: 55px
+                        height: 55px
+                        border-radius: 50%
+                        border-color: #2FCFBC
+                        border-width: 2px
+                        border-style: solid
+                    .toolbar-inner
+                        padding-left: 15px
+                        padding-right: 15px
+                .toolbar:before,.toolbar:after
+                    content: none
+            .subnavbar.schedule:before,.subnavbar.schedule:after
+                content: none
     .navbar:before,.navbar:after
         content: none
 
@@ -102,4 +113,4 @@
             padding-top: 0px
     .page.schedule
         .page-content
-            padding-top: 150px
+            padding-top: 160px

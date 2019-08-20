@@ -1,0 +1,189 @@
+<template>
+    <div class="page" data-name="agendar-cita-fecha" id="agendar-cita-fecha">
+        <div class="page-content login-screen-content">
+            <div class="login-screen-content nav-bar-rect">
+                <div class="row">
+                    <div class="col-15">
+                        <a href='/agendar-cita' data-view=".view-main" class="item-link list-button back-button"
+                            id="back">
+                            <i class="material-icons">close</i>
+                        </a>
+                    </div>
+                    <div class="col-85"></div>
+                </div>
+                <div class="list">
+                    <ul>
+                        <li>
+                            <div class="row">
+                                <div class="col-10"></div>
+                                <div class="col-90">
+                                    <h2>Agendar Cita</h2>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-10"></div>
+                                <div class="col-70">
+                                    <h4>Agrega los datos básicos de la consulta.</h4>
+                                </div>
+                                <div class="col-20"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div class="list no-hairlines-md" id="inputs">
+                    <ul>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-label blue">Fecha</div>
+                                <div class="item-input-wrap asistentes-input">
+                                    <input type="text" name="datetime" readonly="readonly" id="date"
+                                        placeholder="Selecciona la fecha" required validate>
+                                    <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="list">
+                    <ul>
+                        <li>
+                            <div class="row">
+                                <div class="col-50">
+                                    <a href="/agendar-cita" data-view=".view-main"
+                                        class="item-link list-button login-register-button ">Cancelar</a>
+                                </div>
+                                <div class="col-50">
+                                    <a href="#" class="item-link list-button login-button asistente">
+                                        <p>Agendar </p>
+                                        <i class="material-icons">chevron_right</i>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                var appointment = '', datetime = '', today = '';
+                var moment = require('moment');
+                moment().format();
+
+                var calendarModal = app.calendar.create({
+                    inputEl: '#date',
+                    openIn: 'customModal',
+                    minDate: new Date(),
+                    closeOnSelect: true,
+                    weekHeader: false,
+                    yearSelector: false,
+                    header: false,
+                    renderToolbar: function () {
+                        return '<div class="toolbar calendar-custom-toolbar no-shadow">' +
+                            '<div class="toolbar-inner">' +
+                            '<div class="left">' +
+                            '<a href="#" class="link icon-only"><i class="icon icon-back"></i></a>' +
+                            '</div>' +
+                            '<div class="center"></div>' +
+                            '<div class="right">' +
+                            '<a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+                    },
+                    dateFormat: 'dd MM yyyy',
+                    on: {
+                        open: function (c) {
+                            console.log(c);
+                            
+                            $$('.calendar-custom-toolbar .center').text(monthNames[c.currentMonth] + ', ' + c.currentYear);
+                            $$('.calendar-custom-toolbar .left .link').on('click', function () {
+                                c.prevMonth();
+                            });
+                            $$('.calendar-custom-toolbar .right .link').on('click', function () {
+                                c.nextMonth();
+                            });
+                        },
+                        monthYearChangeStart: function (c) {
+                            $$('.calendar-custom-toolbar .center').text(monthNames[c.currentMonth] + ', ' + c.currentYear);
+                        }
+                    }
+                });
+
+                app.data.store.getItem('office').then(function (value) {
+                    app.data.consultorio = value;
+                    app.data.store.getItem('doctor').then(function (value2) {
+                        app.data.doctor = value;
+                        console.log(value);
+                        console.log(value2);
+                    });
+                });
+
+                disableButton();
+
+                $$(document).on('input:notempty', '#datetime', function (e) {
+                    if (name != '' && email != '' && phone != '') {
+                        appointment = moment($$('#datetime').val());
+                        enableButton();
+                    } else {
+                        appointment = moment($$('#datetime').val());
+                    }
+                });
+
+                $$(document).on('input:empty', function (e) {
+                    disableButton();
+                });
+
+                function enableButton() {
+                    today = moment();
+                    if (appointment.isSameOrAfter(today.add(1, 'h'))) {
+                        $$('#agendar-cita-fecha .login-button').removeClass('grey');
+                        $$('#agendar-cita-fecha .login-button').off('click');
+                        $$('#agendar-cita-fecha .login-button').on('click', function (e) {
+                            app.data.paciente.nombre = name;
+                            app.data.paciente.email = email;
+                            app.data.paciente.phone = phone;
+                            datetime = new Date($$('#datetime').val());
+                            var office = $$('#consultorio').val();
+                            app.preloader.show('blue');
+                            app.request.postJSON(app.data.url + '/doctors/' + app.data.doctor.id + '/appointments', {
+                                "email": app.data.paciente.email,
+                                "doctorId": app.data.doctor.id,
+                                "officeId": office,
+                                "name": app.data.paciente.nombre,
+                                "phone": app.data.paciente.phone,
+                                "date": datetime,
+                            }, function (e) {
+                                app.preloader.hide();
+                                app.methods.redirectTo('cita-agendada');
+                            },
+                                function (e) {
+                                    app.preloader.hide();
+                                });
+                        });
+                    } else {
+                        disableButton();
+                    }
+                }
+
+                function disableButton() {
+                    $$('#agendar-cita-fecha .login-button').addClass('grey');
+                    $$('#agendar-cita-fecha .login-button').off('click');
+                }
+
+            }
+        }
+    }
+</script>

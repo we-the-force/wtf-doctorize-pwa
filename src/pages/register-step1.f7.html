@@ -1,6 +1,5 @@
-
 <template>
-<div class="page" data-name="register-step1" id="register-step1">
+  <div class="page" data-name="register-step1" id="register-step1">
     <div class="page-content login-screen-content">
       <div class="screen-title">
         <div class="list">
@@ -17,7 +16,7 @@
             </li>
           </ul>
         </div>
-        
+
       </div>
       <div class="list">
         <ul>
@@ -28,7 +27,7 @@
                 <div class="row no-gap">
                   <div class="col-10">
                     <i class="material-icons">person</i>
-                    
+
                   </div>
                   <div class="col-90">
                     <input type="text" name="fullname" id="username" placeholder="nombre completo" required validate>
@@ -45,7 +44,7 @@
                 <div class="row no-gap">
                   <div class="col-10">
                     <i class="material-icons">vpn_key</i>
-                    
+
                   </div>
                   <div class="col-90">
                     <input type="text" name="password" id="password" placeholder="contraseña" required validate>
@@ -55,27 +54,28 @@
               </div>
             </div>
           </li>
-          
+
         </ul>
       </div>
-      
+
       <div class="list">
         <ul>
           <li>
             <div class="row">
               <div class="col-50">
-                <a href="/" data-view=".view-main" class="item-link list-button login-register-button">Cancelar</a>
+                <a href="#" data-view=".view-main" class="item-link list-button login-register-button"
+                  id="cancel">Cancelar</a>
 
               </div>
               <div class="col-50">
-                <a href="#" data-view=".view-main"  class="item-link list-button login-button">
+                <a href="#" data-view=".view-main" class="item-link list-button login-button">
                   <p>Siguiente </p>
                   <i class="material-icons">chevron_right</i>
                 </a>
-              </div> 
+              </div>
             </div>
-              
-            
+
+
           </li>
         </ul>
         <!-- <div class="block-footer">Some text about login information.<br>Click "Sign In" to close Login Screen</div> -->
@@ -84,44 +84,57 @@
   </div>
 </template>
 <script>
-    import $$ from 'dom7';
-    export default {  
-      on: {
-        pageInit: function(e, page) {
-          var self = this;
-          var app = self.$app;
+  import $$ from 'dom7';
+  export default {
+    on: {
+      pageInit: function (e, page) {
+        var self = this;
+        var app = self.$app;
 
-          let urlParams = (new URL(document.location)).searchParams;
-          var query = app.utils.parseUrlQuery(window.location.href);
-          let code = query.code;
-          let email = query.email; 
-          
-          if(!app.methods.isEmpty(query)){
-            app.data.assistant.flag = true;
-          }
+        let urlParams = (new URL(document.location)).searchParams;
+        var query = app.utils.parseUrlQuery(window.location.href);
+        let code = query.code;
+        let email = query.email;
 
-          $$('#register-step1 .login-button').addClass('grey');
-          $$('#register-step1 .login-button').off('click');
-          $$(document).on('input:notempty', '#username', function(e){
-            $$(document).on('input:notempty', '#password', function(e){
-              $$('#register-step1 .login-button').removeClass('grey');
-              $$('#register-step1 .login-button').off('click');
-              $$('#register-step1 .login-button').on('click', function(e){
-                if(!app.data.assistant.flag){
-                  app.data.register.username = $$('[name="fullname"]').val();
-                  app.data.register.password = $$('[name="password"]').val();
+        if (!app.methods.isEmpty(query)) {
+          app.data.assistant.flag = true;
+        }else{
+          app.data.assistant.flag = false;
+        }
+
+        $$('#register-step1 #cancel').on('click', function (e) {
+          app.data.assistant.flag = false;
+          app.data.store.setItem('assistant', app.data.assistant).then(function (value) {
+            app.methods.redirectTo('root');
+          });
+        });
+
+        $$('#register-step1 .login-button').addClass('grey');
+        $$('#register-step1 .login-button').off('click');
+        $$(document).on('input:notempty', '#username', function (e) {
+          $$(document).on('input:notempty', '#password', function (e) {
+            $$('#register-step1 .login-button').removeClass('grey');
+            $$('#register-step1 .login-button').off('click');
+            $$('#register-step1 .login-button').on('click', function (e) {
+              if (!app.data.assistant.flag) {
+                app.data.register.username = $$('[name="fullname"]').val();
+                app.data.register.password = $$('[name="password"]').val();
+                app.data.store.setItem('register', app.data.register).then(function (value) {
                   app.methods.redirectTo('register-s2');
-                }else{
-                  app.data.assistant.name = $$('[name="fullname"]').val();
-                  app.data.assistant.password = $$('[name="password"]').val();
-                  app.data.assistant.email = email;
-                  app.data.assistant.code = code;
+                });
+              } else {
+                app.data.assistant.name = $$('[name="fullname"]').val();
+                app.data.assistant.password = $$('[name="password"]').val();
+                app.data.assistant.email = email;
+                app.data.assistant.code = code;
+                app.data.store.setItem('assistant', app.data.assistant).then(function (value) {
                   app.methods.redirectTo('register-s3');
-                }
-              });
+                });
+              }
             });
           });
-        }
+        });
       }
     }
+  }
 </script>

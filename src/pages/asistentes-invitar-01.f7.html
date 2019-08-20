@@ -4,7 +4,7 @@
             <div class="login-screen-content nav-bar-rect">
                 <div class="row">
                     <div class="col-15">
-                        <a href='/home' data-view=".view-main"  class="item-link list-button back-button" id="back">
+                        <a href='/home' data-view=".view-main" class="item-link list-button back-button" id="back">
                             <i class="material-icons">chevron_left</i>
                         </a>
                     </div>
@@ -46,25 +46,6 @@
             <div>
                 <div class="list">
                     <ul id="asistentes">
-                        <!-- <li>
-                            <div class="row">
-                                <div class="card card-outline elevation-3 asistentes">
-                                    <div class="rectangle"></div>
-                                    <div class="avatar">
-                                        <img src="https://cdn.framework7.io/placeholder/fashion-88x88-6.jpg"/>
-                                    </div>
-                                    <div class="card-content card-content-padding">
-                                        <h4 class="blue">Test Card</h4>
-                                        <h3 class="light-blue2">This is just a test</h3>
-                                        <h4></h4>
-                                    </div>
-                                    <div class="link dynamic-popover" data-officeId="">
-                                        <i class="material-icons more">more_vert
-                                        </i>
-                                    </div>
-                                </div>
-                            </div>
-                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -75,116 +56,124 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageInit: function(e, page) {
+            pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
                 console.log(app.data.doctor.id);
                 app.preloader.show('blue');
-                app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/assistants',                 function(e) {
-                    var x = JSON.parse(e);
-                    console.log(x);
-                    
-                    for (var i = 0; i < x.length; i++) {
-                        $$('#asistentes').append('<li>'+
-                        '<div class="row">'+
-                            '<div class="card card-outline elevation-3 asistentes">'+
-                                '<div class="rectangle"></div>'+
-                                '<div class="avatar">'+
-                                    '<img src="'+ app.data.url +'/' + x[i].photo + '"/50.png>'+
-                                '</div>'+
-                                '<div class="card-content card-content-padding">'+
-                                    '<h4 class="blue">'+ x[i].officeName +'</h4>'+
-                                    '<h3 class="light-blue2">'+ x[i].name +'</h3>'+
-                                '</div>'+
+                app.data.store.getItem('doctor').then(function (value) {
+                    app.data.doctor = value;
+                    console.log(app.data.doctor.id);
+                    app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/assistants', function (e) {
+                        var x = JSON.parse(e);
+                        console.log(x);
+                        // AGREGAR IM�GEN DEFAULT CUANDO NO TENGA EL ASISTENTE
+                        for (var i = 0; i < x.length; i++) {
+                            if (x[i].name == null) {
+                                x[i].name = 'Por Confirmar...'
+                            }
+                            $$('#asistentes').append('<li>' +
+                                '<div class="row">' +
+                                '<div class="card card-outline elevation-3 asistentes">' +
+                                '<div class="rectangle"></div>' +
+                                '<div class="avatar">' +
+                                '<img src="' + app.data.url + '/' + x[i].photo + '200.png">' +
+                                '</div>' +
+                                '<div class="card-content card-content-padding">' +
+                                '<h3 class="light-blue2">' + x[i].name + '</h3>' +
+                                '</div>' +
                                 '<div class="link dynamic-popover" data-AssistantId="' + x[i].id + '">' +
-                                    '<i class="material-icons more">more_vert</i>' +
-                                '</div>'+
-                            '</div>'+
-                        '</div>'+
-                        '</li>');
-                    }
-                    app.preloader.hide();
-                    $$('.dynamic-popover').on('click', function(e) {
-                        var currentAssistant = $$(this).data('AssistantId');
-                        
-                        var dynamicPopover = app.popover.create({
-                            targetEl: this,
-                            content: '<div class="popover elevation-3">' +
-                                '<div class="popover-inner">' +
-                                '<div class="block">' +
-                                '<div class="list">' +
-                                '<ul id="consultorios">' +
-                                '<li>' +
-                                '<div class="row">' +
-                                '<h4 class="blue">Desactivar</h4>' +
-                                '<label class="toggle toggle-init color-blue-toggle">' +
-                                '<input type="checkbox" name="chbx" value="1" style="display:none" checked>' +
-                                '<span class="toggle-icon"></span>' +
-                                '</label>' +
-                                '</div>' +
-                                '<li>' +
-                                '<li>' +
-                                '<div class="row">' +
-                                '<a href="#" data-view=".view-main" class="item-link list-button edit-assistant">' +
-                                '<h4 class="blue">Editar'+
-                                '<i class="icon material-icons blue">chevron_right</i>' +
-                                '</h4>' +
-                                '</a>' +
-                                '</div>' +
-                                '<li>' +
-                                '<li>' +
-                                '<div class="row">' +
-                                '<div  class="item-link delete-assistant">' +
-                                '<h4 class="blue">Eliminar</h4>' +
-                                '</div>' +
-                                '</div>' +
-                                '<li>' +
-                                '</ul>' +
+                                '<i class="material-icons more">more_vert</i>' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
-                                '</div>',
-                            on: {
-                                open: function(popover) {},
-                                opened: function(popover, AssisstantId = currentAssistant) {
-                                    $$('.delete-assistant').on('click', function() {
-                                        console.log(AssisstantId);
-                                        dynamicPopover.close();
-                                        app.dialog.confirm('¿Estás seguro que deseas eliminar el consultorio?', function() {
-                                            ///assistant/21/delete
-                                            app.preloader.show('blue');
-                                            app.request({
-                                                url: app.data.url + '/doctors/' + app.data.doctor.id + '/assistants/' + AssisstantId,
-                                                method: "DELETE",
-                                                crossDomain: true,
-                                                success: function(e){
-                                                    app.preloader.hide();
-                                                    app.dialog.alert('Se eliminó al asistente.', function(){
-                                                        location.reload();
-                                                    });                                                    
-                                                },
-                                                error: function(e){
-                                                    app.preloader.hide();
-                                                    app.dialog.alert('Ha ocurrido un error elminando al asistente');
-                                                }
+                                '</li>');
+                        }
+                        app.preloader.hide();
+                        $$('.dynamic-popover').on('click', function (e) {
+                            var currentAssistant = $$(this).data('AssistantId');
+
+                            var dynamicPopover = app.popover.create({
+                                targetEl: this,
+                                content: '<div class="popover elevation-3">' +
+                                    '<div class="popover-inner">' +
+                                    '<div class="block">' +
+                                    '<div class="list">' +
+                                    '<ul id="consultorios">' +
+                                    '<li>' +
+                                    '<div class="row">' +
+                                    '<h4 class="blue">Desactivar</h4>' +
+                                    '<label class="toggle toggle-init color-blue-toggle">' +
+                                    '<input type="checkbox" name="chbx" value="1" style="display:none" checked>' +
+                                    '<span class="toggle-icon"></span>' +
+                                    '</label>' +
+                                    '</div>' +
+                                    '<li>' +
+                                    '<li>' +
+                                    '<div class="row">' +
+                                    '<a href="#" data-view=".view-main" class="item-link list-button edit-assistant">' +
+                                    '<h4 class="blue">Editar' +
+                                    '<i class="icon material-icons blue">chevron_right</i>' +
+                                    '</h4>' +
+                                    '</a>' +
+                                    '</div>' +
+                                    '<li>' +
+                                    '<li>' +
+                                    '<div class="row">' +
+                                    '<div  class="item-link delete-assistant">' +
+                                    '<h4 class="blue">Eliminar</h4>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '<li>' +
+                                    '</ul>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>',
+                                on: {
+                                    open: function (popover) { },
+                                    opened: function (popover, AssisstantId = currentAssistant) {
+                                        $$('.delete-assistant').on('click', function () {
+                                            console.log(AssisstantId);
+                                            dynamicPopover.close();
+                                            app.dialog.confirm('¿Estás seguro que deseas eliminar el consultorio?', function () {
+                                                ///assistant/21/delete
+                                                app.preloader.show('blue');
+                                                app.request({
+                                                    url: app.data.url + '/doctors/' + app.data.doctor.id + '/assistants/' + AssisstantId,
+                                                    method: "DELETE",
+                                                    crossDomain: true,
+                                                    success: function (e) {
+                                                        app.preloader.hide();
+                                                        app.dialog.alert('Se eliminó al asistente.', function () {
+                                                            location.reload();
+                                                        });
+                                                    },
+                                                    error: function (e) {
+                                                        app.preloader.hide();
+                                                        app.dialog.alert('Ha ocurrido un error elminando al asistente');
+                                                    }
+                                                });
+                                            });
+
+                                        });
+                                        $$('.edit-assistant').on('click', function () {
+                                            console.log(AssisstantId);
+                                            dynamicPopover.close();
+                                            app.data.assistant.id = AssisstantId;
+                                            app.data.store.setItem('assistant', app.data.assistant).then(function (value) {
+                                                app.methods.redirectTo('assistants-offices');
                                             });
                                         });
-
-                                    });
-                                    $$('.edit-assistant').on('click', function() {
-                                        console.log(AssisstantId);
-                                        dynamicPopover.close();
-                                        location.href = "#!/asistentes-invitar-02?id=" + AssisstantId;
-                                        location.reload();
-                                    });
-                                },
-                            }
+                                    },
+                                }
+                            });
+                            dynamicPopover.open();
                         });
-                        dynamicPopover.open();
-                    });
-                }, 
-                function(e) {
-                    app.preloader.hide();
+                    },
+                        function (e) {
+                            app.preloader.hide();
+                        });
                 });
             }
         }

@@ -4,7 +4,7 @@
             <div class="login-screen-content nav-bar-rect">
                 <div class="row">
                     <div class="col-15">
-                        <a href='/home' data-view=".view-main"  class="item-link list-button back-button" id="back">
+                        <a href='/home' data-view=".view-main" class="item-link list-button back-button" id="back">
                             <i class="material-icons">chevron_left</i>
                         </a>
                     </div>
@@ -33,7 +33,7 @@
                             <div class="row">
                                 <div class="item-inner">
                                     <div class="fab fab-right-middle color-lime">
-                                        <a href="/offices-add-form-basic">
+                                        <a href="#">
                                             <i class="material-icons">add</i>
                                         </a>
                                     </div>
@@ -72,117 +72,132 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageInit: function(e, page) {
+            pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
+
                 app.preloader.show('blue');
-                app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/offices', //id=99
-                    function(e) {
-                        var x = JSON.parse(e);
-                        for (var i = 0; i < x.length; i++) {
-                            $$('#consultorios').append('<li>' +
-                                '<div class="row">' +
-                                '<div class="card card-outline elevation-3">' +
-                                '<div class="rectangle"></div>' +
-                                '<i class="material-icons icon">local_hospital</i>' +
-                                '<div class="card-content card-content-padding">' +
-                                '<h4 class="purple-blue">' + x[i].hospital + '</h4>' +
-                                '<h3 class="blue">' + x[i].name + '</h3>' +
-                                '<h4 class="light-blue">' + x[i].startTime + ' - ' + x[i].closeTime + '</h4>' +
-                                '</div>' +
-                                '<div class="link dynamic-popover" data-officeId="' + x[i].id + '">' +
-                                '<i class="material-icons more">more_vert' +
-                                '</i>' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>' +
-                                '</li>');
-                        }
-                        app.preloader.hide();
-                        $$('.dynamic-popover').on('click', function(e) {
-                            var currentOffice = $$(this).data('officeId');
+                app.data.store.getItem('doctor').then(function (value) {
+                    app.data.doctor = value;
 
-                            var dynamicPopover = app.popover.create({
-                                targetEl: this,
-                                content: '<div class="popover elevation-3">' +
-                                    '<div class="popover-inner">' +
-                                    '<div class="block">' +
-                                    '<div class="list">' +
-                                    '<ul id="consultorios">' +
-                                    '<li>' +
-                                    '<div class="row">' +
-                                    '<h4 class="blue">Desactivar</h4>' +
-                                    '<label class="toggle toggle-init color-blue-toggle">' +
-                                    '<input type="checkbox" name="chbx" value="1" style="display:none" checked>' +
-                                    '<span class="toggle-icon"></span>' +
-                                    '</label>' +
-                                    '</div>' +
-                                    '<li>' +
-                                    '<li>' +
-                                    '<div class="row">' +
-                                    '<a href="#" data-view=".view-main" class="item-link list-button edit-office">' +
-                                    '<h4 class="blue">Editar'+
-                                    '<i class="icon material-icons blue">chevron_right</i>' +
-                                    '</h4>' +
-                                    '</a>' +
-                                    '</div>' +
-                                    '<li>' +
-                                    '<li>' +
-                                    '<div class="row">' +
-                                    '<div  class="item-link delete-office">' +
-                                    '<h4 class="blue">Eliminar</h4>' +
-                                    '</div>' +
-                                    '</div>' +
-                                    '<li>' +
-                                    '</ul>' +
-                                    '</div>' +
-                                    '</div>' +
-                                    '</div>' +
-                                    '</div>',
-                                on: {
-                                    open: function(popover) {},
-                                    opened: function(popover, officeId = currentOffice) {
-                                        $$('.delete-office').on('click', function() {
+                    $$('.fab').click(function () {
+                        app.data.consultorio.edit = false;
+                        app.data.store.setItem('office', app.data.consultorio).then(function (value) {
+                            app.methods.redirectTo('offices-add-form-basic');
+                        });
+                    });
 
-                                            // officeId es el id del consultorio a eliminar mediante el endpoint
-                                            console.log(officeId);
-                                            dynamicPopover.close();
-                                            app.dialog.confirm('¿Estás seguro que deseas eliminar el consultorio?', function() {
-                                                ///assistant/21/delete
-                                                app.preloader.show('blue');
-                                                app.request({
-                                                url: app.data.url + '/doctors/' + app.data.doctor.id + '/offices/' + officeId,
-                                                method: "DELETE",
-                                                crossDomain: true,
-                                                success: function(e){
-                                                    app.preloader.hide();
-                                                    app.dialog.alert('Se eliminó el consultorio.', function(){
-                                                        location.reload();
-                                                    });                                                    
-                                                },
-                                                error: function(e){
-                                                    app.preloader.hide();
-                                                    app.dialog.alert('Ha ocurrido un error elminando el consultorio.');
-                                                }
+                    app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/offices',
+                        function (e) {
+                            var x = JSON.parse(e);
+                            for (var i = 0; i < x.length; i++) {
+                                $$('#consultorios').append('<li>' +
+                                    '<div class="row">' +
+                                    '<div class="card card-outline elevation-3">' +
+                                    '<div class="rectangle"></div>' +
+                                    '<i class="material-icons icon">local_hospital</i>' +
+                                    '<div class="card-content card-content-padding">' +
+                                    '<h4 class="purple-blue">' + x[i].hospital + '</h4>' +
+                                    '<h3 class="blue">' + x[i].name + '</h3>' +
+                                    '<h4 class="light-blue">' + x[i].startTime + ' - ' + x[i].closeTime + '</h4>' +
+                                    '</div>' +
+                                    '<div class="link dynamic-popover" data-officeId="' + x[i].id + '">' +
+                                    '<i class="material-icons more">more_vert' +
+                                    '</i>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</li>');
+                            }
+                            app.preloader.hide();
+                            $$('.dynamic-popover').on('click', function (e) {
+                                var currentOffice = $$(this).data('officeId');
+
+                                var dynamicPopover = app.popover.create({
+                                    targetEl: this,
+                                    content: '<div class="popover elevation-3">' +
+                                        '<div class="popover-inner"igual>' +
+                                        '<div class="block">' +
+                                        '<div class="list">' +
+                                        '<ul id="consultorios">' +
+                                        '<li>' +
+                                        '<div class="row">' +
+                                        '<h4 class="blue">Desactivar</h4>' +
+                                        '<label class="toggle toggle-init color-blue-toggle">' +
+                                        '<input type="checkbox" name="chbx" value="1" style="display:none" checked>' +
+                                        '<span class="toggle-icon"></span>' +
+                                        '</label>' +
+                                        '</div>' +
+                                        '<li>' +
+                                        '<li>' +
+                                        '<div class="row">' +
+                                        '<a href="#" data-view=".view-main" class="item-link list-button edit-office">' +
+                                        '<h4 class="blue">Editar' +
+                                        '<i class="icon material-icons blue">chevron_right</i>' +
+                                        '</h4>' +
+                                        '</a>' +
+                                        '</div>' +
+                                        '<li>' +
+                                        '<li>' +
+                                        '<div class="row">' +
+                                        '<div  class="item-link delete-office">' +
+                                        '<h4 class="blue">Eliminar</h4>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '<li>' +
+                                        '</ul>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>',
+                                    on: {
+                                        open: function (popover) { },
+                                        opened: function (popover, officeId = currentOffice) {
+                                            $$('.delete-office').on('click', function () {
+                                                // officeId es el id del consultorio a eliminar mediante el endpoint
+                                                console.log(officeId);
+                                                dynamicPopover.close();
+                                                app.dialog.confirm('¿Estás seguro que deseas eliminar el consultorio?', function () {
+                                                    ///assistant/21/delete
+                                                    app.preloader.show('blue');
+                                                    app.request({
+                                                        url: app.data.url + '/offices/' + officeId,
+                                                        method: "DELETE",
+                                                        crossDomain: true,
+                                                        success: function (e) {
+                                                            app.preloader.hide();
+                                                            app.dialog.alert('Se eliminó el consultorio.', function () {
+                                                                location.reload();
+                                                            });
+                                                        },
+                                                        error: function (e) {
+                                                            app.preloader.hide();
+                                                            app.dialog.alert('Ha ocurrido un error elminando el consultorio.');
+                                                        }
+                                                    });
+                                                });
+
+                                            });
+                                            $$('.edit-office').on('click', function () {
+                                                dynamicPopover.close();
+                                                app.data.consultorio.id = officeId;
+                                                app.data.consultorio.edit = true;
+                                                console.log(app.data.consultorio);
+                                                app.data.store.setItem('office', app.data.consultorio).then(function (value) {
+                                                    app.methods.redirectTo('offices-add-form-basic');
                                                 });
                                             });
-
-                                        });
-                                        $$('.edit-office').on('click', function() {
-                                            console.log(officeId);
-                                            dynamicPopover.close();
-                                            location.href = "#!/offices-add-form-basic?id=" + officeId;
-                                            location.reload();
-                                        });
-                                    },
-                                }
+                                        },
+                                    }
+                                });
+                                dynamicPopover.open();
                             });
-                            dynamicPopover.open();
+                        },
+                        function (e) {
+                            app.preloader.hide();
                         });
-                    },
-                    function(e) {
-                        app.preloader.hide();
-                    });
+                });
+
             }
         }
     }

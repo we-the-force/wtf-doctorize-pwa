@@ -4,12 +4,13 @@
             <div class="login-screen-content nav-bar-rect">
                 <div class="row">
                     <div class="col-15">
-                        <a href='/offices-add-form-basic' data-view=".view-main"  class="item-link list-button back-button" id="back">
+                        <a href='/offices-add-form-basic' data-view=".view-main"
+                            class="item-link list-button back-button" id="back">
                             <i class="material-icons">chevron_left</i>
                         </a>
                     </div>
                     <div class="col-85"></div>
-                </div>             
+                </div>
                 <div class="list">
                     <ul>
                         <li>
@@ -17,7 +18,7 @@
                                 <div class="col-10"></div>
                                 <div class="col-90">
                                     <h2>Ubicación del Consultorio</h2>
-                                </div> 
+                                </div>
                             </div>
                         </li>
                         <li>
@@ -30,8 +31,8 @@
                             </div>
                         </li>
                     </ul>
-                </div>                                                  
-            </div>   
+                </div>
+            </div>
             <div>
                 <div class="list no-hairlines-md">
                     <ul>
@@ -39,123 +40,139 @@
                             <div class="item-inner">
                                 <div class="item-label blue">Hospital</div>
                                 <div class="item-input-wrap asistentes-input">
-                                <input type="text" name="hospital" id="hospital" placeholder="Hospital" required validate>
-                                <span class="input-clear-button"></span>
+                                    <input type="text" name="hospital" id="hospital" placeholder="Hospital" required
+                                        validate>
+                                    <span class="input-clear-button"></span>
                                 </div>
                             </div>
                         </li>
                         <li class="item-content item-input">
-                        <div class="item-inner">
-                            <div class="item-label blue">Dirección</div>
-                            <div class="item-input-wrap asistentes-input">
-                            <input type="text" name="direction" id="direction" placeholder="Dirección" required validate>
-                            <span class="input-clear-button"></span>
+                            <div class="item-inner">
+                                <div class="item-label blue">Dirección</div>
+                                <div class="item-input-wrap asistentes-input">
+                                    <input type="text" name="direction" id="direction" placeholder="Dirección" required
+                                        validate>
+                                    <span class="input-clear-button"></span>
+                                </div>
                             </div>
-                        </div>
                         </li>
                         <li class="item-content item-input">
                             <div class="item-inner">
                                 <div class="item-label blue">Número de Consultorio</div>
                                 <div class="item-input-wrap asistentes-input">
-                                <input type="text" name="consultorio" id="consultorio" placeholder="Consultorio" required validate pattern="[0-9]*" data-error-message="Only numbers please!">
-                                <span class="input-clear-button"></span>
+                                    <input type="text" name="consultorio" id="consultorio" placeholder="Consultorio"
+                                        required validate pattern="[0-9]*" data-error-message="Only numbers please!">
+                                    <span class="input-clear-button"></span>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </div>
                 <div class="list">
-                    <ul>   
+                    <ul>
                         <li>
                             <div class="row">
                                 <div class="col-50">
-                                    <a href="#" data-view=".view-main" class="item-link list-button login-register-button" id="cancel">Cancelar</a>
+                                    <a href="#" data-view=".view-main"
+                                        class="item-link list-button login-register-button" id="cancel">Cancelar</a>
                                 </div>
                                 <div class="col-50">
-                                <a href="#" class="item-link list-button login-button asistente">
-                                    <p>Siguiente </p>
-                                    <i class="material-icons">chevron_right</i>
-                                </a>
+                                    <a href="#" class="item-link list-button login-button asistente">
+                                        <p>Siguiente </p>
+                                        <i class="material-icons">chevron_right</i>
+                                    </a>
                                 </div>
                             </div>
-                        </li> 
-                    </ul>  
-                </div> 
-            </div>                         
-        </div>                
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
     import $$ from 'dom7';
     export default {
-        on:{
-            pageInit: function(e, page) {
+        on: {
+            pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
                 var hospital = '', direction = '', consultorio = '';
                 var regex = /^[0-9]*$/;
 
-                disableButton();
 
-                if(app.data.consultorio.edit){
-                    $$('#hospital').val(app.data.consultorio.hospital);
-                    $$('#direction').val(app.data.consultorio.address);
-                    $$('#consultorio').val(app.data.consultorio.number);
-                    hospital = app.data.consultorio.hospital;
-                    direction = app.data.consultorio.address;
-                    consultorio = app.data.consultorio.number;
-                    enableButton();
-                }
+                app.data.store.getItem('office').then(function (value) {
+                    app.data.consultorio = value;
 
-                $$(document).on('input:notempty', '#hospital' , function(e){
-                    if(direction != '' && consultorio != ''){
-                        hospital = $$('#hospital').val();
+                    disableButton();
+
+                    if (app.data.consultorio.edit) {
+                        $$('#hospital').val(app.data.consultorio.hospital);
+                        $$('#direction').val(app.data.consultorio.address);
+                        $$('#consultorio').val(app.data.consultorio.number);
+                        hospital = app.data.consultorio.hospital;
+                        direction = app.data.consultorio.address;
+                        consultorio = app.data.consultorio.number;
                         enableButton();
-                    }else{
-                        hospital = $$('#hospital').val();
                     }
+
+                    $$(document).on('input:notempty', '#hospital', function (e) {
+                        if (direction != '' && consultorio != '') {
+                            hospital = $$('#hospital').val();
+                            enableButton();
+                        } else {
+                            hospital = $$('#hospital').val();
+                        }
+                    });
+
+                    $$(document).on('input:notempty', '#direction', function (e) {
+                        if (hospital != '' && consultorio != '') {
+                            direction = $$('#direction').val();
+                            enableButton();
+                        } else {
+                            direction = $$('#direction').val();
+                        }
+                    });
+
+                    $$(document).on('input:notempty', '#consultorio', function (e) {
+                        if (direction != '' && hospital != '') {
+                            consultorio = $$('#consultorio').val();
+                            enableButton();
+                        } else {
+                            consultorio = $$('#consultorio').val();
+                        }
+                    });
+
+
+                    $$('#offices-add-form-map #cancel').on('click', function (e) {
+                        app.methods.redirectTo('offices-add-form-basic');
+                    });
+
+                    $$(document).on('input:empty', function (e) {
+                        disableButton();
+                    });
                 });
 
-                $$(document).on('input:notempty', '#direction' , function(e){
-                    if(hospital != '' && consultorio != ''){
-                        direction = $$('#direction').val();
-                        enableButton();
-                    }else{
-                        direction = $$('#direction').val();
-                    }
-                });
-
-                $$(document).on('input:notempty', '#consultorio' , function(e){
-                    if(direction != '' && hospital != ''){
-                        consultorio = $$('#consultorio').val();
-                        enableButton();
-                    }else{
-                        consultorio = $$('#consultorio').val();
-                    }
-                });
-
-                function enableButton(){
-                    if(regex.test(consultorio)){
+                function enableButton() {
+                    if (regex.test(consultorio)) {
                         app.data.consultorio.hospital = $$('[name="hospital"]').val();
                         app.data.consultorio.address = $$('[name="direction"]').val();
                         app.data.consultorio.number = $$('[name="consultorio"]').val();
                         $$('#offices-add-form-map .login-button').removeClass('grey');
                         $$('#offices-add-form-map .login-button').off('click');
-                        $$('#offices-add-form-map .login-button').on('click', function(e){
-                            app.methods.redirectTo('offices-add-form-schedule');
+                        $$('#offices-add-form-map .login-button').on('click', function (e) {
+                            app.data.store.setItem("office", app.data.consultorio)
+                                .then(function (value) {
+                                    app.methods.redirectTo('offices-add-form-schedule');
+                                })
+                                .catch(function (err) {
+                                    console.log(err);
+                                });
                         });
                     }
                 }
 
-                $$('#offices-add-form-map #cancel').on('click', function(e){
-                    app.methods.redirectTo('offices-add-form-basic');
-                });
-
-                $$(document).on('input:empty',function(e){
-                    disableButton();
-                });
-
-                function disableButton(){
+                function disableButton() {
                     $$('#offices-add-form-map .login-button').addClass('grey');
                     $$('#offices-add-form-map .login-button').off('click');
                 }

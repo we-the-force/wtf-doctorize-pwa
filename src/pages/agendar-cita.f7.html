@@ -113,11 +113,9 @@
                     var app = self.$app;
                     var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
                     var regex2 = /^([0-9]){10}$/;
-                    var appointment = '';
-                    var datetime = '';
-                    var name = '';
-                    var email = '';
-                    var phone = '';
+                    var appointment = '',datetime = '',today = '',name = '',email = '',phone = '';
+                    var moment = require('moment');
+                    moment().format();
     
                     app.preloader.show('blue');
                     app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/offices',//id=99 
@@ -137,17 +135,15 @@
 
                     $$(document).on('input:notempty', '#datetime' , function(e){
                         if(name != '' && email != '' && phone != ''){
-                            datetime = new Date($$('#datetime').val());
-                            /* appointment = $$('#datetime').val(); */
+                            appointment = moment($$('#datetime').val());
                             enableButton();
                         }else{
-                            datetime = new Date($$('#datetime').val());
-                            /* appointment = $$('#datetime').val(); */
+                            appointment = moment($$('#datetime').val());
                         }
                     });
 
                     $$(document).on('input:notempty', '#nombre' , function(e){
-                        if(datetime != '' && email != '' && phone != ''){
+                        if(appointment != '' && email != '' && phone != ''){
                             name = $$('#nombre').val();
                             enableButton();
                         }else{
@@ -156,7 +152,7 @@
                     });
 
                     $$(document).on('input:notempty', '#email' , function(e){
-                        if(name != '' && datetime != '' && phone != ''){
+                        if(name != '' && appointment != '' && phone != ''){
                             email = $$('#email').val();
                             enableButton();
                         }else{
@@ -165,7 +161,7 @@
                     });
 
                     $$(document).on('input:notempty', '#phone' , function(e){
-                        if(name != '' && email != '' && datetime != ''){
+                        if(name != '' && email != '' && appointment != ''){
                             phone = $$('#phone').val();
                             enableButton();
                         }else{
@@ -173,61 +169,42 @@
                         }
                     });
                     
-                    $$(document).on('input:empty', '#datetime', function(e){
-                        disableButton();
-                    });
-                    $$(document).on('input:empty', '#nombre', function(e){
-                        disableButton();
-                    });
-                    $$(document).on('input:empty', '#email', function(e){
-                        disableButton();
-                    });
-                    $$(document).on('input:empty', '#phone', function(e){
+                    $$(document).on('input:empty', function(e){
                         disableButton();
                     });
 
                     function enableButton(){
-                        var today = new Date();
-                        var todayDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-                        var date = datetime.getFullYear()+'-'+(datetime.getMonth()+1)+'-'+datetime.getDate();
-                        var todayTime = (today.getHours()+1) + ":" + today.getMinutes();
-                        var time = datetime.getHours() + ":" + datetime.getMinutes() + ":" + datetime.getSeconds();
-                        if(date > todayDate || (date == todayDate && time >= todayTime)){
-                            if(regex.test(email) && regex2.test(phone))
-                            {
-                            $$('#agendar-cita .login-button').removeClass('grey');
-                            $$('#agendar-cita .login-button').off('click');
-                            $$('#agendar-cita .login-button').on('click', function(e){
-                                app.data.paciente.nombre = name;
-                                app.data.paciente.email = email;
-                                app.data.paciente.phone = phone;
-                                var dateTime = new Date($$('#datetime').val());
-                                var office = $$('#consultorio').val();
-                                console.log(office);
-                                console.log(app.data.paciente.email);
-                                console.log(app.data.doctor.id);
-                                console.log(app.data.paciente.nombre);
-                                console.log(app.data.paciente.phone);
-                                console.log(dateTime);
-                                
-                                app.preloader.show('blue');
-                                app.request.postJSON(app.data.url + '/doctors/' + app.data.doctor.id + '/appointments', { 
-                                    "email": app.data.paciente.email,
-                                    "doctorId": app.data.doctor.id,
-                                    "officeId": office,
-                                    "name": app.data.paciente.nombre,
-                                    "phone": app.data.paciente.phone,
-                                    "date": dateTime,
-                                },function(e){
-                                    app.preloader.hide();
-                                    app.methods.redirectTo('cita-agendada');                                     
-                                }, 
-                                function(e) {
-                                    app.preloader.hide();
+                        today = moment();                        
+                        if(appointment.isSameOrAfter(today.add(1,'h'))){
+                            console.log('ahoy');                            
+                            if(regex.test(email) && regex2.test(phone)){
+                                console.log('ahoyy');                                
+                                $$('#agendar-cita .login-button').removeClass('grey');
+                                $$('#agendar-cita .login-button').off('click');
+                                $$('#agendar-cita .login-button').on('click', function(e){
+                                    app.data.paciente.nombre = name;
+                                    app.data.paciente.email = email;
+                                    app.data.paciente.phone = phone;
+                                    datetime = new Date($$('#datetime').val());
+                                    var office = $$('#consultorio').val();
+                                    app.preloader.show('blue');
+                                    app.request.postJSON(app.data.url + '/doctors/' + app.data.doctor.id + '/appointments', { 
+                                        "email": app.data.paciente.email,
+                                        "doctorId": app.data.doctor.id,
+                                        "officeId": office,
+                                        "name": app.data.paciente.nombre,
+                                        "phone": app.data.paciente.phone,
+                                        "date": datetime,
+                                    },function(e){
+                                        app.preloader.hide();
+                                        app.methods.redirectTo('cita-agendada');                                     
+                                    }, 
+                                    function(e) {
+                                        app.preloader.hide();
+                                    });
                                 });
-                            });
                             }else{
-                            disableButton();
+                                disableButton();
                             }
                         }else{
                             disableButton();

@@ -47,7 +47,7 @@
         </ul>
       </div>
     </div>
-    <!-- 
+    <!--
 
         <div class="page-content login-screen-content tab hide-navbar-on-scroll"  id="tab-2">
           <div class="list">
@@ -121,92 +121,92 @@
   </div>
 </template>
 <script>
-  import $$ from 'dom7';
-  export default {
-    on: {
-      pageInit: function (e, page) {
-        var self = this;
-        var app = self.$app;
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageInit: function(e, page) {
+                var self = this;
+                var app = self.$app;
 
-        $$('.dynamic-sheet').on('click', function () {
-          var dynamicSheet = app.sheet.create({
-            content: '<div class="sheet-modal">' +
-              '<div class="close-sheet">' +
-              '<img src="/static/images/cancel_24px.svg" alt="" class="close">' +
-              '</div>' +
-              '<div class="sheet-modal-inner">' +
-              '<div class="list">' +
-              '<ul>' +
-              '<li>' +
-              '<div class="row">' +
-              '<div class="col">' +
-              '<a href="#" data-view=".view-main" class="item-link list-button login-register-button consultorios">' +
-              '<i class="material-icons">local_hospital</i>' +
-              'Consultorios</a>' +
-              '</div>' +
-              '</div>' +
-              '</li>' +
-              '<li>' +
-              '<div class="row">' +
-              '<div class="col">' +
-              '<a href="#" data-view=".view-main" class="item-link list-button login-register-button asistentes">' +
-              '<i class="material-icons">headset_mic</i>' +
-              'Asistentes</a>' +
-              '</div>' +
-              '</div>' +
-              '</li>' +
-              '<li>' +
-              '<div class="row">' +
-              '<div class="col">' +
-              '<a href="#" data-view=".view-main" class="item-link list-button login-register-button cita">' +
-              '<i class="material-icons">event</i>' +
-              'Nueva cita</a>' +
-              '</div>' +
-              '</div>' +
-              '</li>' +
-              '<li>' +
-              '<div class="row">' +
-              '<div class="col">' +
-              '<a href="#" data-view=".view-main" class="item-link list-button login-register-button paciente">' +
-              '<i class="material-icons">person_add</i>' +
-              'Nuevo Paciente</a>' +
-              '</div>' +
-              '</div>' +
-              '</li>' +
-              '</ul>' +
-              '</div>' +
-              '</div>' +
-              '</div>',
-            on: {
-              open: function (sheet) {
-                console.log('Sheet open');
-              },
-              opened: function (sheet) {
-                $$('.sheet-modal .close').on('click', function () {
-                  dynamicSheet.close();
+                $$('.dynamic-sheet').on('click', function() {
+                    var dynamicSheet = app.sheet.create({
+                        content: '<div class="sheet-modal">' +
+                            '<div class="close-sheet">' +
+                            '<img src="/static/images/cancel_24px.svg" alt="" class="close">' +
+                            '</div>' +
+                            '<div class="sheet-modal-inner">' +
+                            '<div class="list">' +
+                            '<ul>' +
+                            '<li>' +
+                            '<div class="row">' +
+                            '<div class="col">' +
+                            '<a href="#" data-view=".view-main" class="item-link list-button login-register-button consultorios">' +
+                            '<i class="material-icons">local_hospital</i>' +
+                            'Consultorios</a>' +
+                            '</div>' +
+                            '</div>' +
+                            '</li>' +
+                            '<li>' +
+                            '<div class="row">' +
+                            '<div class="col">' +
+                            '<a href="#" data-view=".view-main" class="item-link list-button login-register-button asistentes">' +
+                            '<i class="material-icons">headset_mic</i>' +
+                            'Asistentes</a>' +
+                            '</div>' +
+                            '</div>' +
+                            '</li>' +
+                            '<li>' +
+                            '<div class="row">' +
+                            '<div class="col">' +
+                            '<a href="#" data-view=".view-main" class="item-link list-button login-register-button cita">' +
+                            '<i class="material-icons">event</i>' +
+                            'Nueva cita</a>' +
+                            '</div>' +
+                            '</div>' +
+                            '</li>' +
+                            '<li>' +
+                            '<div class="row">' +
+                            '<div class="col">' +
+                            '<a href="#" data-view=".view-main" class="item-link list-button login-register-button paciente">' +
+                            '<i class="material-icons">person_add</i>' +
+                            'Nuevo Paciente</a>' +
+                            '</div>' +
+                            '</div>' +
+                            '</li>' +
+                            '</ul>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>',
+                        on: {
+                            open: function(sheet) {
+                                console.log('Sheet open');
+                            },
+                            opened: function(sheet) {
+                                $$('.sheet-modal .close').on('click', function() {
+                                    dynamicSheet.close();
+                                });
+                                $$('.sheet-modal .consultorios').click(function() {
+                                    dynamicSheet.close();
+                                    app.methods.redirectTo('offices-show');
+                                });
+                                $$('.sheet-modal .asistentes').click(function() {
+                                    dynamicSheet.close();
+                                    app.methods.redirectTo('asistentes-invitar-01');
+                                });
+                                $$('.sheet-modal .cita').click(function() {
+                                    dynamicSheet.close();
+                                    app.methods.redirectTo('agendar-cita');
+                                });
+                                $$('.sheet-modal .paciente').click(function() {
+                                    dynamicSheet.close();
+                                    app.methods.redirectTo('nuevo-paciente');
+                                });
+                            },
+                        }
+                    });
+                    dynamicSheet.open();
                 });
-                $$('.sheet-modal .consultorios').click(function () {
-                  dynamicSheet.close();
-                  app.methods.redirectTo('offices-show');
-                });
-                $$('.sheet-modal .asistentes').click(function () {
-                  dynamicSheet.close();
-                  app.methods.redirectTo('asistentes-invitar-01');
-                });
-                $$('.sheet-modal .cita').click(function () {
-                  dynamicSheet.close();
-                  app.methods.redirectTo('agendar-cita');
-                });
-                $$('.sheet-modal .paciente').click(function () {
-                  dynamicSheet.close();
-                  app.methods.redirectTo('nuevo-paciente');
-                });
-              },
             }
-          });
-          dynamicSheet.open();
-        });
-      }
+        }
     }
-  }
 </script>

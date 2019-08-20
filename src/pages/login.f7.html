@@ -77,84 +77,91 @@
   </div>
 </template>
 <script>
-  import $$ from 'dom7';
-  export default {
-    on: {
-      pageInit: function (e, page) {
-        var self = this;
-        var app = self.$app;
-        var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        var email_login = '', password_login = ''             ;
-        var errorPopup = app.popup.create({
-          content: '<div class="popup popup-swipe-to-close">' +
-            '<div class="block text-align-center">' +
-            '<p>Tus datos de acceso son incorrectos. <br/><br/>Intenta nuevamente.</p>' +
-            '<div class="list"> <ul> <li><a class="item-link list-button popup-close" href="#">Cerrar</a></li> </ul> </div>' +
-            '</div>' +
-            '</div>'
-        });
-        
-        disableButton();
+    import $$ from 'dom7';
 
-        $$(document).on('input:notempty', '#username' , function(e){
-            if(password_login != ''){
-              email_login = $$('#username').val();
-              enableButton();
-            }else{
-              email_login = $$('#username').val();
-            }
-        });
-
-        $$(document).on('input:notempty', '#password' , function(e){
-            if(email_login != ''){
-              password_login = $$('#password').val();
-              enableButton();
-            }else{
-              password_login = $$('#password').val();
-            }
-        });
-
-        $$(document).on('input:empty', '#username', function(e){
-            disableButton();
-        });
-
-        $$(document).on('input:empty', '#password', function(e){
-            disableButton();
-        });
-
-        function enableButton(){
-          if (regex.test(email_login)) {
-                $$('#login .login-button').removeClass('grey');
-                $$('#login .login-button').off('click');
-                $$('#login .login-button').on('click', function(e) {
-                    e.preventDefault();
-                    app.preloader.show('blue');
-                    app.request.postJSON(app.data.url + '/account/login', { "email": email_login, "password": password_login }, 
-                    function(e) {
-                        app.preloader.hide();
-                        app.data.doctor.id = e.id;
-                        app.data.doctor.email = e.email;
-                        app.data.doctor.name = e.name;
-                        app.data.doctor.cellphone = e.cellphone;
-                        app.data.doctor.specialty = e.specialty;
-                        console.log(app.data.doctor);
-                        app.methods.redirectTo('home');
-                    }, 
-                    function(e) {
-                        app.preloader.hide();
-                        errorPopup.open();
-                    });
+    export default {
+        on: {
+            pageInit: function(e, page) {
+                var self = this;
+                var app = self.$app;
+                var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                var email_login = '',
+                    password_login = '';
+                var errorPopup = app.popup.create({
+                    content: '<div class="popup popup-swipe-to-close">' +
+                        '<div class="block text-align-center">' +
+                        '<p>Tus datos de acceso son incorrectos. <br/><br/>Intenta nuevamente.</p>' +
+                        '<div class="list"> <ul> <li><a class="item-link list-button popup-close" href="#">Cerrar</a></li> </ul> </div>' +
+                        '</div>' +
+                        '</div>'
                 });
-            }else{
-              disableButton();
+
+                disableButton();
+
+                $$(document).on('input:notempty', '#username', function(e) {
+                    if (password_login != '') {
+                        email_login = $$('#username').val();
+                        enableButton();
+                    } else {
+                        email_login = $$('#username').val();
+                    }
+                });
+
+                $$(document).on('input:notempty', '#password', function(e) {
+                    if (email_login != '') {
+                        password_login = $$('#password').val();
+                        enableButton();
+                    } else {
+                        password_login = $$('#password').val();
+                    }
+                });
+
+                $$(document).on('input:empty', '#username', function(e) {
+                    disableButton();
+                });
+
+                $$(document).on('input:empty', '#password', function(e) {
+                    disableButton();
+                });
+
+                function enableButton() {
+                    if (regex.test(email_login)) {
+                        $$('#login .login-button').removeClass('grey');
+                        $$('#login .login-button').off('click');
+                        $$('#login .login-button').on('click', function(e) {
+                            e.preventDefault();
+                            app.preloader.show('blue');
+                            app.request.postJSON(app.data.url + '/account/login', {
+                                    "email": email_login,
+                                    "password": password_login
+                                },
+                                function(e) {
+                                    app.preloader.hide();
+                                    app.data.store
+                                        .setItem("doctor", e)
+                                        .then(function(value) {
+                                            console.log(value);
+                                        })
+                                        .catch(function(err) {
+                                            console.log(err);
+                                        });
+                                    app.methods.redirectTo('home');
+                                },
+                                function(e) {
+                                    app.preloader.hide();
+                                    errorPopup.open();
+                                });
+                        });
+                    } else {
+                        disableButton();
+                    }
+                }
+
+                function disableButton() {
+                    $$('#login .login-button').addClass('grey');
+                    $$('#login .login-button').off('click');
+                }
             }
         }
-
-        function disableButton(){
-          $$('#login .login-button').addClass('grey');
-          $$('#login .login-button').off('click');
-        }
-      }
     }
-  }
 </script>

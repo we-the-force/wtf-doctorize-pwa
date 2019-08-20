@@ -1,6 +1,8 @@
 import $$ from 'dom7';
 import Framework7 from 'framework7/framework7.esm.bundle.js';
 
+import localForage from "localforage";
+
 // Import F7 Styles
 import 'framework7/css/framework7.bundle.css';
 
@@ -15,8 +17,11 @@ import routes from './routes.js';
 import register from './register.js';
 
 Framework7.request.setup({
-  contentType: "application/json"
+    contentType: "application/json"
 });
+
+
+
 
 var app = new Framework7({
     root: '#app', // App root element
@@ -24,8 +29,12 @@ var app = new Framework7({
     name: 'Doctorize', // App name
     theme: 'auto', // Automatic theme detection
     // App root data
+
     data: function() {
         return {
+            store: localForage.createInstance({
+                name: "datastore"
+            }),
             specialties: {
                 values: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
                 displayValues: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
@@ -39,15 +48,20 @@ var app = new Framework7({
             assistant: {
                 id: '',
                 flag: false,
+                edit: false,
+                addOffice: false,
                 code: '',
                 name: '',
                 password: '',
                 email: '',
-                consultorio: '',
+                consultorio: {
+                    id: '',
+                    name: '',
+                },
                 permisos: [],
             },
             doctor: {
-                id: '99',
+                id: '',
                 email: '',
                 name: '',
                 cellphone: '',
@@ -123,11 +137,10 @@ var app = new Framework7({
     view: {
         pushState: true
     },
-    navbar:{
-      showOnPageScrollEnd: false
+    navbar: {
+        showOnPageScrollEnd: false
     }
 });
-
 /* //login
 var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 var email_login, password_login;
@@ -170,6 +183,7 @@ var errorPopup = app.popup.create({
 
 app.init(function() {
     console.log('init');
+
     window.addEventListener('beforeinstallprompt', (e) => {
         // Prevent Chrome 67 and earlier from automatically showing the prompt
         e.preventDefault();

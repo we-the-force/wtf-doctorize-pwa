@@ -98,7 +98,7 @@
 
         if (!app.methods.isEmpty(query)) {
           app.data.assistant.flag = true;
-        }else{
+        } else {
           app.data.assistant.flag = false;
         }
 
@@ -119,8 +119,10 @@
               if (!app.data.assistant.flag) {
                 app.data.register.username = $$('[name="fullname"]').val();
                 app.data.register.password = $$('[name="password"]').val();
-                app.data.store.setItem('register', app.data.register).then(function (value) {
-                  app.methods.redirectTo('register-s2');
+                app.data.store.setItem('assistant', app.data.assistant).then(function (value) {
+                  app.data.store.setItem('register', app.data.register).then(function (value) {
+                    app.methods.redirectTo('register-s2');
+                  });
                 });
               } else {
                 app.data.assistant.name = $$('[name="fullname"]').val();

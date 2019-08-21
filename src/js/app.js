@@ -96,11 +96,6 @@ var app = new Framework7({
                 blood: '',
                 pressure: '',
             },
-            paciente: {
-                nombre: '',
-                email: '',
-                phone: '',
-            },
             url: 'http://api.mydoctorize.com'
         };
     },

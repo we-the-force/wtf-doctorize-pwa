@@ -2,62 +2,26 @@
     <div class="page schedule" data-name="schedule" id="schedule">
 
         <!--Nav bar-->
-        <div class="navbar" id="nav1">
-            <div class="navbar-inner sliding">
+        <div class="navbar schedule" id="nav1">
+            <div class="navbar-inner sliding schedule">
                 <div class="left">
                     <div class="fab fab-left-middle color-white profile">
                         <a href="#">
-                            <i class="icon material-icons md-only">photo</i>
+                            <i class="icon material-icons">photo</i>
                         </a>
                     </div>
                 </div>
                 <div class="right">
                     <div class="fab fab-right-middle color-white search">
                         <a href="#">
-                            <i class="icon material-icons md-only">search</i>
+                            <i class="icon material-icons">search</i>
                         </a>
                     </div>
                 </div>
-                <div class="subnavbar">
+                <div class="subnavbar schedule">
                     <div class="subnavbar-inner">
                         <div class="toolbar tabbar tabbar-scrollable toolbar-top" id='subnavtoolbar'>
-                            <div class="toolbar-inner">
-                                <a href="#tab-1" class="tab-link tab-link-active">
-                                    <p>04</p>
-                                    <p>DEC</p>
-                                </a>
-                                <a href="#tab-2" class="tab-link tab-link-today">
-                                    <p>05</p>
-                                    <p>DEC</p>
-                                </a>
-                                <a href="#tab-3" class="tab-link">
-                                    <p>06</p>
-                                    <p>DEC</p>
-                                </a>
-                                <a href="#tab-4" class="tab-link">
-                                    <p>07</p>
-                                    <p>DEC</p>
-                                </a>
-                                <a href="#tab-5" class="tab-link">
-                                    <p>08</p>
-                                    <p>DEC</p>
-                                </a>
-                                <a href="#tab-6" class="tab-link">
-                                    <p>09</p>
-                                    <p>DEC</p>
-                                </a>
-                                <a href="#tab-7" class="tab-link">
-                                    <p>10</p>
-                                    <p>DEC</p>
-                                </a>
-                                <a href="#tab-8" class="tab-link">
-                                    <p>11</p>
-                                    <p>DEC</p>
-                                </a>
-                                <a href="#tab-9" class="tab-link">
-                                    <p>12</p>
-                                    <p>DEC</p>
-                                </a>
+                            <div class="toolbar-inner" id="subnavtoolbar-inner">
                             </div>
                         </div>
                     </div>
@@ -69,19 +33,19 @@
         <!--tool bar-->
         <div class="toolbar tabbar tabbar-labels toolbar-bottom menu">
             <div class="toolbar-inner">
-                <a href="/home" class="tab-link">
+                <a href="/home" class="tab-link" id='tab1'>
                     <!-- Different icons for iOS and MD themes -->
                     <i class="icon material-icons">home</i>
                 </a>
-                <a href="/schedule" class="tab-link  tab-link-active">
+                <a href="#" class="tab-link  tab-link-active" id='tab2'>
                     <i class="icon material-icons">today</i>
                 </a>
                 <a href="#" class="tab-link">
                 </a>
-                <a href="#" class="tab-link">
+                <a href="#" class="tab-link" id='tab3'>
                     <i class="icon material-icons">monetization_on</i>
                 </a>
-                <a href="#" class="tab-link">
+                <a href="#" class="tab-link" id='tab4'>
                     <i class="icon material-icons">settings</i>
                 </a>
             </div>
@@ -94,182 +58,6 @@
 
         <!--tabs-->
         <div class="tabs">
-            <div id="tab-1" class="page-content login-screen-content tab hide-navbar-on-scroll tab-active">
-                <div class="list">
-                    <ul>
-                        <li class="item-divider">
-                            <i class="icon material-icons md-only">watch_later</i>
-                            12:00 PM
-                            <hr>
-                        </li>
-                        <li>
-                            <div class="item-content">
-                                <div class="item-inner">
-                                    <div class="fab fab-center-center item-fab">
-                                        <a href="#">
-                                            <i class="icon material-icons md-only">add</i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="item-divider">
-                            <i class="icon material-icons md-only">watch_later</i>
-                            12:30 PM
-                            <hr>
-                        </li>
-                        <li>
-                            <div class="row">
-                                <div class="card card-expandable" id='cita01'>
-                                    <div class="rectangle card-opened-fade-out"></div>
-                                    <div class="card-content">
-
-                                        <div class="card-header display-block">
-                                            <h6 class="light-blue2 card-opened-fade-out">CONSULTA</h6>
-                                            <h3 class="blue card-opened-fade-out">Aglaee Alvarez</h3>
-                                            <h5 class="light-blue card-opened-fade-out">Hospital General Zona 2</h5>
-                                            <h4 class="purple-blue card-opened-fade-out">
-                                                <i class="icon material-icons md-only time">watch_later</i>12:00PM -
-                                                12:30PM</h4>
-                                            <a href="#" class="link card-close card-opened-fade-in color-white">
-                                                <i class="icon material-icons white">close</i>
-                                                <h3 class="label">CERRAR</h3>
-                                            </a>
-                                            <div class="item-content card-opened-fade-in">
-                                                <ul>
-                                                    <li>
-                                                        <div class="item-inner">
-                                                        </div>
-                                                    </li>
-                                                    <li>
-
-                                                        <div class="item-inner">
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-
-
-                                        </div>
-                                        <i class="icon f7-icons chevron card-opened-fade-out">chevron_right</i>
-                                        <div class="card-content-padding">
-                                            <p>Framework7 - is a free and open source HTML mobile framework to
-                                                develop
-                                                hybrid mobile apps or web apps with iOS or Android (Material) native
-                                                look and feel. It is also an indispensable prototyping apps tool to
-                                                show
-                                                working app prototype as soon as possible in case you need to.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                        </li>
-                        <li class="item-divider">
-                            <i class="icon material-icons md-only">watch_later</i>
-                            1:00 PM
-                            <hr>
-                        </li>
-                        <li>
-                            <div class="item-content">
-                                <div class="item-inner">
-                                    <div class="fab fab-center-center item-fab">
-                                        <a href="#">
-                                            <i class="icon material-icons md-only">add</i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="item-divider">
-                            <i class="icon material-icons md-only">watch_later</i>
-                            1:30 PM
-                            <hr>
-                        </li>
-                        <li>
-                            <div class="item-content">
-                                <div class="item-inner">
-                                    <div class="fab fab-center-center item-fab">
-                                        <a href="#">
-                                            <i class="icon material-icons md-only">add</i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="item-divider">
-                            <i class="icon material-icons md-only">watch_later</i>
-                            1:30 PM
-                            <hr>
-                        </li>
-                        <li>
-                            <div class="item-content">
-                                <div class="item-inner">
-                                    <p>Quis omnis.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <br>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div id="tab-2" class="page-content login-screen-content tab hide-navbar-on-scroll tab">
-                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
-                    iste
-                    eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea
-                    ipsa
-                    temporibus dicta architecto saepe.</p>
-                ...
-            </div>
-            <div id="tab-3" class="page-content login-screen-content tab hide-navbar-on-scroll tab">
-                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
-                    iste
-                    eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea
-                    ipsa
-                    temporibus dicta architecto saepe.</p>...
-            </div>
-            <div id="tab-4" class="page-content login-screen-content tab hide-navbar-on-scroll tab">
-                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
-                    iste
-                    eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea
-                    ipsa
-                    temporibus dicta architecto saepe.</p>...
-            </div>
-            <div id="tab-5" class="page-content login-screen-content tab hide-navbar-on-scroll tab">
-                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
-                    iste
-                    eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea
-                    ipsa
-                    temporibus dicta architecto saepe.</p>...
-            </div>
-            <div id="tab-6" class="page-content login-screen-content tab hide-navbar-on-scroll tab">
-                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
-                    iste
-                    eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea
-                    ipsa
-                    temporibus dicta architecto saepe.</p>...
-            </div>
-            <div id="tab-7" class="page-content login-screen-content tab hide-navbar-on-scroll tab">
-                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
-                    iste
-                    eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea
-                    ipsa
-                    temporibus dicta architecto saepe.</p>...
-            </div>
-            <div id="tab-8" class="page-content login-screen-content tab hide-navbar-on-scroll tab">
-                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
-                    iste
-                    eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea
-                    ipsa
-                    temporibus dicta architecto saepe.</p>...
-            </div>
-            <div id="tab-9" class="page-content login-screen-content tab hide-navbar-on-scroll tab">
-                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
-                    iste
-                    eos perspiciatis vero porro aliquam officia deleniti, cumque rem, consequatur, ea
-                    ipsa
-                    temporibus dicta architecto saepe.</p>...
-            </div>
         </div>
     </div>
 </template>
@@ -280,11 +68,50 @@
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
+                const monthNames = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];
+                var z, today, y, i, n;
+                var moment = require('moment');
+                moment().format();
 
-                /* $$(document).on('card:beforeopen', '#cita01', function(e) {
-                    console.log('ahoy');                    
-                }); */
+                app.preloader.show('blue');/* abre preloader */
 
+                /*
+                    crea la subnavbar con los 30 dias a partir de hoy
+                */
+                z = moment(), today = moment(), y = moment(z).add(1, 'M'), i = 1;
+                while (z.isBefore(y)) {
+                    $$('#subnavtoolbar-inner').append(
+                        '<a href="#tab-' + i + '" class="tab-link" id="' + z.date() + '-' + monthNames[z.month()] + '" data-date="' + z.year() + '-' + (z.month() + 1) + '-' + z.date() + '">' +
+                        '<p>' + z.date() + ' </p>' +
+                        '<p>' + monthNames[z.month()] + ' </p>' +
+                        '</a>');
+                    $$('.tabs').append(
+                        '<div id="tab-' + i + '" class="page-content login-screen-content tab hide-navbar-on-scroll tab">' +
+                        '<div class="list">' +
+                        '<ul >' +
+                        '</ul>' +
+                        '</div>' +
+                        '</div>'
+                    );
+                    if (z.isSame(today)) {
+                        $$('#' + z.date() + '-' + monthNames[z.month()]).addClass('tab-link-active');
+                        $$('#' + z.date() + '-' + monthNames[z.month()]).addClass('tab-link-today');
+                        $$('#tab-' + i).addClass('tab-active');
+                    }
+                    i++;
+                    z.add(1, 'd')
+                }
+                /*--------------------------------------------------------------------------------*/
+
+                /* llena pagina 1 cuando inicia */
+                fillPage('#tab-1', moment().year() + '-' + (moment().month() + 1) + '-' + moment().date());
+
+                /* llena la pagina a donde se le de click */
+                $$('#subnavtoolbar-inner .tab-link').click(function (e) {
+                    fillPage($$($$(this).attr('href')), $$(this).data("date"));
+                });
+
+                /* esconde la subnavbar y el icono de la toolbar cuando una carta se expande */
                 $$(document).on('card:open', function (e) {
                     $$('.subnavbar').hide();
                     $$('.add-circle').hide();
@@ -292,24 +119,14 @@
 
                 });
 
+                /* regresa la subnavbar y el icono de la tool bar cuando la carta se comprime */
                 $$(document).on('card:close', function (e) {
                     $$('.subnavbar').show();
                     $$('.add-circle').show();
                     $$(e.srcElement).find('.card-header').removeClass('header-rect');
                 });
-                /*                 $$('.navbar').change(function (e) {
-                                    console.log('ahoy');
-                                });
-                
-                                $$('.navbar').prop({
-                
-                                }); */
 
-                /* $$('.tab-active').scroll(function(){
-                    app.navbar.hide('.navbar');
-                    $$('#scrolltoolbar').css('top', '0');                                 
-                });  */
-
+                /* abre la lista de la toolbar */
                 $$('.dynamic-sheet').on('click', function () {
                     var dynamicSheet = app.sheet.create({
                         content: '<div class="sheet-modal">' +
@@ -322,7 +139,7 @@
                             '<li>' +
                             '<div class="row">' +
                             '<div class="col">' +
-                            '<a href="/offices-show" data-view=".view-main" class="item-link list-button login-register-button">' +
+                            '<a href="#" data-view=".view-main" class="item-link list-button login-register-button consultorios">' +
                             '<i class="material-icons">local_hospital</i>' +
                             'Consultorios</a>' +
                             '</div>' +
@@ -331,7 +148,7 @@
                             '<li>' +
                             '<div class="row">' +
                             '<div class="col">' +
-                            '<a href="/assistants-show" data-view=".view-main" class="item-link list-button login-register-button">' +
+                            '<a href="#" data-view=".view-main" class="item-link list-button login-register-button asistentes">' +
                             '<i class="material-icons">headset_mic</i>' +
                             'Asistentes</a>' +
                             '</div>' +
@@ -340,7 +157,7 @@
                             '<li>' +
                             '<div class="row">' +
                             '<div class="col">' +
-                            '<a href="/agendar-cita" data-view=".view-main" class="item-link list-button login-register-button">' +
+                            '<a href="#" data-view=".view-main" class="item-link list-button login-register-button cita">' +
                             '<i class="material-icons">event</i>' +
                             'Nueva cita</a>' +
                             '</div>' +
@@ -349,7 +166,7 @@
                             '<li>' +
                             '<div class="row">' +
                             '<div class="col">' +
-                            '<a href="/nuevo-paciente" data-view=".view-main" class="item-link list-button login-register-button">' +
+                            '<a href="#" data-view=".view-main" class="item-link list-button login-register-button paciente">' +
                             '<i class="material-icons">person_add</i>' +
                             'Nuevo Paciente</a>' +
                             '</div>' +
@@ -364,11 +181,25 @@
                                 console.log('Sheet open');
                             },
                             opened: function (sheet) {
-                                $$('.close').on('click', function () {
+                                /* cierra la lista antes de redireccionar */
+                                $$('.sheet-modal .close').on('click', function () {
                                     dynamicSheet.close();
                                 });
-                                $$('a').on('click', function () {
+                                $$('.sheet-modal .consultorios').click(function () {
                                     dynamicSheet.close();
+                                    app.methods.redirectTo('offices-show');
+                                });
+                                $$('.sheet-modal .asistentes').click(function () {
+                                    dynamicSheet.close();
+                                    app.methods.redirectTo('asistentes-invitar-01');
+                                });
+                                $$('.sheet-modal .cita').click(function () {
+                                    dynamicSheet.close();
+                                    app.methods.redirectTo('agendar-cita');
+                                });
+                                $$('.sheet-modal .paciente').click(function () {
+                                    dynamicSheet.close();
+                                    app.methods.redirectTo('nuevo-paciente');
                                 });
                             },
                         }
@@ -376,8 +207,283 @@
                     dynamicSheet.open();
                 });
 
+                /* funcion para llenar la pagina dinamicamente */
+                function fillPage(x, y) {
+                    let flag = true;
 
+                    app.data.store.getItem('doctor').then(function (value) {
+                        app.data.doctor = value;
+                        /* limpia la pagina antes de poner algo */
+                        $$(x).children('.list').children('ul').empty();
+                        app.preloader.hide();
+                        /* trae las citas del doctor */ //cmabiar por el endpoint para traer solo las citas del dia
+                        app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/appointments?filter=date&search=' + y,
+                            function (e) {
+                                let z = JSON.parse(e);
+                                if (z && z.length > 0) {
+                                    //quitar el finltro cuando sea por dia
+                                    z = z.filter(element => moment(element.date).isValid());
+                                    //cambiar de checar por hora a checar cual es mas grande cuando agrege el endpoint
+                                    z.sort(function (a, b) {
+                                        if (moment(a.date).hour() < moment(b.date).hour()) {
+                                            return -1;
+                                        } else if (moment(a.date).hour() > moment(b.date).hour()) {
+                                            return 1;
+                                        }
+                                        return 0;
+                                    });
+                                    //dejar de checar cuando se arregle la pantalla de cita
+                                    z.forEach(e => {
+                                        let i = moment(e.date);
+                                        if (i.minute() >= 30) {
+                                            i.minute(30);
+                                        } else {
+                                            i.minute(0);
+                                        }
+                                        e.date = +i;
+                                    });
 
+                                    /* comienza a llenar la pagina */
+                                    for (let i in z) {
+                                        let j = moment(z[i].date); /* convierte el elemento en moment */
+                                        let k = eval(i) + 1;
+                                        let minute = '00';
+                                        let minute2 = '00';
+
+                                        /* pone la linea de la hora si es el primer elemento */
+                                        if (flag) {
+                                            if (j.minute() >= 30) minute = '30';
+                                            $$(x).children('.list').children('ul').append(
+                                                '<li class="item-divider">' +
+                                                '<i class="icon material-icons">watch_later</i>' +
+                                                j.hour() + ':' + minute +
+                                                '<hr>' +
+                                                '</li>');
+                                        }
+
+                                        let n = moment(j).add(30, 'm');
+
+                                        if (n.minute() >= 30) {
+                                            minute = '30';
+                                            minute2 = '00';
+                                        } else {
+                                            minute = '00';
+                                            minute2 = '30';
+                                        }
+                                        /* pone la carta de la cita */
+                                        $$(x).children('.list').children('ul').append(
+                                            '<li>' +
+                                            '<div class="row">' +
+                                            '<div class="card card-expandable" id="cita01">' +
+                                            '<div class="rectangle card-opened-fade-out"></div>' +
+                                            '<div class="card-content">' +
+                                            '<div class="card-header display-block">' +
+                                            '<h6 class="light-blue2 card-opened-fade-out">CONSULTA</h6>' +
+                                            '<h3 class="blue card-opened-fade-out">' + z[i].name + '</h3>' +
+                                            '<h5 class="light-blue card-opened-fade-out">Hospital General Zona 2</h5>' +/* agregar nombre del consultorio */
+                                            '<h4 class="purple-blue card-opened-fade-out">' +
+                                            '<i class="icon material-icons time">watch_later</i>' +
+                                            j.hour() + ':' + minute2 + ' - ' + n.hour() + ':' + minute +
+                                            '</h4>' +
+                                            '<a href="#" class="link card-close card-opened-fade-in color-white">' +
+                                            '<i class="icon material-icons white">close</i>' +
+                                            '<h3 class="label">CERRAR</h3>' +
+                                            '</a>' +
+                                            '<div class="row">' +
+                                            '<div class="col-5"></div>' +
+                                            '<div class="col-90">' +
+                                            '<div class="item-content card-opened-fade-in details-event">' +
+                                            '<div class="fab fab-left-middle color-white photo">' +
+                                            '<a href="#">' +
+                                            '<i class="icon material-icons">photo</i>' +
+                                            '</a>' +
+                                            '</div>' +
+                                            '<ul>' +
+                                            '<li>' +
+                                            '<div class="item-inner">' +
+                                            '<h2 class="white">' + z[i].name + '</h2>' +
+                                            '</div>' +
+                                            '</li>' +
+                                            '<li>' +
+                                            '<div class="item-inner">' +
+                                            '<div class="fab fab-middle color-white contact comment">' +
+                                            '<a href="#">' +
+                                            '<i class="icon material-icons">comment</i>' +
+                                            '</a>' +
+                                            '</div>' +
+                                            '<div class="fab fab-middle color-white contact email">' +
+                                            '<a href="#">' +
+                                            '<i class="icon material-icons">email</i>' +
+                                            '</a>' +
+                                            '</div>' +
+                                            '<div class="fab fab-middle color-white contact phone">' +
+                                            '<a href="#">' +
+                                            '<i class="icon material-icons">local_phone</i>' +
+                                            '</a>' +
+                                            '</div>' +
+                                            '<div class="stars">' +
+                                            '<i class="icon material-icons"' +
+                                            'style="left:0px">star</i>' +
+                                            '<i class="icon material-icons"' +
+                                            'style="left:20px">star</i>' +
+                                            '<i class="icon material-icons"' +
+                                            'style="left:40px">star</i>' +
+                                            '<i class="icon material-icons"' +
+                                            'style="left:60px">star</i>' +
+                                            '<i class="icon material-icons"' +
+                                            'style="left:80px">star_half</i>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '</li>' +
+                                            '</ul>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '<div class="col-5"></div>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '<i class="icon f7-icons chevron card-opened-fade-out">chevron_right</i>' +
+                                            '<div class="card-content-padding list">' +
+                                            '<ul>' +
+                                            '<li>' +
+                                            '<div class="row">' +
+                                            '<div class="col-70">' +
+                                            '<h2 class="blue2">CONSULTA</h2>' +
+                                            '</div>' +
+                                            '<div class="col-30">' +
+                                            '<h2 class="blue2">$500</h2>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '</li>' +
+                                            '<li>' +
+                                            '<div class="row">' +
+                                            '<div class="col-5">' +
+                                            '<i class="icon material-icons time light-blue2">watch_later</i>' +
+                                            '</div>' +
+                                            '<div class="col-95">' +
+                                            '<h3 class="light-blue2">' + j.hour() + ':' + minute2 + ' - ' + n.hour() + ':' + minute + '</h3>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '</li>' +
+                                            '<li>' +
+                                            '<div class="row">' +
+                                            '<div class="col-60">' +
+                                            '<h3 class="blue2">Centro Hospitalario la Concepción</h3>' +/* agregar nombre del consultorio */
+                                            '</div>' +
+                                            '<div class="col-40"></div>' +
+                                            '</div>' +
+                                            '</li>' +
+                                            '<li>' +
+                                            '<div class="row">' +
+                                            '<div class="col-55">' +
+                                            '</div>' +
+                                            '<div class="col-45">' +
+                                            '<a href="#" class="item-link list-button login-button">' +
+                                            '<p>Navegar</p>' +
+                                            '<i class="material-icons">directions</i>' +
+                                            '</a>' +
+                                            '</div>' +
+                                            '</div> ' +
+                                            '</li>' +
+                                            '</ul>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '</li>'
+                                        );
+
+                                        /* checa cuando cerrar la lista y cuando no */
+                                        if (k < z.length) {
+                                            if (!moment(z[k].date).isSame(n)) { /* si el elemento no precede a otro cierra la lista */
+                                                closeList(n)
+                                            } else { /* si el elemento tiene un sucesor sigue con la lista */
+                                                flag = false;
+                                            }
+                                        } else { /* si el elemento es el ultimo cierra la lista */
+                                            closeList(n)
+                                        }
+                                    }
+                                } else {
+                                    let hour = moment(), minute;
+                                    flag = true;
+                                    if (hour.minute() >= 30) {
+                                        minute = '30';
+                                    } else {
+                                        minute = '00'
+                                    }
+                                    $$(x).children('.list').children('ul').append(
+                                        '<li class="item-divider">' +
+                                        '<i class="icon material-icons">watch_later</i>' +
+                                        hour.hour() + ':' + minute +
+                                        '<hr>' +
+                                        '</li>' +
+                                        '<li>' +
+                                        '<div class="row">' +
+                                        '<div class="col-35"></div>' +
+                                        '<div class="col-30">' +
+                                        '<div class="schedule-icon">' +
+                                        '<img src="/static/icons/calendar_today_24px.png">' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '<div class="col-35"></div>' +
+                                        '</div>' +
+                                        '</li>' +
+                                        '<div class="row">' +
+                                        '<div class="col-15"></div>' +
+                                        '<div class="col-70">' +
+                                        '<h4 style="text-align: center;">' +
+                                        'No cuentas con citas este dia. <br> Agrega una.' +
+                                        '</h4>' +
+                                        '</div>' +
+                                        '<div class="col-15"></div>' +
+                                        '</div>' +
+                                        '<li>' +
+                                        '<div class="item-content">' +
+                                        '<div class="item-inner">' +
+                                        '<div class="fab fab-center-center item-fab">' +
+                                        '<a href="#">' +
+                                        '<i class="icon material-icons">add</i>' +
+                                        '</a>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</li>'
+                                    );
+                                }
+                                $$('.item-fab').click(function (e) {
+                                    app.methods.redirectTo('agendar-cita');
+                                });
+                            });
+                    });
+
+                    function closeList(n) {
+                        let minute;
+                        flag = true;
+                        if (n.minute() >= 30) {
+                            minute = '30';
+                        } else {
+                            minute = '00'
+                        }
+                        $$(x).children('.list').children('ul').append(
+                            '<li class="item-divider">' +
+                            '<i class="icon material-icons">watch_later</i>' +
+                            n.hour() + ':' + minute +
+                            '<hr>' +
+                            '</li>' +
+                            '<li>' +
+                            '<div class="item-content">' +
+                            '<div class="item-inner">' +
+                            '<div class="fab fab-center-center item-fab">' +
+                            '<a href="#">' +
+                            '<i class="icon material-icons">add</i>' +
+                            '</a>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</li>'
+                        );
+                    }
+                }
 
             }
         }

@@ -23,6 +23,7 @@ import officesAddFormMap from '../pages/offices-add-form-map.f7.html';
 import officesAddFormSchedule from '../pages/offices-add-form-schedule.f7.html';
 import home from '../pages/home2.f7.html';
 import AgendarCita from '../pages/agendar-cita.f7.html';
+import AgendarCitaFecha from '../pages/agendar-cita-fecha.f7.html';
 import CitaAgendada from '../pages/cita-agendada.f7.html';
 import NuevoPaciente from '../pages/nuevo-paciente.f7.html';
 import schedule from '../pages/schedule.f7.html';
@@ -114,6 +115,11 @@ var routes = [
         name: 'agendar-cita',
         path: '/agendar-cita',
         component: AgendarCita,
+    },
+    {
+        name: 'agendar-cita-fecha',
+        path: '/agendar-cita-fecha',
+        component: AgendarCitaFecha,
     },
     {
         name: 'cita-agendada',

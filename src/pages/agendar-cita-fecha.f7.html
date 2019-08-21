@@ -82,14 +82,48 @@
                 var moment = require('moment');
                 moment().format();
 
+
+                app.data.store.getItem('office').then(function (value) {
+                    app.data.consultorio = value;
+
+                    app.request.get(app.data.url + '/offices/' + app.data.consultorio.id,
+                        function (e) {
+                            var x = JSON.parse(e);
+                            app.data.consultorio.nombre = x.name;
+                            app.data.consultorio.email = x.email;
+                            app.data.consultorio.phone = x.phone;
+                            app.data.consultorio.hospital = x.hospital;
+                            app.data.consultorio.address = x.address;
+                            app.data.consultorio.number = x.number;
+                            app.data.consultorio.startTime = x.startTime;
+                            app.data.consultorio.closeTime = x.closeTime;
+                            app.data.consultorio.lunchStartTime = x.lunchStartTime;
+                            app.data.consultorio.lunchCloseTime = x.lunchCloseTime;
+                            app.data.consultorio.days = x.days;
+                            console.log(app.data.consultorio.days);
+                            
+                        });
+                    app.data.store.getItem('doctor').then(function (value2) {
+                        app.data.doctor = value;
+
+                        
+                    });
+                });
+
                 var calendarModal = app.calendar.create({
                     inputEl: '#date',
                     openIn: 'customModal',
-                    minDate: new Date(),
+                    minDate: new Date(moment().subtract(1,'d')),
                     closeOnSelect: true,
                     weekHeader: false,
                     yearSelector: false,
                     header: false,
+                    dateFormat: 'dd MM yyyy',/* 
+                    disabled: function(e){
+                        var date = moment(e);
+                        if(date.isoWeekday()){}
+
+                    }, */
                     renderToolbar: function () {
                         return '<div class="toolbar calendar-custom-toolbar no-shadow">' +
                             '<div class="toolbar-inner">' +
@@ -103,7 +137,6 @@
                             '</div>' +
                             '</div>';
                     },
-                    dateFormat: 'dd MM yyyy',
                     on: {
                         open: function (c) {
                             console.log(c);
@@ -120,15 +153,6 @@
                             $$('.calendar-custom-toolbar .center').text(monthNames[c.currentMonth] + ', ' + c.currentYear);
                         }
                     }
-                });
-
-                app.data.store.getItem('office').then(function (value) {
-                    app.data.consultorio = value;
-                    app.data.store.getItem('doctor').then(function (value2) {
-                        app.data.doctor = value;
-                        console.log(value);
-                        console.log(value2);
-                    });
                 });
 
                 disableButton();

@@ -72,6 +72,7 @@
                 var z, today, y, i, n;
                 var moment = require('moment');
                 moment().format();
+                moment().locale('ES');
 
                 app.preloader.show('blue');/* abre preloader */
 
@@ -81,7 +82,7 @@
                 z = moment(), today = moment(), y = moment(z).add(1, 'M'), i = 1;
                 while (z.isBefore(y)) {
                     $$('#subnavtoolbar-inner').append(
-                        '<a href="#tab-' + i + '" class="tab-link" id="' + z.date() + '-' + monthNames[z.month()] + '" data-date="' + z.year() + '-' + (z.month() + 1) + '-' + z.date() + '">' +
+                        '<a href="#tab-' + i + '" class="tab-link" id="' + z.format("DD-MMM") + '" data-date="' + moment(moment(z).add(1, 'M')).format("YYYY-MM-DD") + '">' +
                         '<p>' + z.date() + ' </p>' +
                         '<p>' + monthNames[z.month()] + ' </p>' +
                         '</a>');
@@ -94,8 +95,8 @@
                         '</div>'
                     );
                     if (z.isSame(today)) {
-                        $$('#' + z.date() + '-' + monthNames[z.month()]).addClass('tab-link-active');
-                        $$('#' + z.date() + '-' + monthNames[z.month()]).addClass('tab-link-today');
+                        $$('#' + z.format("DD-MMM")).addClass('tab-link-active');
+                        $$('#' + z.format("DD-MMM")).addClass('tab-link-today');
                         $$('#tab-' + i).addClass('tab-active');
                     }
                     i++;
@@ -104,7 +105,7 @@
                 /*--------------------------------------------------------------------------------*/
 
                 /* llena pagina 1 cuando inicia */
-                fillPage('#tab-1', moment().year() + '-' + (moment().month() + 1) + '-' + moment().date());
+                fillPage('#tab-1',moment(moment().add(1, 'M')).format("YYYY-MM-DD"));
 
                 /* llena la pagina a donde se le de click */
                 $$('#subnavtoolbar-inner .tab-link').click(function (e) {
@@ -215,7 +216,7 @@
                         app.data.doctor = value;
                         /* limpia la pagina antes de poner algo */
                         $$(x).children('.list').children('ul').empty();
-                        app.preloader.hide();
+
                         /* trae las citas del doctor */ //cmabiar por el endpoint para traer solo las citas del dia
                         app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/appointments?filter=date&search=' + y,
                             function (e) {
@@ -453,7 +454,10 @@
                                 $$('.item-fab').click(function (e) {
                                     app.methods.redirectTo('agendar-cita');
                                 });
+
+                                app.preloader.hide();
                             });
+
                     });
 
                     function closeList(n) {

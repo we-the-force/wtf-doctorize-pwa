@@ -42,7 +42,15 @@
                                 <div class="item-input-wrap asistentes-input">
                                     <input type="text" name="datetime" readonly="readonly" id="date"
                                         placeholder="Selecciona la fecha" required validate>
-                                    <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-label blue">Horarios Disponibles</div>
+                                <div class="item-input-wrap asistentes-input">
+                                    <input type="text" name="time" readonly="readonly" id="time"
+                                        placeholder="Selecciona la hora" required validate>
                                 </div>
                             </div>
                         </li>
@@ -82,48 +90,65 @@
                 var moment = require('moment');
                 moment().format();
 
+                disableButton();
 
                 app.data.store.getItem('office').then(function (value) {
                     app.data.consultorio = value;
-
+                    app.preloader.show('blue');
                     app.request.get(app.data.url + '/offices/' + app.data.consultorio.id,
                         function (e) {
                             var x = JSON.parse(e);
-                            app.data.consultorio.nombre = x.name;
-                            app.data.consultorio.email = x.email;
-                            app.data.consultorio.phone = x.phone;
-                            app.data.consultorio.hospital = x.hospital;
-                            app.data.consultorio.address = x.address;
-                            app.data.consultorio.number = x.number;
                             app.data.consultorio.startTime = x.startTime;
                             app.data.consultorio.closeTime = x.closeTime;
                             app.data.consultorio.lunchStartTime = x.lunchStartTime;
                             app.data.consultorio.lunchCloseTime = x.lunchCloseTime;
                             app.data.consultorio.days = x.days;
                             console.log(app.data.consultorio.days);
-                            
+                            app.preloader.hide();
                         });
-                    app.data.store.getItem('doctor').then(function (value2) {
-                        app.data.doctor = value;
 
-                        
+                    calendarModal.on('change', function (x, y) {
+                        let z = moment(new Date(calendarModal.value[0]));
+                        app.data.store.getItem('doctor').then(function (value2) {
+                            app.data.doctor = value2;
+                            app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/appointments?filter=office&filter=date&search=' + app.data.consultorio.id + '&search=' + z.format("YYYY-MM-DD"),
+                                function (e) {
+                                    let x = JSON.parse(e);
+                                    var pickerDevice = app.picker.create({
+                                        inputEl: '#time',
+                                        cols: [
+                                            {
+                                                textAlign: 'center',
+                                                values: ['10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30']
+                                            }
+                                        ]
+                                    });
+
+                                }, function (params) {
+                                    console.log(params);
+
+                                });
+
+                        });
+
                     });
+
                 });
 
                 var calendarModal = app.calendar.create({
                     inputEl: '#date',
                     openIn: 'customModal',
-                    minDate: new Date(moment().subtract(1,'d')),
+                    minDate: moment().subtract(1, 'd').toDate(),
                     closeOnSelect: true,
                     weekHeader: false,
                     yearSelector: false,
                     header: false,
-                    dateFormat: 'dd MM yyyy',/* 
-                    disabled: function(e){
+                    firstDay: 7,
+                    dateFormat: 'dd MM yyyy',
+                    disabled: function (e) {
                         var date = moment(e);
-                        if(date.isoWeekday()){}
-
-                    }, */
+                        return !app.data.consultorio.days.includes(date.isoWeekday())
+                    },
                     renderToolbar: function () {
                         return '<div class="toolbar calendar-custom-toolbar no-shadow">' +
                             '<div class="toolbar-inner">' +
@@ -139,8 +164,6 @@
                     },
                     on: {
                         open: function (c) {
-                            console.log(c);
-                            
                             $$('.calendar-custom-toolbar .center').text(monthNames[c.currentMonth] + ', ' + c.currentYear);
                             $$('.calendar-custom-toolbar .left .link').on('click', function () {
                                 c.prevMonth();
@@ -155,31 +178,30 @@
                     }
                 });
 
-                disableButton();
+                /* $$(document).on('change', '#date', function (e) {           
+                    console.log('carga dias');
+                }); */
 
-                $$(document).on('input:notempty', '#datetime', function (e) {
-                    if (name != '' && email != '' && phone != '') {
-                        appointment = moment($$('#datetime').val());
-                        enableButton();
-                    } else {
-                        appointment = moment($$('#datetime').val());
-                    }
-                });
 
-                $$(document).on('input:empty', function (e) {
-                    disableButton();
-                });
+
+                /*                 $$(document).on('input:notempty', '#date', function (e) {  
+                                    console.log('ahoy');
+                                                                            
+                                        enableButton();
+                                });
+                
+                                $$(document).on('input:empty', '#date' , function (e) {
+                                    console.log('not ahoy');
+                                    disableButton();
+                                }); */
 
                 function enableButton() {
-                    today = moment();
+                    /* today = moment();
                     if (appointment.isSameOrAfter(today.add(1, 'h'))) {
                         $$('#agendar-cita-fecha .login-button').removeClass('grey');
                         $$('#agendar-cita-fecha .login-button').off('click');
                         $$('#agendar-cita-fecha .login-button').on('click', function (e) {
-                            app.data.paciente.nombre = name;
-                            app.data.paciente.email = email;
-                            app.data.paciente.phone = phone;
-                            datetime = new Date($$('#datetime').val());
+                            datetime = new Date($$('#date').val());
                             var office = $$('#consultorio').val();
                             app.preloader.show('blue');
                             app.request.postJSON(app.data.url + '/doctors/' + app.data.doctor.id + '/appointments', {
@@ -196,10 +218,12 @@
                                 function (e) {
                                     app.preloader.hide();
                                 });
+                                console.log('ahoy');
+                                
                         });
                     } else {
                         disableButton();
-                    }
+                    } */
                 }
 
                 function disableButton() {

@@ -86,7 +86,7 @@
                 var self = this;
                 var app = self.$app;
                 var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-                var appointment = '', datetime = '', today = '';
+                var datetime = '', today = '';
                 var moment = require('moment');
                 moment().format();
 
@@ -104,22 +104,56 @@
                             app.data.consultorio.lunchCloseTime = x.lunchCloseTime;
                             app.data.consultorio.days = x.days;
                             console.log(app.data.consultorio.days);
+                            console.log(app.data.consultorio.startTime);
+                            console.log(app.data.consultorio.closeTime);
                             app.preloader.hide();
                         });
 
                     calendarModal.on('change', function (x, y) {
-                        let z = moment(new Date(calendarModal.value[0]));
+                        var z = moment(new Date(calendarModal.getValue()));
+                        today = moment();
+
                         app.data.store.getItem('doctor').then(function (value2) {
                             app.data.doctor = value2;
                             app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/appointments?filter=office&filter=date&search=' + app.data.consultorio.id + '&search=' + z.format("YYYY-MM-DD"),
                                 function (e) {
                                     let x = JSON.parse(e);
+                                    x = x.map(e => moment(e.date));
+                                    let y = [];
+                                    let startTimeArray = app.data.consultorio.startTime.split(":");
+                                    let startTime = moment(z).hour(startTimeArray[0]).minute(startTimeArray[1]);
+                                    let closeTimeArray = app.data.consultorio.closeTime.split(":");
+                                    let closeTime = moment(z).hour(closeTimeArray[0]).minute(closeTimeArray[1]);
+                                    let lunchStartTimeArray = app.data.consultorio.lunchStartTime.split(":");
+                                    let lunchStartTime = moment(z).hour(lunchStartTimeArray[0]).minute(lunchStartTimeArray[1]);
+                                    let lunchCloseTimeArray = app.data.consultorio.lunchCloseTime.split(":");
+                                    let lunchCloseTime = moment(z).hour(lunchCloseTimeArray[0]).minute(lunchCloseTimeArray[1]);
+
+                                    z = startTime;
+
+                                    while (z.isBefore(closeTime)) {
+                                        if (z.isAfter(today)) {
+                                            if (!z.isBetween(lunchStartTime, lunchCloseTime)) {
+                                                if (x.every(e => !(e.isSameOrAfter(z) && e.isBefore(moment(z).add(30, 'm'))))) {
+                                                    y.push(z.format("HH:mm"));
+                                                    z.add(30, 'm');
+                                                    continue;
+                                                }
+                                            }
+                                        }
+                                        z.add(30, 'm');
+                                    }
+
+                                    $$(document).on('picker:closed', '#time', function (e) {
+                                        enableButton(z, pickerDevice.getValue());
+                                    });
+
                                     var pickerDevice = app.picker.create({
                                         inputEl: '#time',
                                         cols: [
                                             {
                                                 textAlign: 'center',
-                                                values: ['10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30']
+                                                values: y
                                             }
                                         ]
                                     });
@@ -178,60 +212,68 @@
                     }
                 });
 
-                /* $$(document).on('change', '#date', function (e) {           
-                    console.log('carga dias');
-                }); */
-
-
-
-                /*                 $$(document).on('input:notempty', '#date', function (e) {  
-                                    console.log('ahoy');
-                                                                            
-                                        enableButton();
-                                });
-                
-                                $$(document).on('input:empty', '#date' , function (e) {
-                                    console.log('not ahoy');
-                                    disableButton();
-                                }); */
-
-                function enableButton() {
-                    /* today = moment();
-                    if (appointment.isSameOrAfter(today.add(1, 'h'))) {
-                        $$('#agendar-cita-fecha .login-button').removeClass('grey');
-                        $$('#agendar-cita-fecha .login-button').off('click');
-                        $$('#agendar-cita-fecha .login-button').on('click', function (e) {
-                            datetime = new Date($$('#date').val());
-                            var office = $$('#consultorio').val();
+                function enableButton(z, y) {
+                    $$('#agendar-cita-fecha .login-button').removeClass('grey');
+                    $$('#agendar-cita-fecha .login-button').off('click');
+                    $$('#agendar-cita-fecha .login-button').click(function (e) {
+                        app.data.store.getItem('patient').then(function (patient) {
+                            app.data.patient = patient;
+                            datetime = moment(z.format("YYYY-MM-DD") + 'T' + y);
                             app.preloader.show('blue');
                             app.request.postJSON(app.data.url + '/doctors/' + app.data.doctor.id + '/appointments', {
                                 "email": app.data.paciente.email,
                                 "doctorId": app.data.doctor.id,
-                                "officeId": office,
+                                "officeId": app.data.consultorio.id,
                                 "name": app.data.paciente.nombre,
                                 "phone": app.data.paciente.phone,
-                                "date": datetime,
-                            }, function (e) {
-                                app.preloader.hide();
-                                app.methods.redirectTo('cita-agendada');
+                                "date": datetime.toDate(),
                             },
                                 function (e) {
                                     app.preloader.hide();
+                                    app.methods.redirectTo('cita-agendada');
+                                },
+                                function (e) {
+                                    app.preloader.hide();
                                 });
-                                console.log('ahoy');
-                                
                         });
-                    } else {
-                        disableButton();
-                    } */
-                }
-
+                    });
+                };
+                /* today = moment();
+                if (appointment.isSameOrAfter(today.add(1, 'h'))) {
+                    $$('#agendar-cita-fecha .login-button').removeClass('grey');
+                    $$('#agendar-cita-fecha .login-button').off('click');
+                    $$('#agendar-cita-fecha .login-button').on('click', function (e) {
+                        datetime = new Date($$('#date').val());
+                        var office = $$('#consultorio').val();
+                        app.preloader.show('blue');
+                        app.request.postJSON(app.data.url + '/doctors/' + app.data.doctor.id + '/appointments', {
+                            "email": app.data.paciente.email,
+                            "doctorId": app.data.doctor.id,
+                            "officeId": office,
+                            "name": app.data.paciente.nombre,
+                            "phone": app.data.paciente.phone,
+                            "date": datetime,
+                        }, function (e) {
+                            app.preloader.hide();
+                            app.methods.redirectTo('cita-agendada');
+                        },
+                            function (e) {
+                                app.preloader.hide();
+                            });
+                            console.log('ahoy');
+                            
+                    });
+                } else {
+                    disableButton();
+                } */
                 function disableButton() {
                     $$('#agendar-cita-fecha .login-button').addClass('grey');
                     $$('#agendar-cita-fecha .login-button').off('click');
                 }
 
             }
+
+
         }
     }
 </script>

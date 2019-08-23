@@ -30,7 +30,7 @@
 
                   </div>
                   <div class="col-90">
-                    <input type="text" name="fullname" id="username" placeholder="nombre completo" required validate>
+                    <input type="text" name="fullname" id="fullname" placeholder="nombre completo" required validate>
 
                   </div>
                 </div>
@@ -47,7 +47,7 @@
 
                   </div>
                   <div class="col-90">
-                    <input type="text" name="password" id="password" placeholder="contraseña" required validate>
+                    <input type="text" name="password" id="pass" placeholder="contraseña" required validate>
 
                   </div>
                 </div>
@@ -111,8 +111,8 @@
 
         $$('#register-step1 .login-button').addClass('grey');
         $$('#register-step1 .login-button').off('click');
-        $$(document).on('input:notempty', '#username', function (e) {
-          $$(document).on('input:notempty', '#password', function (e) {
+        $$(document).on('input:notempty', '#fullname', function (e) {
+          $$(document).on('input:notempty', '#pass', function (e) {
             $$('#register-step1 .login-button').removeClass('grey');
             $$('#register-step1 .login-button').off('click');
             $$('#register-step1 .login-button').on('click', function (e) {

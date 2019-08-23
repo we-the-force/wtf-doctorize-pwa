@@ -238,34 +238,7 @@
                         });
                     });
                 };
-                /* today = moment();
-                if (appointment.isSameOrAfter(today.add(1, 'h'))) {
-                    $$('#agendar-cita-fecha .login-button').removeClass('grey');
-                    $$('#agendar-cita-fecha .login-button').off('click');
-                    $$('#agendar-cita-fecha .login-button').on('click', function (e) {
-                        datetime = new Date($$('#date').val());
-                        var office = $$('#consultorio').val();
-                        app.preloader.show('blue');
-                        app.request.postJSON(app.data.url + '/doctors/' + app.data.doctor.id + '/appointments', {
-                            "email": app.data.paciente.email,
-                            "doctorId": app.data.doctor.id,
-                            "officeId": office,
-                            "name": app.data.paciente.nombre,
-                            "phone": app.data.paciente.phone,
-                            "date": datetime,
-                        }, function (e) {
-                            app.preloader.hide();
-                            app.methods.redirectTo('cita-agendada');
-                        },
-                            function (e) {
-                                app.preloader.hide();
-                            });
-                            console.log('ahoy');
-                            
-                    });
-                } else {
-                    disableButton();
-                } */
+                
                 function disableButton() {
                     $$('#agendar-cita-fecha .login-button').addClass('grey');
                     $$('#agendar-cita-fecha .login-button').off('click');

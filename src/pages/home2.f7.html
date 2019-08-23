@@ -1,6 +1,14 @@
 <template>
   <div class="page" data-name="home" id="home">
 
+
+    <div class="panel panel-left panel-cover panel-resizable">
+      <div class="block">
+        <a class="panel-close" href="#">Salir</a>
+          <h1>AJUSTES</h1>
+      </div>
+    </div>
+
     <div class="toolbar tabbar tabbar-labels toolbar-bottom menu">
       <div class="toolbar-inner">
         <a href="/home" class="tab-link tab-link-active">
@@ -40,6 +48,14 @@
           <li>
             <div class="row">
               <div class="col">
+                <a href="#" data-view=".view-main"
+                  class="item-link list-button login-register-button panel-open">Ajustes</a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="row">
+              <div class="col">
                 <a href="/" data-view=".view-main" class="item-link list-button login-register-button logout">Salir</a>
               </div>
             </div>
@@ -48,6 +64,7 @@
       </div>
     </div>
   </div>
+
 </template>
 <script>
   import $$ from 'dom7';
@@ -60,6 +77,14 @@
         $$('.logout').click(function (params) {
           app.data.store.clear();
           app.methods.redirectTo('root');
+        });
+
+        $$('.panel-open').click(function (e) {
+          console.log('creating panel');
+          var panel = app.panel.create({
+            el: '.panel',
+          });
+          panel.open();
         });
 
         $$('.dynamic-sheet').on('click', function () {

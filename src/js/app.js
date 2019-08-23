@@ -122,6 +122,7 @@ var app = new Framework7({
     // Enable panel left visibility breakpoint
     panel: {
         leftBreakpoint: 960,
+        swipe: 'left',
     },
     // Register service worker
     serviceWorker: {

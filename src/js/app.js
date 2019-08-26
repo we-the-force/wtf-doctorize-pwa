@@ -17,123 +17,125 @@ import routes from './routes.js';
 import register from './register.js';
 
 Framework7.request.setup({
-    contentType: "application/json"
+  contentType: "application/json"
 });
 
 
 var app = new Framework7({
-    root: '#app', // App root element
+  root: '#app', // App root element
 
-    name: 'Doctorize', // App name
-    theme: 'auto', // Automatic theme detection
-    // App root data
+  name: 'Doctorize', // App name
+  theme: 'auto', // Automatic theme detection
+  // App root data
 
-    data: function() {
-        return {
-            store: localForage.createInstance({
-                name: "datastore"
-            }),
-            specialties: {
-                values: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
-                displayValues: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
-            },
-            register: {
-                username: '',
-                password: '',
-                email: '',
-                phone: '',
-            },
-            assistant: {
-                id: '',
-                flag: false,
-                edit: false,
-                addOffice: false,
-                code: '',
-                name: '',
-                password: '',
-                email: '',
-                consultorio: {
-                    id: '',
-                    name: '',
-                },
-                permisos: [],
-            },
-            doctor: {
-                id: '',
-                email: '',
-                name: '',
-                cellphone: '',
-                specialty: {
-                    id: '',
-                    name: '',
-                },
-            },
-            consultorio: {
-                id: '',
-                nombre: '',
-                email: '',
-                phone: '',
-                hospital: '',
-                address: '',
-                number: '',
-                startTime: '',
-                closeTime: '',
-                lunchStartTime: '',
-                lunchCloseTime: '',
-                days: [],
-                edit: false,
-            },
-            paciente: {
-                nombre: '',
-                email: '',
-                phone: '',
-                birthdate: '',
-                civilStatus: '',
-                weight: '',
-                height: '',
-                blood: '',
-                pressure: '',
-            },
-            url: 'http://api.mydoctorize.com'
-        };
-    },
-    // App root methods
-    methods: {
-        helloWorld: function() {
-            app.dialog.alert('Hello World!');
+  data: function () {
+    return {
+      store: localForage.createInstance({
+        name: "datastore"
+      }),
+      specialties: {
+        values: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
+        displayValues: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
+      },
+      register: {
+        username: '',
+        password: '',
+        email: '',
+        phone: '',
+      },
+      assistant: {
+        id: '',
+        flag: false,
+        edit: false,
+        addOffice: false,
+        code: '',
+        name: '',
+        password: '',
+        email: '',
+        consultorio: {
+          id: '',
+          name: '',
         },
-        redirectTo: function(pathTo) {
-            // console.log(app);
-
-            app.views.main.router.navigate({
-                name: pathTo
-            });
+        permisos: [],
+      },
+      doctor: {
+        id: '',
+        email: '',
+        name: '',
+        cellphone: '',
+        specialty: {
+          id: '',
+          name: '',
         },
-        isEmpty: function(obj) {
-            for (var key in obj) {
-                if (obj.hasOwnProperty(key))
-                    return false;
-            }
-            return true;
-        }
+        photo: '',
+      },
+      consultorio: {
+        id: '',
+        nombre: '',
+        email: '',
+        phone: '',
+        hospital: '',
+        address: '',
+        number: '',
+        startTime: '',
+        closeTime: '',
+        lunchStartTime: '',
+        lunchCloseTime: '',
+        days: [],
+        edit: false,
+      },
+      paciente: {
+        nombre: '',
+        email: '',
+        phone: '',
+        birthdate: '',
+        civilStatus: '',
+        weight: '',
+        height: '',
+        blood: '',
+        pressure: '',
+      },
+      url: 'http://api.mydoctorize.com'
+    };
+  },
+  // App root methods
+  methods: {
+    helloWorld: function () {
+      app.dialog.alert('Hello World!');
     },
-    // App routes
-    routes: routes,
-    // Enable panel left visibility breakpoint
-    panel: {
-        leftBreakpoint: 960,
-        swipe: 'left',
+    redirectTo: function (pathTo) {
+      // console.log(app);
+
+      app.views.main.router.navigate({
+        name: pathTo
+      });
     },
-    // Register service worker
-    serviceWorker: {
-        path: '/service-worker.js',
-    },
-    view: {
-        pushState: true
-    },
-    navbar: {
-        showOnPageScrollEnd: false
+    isEmpty: function (obj) {
+      for (var key in obj) {
+        if (obj.hasOwnProperty(key))
+          return false;
+      }
+      return true;
     }
+  },
+  // App routes
+  routes: routes,
+  // Enable panel left visibility breakpoint
+  panel: {
+    leftBreakpoint: 960,
+    swipe: 'left',
+  },
+  // Register service worker
+  serviceWorker: {
+    path: '/service-worker.js',
+  },
+  view: {
+    pushState: true
+  },
+  navbar: {
+    showOnPageScrollEnd: false
+  },
+  flow: 'default' //RA registrar asistente, RD registrar doctor, RP registrar paciente, UA update asistente, UD update doctor, UP update patient
 });
 /* //login
 var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -175,19 +177,18 @@ var errorPopup = app.popup.create({
     }
 }); */
 
-app.init(function() {
-    console.log('init');
+app.init(function () {
+  console.log('init');
 
-    window.addEventListener('beforeinstallprompt', (e) => {
-        // Prevent Chrome 67 and earlier from automatically showing the prompt
-        e.preventDefault();
-        // Stash the event so it can be triggered later.
-        deferredPrompt = e;
-        // Update UI notify the user they can add to home screen
-        btnAdd.style.display = 'block';
-    });
+  window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevent Chrome 67 and earlier from automatically showing the prompt
+    e.preventDefault();
+    // Stash the event so it can be triggered later.
+    deferredPrompt = e;
+    // Update UI notify the user they can add to home screen
+    btnAdd.style.display = 'block';
+  });
 });
-
 /*
 $$('#login .login-button').addClass('grey');
 $$('#login .login-button').off('click');
@@ -219,27 +220,27 @@ $$(document).on('input:notempty', '#username', function(e) {
  */
 
 //recuperar contrase
-$$(document).on('page:init', '.page[data-name="recovery"]', function(e) {
+$$(document).on('page:init', '.page[data-name="recovery"]', function (e) {
 
-    var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    var email_recovery;
+  var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  var email_recovery;
 
-    $$('#recovery .login-button').addClass('grey');
-    $$('#recovery .login-button').off('click');
+  $$('#recovery .login-button').addClass('grey');
+  $$('#recovery .login-button').off('click');
 
-    $$(document).on('input:notempty', '#username', function(e) {
-        email_recovery = $$('#recovery #username').val();
+  $$(document).on('input:notempty', '#username', function (e) {
+    email_recovery = $$('#recovery #username').val();
 
-        if (regex.test(email_recovery)) {
-            $$('#recovery .login-button').removeClass('grey');
-            $$('#recovery .login-button').off('click');
-            $$('#recovery .login-button').on('click', function() {
-                app.request.postJSON(app.data.url + '/account/password/reset', { "email": email_recovery }, function(e) {
-                    console.log(e);
-                });
-            });
-        }
-    });
+    if (regex.test(email_recovery)) {
+      $$('#recovery .login-button').removeClass('grey');
+      $$('#recovery .login-button').off('click');
+      $$('#recovery .login-button').on('click', function () {
+        app.request.postJSON(app.data.url + '/account/password/reset', { "email": email_recovery }, function (e) {
+          console.log(e);
+        });
+      });
+    }
+  });
 });
 
 

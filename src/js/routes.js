@@ -32,6 +32,7 @@ import LeftPage1 from '../pages/left-page-1.f7.html';
 import LeftPage2 from '../pages/left-page-2.f7.html';
 import DynamicRoutePage from '../pages/dynamic-route.f7.html';
 import RequestAndLoad from '../pages/request-and-load.f7.html';
+import PhotoModule from '../pages/photo-module.f7.html';
 // import NotFoundPage from '../pages/404.f7.html';
 
 var routes = [
@@ -70,6 +71,11 @@ var routes = [
         path: '/register-s3',
         component: RegisterS3Page,
 
+    },
+    {
+        name: 'photo-module',
+        path: '/photo-module',
+        component: PhotoModule,
     },
     {
         name: 'register-s4',

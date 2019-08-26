@@ -97,16 +97,15 @@
         let email = query.email;
 
         if (!app.methods.isEmpty(query)) {
-          app.data.assistant.flag = true;
+          app.data.flow = 'RA';
         } else {
-          app.data.assistant.flag = false;
+          app.data.flow = 'RD';
         }
 
         $$('#register-step1 #cancel').on('click', function (e) {
-          app.data.assistant.flag = false;
-          app.data.store.setItem('assistant', app.data.assistant).then(function (value) {
-            app.methods.redirectTo('root');
-          });
+          app.data.flow = 'default';
+          app.data.store.removeItem('flow');
+          app.methods.redirectTo('root');
         });
 
         $$('#register-step1 .login-button').addClass('grey');
@@ -116,22 +115,26 @@
             $$('#register-step1 .login-button').removeClass('grey');
             $$('#register-step1 .login-button').off('click');
             $$('#register-step1 .login-button').on('click', function (e) {
-              if (!app.data.assistant.flag) {
+              if (app.data.flow == 'RD') {
                 app.data.register.username = $$('[name="fullname"]').val();
                 app.data.register.password = $$('[name="password"]').val();
-                app.data.store.setItem('assistant', app.data.assistant).then(function (value) {
+                app.data.store.setItem('flow', app.data.flow).then(function (value) {
                   app.data.store.setItem('register', app.data.register).then(function (value) {
                     app.methods.redirectTo('register-s2');
                   });
                 });
-              } else {
+              } else if (app.data.flow == 'RA') {
                 app.data.assistant.name = $$('[name="fullname"]').val();
                 app.data.assistant.password = $$('[name="password"]').val();
                 app.data.assistant.email = email;
                 app.data.assistant.code = code;
-                app.data.store.setItem('assistant', app.data.assistant).then(function (value) {
-                  app.methods.redirectTo('register-s3');
+                app.data.store.setItem('flow', app.data.flow).then(function (value) {
+                  app.data.store.setItem('assistant', app.data.assistant).then(function (value) {
+                    app.methods.redirectTo('photo-module');
+                  });
                 });
+              } else {
+                app.methods.redirectTo('root');//avisar de error
               }
             });
           });

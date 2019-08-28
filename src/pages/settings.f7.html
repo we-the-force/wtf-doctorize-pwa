@@ -1,0 +1,139 @@
+<template>
+    <div class="page personal-settings" data-name="personal-settings" id="personal-settings">
+        <div class="page-content login-screen-content">
+            <div class="login-screen-content nav-bar-rect">
+                <div class="block" style="margin: 0px;">
+                    <a href='/home' class="item-link list-button back-button">
+                        <i class="material-icons close">chevron_left</i>
+                    </a>
+                    <h3 class="title">Información Personal</h3>
+                </div>
+                <div class="list photo">
+                    <ul>
+                        <li>
+                            <div class="row">
+                                <div class="col-15"></div>
+                                <div class="col-70">
+                                    <a href="#" class="edit">
+                                        <img src="../static/images/done.png"></img>
+                                    </a>
+                                </div>
+                                <div class="col-15"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-30"></div>
+                                <div class="col-40">
+                                    <h4 style="text-align: center; margin-top: 5px;">Agregar foto</h4>
+                                </div>
+                                <div class="col-30"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div class="list no-hairlines-md" id="inputs">
+                    <ul>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-label blue">Nombre</div>
+                                <div class="item-input-wrap asistentes-input"  id="set-name">
+                                    <input type="text" name="set-name">
+                                    <i class="material-icons">chevron_right</i>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-label blue">Email</div>
+                                <div class="item-input-wrap asistentes-input" id="set-mail">
+                                    <input type="text" name="set-mail">
+                                    <i class="material-icons">chevron_right</i>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-label blue">Celular</div>
+                                <div class="item-input-wrap asistentes-input" id="set-cel">
+                                    <input type="text" name="set-cel">
+                                    <i class="material-icons">chevron_right</i>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-label blue">Especialidad</div>
+                                <div class="item-input-wrap asistentes-input" id="set-special">
+                                    <input type="text" name="set-special">
+                                    <i class="material-icons">chevron_right</i>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+
+                app.data.store.getItem('doctor').then(function (value) {
+                    app.data.doctor = value;
+                    console.log(app.data.doctor);
+                    
+                    $$("#set-name input").val(app.data.doctor.name);
+                    $$("#set-mail input").val(app.data.doctor.email);
+                    $$("#set-cel input").val(app.data.doctor.cellphone);
+                    $$("#set-special input").val(app.data.doctor.specialty.name);
+                    $$(".photo .edit").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
+                });
+
+                $$("#set-name").click(function (e) {
+                    app.data.flow = 'SN';
+                    app.data.store.setItem('flow', app.data.flow).then(function (value) {
+                        app.methods.redirectTo('settings-edit');
+                    });
+                });
+
+                $$("#set-mail").click(function (e) {
+                    app.data.flow = 'SM';
+                    app.data.store.setItem('flow', app.data.flow).then(function (value) {
+                        app.methods.redirectTo('settings-edit');
+                    });
+                });
+
+                $$("#set-cel").click(function (e) {
+                    app.data.flow = 'SC';
+                    app.data.store.setItem('flow', app.data.flow).then(function (value) {
+                        app.methods.redirectTo('settings-edit');
+                    });
+                });
+
+                $$("#set-special").click(function (e) {
+                    app.data.flow = 'SS';
+                    app.data.store.setItem('flow', app.data.flow).then(function (value) {
+                        app.methods.redirectTo('settings-edit');
+                    });
+                });
+
+                $$(".photo .edit").click(function (e) {
+                    app.data.flow = 'UD';
+                    app.data.store.setItem('flow', app.data.flow).then(function (value) {
+                        app.methods.redirectTo('photo-module');
+                    });
+                });
+
+
+            }
+        }
+    }
+</script>

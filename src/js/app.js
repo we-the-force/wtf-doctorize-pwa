@@ -124,6 +124,7 @@ var app = new Framework7({
   panel: {
     leftBreakpoint: 960,
     swipe: 'left',
+    swipeOnlyClose: true,
   },
   // Register service worker
   serviceWorker: {
@@ -189,6 +190,28 @@ app.init(function () {
     btnAdd.style.display = 'block';
   });
 });
+
+/* $$(document).on('panel:open',function (e) {
+  app.data.store.getItem('doctor').then(function (value) {
+    app.data.doctor = value;
+    $$(".doctor .name").text(app.data.doctor.name);
+    $$(".doctor .mail").text(app.data.doctor.email);
+    $$(".panel .avatar").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
+  });
+  var panel = app.panel.create({
+    el: '.panel',
+  });
+  panel.open();
+
+  $$(".panel .avatar").click(function (e) {
+    panel.close();
+    app.data.flow = 'UD';
+    app.data.store.setItem('flow', app.data.flow).then(function (value) {
+      app.methods.redirectTo('photo-module');
+    });
+  });
+}); */
+
 /*
 $$('#login .login-button').addClass('grey');
 $$('#login .login-button').off('click');

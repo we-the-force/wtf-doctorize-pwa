@@ -134,7 +134,6 @@
                         '</div>' +
                         '</div>',
                     buttons: [{}]
-
                 });
 
                 app.data.store.getItem('flow').then(function (flow) {
@@ -163,7 +162,7 @@
                                 app.methods.redirectTo('register-s1');
                                 break;
                             case 'UD':
-                                app.methods.redirectTo('home');
+                                app.methods.redirectTo('settings');
                                 break;
                             default:
                                 app.methods.redirectTo('root');
@@ -266,7 +265,7 @@
                                     success: function (e) {
                                         app.data.store.removeItem('flow').then(function (value) {
                                             app.preloader.hide();
-                                            app.methods.redirectTo('home');
+                                            app.methods.redirectTo('settings');
                                         });
                                     },
                                     error: function (e) {

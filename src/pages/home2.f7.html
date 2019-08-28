@@ -59,7 +59,7 @@
     <div class="panel panel-left panel-cover panel-resizable">
       <div class="block">
         <a class="panel-close" href="#">Salir</a>
-        <h1>AJUSTES</h1>
+        <h1>Perfil</h1>
       </div>
       <a href="#" class="avatar">
         <img src="../static/images/logo.png"></img>
@@ -228,13 +228,17 @@
           });
           panel.open();
 
-          $$(".panel .avatar").click(function (e) {
+          $$(".panel #personal-settings").click(function (e) {
+            panel.close();
+            app.methods.redirectTo('settings');
+          });
+          /* $$(".panel .avatar").click(function (e) {
             panel.close();
             app.data.flow = 'UD';
             app.data.store.setItem('flow', app.data.flow).then(function (value) {
               app.methods.redirectTo('photo-module');
             });
-          });
+          }); */
         });
 
         $$('.dynamic-sheet').on('click', function () {

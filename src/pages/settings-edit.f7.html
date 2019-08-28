@@ -1,0 +1,273 @@
+<template>
+    <div class="page settings-edit" data-name="settings-edit" id="settings-edit">
+        <div class="page-content login-screen-content">
+            <div class="login-screen-content nav-bar-rect">
+                <div class="block" style="margin: 0px;">
+                    <a href='#' class="item-link list-button back-button">
+                        <i class="material-icons close">chevron_left</i>
+                    </a>
+                    <h3 class="title"></h3>
+                </div>
+
+            </div>
+            <div>
+                <div class="list no-hairlines-md" id="inputs">
+                    <ul>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-label blue"></div>
+                                <div class="item-input-wrap asistentes-input">
+                                    <input type="text" required validate>
+                                    <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <a href="#" class="item-link list-button login-button">
+                <p>Guardar </p>
+                <i class="material-icons">chevron_right</i>
+            </a>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+
+                app.data.store.getItem('doctor').then(function (value) {
+                    app.data.doctor = value;
+                    app.data.store.getItem('flow').then(function (e) {
+                        app.data.flow = e;
+                        switch (app.data.flow) {
+                            case 'SN':
+                                setName();
+                                break;
+                            case 'SM':
+                                setMail();
+                                break;
+                            case 'SC':
+                                setPhone();
+                                break;
+                            case 'SS':
+                                setSpeciality();
+                                break;
+                            default:
+                                app.methods.redirectTo('settings');
+                                break;
+                        }
+                    });
+                });
+
+
+                $$(".back-button").click(function (e) {
+                    app.data.flow = 'default';
+                    app.data.store.removeItem('flow').then(function (value) {
+                        app.methods.redirectTo('settings');
+                    });
+                });
+
+                function setSpeciality() {
+                    $$(".settings-edit .title").text("Edita tu especialidad");
+                    $$(".settings-edit .item-label").text("Especialidad");
+                    $$(".settings-edit input").attr("type", "text");
+                    $$(".settings-edit input").attr("id", "picker");
+                    $$(".settings-edit input").val(app.data.doctor.specialty.name);
+                    var specialties = app.data.specialties,specialityID;
+                    var picker = app.picker.create({
+                        inputEl: '#picker',
+                        cols: [{
+                            values: specialties.values,
+                            displayValues: specialties.displayValues,
+                        }]
+                    });
+                    $$(document).on('input:notempty', ".settings-edit input", function (e) {
+                        $$('#settings-edit .login-button').removeClass('grey');
+                        $$('#settings-edit .login-button').off('click');
+                        $$("#settings-edit .login-button").click(function (e) {
+                            specialityID = specialties.values.indexOf(picker.value[0]);
+                            specialityID++;                            
+                            app.request({
+                                url: app.data.url + '/doctors/' + app.data.doctor.id,
+                                method: "PATCH",
+                                crossDomain: true,
+                                data: {
+                                    "name": app.data.doctor.name,
+                                    "cellphone": app.data.doctor.cellphone,
+                                    "email": app.data.doctor.email,
+                                    "specialty": {
+                                        "id": specialityID,
+                                    }
+                                },
+                                success: function (e) {
+                                    app.data.store.removeItem('flow').then(function (value) {
+                                        app.request.get(app.data.url + '/doctors/' + app.data.doctor.id,
+                                            function (i) {
+                                                var x = JSON.parse(i);
+                                                app.preloader.hide();
+                                                console.log(x);
+                                                app.data.store.setItem("doctor", x);
+                                                app.methods.redirectTo('settings');
+                                                location.reload();
+                                            });
+                                    });
+                                },
+                                error: function (e) {
+                                    app.preloader.hide();
+                                }
+                            });
+                        });
+                    });
+
+                    $$(document).on('input:empty', function (e) {
+                        disableButton();
+                    });
+
+                }
+
+                function setPhone() {
+                    $$(".settings-edit .title").text("Edita tu celular");
+                    $$(".settings-edit .item-label").text("Celular");
+                    $$(".settings-edit input").attr("type", "tel");
+                    $$(".settings-edit input").val(app.data.doctor.cellphone);
+
+                    $$(document).on('input:notempty', ".settings-edit input", function (e) {
+                        $$('#settings-edit .login-button').removeClass('grey');
+                        $$('#settings-edit .login-button').off('click');
+                        $$("#settings-edit .login-button").click(function (e) {
+                            app.request({
+                                url: app.data.url + '/doctors/' + app.data.doctor.id,
+                                method: "PATCH",
+                                crossDomain: true,
+                                data: {
+                                    "name": app.data.doctor.name,
+                                    "cellphone": $$(".settings-edit input").val(),
+                                    "email": app.data.doctor.email,
+                                },
+                                success: function (e) {
+                                    app.data.store.removeItem('flow').then(function (value) {
+                                        app.request.get(app.data.url + '/doctors/' + app.data.doctor.id,
+                                            function (i) {
+                                                var x = JSON.parse(i);
+                                                app.preloader.hide();
+                                                console.log(x);
+                                                app.data.store.setItem("doctor", x);
+                                                app.methods.redirectTo('settings');
+                                                location.reload();
+                                            });
+                                    });
+                                },
+                                error: function (e) {
+                                    app.preloader.hide();
+                                }
+                            });
+                        });
+                    });
+
+                    $$(document).on('input:empty', function (e) {
+                        disableButton();
+                    });
+                }
+
+                function setMail() {
+                    $$(".settings-edit .title").text("Edita tu correo");
+                    $$(".settings-edit .item-label").text("Correo");
+                    $$(".settings-edit input").attr("type", "email");
+                    $$(".settings-edit input").val(app.data.doctor.email);
+
+                    $$(document).on('input:notempty', ".settings-edit input", function (e) {
+                        $$('#settings-edit .login-button').removeClass('grey');
+                        $$('#settings-edit .login-button').off('click');
+                        $$("#settings-edit .login-button").click(function (e) {
+                            app.request({
+                                url: app.data.url + '/doctors/' + app.data.doctor.id,
+                                method: "PATCH",
+                                crossDomain: true,
+                                data: {
+                                    "name": app.data.doctor.name,
+                                    "email": $$(".settings-edit input").val(),
+                                    "cellphone": app.data.doctor.cellphone,
+
+                                },
+                                success: function (e) {
+                                    app.data.store.removeItem('flow').then(function (value) {
+                                        app.request.get(app.data.url + '/doctors/' + app.data.doctor.id,
+                                            function (i) {
+                                                var x = JSON.parse(i);
+                                                app.preloader.hide();
+                                                console.log(x);
+                                                app.data.store.setItem("doctor", x);
+                                                app.methods.redirectTo('settings');
+                                                location.reload();
+                                            });
+                                    });
+                                },
+                                error: function (e) {
+                                    app.preloader.hide();
+                                }
+                            });
+                        });
+                    });
+
+                    $$(document).on('input:empty', function (e) {
+                        disableButton();
+                    });
+                }
+
+                function setName() {
+                    $$(".settings-edit .title").text("Edita tu nombre");
+                    $$(".settings-edit .item-label").text("Nombre");
+                    $$(".settings-edit input").val(app.data.doctor.name);
+
+                    $$(document).on('input:notempty', ".settings-edit input", function (e) {
+                        $$('#settings-edit .login-button').removeClass('grey');
+                        $$('#settings-edit .login-button').off('click');
+                        $$("#settings-edit .login-button").click(function (e) {
+                            app.request({
+                                url: app.data.url + '/doctors/' + app.data.doctor.id,
+                                method: "PATCH",
+                                crossDomain: true,
+                                data: {
+                                    "name": $$(".settings-edit input").val(),
+                                    "email": app.data.doctor.email,
+                                    "cellphone": app.data.doctor.cellphone,
+
+                                },
+                                success: function (e) {
+                                    app.data.store.removeItem('flow').then(function (value) {
+                                        app.request.get(app.data.url + '/doctors/' + app.data.doctor.id,
+                                            function (i) {
+                                                var x = JSON.parse(i);
+                                                app.preloader.hide();
+                                                console.log(x);
+                                                app.data.store.setItem("doctor", x);
+                                                app.methods.redirectTo('settings');
+                                                location.reload();
+                                            });
+                                    });
+                                },
+                                error: function (e) {
+                                    app.preloader.hide();
+                                }
+                            });
+                        });
+                    });
+
+                    $$(document).on('input:empty', function (e) {
+                        disableButton();
+                    });
+                }
+
+                function disableButton() {
+                    $$('#settings-edit .login-button').addClass('grey');
+                    $$('#settings-edit .login-button').off('click');
+                }
+            }
+        }
+    }
+</script>

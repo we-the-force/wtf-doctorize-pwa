@@ -33,6 +33,8 @@ import LeftPage2 from '../pages/left-page-2.f7.html';
 import DynamicRoutePage from '../pages/dynamic-route.f7.html';
 import RequestAndLoad from '../pages/request-and-load.f7.html';
 import PhotoModule from '../pages/photo-module.f7.html';
+import Settings from '../pages/settings.f7.html';
+import SettingsEdit from '../pages/settings-edit.f7.html';
 // import NotFoundPage from '../pages/404.f7.html';
 
 var routes = [
@@ -86,6 +88,16 @@ var routes = [
         name: 'register-s5',
         path: '/account/signup/confirmation',
         component: RegisterS5Page,
+    },
+    {
+        name: 'settings',
+        path: '/settings',
+        component: Settings,
+    },
+    {
+        name: 'settings-edit',
+        path: '/settings-edit',
+        component: SettingsEdit,
     },
     {
         name: 'nuevo-paciente',

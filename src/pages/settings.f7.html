@@ -3,7 +3,7 @@
         <div class="page-content login-screen-content">
             <div class="login-screen-content nav-bar-rect">
                 <div class="block" style="margin: 0px;">
-                    <a href='/home' class="item-link list-button back-button">
+                    <a href='#' class="item-link list-button back-button">
                         <i class="material-icons close">chevron_left</i>
                     </a>
                     <h3 class="title">Información Personal</h3>
@@ -97,6 +97,12 @@
                     $$(".photo .edit").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
                 });
 
+                $$(".back-button").click(function (e) {
+                    app.data.flow = 'default';
+                    app.data.store.removeItem('flow').then(function (value) {
+                        app.methods.previousPage();
+                    });
+                });
                 $$("#set-name").click(function (e) {
                     app.data.flow = 'SN';
                     app.data.store.setItem('flow', app.data.flow).then(function (value) {

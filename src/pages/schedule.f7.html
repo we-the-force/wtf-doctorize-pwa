@@ -5,10 +5,8 @@
         <div class="navbar schedule" id="nav1">
             <div class="navbar-inner sliding schedule">
                 <div class="left">
-                    <div class="fab fab-left-middle color-white profile">
-                        <a href="#">
+                    <div class="fab fab-left-middle color-white profile panel-open">
                             <i class="icon material-icons">photo</i>
-                        </a>
                     </div>
                 </div>
                 <div class="right">
@@ -74,6 +72,11 @@
                 moment().format();
                 moment().locale('ES');
 
+                app.data.store.getItem('doctor').then(function (value) {
+                    app.data.doctor = value;
+                    $$(".navbar .profile").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
+                });
+
                 app.preloader.show('blue');/* abre preloader */
                 /*
                     crea la subnavbar con los 30 dias a partir de hoy
@@ -119,7 +122,6 @@
                     $$(e.srcElement).find('.card-header').addClass('header-rect');
 
                 });
-
                 /* regresa la subnavbar y el icono de la tool bar cuando la carta se comprime */
                 $$(document).on('card:close', function (e) {
                     $$('.subnavbar').show();

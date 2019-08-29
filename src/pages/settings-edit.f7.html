@@ -39,6 +39,7 @@
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
+                var specialties, specialityID;
 
                 app.data.store.getItem('doctor').then(function (value) {
                     app.data.doctor = value;
@@ -78,7 +79,7 @@
                     $$(".settings-edit input").attr("type", "text");
                     $$(".settings-edit input").attr("id", "picker");
                     $$(".settings-edit input").val(app.data.doctor.specialty.name);
-                    var specialties = app.data.specialties,specialityID;
+                    specialties = app.data.specialties;
                     var picker = app.picker.create({
                         inputEl: '#picker',
                         cols: [{
@@ -86,48 +87,7 @@
                             displayValues: specialties.displayValues,
                         }]
                     });
-                    $$(document).on('input:notempty', ".settings-edit input", function (e) {
-                        $$('#settings-edit .login-button').removeClass('grey');
-                        $$('#settings-edit .login-button').off('click');
-                        $$("#settings-edit .login-button").click(function (e) {
-                            specialityID = specialties.values.indexOf(picker.value[0]);
-                            specialityID++;                            
-                            app.request({
-                                url: app.data.url + '/doctors/' + app.data.doctor.id,
-                                method: "PATCH",
-                                crossDomain: true,
-                                data: {
-                                    "name": app.data.doctor.name,
-                                    "cellphone": app.data.doctor.cellphone,
-                                    "email": app.data.doctor.email,
-                                    "specialty": {
-                                        "id": specialityID,
-                                    }
-                                },
-                                success: function (e) {
-                                    app.data.store.removeItem('flow').then(function (value) {
-                                        app.request.get(app.data.url + '/doctors/' + app.data.doctor.id,
-                                            function (i) {
-                                                var x = JSON.parse(i);
-                                                app.preloader.hide();
-                                                console.log(x);
-                                                app.data.store.setItem("doctor", x);
-                                                app.methods.redirectTo('settings');
-                                                location.reload();
-                                            });
-                                    });
-                                },
-                                error: function (e) {
-                                    app.preloader.hide();
-                                }
-                            });
-                        });
-                    });
-
-                    $$(document).on('input:empty', function (e) {
-                        disableButton();
-                    });
-
+                    inputCheck();
                 }
 
                 function setPhone() {
@@ -135,43 +95,7 @@
                     $$(".settings-edit .item-label").text("Celular");
                     $$(".settings-edit input").attr("type", "tel");
                     $$(".settings-edit input").val(app.data.doctor.cellphone);
-
-                    $$(document).on('input:notempty', ".settings-edit input", function (e) {
-                        $$('#settings-edit .login-button').removeClass('grey');
-                        $$('#settings-edit .login-button').off('click');
-                        $$("#settings-edit .login-button").click(function (e) {
-                            app.request({
-                                url: app.data.url + '/doctors/' + app.data.doctor.id,
-                                method: "PATCH",
-                                crossDomain: true,
-                                data: {
-                                    "name": app.data.doctor.name,
-                                    "cellphone": $$(".settings-edit input").val(),
-                                    "email": app.data.doctor.email,
-                                },
-                                success: function (e) {
-                                    app.data.store.removeItem('flow').then(function (value) {
-                                        app.request.get(app.data.url + '/doctors/' + app.data.doctor.id,
-                                            function (i) {
-                                                var x = JSON.parse(i);
-                                                app.preloader.hide();
-                                                console.log(x);
-                                                app.data.store.setItem("doctor", x);
-                                                app.methods.redirectTo('settings');
-                                                location.reload();
-                                            });
-                                    });
-                                },
-                                error: function (e) {
-                                    app.preloader.hide();
-                                }
-                            });
-                        });
-                    });
-
-                    $$(document).on('input:empty', function (e) {
-                        disableButton();
-                    });
+                    inputCheck();
                 }
 
                 function setMail() {
@@ -179,87 +103,77 @@
                     $$(".settings-edit .item-label").text("Correo");
                     $$(".settings-edit input").attr("type", "email");
                     $$(".settings-edit input").val(app.data.doctor.email);
-
-                    $$(document).on('input:notempty', ".settings-edit input", function (e) {
-                        $$('#settings-edit .login-button').removeClass('grey');
-                        $$('#settings-edit .login-button').off('click');
-                        $$("#settings-edit .login-button").click(function (e) {
-                            app.request({
-                                url: app.data.url + '/doctors/' + app.data.doctor.id,
-                                method: "PATCH",
-                                crossDomain: true,
-                                data: {
-                                    "name": app.data.doctor.name,
-                                    "email": $$(".settings-edit input").val(),
-                                    "cellphone": app.data.doctor.cellphone,
-
-                                },
-                                success: function (e) {
-                                    app.data.store.removeItem('flow').then(function (value) {
-                                        app.request.get(app.data.url + '/doctors/' + app.data.doctor.id,
-                                            function (i) {
-                                                var x = JSON.parse(i);
-                                                app.preloader.hide();
-                                                console.log(x);
-                                                app.data.store.setItem("doctor", x);
-                                                app.methods.redirectTo('settings');
-                                                location.reload();
-                                            });
-                                    });
-                                },
-                                error: function (e) {
-                                    app.preloader.hide();
-                                }
-                            });
-                        });
-                    });
-
-                    $$(document).on('input:empty', function (e) {
-                        disableButton();
-                    });
+                    inputCheck();
                 }
 
                 function setName() {
                     $$(".settings-edit .title").text("Edita tu nombre");
                     $$(".settings-edit .item-label").text("Nombre");
                     $$(".settings-edit input").val(app.data.doctor.name);
+                    inputCheck();
+                }
 
+                function inputCheck() {
                     $$(document).on('input:notempty', ".settings-edit input", function (e) {
                         $$('#settings-edit .login-button').removeClass('grey');
                         $$('#settings-edit .login-button').off('click');
                         $$("#settings-edit .login-button").click(function (e) {
-                            app.request({
-                                url: app.data.url + '/doctors/' + app.data.doctor.id,
-                                method: "PATCH",
-                                crossDomain: true,
-                                data: {
-                                    "name": $$(".settings-edit input").val(),
-                                    "email": app.data.doctor.email,
-                                    "cellphone": app.data.doctor.cellphone,
-
-                                },
-                                success: function (e) {
-                                    app.data.store.removeItem('flow').then(function (value) {
-                                        app.request.get(app.data.url + '/doctors/' + app.data.doctor.id,
-                                            function (i) {
-                                                var x = JSON.parse(i);
-                                                app.preloader.hide();
-                                                console.log(x);
-                                                app.data.store.setItem("doctor", x);
-                                                app.methods.redirectTo('settings');
-                                                location.reload();
-                                            });
-                                    });
-                                },
-                                error: function (e) {
-                                    app.preloader.hide();
-                                }
-                            });
+                            callApi($$(".settings-edit input").val());
                         });
                     });
-
                     $$(document).on('input:empty', function (e) {
                         disableButton();
+                    });
+                }
+
+                function callApi(value) {
+                    var j;
+                    switch (app.data.flow) {
+                        case "SN":
+                            j = {
+                                "name": value
+                            }
+                            break;
+                        case "SM":
+                            j = {
+                                "email": value
+                            }
+                            break;
+                        case "SC":
+                            j = {
+                                "cellphone": value
+                            }
+                            break;
+                        case "SS":
+                            specialityID = specialties.values.indexOf(value);
+                            specialityID++;
+                            j = {
+                                "specialty": {
+                                    "id": specialityID,
+                                }
+                            }
+                            break;
+                    }
+                    app.request({
+                        url: app.data.url + '/doctors/' + app.data.doctor.id,
+                        method: "PATCH",
+                        crossDomain: true,
+                        data: j,
+                        success: function (e) {
+                            app.data.store.removeItem('flow').then(function (e) {
+                                app.request.get(app.data.url + '/doctors/' + app.data.doctor.id,
+                                    function (i) {
+                                        var x = JSON.parse(i);
+                                        app.preloader.hide();
+                                        app.data.store.setItem("doctor", x);
+                                        app.methods.redirectTo('settings');
+                                        location.reload();
+                                    });
+                            });
+                        },
+                        error: function (e) {
+                            app.preloader.hide();
+                        }
                     });
                 }
 

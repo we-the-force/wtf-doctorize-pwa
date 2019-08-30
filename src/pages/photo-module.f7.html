@@ -241,8 +241,8 @@
                 }
 
                 function modificarDoctor() {
-                        $$('h1').text('Foto de Perfil');
-                        $$('h4').text('Agrega tu foto de perfil');
+                    $$('h1').text('Foto de Perfil');
+                    $$('h4').text('Agrega tu foto de perfil');
                     app.data.store.getItem('doctor').then(function (value) {
                         app.data.doctor = value;
                         $$('#photo-module .create-account').off('click');
@@ -254,7 +254,7 @@
                                     method: "PATCH",
                                     crossDomain: true,
                                     data: {
-                                        "imageData": blob,
+                                        "imageData": blob
                                     },
                                     success: function (e) {
                                         app.data.store.removeItem('flow').then(function (value) {

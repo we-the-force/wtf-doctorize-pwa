@@ -142,23 +142,7 @@ var app = new Framework7({
   flow: 'default' //RA registrar asistente, RD registrar doctor, RP registrar paciente, UA update asistente, UD update doctor, UP update patient
 });
 
-$$('.panel-open').click(function (e) {
-  app.data.store.getItem('doctor').then(function (value) {
-    app.data.doctor = value;
-    $$(".doctor .name").text(app.data.doctor.name);
-    $$(".doctor .mail").text(app.data.doctor.email);
-    $$(".panel .avatar").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
-  });
-  var panel = app.panel.create({
-    el: '.panel',
-  });
-  panel.open();
 
-  $$(".panel #personal-settings").click(function (e) {
-    panel.close();
-    app.methods.redirectTo('settings');
-  });
-});
 
 /* //login
 var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;

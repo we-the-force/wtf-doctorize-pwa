@@ -6,7 +6,7 @@
             <div class="navbar-inner sliding schedule">
                 <div class="left">
                     <div class="fab fab-left-middle color-white profile panel-open">
-                            <i class="icon material-icons">photo</i>
+                        <i class="icon material-icons">photo</i>
                     </div>
                 </div>
                 <div class="right">
@@ -129,13 +129,22 @@
                     $$(e.srcElement).find('.card-header').removeClass('header-rect');
                 });
 
-                /* $$('.navbar .profile').click(function (e) {
-                    console.log('creating panel');
+                $$('.panel-open').click(function (e) {
+                    app.data.store.getItem('doctor').then(function (value) {
+                        app.data.doctor = value;
+                        $$(".doctor .name").text(app.data.doctor.name);
+                        $$(".doctor .mail").text(app.data.doctor.email);
+                        $$(".panel .avatar").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
+                    });
                     var panel = app.panel.create({
                         el: '.panel',
                     });
                     panel.open();
-                }); */
+                    $$(".panel #personal-settings").click(function (e) {
+                        panel.close();
+                        app.methods.redirectTo('settings');
+                    });
+                });
 
                 /* abre la lista de la toolbar */
                 $$('.dynamic-sheet').on('click', function () {

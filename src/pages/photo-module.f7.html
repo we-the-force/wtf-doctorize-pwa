@@ -43,7 +43,7 @@
             <div class="list">
                 <ul>
                     <li>
-                        <div class="item-content item-input" id="picker">
+                        <div class="item-content item-input" id="picker" style="visibility:hidden">
                             <div class="item-inner">
                                 <div class="item-input-wrap">
                                     <div class="row no-gap">
@@ -206,6 +206,9 @@
                 });
 
                 function registrarDoctor() {
+
+
+                    $$('#picker').css("visibility", "visible");
                     app.data.store.getItem('register').then(function (value) {
                         app.data.register = value;
                         $$('#photo-module .create-account').off('click');
@@ -215,7 +218,14 @@
                             c.result('base64').then(function (blob) {
                                 app.preloader.show('blue');
                                 app.request.postJSON(app.data.url + '/doctors', {
+                                    "password": app.data.register.password,
+                                    "name": app.data.register.username,
+                                    "email": app.data.register.email,
+                                    "cellphone": app.data.register.phone,
                                     "imageData": blob,
+                                    "specialty": {
+                                        "id": specialityID
+                                    }
                                 }, function (e) {
                                     app.data.store.removeItem('flow').then(function (value) {
                                         app.preloader.hide();
@@ -231,11 +241,10 @@
                 }
 
                 function modificarDoctor() {
-                    app.data.store.getItem('doctor').then(function (value) {
-                        app.data.doctor = value;
-                        $$('#picker').css("visibility", "hidden");
                         $$('h1').text('Foto de Perfil');
                         $$('h4').text('Agrega tu foto de perfil');
+                    app.data.store.getItem('doctor').then(function (value) {
+                        app.data.doctor = value;
                         $$('#photo-module .create-account').off('click');
                         $$('#photo-module .create-account').on('click', function (e) {
                             c.result('base64').then(function (blob) {
@@ -245,20 +254,18 @@
                                     method: "PATCH",
                                     crossDomain: true,
                                     data: {
-                                        "password": app.data.doctor.password,
-                                        "name": app.data.doctor.name,
-                                        "email": app.data.doctor.email,
-                                        "cellphone": app.data.doctor.phone,
                                         "imageData": blob,
-                                        "specialty": {
-                                            "id": app.data.doctor.specialty.id
-                                        }
-
                                     },
                                     success: function (e) {
                                         app.data.store.removeItem('flow').then(function (value) {
                                             app.preloader.hide();
-                                            app.methods.redirectTo('settings');
+                                            app.request.get(app.data.url + '/doctors/' + app.data.doctor.id,
+                                                function (i) {
+                                                    var x = JSON.parse(i);
+                                                    app.data.store.setItem("doctor", x);
+                                                    app.methods.redirectTo('settings');
+                                                    location.reload();
+                                                });
                                         });
                                     },
                                     error: function (e) {
@@ -273,7 +280,6 @@
                 function registrarAsistente() {
                     app.data.store.getItem('assistant').then(function (value) {
                         app.data.assistant = value;
-                        $$('#picker').css("visibility", "hidden");
                         $$('h1').text('Foto de Perfil');
                         $$('h4').text('Agrega tu foto de perfil');
 

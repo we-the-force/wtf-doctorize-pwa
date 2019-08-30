@@ -215,14 +215,7 @@
                             c.result('base64').then(function (blob) {
                                 app.preloader.show('blue');
                                 app.request.postJSON(app.data.url + '/doctors', {
-                                    "password": app.data.register.password,
-                                    "name": app.data.register.username,
-                                    "email": app.data.register.email,
-                                    "cellphone": app.data.register.phone,
                                     "imageData": blob,
-                                    "specialty": {
-                                        "id": specialityID
-                                    }
                                 }, function (e) {
                                     app.data.store.removeItem('flow').then(function (value) {
                                         app.preloader.hide();

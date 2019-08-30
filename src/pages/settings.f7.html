@@ -100,7 +100,7 @@
                 $$(".back-button").click(function (e) {
                     app.data.flow = 'default';
                     app.data.store.removeItem('flow').then(function (value) {
-                        app.methods.previousPage();
+                        app.methods.redirectTo('home');
                     });
                 });
                 $$("#set-name").click(function (e) {

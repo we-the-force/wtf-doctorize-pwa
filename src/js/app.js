@@ -8,7 +8,7 @@ import 'framework7/css/framework7.bundle.css';
 
 // Import Icons and App Custom Styles
 import '../css/icons.css';
-import '../css/app.sass';
+import '../css/app2.sass';
 
 // Import Routes
 import routes from './routes.js';

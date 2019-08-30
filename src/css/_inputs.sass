@@ -1,0 +1,25 @@
+.item-input
+    & .item-inner
+        height: 56px
+    &-wrap
+        &.rounded
+            height: 40px
+            background-color: #ffffff
+            border-radius: 20px
+            box-shadow: -2px 2px 15px rgba(16, 43, 200, 0.2)
+            transition: all 0.2s
+            transform: scale(1)
+            i
+                position: absolute
+                width: 24px
+                height: 24px
+                top: 8px
+                left: 8px
+            
+            &:after
+                background: transparent !important
+        &.linear
+    &-focused
+        .rounded
+            transform: scale(1.01)
+            box-shadow: -2px 2px 15px rgba(16, 43, 200, 0.2)

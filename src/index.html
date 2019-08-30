@@ -2,8 +2,8 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <!--
+  <meta charset="utf-8">
+  <!--
   Customize this policy to fit your own app's needs. For more guidance, see:
       https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
   Some notes:
@@ -12,30 +12,319 @@
     * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
       * Enable inline JS: add 'unsafe-inline' to default-src
   -->
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
 
-    <meta name="theme-color" content="#2F80ED">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="msapplication-tap-highlight" content="no">
-    <title>doctorize-pwa</title>
+  <meta name="theme-color" content="#2F80ED">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>doctorize-pwa</title>
 
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="static/icons/apple-touch-icon.png">
-    <link rel="icon" href="static/icons/favicon.png">
-    <link rel="manifest" href="/manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="static/icons/apple-touch-icon.png">
+  <link rel="icon" href="static/icons/favicon.png">
+  <link rel="manifest" href="/manifest.json">
 
-    <!-- built styles file will be auto injected -->
+  <!-- built styles file will be auto injected -->
 </head>
 
 <body>
-    <div id="app">
-        <!-- Status bar overlay for fullscreen mode-->
-        <div class="statusbar"></div>
+  <div id="app">
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar"></div>
 
-        <!-- Left panel with cover effect when hidden -->
-        <!-- <div class="panel panel-left panel-cover theme-dark">
+    <div class="panel panel-left panel-cover panel-resizable">
+      <div class="block">
+        <a class="panel-close" href="#">Salir</a>
+        <h1>Perfil</h1>
+      </div>
+      <a href="#" class="avatar">
+        <img src="../static/images/logo.png"></img>
+      </a>
+      <div class="block doctor">
+        <h3 class="name">Dr. Bryan Gosling</h3>
+        <h4 class="mail">bryan.gosling@medica2k.med</h4>
+      </div>
+      <div class="list">
+        <ul>
+          <li>
+            <div class="row">
+              <div class="card card-outline elevation-3" id="personal-settings">
+                <div class="rectangle"></div>
+                <i class="material-icons icon">person</i>
+                <div class="card-content card-content-padding">
+                  <h3 class="settings-name">Información Personal</h3>
+                </div>
+                <div class="link arrow">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="row">
+              <div class="card card-outline elevation-3" id="offices-settings">
+                <div class="rectangle"></div>
+                <i class="material-icons icon" style="left: -21%;">meeting_room</i>
+                <div class="card-content card-content-padding">
+                  <h3 class="settings-name">Consultorios</h3>
+                </div>
+                <div class="link arrow">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="row">
+              <div class="card card-outline elevation-3" id="assistants-settings">
+                <div class="rectangle"></div>
+                <i class="material-icons icon">headset_mic</i>
+                <div class="card-content card-content-padding">
+                  <h3 class="settings-name">Asistentes</h3>
+                </div>
+                <div class="link arrow">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="row">
+              <div class="card card-outline elevation-3" id="cash-settings">
+                <div class="rectangle"></div>
+                <i class="material-icons icon">account_balance</i>
+                <div class="card-content card-content-padding">
+                  <h3 class="settings-name">Bancos y Tarjetas</h3>
+                </div>
+                <div class="link arrow">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="row">
+              <div class="card card-outline elevation-3" id="suscription-settings">
+                <div class="rectangle"></div>
+                <i class="material-icons icon">local_activity</i>
+                <div class="card-content card-content-padding">
+                  <h3 class="settings-name">Suscripción</h3>
+                </div>
+                <div class="link arrow">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="row">
+              <div class="card card-outline elevation-3" id="help-settings">
+                <div class="rectangle"></div>
+                <i class="material-icons icon">contact_support</i>
+                <div class="card-content card-content-padding">
+                  <h3 class="settings-name">Ayuda</h3>
+                </div>
+                <div class="link arrow">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="row">
+              <div class="card card-outline elevation-3" id="law-settings">
+                <div class="rectangle"></div>
+                <i class="material-icons icon">gavel</i>
+                <div class="card-content card-content-padding">
+                  <h3 class="settings-name">Legales</h3>
+                </div>
+                <div class="link arrow">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="row">
+              <div class="card card-outline elevation-3" id="notifications-settings">
+                <div class="rectangle"></div>
+                <i class="material-icons icon">notifications</i>
+                <div class="card-content card-content-padding">
+                  <h3 class="settings-name">Notificaciones</h3>
+                </div>
+                <div class="link arrow">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="row">
+              <div class="card card-outline elevation-3" id="security-settings">
+                <div class="rectangle"></div>
+                <i class="material-icons icon">vpn_key</i>
+                <div class="card-content card-content-padding">
+                  <h3 class="settings-name">Sesión y Seguridad</h3>
+                </div>
+                <div class="link arrow">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- <div class="panel panel-left panel-cover panel-resizable">
+      <div class="block">
+        <a class="panel-close" href="#">Salir</a>
+        <h1>AJUSTES</h1>
+      </div>
+      <a href="#" class="avatar">
+        <img src="../static/images/logo.png"></img>
+      </a>
+      <div class="block doctor">
+        <h3 class="name">Dr. Bryan Gosling</h3>
+        <h4 class="mail">bryan.gosling@medica2k.med</h4>
+      </div>
+      <div class="list">
+        <ul>
+          <li>
+            <div class="row">
+              <div class="card card-outline elevation-3">
+                <div class="rectangle"></div>
+                <i class="material-icons icon">person</i>
+                <div class="card-content card-content-padding">
+                  <h3 class="settings-name">Información Personal</h3>
+                </div>
+                <div class="link arrow">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="row">
+              <div class="card card-outline elevation-3">
+                <div class="rectangle"></div>
+                <i class="material-icons icon" style="left: -21%;">meeting_room</i>
+                <div class="card-content card-content-padding">
+                  <h3 class="settings-name">Consultorios</h3>
+                </div>
+                <div class="link arrow">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="row">
+              <div class="card card-outline elevation-3">
+                <div class="rectangle"></div>
+                <i class="material-icons icon">headset_mic</i>
+                <div class="card-content card-content-padding">
+                  <h3 class="settings-name">Asistentes</h3>
+                </div>
+                <div class="link arrow">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="row">
+              <div class="card card-outline elevation-3">
+                <div class="rectangle"></div>
+                <i class="material-icons icon">account_balance</i>
+                <div class="card-content card-content-padding">
+                  <h3 class="settings-name">Bancos y Tarjetas</h3>
+                </div>
+                <div class="link arrow">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="row">
+              <div class="card card-outline elevation-3">
+                <div class="rectangle"></div>
+                <i class="material-icons icon">local_activity</i>
+                <div class="card-content card-content-padding">
+                  <h3 class="settings-name">Suscripción</h3>
+                </div>
+                <div class="link arrow">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="row">
+              <div class="card card-outline elevation-3">
+                <div class="rectangle"></div>
+                <i class="material-icons icon">contact_support</i>
+                <div class="card-content card-content-padding">
+                  <h3 class="settings-name">Ayuda</h3>
+                </div>
+                <div class="link arrow">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="row">
+              <div class="card card-outline elevation-3">
+                <div class="rectangle"></div>
+                <i class="material-icons icon">gavel</i>
+                <div class="card-content card-content-padding">
+                  <h3 class="settings-name">Legales</h3>
+                </div>
+                <div class="link arrow">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="row">
+              <div class="card card-outline elevation-3">
+                <div class="rectangle"></div>
+                <i class="material-icons icon">notifications</i>
+                <div class="card-content card-content-padding">
+                  <h3 class="settings-name">Notificaciones</h3>
+                </div>
+                <div class="link arrow">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="row">
+              <div class="card card-outline elevation-3">
+                <div class="rectangle"></div>
+                <i class="material-icons icon">vpn_key</i>
+                <div class="card-content card-content-padding">
+                  <h3 class="settings-name">Sesión y Seguridad</h3>
+                </div>
+                <div class="link arrow">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div> -->
+    <!-- Left panel with cover effect when hidden -->
+    <!-- <div class="panel panel-left panel-cover theme-dark">
       <div class="view view-init" data-view="left">
         <div class="page">
           <div class="navbar">
@@ -70,8 +359,8 @@
       </div>
     </div> -->
 
-        <!-- Right panel with reveal effect-->
-        <!-- <div class="panel panel-right panel-reveal theme-dark">
+    <!-- Right panel with reveal effect-->
+    <!-- <div class="panel panel-right panel-reveal theme-dark">
       <div class="view">
         <div class="page">
           <div class="navbar">
@@ -86,12 +375,12 @@
       </div>
     </div> -->
 
-        <!-- Your main view, should have "view-main" class -->
-        <div class="view view-main view-init safe-areas" data-url="/"></div>
+    <!-- Your main view, should have "view-main" class -->
+    <div class="view view-main view-init safe-areas" data-url="/"></div>
 
 
-        <!-- Popup -->
-        <!-- <div class="popup" id="my-popup">
+    <!-- Popup -->
+    <!-- <div class="popup" id="my-popup">
       <div class="view">
         <div class="page">
           <div class="navbar">
@@ -111,13 +400,13 @@
       </div>
     </div> -->
 
-        <!-- Login Screen -->
-        <!-- <div class="login-screen" id="my-login-screen">
+    <!-- Login Screen -->
+    <!-- <div class="login-screen" id="my-login-screen">
 
     </div> -->
-    </div>
+  </div>
 
-    <!-- built script files will be auto injected -->
+  <!-- built script files will be auto injected -->
 </body>
 
 </html>

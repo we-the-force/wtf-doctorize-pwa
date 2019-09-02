@@ -3,15 +3,15 @@
 
     <div class="page-content login-screen-content">
       <div class="login-screen-title">
-        <img src="/static/images/logo.png"
-          srcset="/static/images/logo@2x.png 2x, /static/images/logo@3x.png 3x, /static/images/logo@4x.png 4x">
+        <img src="/static/images/logo_v2.png"
+          srcset="/static/images/logo@2x_v2.png 2x, /static/images/logo@3x_v2.png 3x, /static/images/logo@4x_v2.png 4x">
       </div>
       <div class="list">
         <ul>
           <li class="item-content item-input">
             <div class="item-inner">
               <div class="item-input-wrap rounded">
-                <div class="row no-gap">
+                <div class="row">
                   <div class="col-10">
                     <i class="material-icons">person</i>
                     
@@ -27,17 +27,16 @@
           <li class="item-content item-input">
             <div class="item-inner">
               <div class="item-input-wrap rounded">
-                <div class="row no-gap">
+                <div class="row">
                   <div class="col-10">
                     <i class="material-icons">vpn_key</i>
 
                   </div>
                   <div class="col-90">
-                    <input type="password" name="password" id="password" placeholder="contraseña" required validate>
-
+                    <input type="password" name="password" id="password" placeholder="*******" required validate>
+                    <span class="input-clear-button"></span>
                   </div>
                 </div>
-
               </div>
             </div>
           </li>
@@ -45,27 +44,24 @@
             <div class="row">
               <div class="col-60">
                 <a href="/account/password/reset" data-view=".view-main"
-                  class="item-link list-button login-recovery-button">Olvidé mi contraseña</a>
+                  class="item-link list-button btn-simple">Reestablecer contraseña</a>
               </div>
             </div>
           </li>
         </ul>
       </div>
 
-      <div class="list">
+      <div class="list buttons">
         <ul>
           <li>
             <div class="row">
-              <div class="col-50">
                 <a href="/register-s1/" data-view=".view-main"
-                  class="item-link list-button login-register-button">Regístrate</a>
-              </div>
-              <div class="col-50">
-                <a href="#" class="item-link list-button login-button">
+                  class="item-link btn-simple">Regístrate</a>
+      
+                <a href="#" class="item-link list-button btn-rounded" id="login-button">
                   <p>Ingresar </p>
                   <i class="material-icons">chevron_right</i>
                 </a>
-              </div>
             </div>
           </li>
 
@@ -125,9 +121,9 @@
 
                 function enableButton() {
                     if (regex.test(email_login)) {
-                        $$('#login .login-button').removeClass('grey');
-                        $$('#login .login-button').off('click');
-                        $$('#login .login-button').on('click', function(e) {
+                        $$('#login .btn-rounded').removeClass('grey');
+                        $$('#login .btn-rounded').off('click');
+                        $$('#login .btn-rounded').on('click', function(e) {
                             e.preventDefault();
                             app.preloader.show('blue');
                             app.request.postJSON(app.data.url + '/account/login', {
@@ -157,8 +153,8 @@
                 }
 
                 function disableButton() {
-                    $$('#login .login-button').addClass('grey');
-                    $$('#login .login-button').off('click');
+                    $$('#login .btn-rounded').addClass('grey');
+                    $$('#login .btn-rounded').off('click');
                 }
             }
         }

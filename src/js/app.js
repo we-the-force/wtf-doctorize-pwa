@@ -249,28 +249,28 @@ $$(document).on('input:notempty', '#username', function(e) {
  */
 
 //recuperar contrase
-$$(document).on('page:init', '.page[data-name="recovery"]', function (e) {
+/* $$(document).on('page:init', '.page[data-name="recovery"]', function (e) {
 
   var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   var email_recovery;
 
-  $$('#recovery .login-button').addClass('grey');
-  $$('#recovery .login-button').off('click');
+  $$('#recovery .btn-rounded').addClass('grey');
+  $$('#recovery .btn-rounded').off('click');
 
   $$(document).on('input:notempty', '#username', function (e) {
-    email_recovery = $$('#recovery #username').val();
+    email_recovery = $$('#recovery #email').val();
 
     if (regex.test(email_recovery)) {
-      $$('#recovery .login-button').removeClass('grey');
-      $$('#recovery .login-button').off('click');
-      $$('#recovery .login-button').on('click', function () {
+      $$('#recovery .btn-rounded').removeClass('grey');
+      $$('#recovery .btn-rounded').off('click');
+      $$('#recovery .btn-rounded').on('click', function () {
         app.request.postJSON(app.data.url + '/account/password/reset', { "email": email_recovery }, function (e) {
           console.log(e);
         });
       });
     }
   });
-});
+}); */
 
 
 

@@ -43,8 +43,8 @@
           <li>
             <div class="row">
               <div class="col-60">
-                <a href="/account/password/reset" data-view=".view-main"
-                  class="item-link list-button btn-simple">Reestablecer contraseña</a>
+                <a href="/account/password/reset"  style="width: 100%;"
+                  class="item-link list-button btn-simple" id="recovery">Reestablecer contraseña</a>
               </div>
             </div>
           </li>
@@ -93,6 +93,8 @@
 
                 disableButton();
 
+                $$().click();
+
                 $$(document).on('input:notempty', '#username', function(e) {
                     if (password_login != '') {
                         email_login = $$('#username').val();
@@ -111,11 +113,7 @@
                     }
                 });
 
-                $$(document).on('input:empty', '#username', function(e) {
-                    disableButton();
-                });
-
-                $$(document).on('input:empty', '#password', function(e) {
+                $$(document).on('input:empty', function(e) {
                     disableButton();
                 });
 

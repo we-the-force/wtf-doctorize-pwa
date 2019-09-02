@@ -1,69 +1,104 @@
-
 <template>
-<div class="page" data-name="recovery" id="recovery">
-    <div class="page-content login-screen-content">
-      <div class="screen-title">
+  <div class="page" data-name="recovery" id="recovery">
+    <div class="page-content login-screen-content recovery">
+      <div class="screen-title header-blue">
         <div class="list">
           <ul>
             <li>
               <div class="row">
                 <div class="col-10"></div>
                 <div class="col-80">
-                  <h1>Recupera <br>tu cuenta</h1>
-                  <h4>compartenos tu correo para ayudarte a recuperar tu cuenta.</h4>
+                  <h1>Reestablecer
+                    contraseña</h1>
+                  <p>Escribir el correo electrónico registrado para cambiar la contraseña.</p>
                 </div>
                 <div class="col-10"></div>
               </div>
             </li>
           </ul>
         </div>
-        
+
       </div>
       <div class="list">
         <ul>
           <li class="item-content item-input">
             <div class="item-inner">
-              <!-- <div class="item-title item-label">email</div> -->
-              <div class="item-input-wrap">
-                <div class="row no-gap">
+              <div class="item-input-wrap rounded">
+                <div class="row">
                   <div class="col-10">
                     <i class="material-icons">email</i>
-                    
+
                   </div>
                   <div class="col-90">
-                    <input type="email" name="username" id="username" placeholder="correo electrónico" required validate>
-
+                    <input type="email" name="email" id="email" placeholder="Correo electrónico" required validate>
+                    <span class="input-clear-button"></span>
                   </div>
                 </div>
               </div>
             </div>
           </li>
-          
+
         </ul>
       </div>
-      
-      <div class="list">
+      <!-- <div class="list buttons">
         <ul>
           <li>
             <div class="row">
-              <div class="col-50">
-                <a href="/" data-view=".view-main" class="item-link list-button login-register-button">Regresar</a>
-
-              </div>
-              <div class="col-50">
-                <a href="/recovery-sent/" data-view=".view-main"  class="item-link list-button login-button">
-                  <p>Recuperar </p>
+                <a href="/register-s1/" data-view=".view-main"
+                  class="item-link btn-simple">Regístrate</a>
+      
+                <a href="#" class="item-link list-button btn-rounded" id="login-button">
+                  <p>Ingresar </p>
                   <i class="material-icons">chevron_right</i>
                 </a>
-              </div> 
-            </div>       
+            </div>
+          </li>
+
+        </ul>
+      </div> -->
+      <div class="list buttons">
+        <ul>
+          <li>
+            <div class="row">
+              <a href="/" class="item-link btn-simple">Regresar</a>
+
+              <a href="/recovery-sent/" class="item-link list-button btn-rounded">
+                <p>Recuperar </p>
+                <i class="material-icons">chevron_right</i>
+              </a>
+            </div>
           </li>
         </ul>
-        <!-- <div class="block-footer">Some text about login information.<br>Click "Sign In" to close Login Screen</div> -->
       </div>
     </div>
   </div>
 </template>
 <script>
-  export default {}
+  import $$ from 'dom7';
+  export default {
+    on: {
+      pageInit: function (e, page) {
+
+        var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        var email_recovery;
+
+        $$('#recovery .btn-rounded').addClass('grey');
+        $$('#recovery .btn-rounded').off('click');
+
+        $$(document).on('input:notempty', '#email', function (e) {
+          email_recovery = $$('#recovery #email').val();
+
+          if (regex.test(email_recovery)) {
+            $$('#recovery .btn-rounded').removeClass('grey');
+            $$('#recovery .btn-rounded').off('click');
+            $$('#recovery .btn-rounded').on('click', function () {
+              app.request.postJSON(app.data.url + '/account/password/reset', { "email": email_recovery }, function (e) {
+                console.log(e);
+              });
+            });
+          }
+        });
+      }
+    }
+  }
 </script>

@@ -7,6 +7,7 @@ import localForage from "localforage";
 import 'framework7/css/framework7.bundle.css';
 
 // Import Icons and App Custom Styles
+import '../css/font-face.css';
 import '../css/icons.css';
 import '../css/app2.sass';
 

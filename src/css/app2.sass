@@ -1,11 +1,13 @@
 \:root
     @import colors
     @import fonts
+    @import headers
     @import inputs
     @import buttons
     --f7-list-item-padding-horizontal: 25px
     --f7-list-item-min-height: 40px
     --f7-input-height: 40px
+    --f7-font-family: 'Nunito'
     .page-content
         background: radial-gradient(1005.67px at 16.69% 17.13%, #FCFCFF 0%, #EBEFF2 100%)
         &.login-screen-content
@@ -14,14 +16,32 @@
                 img
                     height: 140px
                     width: 140px
-        .list.buttons
-            position: absolute
-            bottom: 15%
-            width: 100%
-            .btn-rounded
-                right: 25px
-            .btn-simple
-                left: 35px
+        .list
+            &.buttons
+                position: absolute
+                bottom: 15%
+                width: 100%
+                .btn-rounded
+                    right: 25px
+                    &.center           
+                        left: 50%
+                        transform: translate(-50%)
+                .btn-simple
+                    left: 35px     
+        p
+            font: $Body-1
+        h1
+            font: $H1
+        h1,p
+            line-height: 120%
+            text-align: left
+        img
+            display: block
+            margin-left: auto
+            margin-right: auto
+        &.center
+            h1,p
+                text-align: center
     @import recovery
 
         

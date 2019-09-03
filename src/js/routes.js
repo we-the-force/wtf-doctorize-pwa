@@ -3,7 +3,6 @@ import LoginPage from '../pages/login.f7.html';
 import RecoveryPage from '../pages/recovery.f7.html';
 import RegisterS1Page from '../pages/register-step1.f7.html';
 import RegisterS2Page from '../pages/register-step2.f7.html';
-import RegisterS3Page from '../pages/register-step3.f7.html';
 import RegisterS4Page from '../pages/register-step4.f7.html';
 import RegisterS5Page from '../pages/register-step5.f7.html';
 import RecoverySentPage from '../pages/recovery-sent.f7.html';
@@ -28,14 +27,11 @@ import CitaAgendada from '../pages/cita-agendada.f7.html';
 import NuevoPaciente from '../pages/nuevo-paciente.f7.html';
 import schedule from '../pages/schedule.f7.html';
 
-import LeftPage1 from '../pages/left-page-1.f7.html';
-import LeftPage2 from '../pages/left-page-2.f7.html';
 import DynamicRoutePage from '../pages/dynamic-route.f7.html';
 import RequestAndLoad from '../pages/request-and-load.f7.html';
 import PhotoModule from '../pages/photo-module.f7.html';
 import Settings from '../pages/settings.f7.html';
 import SettingsEdit from '../pages/settings-edit.f7.html';
-// import NotFoundPage from '../pages/404.f7.html';
 
 var routes = [
 
@@ -67,12 +63,6 @@ var routes = [
         name: 'register-s2',
         path: '/register-s2',
         component: RegisterS2Page,
-    },
-    {
-        name: 'register-s3',
-        path: '/register-s3',
-        component: RegisterS3Page,
-
     },
     {
         name: 'photo-module',
@@ -193,15 +183,6 @@ var routes = [
     {
         path: '/form/',
         component: FormPage,
-    },
-
-    {
-        path: '/left-page-1/',
-        component: LeftPage1,
-    },
-    {
-        path: '/left-page-2/',
-        component: LeftPage2,
     },
     {
         path: '/dynamic-route/blog/:blogId/post/:postId/',

@@ -1,37 +1,34 @@
 <template>
   <div class="page" data-name="register-step2" id="register-step2">
-    <div class="page-content login-screen-content">
-      <div class="screen-title">
+    <div class="page-content login-screen-content register-step2">
+      <div class="screen-title header-blue">
         <div class="list">
           <ul>
             <li>
               <div class="row">
                 <div class="col-10"></div>
                 <div class="col-80">
-                  <h1>Correo <br>y Teléfono</h1>
-                  <h4>Ahora apóyanos con tu correo electrónico y tu celular.</h4>
+                  <h1>Correo electrónico <br>y celular</h1>
+                  <p>Ingresar un correo electrónico y número celular.</p>
                 </div>
                 <div class="col-10"></div>
               </div>
             </li>
           </ul>
         </div>
-
       </div>
       <div class="list">
         <ul>
           <li class="item-content item-input">
             <div class="item-inner">
-              <!-- <div class="item-title item-label">email</div> -->
-              <div class="item-input-wrap">
-                <div class="row no-gap">
+              <div class="item-input-wrap rounded">
+                <div class="row">
                   <div class="col-10">
                     <i class="material-icons">email</i>
-
                   </div>
                   <div class="col-90">
-                    <input type="email" name="email" id="email" placeholder="correo electrónico" required validate>
-
+                    <input type="email" id="email" placeholder="Correo electrónico" required validate>
+                    <span class="input-clear-button"></span>
                   </div>
                 </div>
               </div>
@@ -39,27 +36,36 @@
           </li>
           <li class="item-content item-input">
             <div class="item-inner">
-              <!-- <div class="item-title item-label">email</div> -->
-              <div class="item-input-wrap">
-                <div class="row no-gap">
+              <div class="item-input-wrap rounded">
+                <div class="row">
                   <div class="col-10">
-                    <i class="material-icons">phone</i>
-
+                    <i class="material-icons">local_phone</i>
                   </div>
                   <div class="col-90">
-                    <input type="tel" name="phone" id="phone" placeholder="teléfono" required validate pattern="[0-9]*"
-                      data-error-message="Only numbers please!">
-
+                    <input type="tel" id="phone" placeholder="Celular" required validate pattern="[0-9]*"
+                      data-error-message="Solo numeros!">
+                      <span class="input-clear-button"></span>
                   </div>
                 </div>
               </div>
             </div>
           </li>
-
         </ul>
       </div>
-
-      <div class="list">
+      <div class="list buttons">
+        <ul>
+          <li>
+            <div class="row">
+              <a href="/register-s1" class="item-link btn-simple">Regresar</a>
+              <a href="/photo-module" class="item-link list-button btn-rounded">
+                <p>Siguiente </p>
+                <i class="material-icons">chevron_right</i>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!-- <div class="list">
         <ul>
           <li>
             <div class="row">
@@ -69,18 +75,15 @@
 
               </div>
               <div class="col-50">
-                <a href="/photo-module" data-view=".view-main" class="item-link list-button login-button">
+                <a href="/photo-module" data-view=".view-main" class="item-link list-button btn-rounded">
                   <p>Siguiente </p>
                   <i class="material-icons">chevron_right</i>
                 </a>
               </div>
             </div>
-
-
           </li>
         </ul>
-        <!-- <div class="block-footer">Some text about login information.<br>Click "Sign In" to close Login Screen</div> -->
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -94,20 +97,19 @@
         var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         var regex2 = /^([0-9]){10}$/;
 
-        $$('#register-step2 .login-button').addClass('grey');
-        $$('#register-step2 .login-button').off('click');
+        $$('#register-step2 .btn-rounded').addClass('grey');
+        $$('#register-step2 .btn-rounded').off('click');
 
         app.data.store.getItem('register').then(function (value) {
           app.data.register = value;
-
           $$(document).on('input:notempty', '#email', function (e) {
             $$(document).on('input:notempty', '#phone', function (e) {
-              app.data.register.email = $$('[name="email"]').val();
-              app.data.register.phone = $$('[name="phone"]').val();
+              app.data.register.email = $$('#email').val();
+              app.data.register.phone = $$('#phone').val();
               if (regex.test(app.data.register.email) && regex2.test(app.data.register.phone)) {
-                $$('#register-step2 .login-button').removeClass('grey');
-                $$('#register-step2 .login-button').off('click');
-                $$('#register-step2 .login-button').on('click', function (e) {
+                $$('#register-step2 .btn-rounded').removeClass('grey');
+                $$('#register-step2 .btn-rounded').off('click');
+                $$('#register-step2 .btn-rounded').on('click', function (e) {
                   console.log(app.data.register.email);
                   console.log(app.data.register.phone);
                   app.data.store.setItem('register', app.data.register).then(function (value) {
@@ -115,8 +117,8 @@
                   });
                 });
               } else {
-                $$('#register-step2 .login-button').addClass('grey');
-                $$('#register-step2 .login-button').off('click');
+                $$('#register-step2 .btn-rounded').addClass('grey');
+                $$('#register-step2 .btn-rounded').off('click');
               }
             });
           });

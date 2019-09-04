@@ -57,7 +57,7 @@
           <li>
             <div class="row">
               <a href="/register-s1" class="item-link btn-simple">Regresar</a>
-              <a href="/photo-module" class="item-link list-button btn-rounded">
+              <a href="#" class="item-link list-button btn-rounded">
                 <p>Siguiente </p>
                 <i class="material-icons">chevron_right</i>
               </a>
@@ -65,25 +65,6 @@
           </li>
         </ul>
       </div>
-      <!-- <div class="list">
-        <ul>
-          <li>
-            <div class="row">
-              <div class="col-50">
-                <a href="/register-s1" data-view=".view-main"
-                  class="item-link list-button login-register-button">Regresar</a>
-
-              </div>
-              <div class="col-50">
-                <a href="/photo-module" data-view=".view-main" class="item-link list-button btn-rounded">
-                  <p>Siguiente </p>
-                  <i class="material-icons">chevron_right</i>
-                </a>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div> -->
     </div>
   </div>
 </template>
@@ -113,7 +94,7 @@
                   console.log(app.data.register.email);
                   console.log(app.data.register.phone);
                   app.data.store.setItem('register', app.data.register).then(function (value) {
-
+                    app.methods.redirectTo('photo-module');
                   });
                 });
               } else {

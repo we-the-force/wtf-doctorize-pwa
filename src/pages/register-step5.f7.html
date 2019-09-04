@@ -1,15 +1,14 @@
 <template>
     <div class="page" data-name="register-step5" id='register-step5'>
-        <div class="page-content login-screen-content">
-            <div class="screen-title">
+        <div class="page-content login-screen-content register-step5 ">
+            <div class="screen-title header-blue">
                 <div class="list">
                     <ul>
                         <li>
                             <div class="row">
                                 <div class="col-10"></div>
                                 <div class="col-80">
-                                    <h1>Ingresa el codigo <br>de verificacion</h1>
-
+                                    <h1>Ingresa el codigo de verificacion</h1>
                                 </div>
                                 <div class="col-10"></div>
                             </div>
@@ -21,15 +20,15 @@
                 <ul>
                     <li class="item-content item-input">
                         <div class="item-inner">
-                            <div class="item-input-wrap">
-                                <div class="row no-gap">
+                            <div class="item-input-wrap rounded">
+                                <div class="row ">
                                     <div class="col-10">
                                         <i class="material-icons">vpn_key</i>
-
                                     </div>
                                     <div class="col-90">
-                                        <input type="text" name="code1" id="code" placeholder="Codigo" required
+                                        <input type="text" id="code" placeholder="Codigo" required
                                             validate>
+                                        <span class="input-clear-button"></span>
                                     </div>
                                 </div>
                             </div>
@@ -37,14 +36,11 @@
                     </li>
                 </ul>
             </div>
-            <div class="list">
+            <div class="list buttons">
                 <ul>
                     <li>
                         <div class="row">
-                            <div class="col-50"></div>
-                            <div class="col-50">
-                                <a href='/' data-view=".view-main" class="item-link list-button login-button"
-                                    id="button">
+                                <a href='/'class="item-link list-button btn-rounded">
                                     <p>Confirmar </p>
                                     <i class="material-icons">chevron_right</i>
                                 </a>
@@ -75,14 +71,14 @@
                 } else {
                     app.data.store.getItem('register').then(function (value) {
                         app.data.register = value;
-                        $$('#register-step5 .login-button').addClass('grey');
-                        $$('#register-step5 .login-button').off('click');
+                        $$('#register-step5 .btn-rounded').addClass('grey');
+                        $$('#register-step5 .btn-rounded').off('click');
                         $$(document).on('input:notempty', '#code', function (e) {
-                            code = $$('[name="code1"]').val();
+                            code = $$('#code').val();
                             email = app.data.register.email;
-                            $$('#register-step5 .login-button').removeClass('grey');
-                            $$('#register-step5 .login-button').off('click');
-                            $$('#register-step5 .login-button').on('click', function (e) {
+                            $$('#register-step5 .btn-rounded').removeClass('grey');
+                            $$('#register-step5 .btn-rounded').off('click');
+                            $$('#register-step5 .btn-rounded').on('click', function (e) {
                                 makeRequest();
                             });
                         });

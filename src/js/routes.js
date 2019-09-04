@@ -174,6 +174,7 @@ var routes = [
     },
     {
         path: '/recovery-sent/',
+        name: 'recovery-sent',
         component: RecoverySentPage,
     },
     {

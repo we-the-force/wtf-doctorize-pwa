@@ -1,6 +1,7 @@
 <template>
     <div class="page" data-name="photo-module" id="photo-module">
         <div class="page-content login-screen-content photo-module">
+
             <div class="screen-title header-blue">
                 <div class="list">
                     <ul>
@@ -9,7 +10,7 @@
                                 <div class="col-10"></div>
                                 <div class="col-80">
                                     <h1>Foto de perfil y especialidad</h1>
-                                    <p>Agregar una foto de perfil y la especialidad ejercida.</p>
+                                    <p class="mar">Agregar una foto de perfil y la especialidad ejercida.</p>
                                 </div>
                                 <div class="col-10"></div>
                             </div>
@@ -18,24 +19,14 @@
                 </div>
 
             </div>
-            <div class="list">
-                <ul>
-                    <li>
-                        <div class="row">
-                            <div class="col-15"></div>
-                            <div class="col-70">
-                                <div class="web-cam" id="web-cam">
-                                </div>
-                            </div>
-                            <div class="col-15"></div>
-                        </div>
-                    </li>
-
-                </ul>
+            <div class="border">
+                <div class="upload-photo" id="upload-photo">
+                        <img src="../static/images/add_a_photo_24px.svg" class="camera" alt="">
+                </div>
             </div>
-            <div class="list input-picker">
+            <div class="list buttons">
                 <ul>
-                    <li>
+                    <li class="mar-bot">
                         <div class="item-content item-input" id="picker" style="visibility:hidden">
                             <div class="item-inner">
                                 <div class="item-input-wrap rounded">
@@ -46,7 +37,7 @@
                                         <div class="col-90">
                                             <input type="text" name="specialty" placeholder="Especialidad"
                                                 readonly="readonly" id="specialty-picker">
-                                                <i class="material-icons right">keyboard_arrow_down</i>
+                                            <i class="material-icons right">keyboard_arrow_down</i>
                                         </div>
                                     </div>
 
@@ -54,10 +45,6 @@
                             </div>
                         </div>
                     </li>
-                </ul>
-            </div>
-            <div class="list buttons">
-                <ul>
                     <li>
                         <div class="row">
                             <a href="#" class="item-link btn-simple">Regresar</a>
@@ -69,28 +56,6 @@
                     </li>
                 </ul>
             </div>
-            <!-- <div class="list">
-                <ul>
-                    <li>
-                        <div class="row">
-                            <div class="col-50">
-                                <a href="#" data-view=".view-main" class="item-link list-button login-register-button"
-                                    id="cancel">Regresar</a>
-
-                            </div>
-                            <div class="col-50">
-                                <a href="#" data-view=".view-main"
-                                    class="item-link list-button login-button btn-rounded">
-                                    <p>Guardar </p>
-                                    <i class="material-icons">chevron_right</i>
-                                </a>
-                            </div>
-                        </div>
-
-
-                    </li>
-                </ul>
-            </div> -->
         </div>
     </div>
 </template>
@@ -402,6 +367,39 @@
                     buttons: [{}]
                 });
 
+                $$('.upload-photo').on('click', function () {
+                    ac.open();
+
+                    $$('.actions-group #cancel').on('click', function () {
+                        ac.close();
+                    });
+
+                    if (window.File && window.FileReader && window.FormData) {
+                        var $inputField = $$('#file-upload');
+                        $inputField.off('change');
+                        $inputField.on('change', function (e) {
+                            $$('.upload-photo').off('click');
+
+                            var file = e.target.files[0];
+
+                            if (file) {
+                                if (/^image\//i.test(file.type)) {
+                                    readFile(file);
+                                } else {
+                                    alert('Not a valid image!');
+                                    console.log('Not a valid image!');
+                                }
+                            } else {
+                                console.log('Not a FILE');
+                            }
+                        });
+                    } else {
+                        alert("File upload is not supported!");
+                        console.log('File upload is not supported!');
+                    }
+
+                });
+
                 app.data.store.getItem('flow').then(function (flow) {
                     app.data.flow = flow;
                     switch (app.data.flow) {
@@ -437,38 +435,6 @@
 
                     });
 
-                    $$('.web-cam').on('click', function () {
-                        ac.open();
-
-                        $$('.actions-group #cancel').on('click', function () {
-                            ac.close();
-                        });
-
-                        if (window.File && window.FileReader && window.FormData) {
-                            var $inputField = $$('#file-upload');
-                            $inputField.off('change');
-                            $inputField.on('change', function (e) {
-                                $$('.web-cam').off('click');
-
-                                var file = e.target.files[0];
-
-                                if (file) {
-                                    if (/^image\//i.test(file.type)) {
-                                        readFile(file);
-                                    } else {
-                                        alert('Not a valid image!');
-                                        console.log('Not a valid image!');
-                                    }
-                                } else {
-                                    console.log('Not a FILE');
-                                }
-                            });
-                        } else {
-                            alert("File upload is not supported!");
-                            console.log('File upload is not supported!');
-                        }
-
-                    });
                 });
 
                 function registrarDoctor() {
@@ -620,7 +586,7 @@
 
                 function sendFile(dataURL) {
                     var imgHtml = '<img id="web-img" src="' + dataURL + '" alt="">';
-                    $$('.web-cam').html(imgHtml);
+                    $$('.upload-photo').html(imgHtml);
                     c = new croppie(document.getElementById('web-img'), {
                         viewport: {
                             width: 200,

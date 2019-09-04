@@ -1,22 +1,20 @@
 <template>
-<div class="page recovery-sent-page" data-name="register-step4">
-    <div class="page-content login-screen-content">
-      <div class="screen-title">
+  <div class="page recovery-sent-page" data-name="register-step4">
+    <div class="page-content login-screen-content register-step4 center">
+      <div class="screen-title header-blue">
         <div class="list">
           <ul>
             <li>
               <div class="row">
-                <div class="col-10"></div>
-                <div class="col-80">
+                <div class="col-15"></div>
+                <div class="col-70">
                   <h1>Hemos enviado un correo</h1>
-
                 </div>
-                <div class="col-10"></div>
+                <div class="col-15"></div>
               </div>
             </li>
           </ul>
         </div>
-
       </div>
       <div class="list">
         <ul>
@@ -24,8 +22,7 @@
             <div class="row">
               <div class="col-30"></div>
               <div class="col-40">
-
-                <img src="/static/images/mail_outline_24px.svg" class="recovery-sent-img" alt="">
+                <img src="../static/images/email_24px.svg" alt="">
               </div>
               <div class="col-30"></div>
             </div>
@@ -39,27 +36,24 @@
             <div class="row">
               <div class="col-10"></div>
               <div class="col-80">
-                <h4>
-                  Te enviamos un correo con un link para activar tu cuenta.
-                </h4>
+                <p class='dark-blue'>
+                  Hemos enviado un correo con un link para activar la cuenta.
+                </p>
               </div>
               <div class="col-10"></div>
             </div>
           </li>
         </ul>
       </div>
-      <div class="list">
+      <div class="list buttons">
         <ul>
           <li>
             <div class="row">
-              <div class="col-30"></div>
-              <div class="col-40">
-                <a href="/account/signup/confirmation" data-view=".view-main" class="item-link list-button login-button aceptar-button">
+                <a href="/account/signup/confirmation"
+                  class="item-link list-button btn-rounded center">
                   <p>Aceptar </p>
                   <i class="material-icons">chevron_right</i>
                 </a>
-              </div>
-              <div class="col-30"></div>
             </div>
 
 
@@ -71,17 +65,10 @@
   </div>
 </template>
 <script>
-    import $$ from 'dom7';
-    import Framework7 from 'framework7/framework7.esm.bundle.js';
-    import routes from '../js/routes.js';
+  import $$ from 'dom7';
+  import Framework7 from 'framework7/framework7.esm.bundle.js';
+  import routes from '../js/routes.js';
 
-    export default {
-        on: {
-            pageInit: function(e, page) {
-                var self = this;
-                var app = self.$app;
-
-            }
-        }
-    }
+  export default {
+  }
 </script>

@@ -1,6 +1,6 @@
 \:root
+    @import variables
     @import colors
-    @import fonts
     @import headers
     @import inputs
     @import buttons
@@ -9,7 +9,7 @@
     --f7-input-height: 40px
     --f7-font-family: 'Nunito'
     .page-content
-        background: radial-gradient(1005.67px at 16.69% 17.13%, #FCFCFF 0%, #EBEFF2 100%)
+        background: $back-color
         &.login-screen-content
             .login-screen-title
                 margin-top: 25%
@@ -30,6 +30,8 @@
                 .btn-simple
                     position: absolute
                     left: 35px    
+            &.no-mar
+                margin: 0px
         p
             font: $Body-1
         h1
@@ -37,13 +39,12 @@
         h1,p
             line-height: 120%
             text-align: left
-        img
-            display: block
-            margin-left: auto
-            margin-right: auto
         &.center
             h1,p
                 text-align: center
+            img
+                display: block
+                margin: 25% auto 0% auto 
     @import photoModule
     @import recovery
 

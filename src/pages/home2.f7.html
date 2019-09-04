@@ -21,7 +21,7 @@
       </div>
       <div class="add-circle">
         <a>
-          <img src="/static/images/add_circle_24px.svg" class="dynamic-sheet" alt="">
+          <img src="/static/images/add_circle_24px_v2.svg" class="dynamic-sheet" alt="">
         </a>
       </div>
     </div>
@@ -87,30 +87,6 @@
             app.methods.redirectTo('settings');
           });
         });
-        /* $$('.panel-open').click(function (e) {
-          app.data.store.getItem('doctor').then(function (value) {
-            app.data.doctor = value;
-            $$(".doctor .name").text(app.data.doctor.name);
-            $$(".doctor .mail").text(app.data.doctor.email);
-            $$(".panel .avatar").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
-          });
-          var panel = app.panel.create({
-            el: '.panel',
-          });
-          panel.open();
-
-          $$(".panel #personal-settings").click(function (e) {
-            panel.close();
-            app.methods.redirectTo('settings');
-          });
-          /* $$(".panel .avatar").click(function (e) {
-            panel.close();
-            app.data.flow = 'UD';
-            app.data.store.setItem('flow', app.data.flow).then(function (value) {
-              app.methods.redirectTo('photo-module');
-            });
-          }); 
-        }); */
 
         $$('.dynamic-sheet').on('click', function () {
           var dynamicSheet = app.sheet.create({

@@ -28,7 +28,6 @@ import NuevoPaciente from '../pages/nuevo-paciente.f7.html';
 import schedule from '../pages/schedule.f7.html';
 
 import DynamicRoutePage from '../pages/dynamic-route.f7.html';
-import RequestAndLoad from '../pages/request-and-load.f7.html';
 import PhotoModule from '../pages/photo-module.f7.html';
 import Settings from '../pages/settings.f7.html';
 import SettingsEdit from '../pages/settings-edit.f7.html';

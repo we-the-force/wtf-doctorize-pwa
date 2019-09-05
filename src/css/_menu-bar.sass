@@ -1,18 +1,39 @@
 .menu
-    --f7-tabbar-icon-size: 28px
-    box-shadow: -2.56075px 2.56075px 19.2056px rgba(16, 43, 200, 0.2)
+    --f7-tabbar-icon-size: 31px
+    box-shadow: -2px 2px 15px rgba(16, 43, 200, 0.2)
+    --f7-toolbar-height: 64px
     .toolbar-inner
         .tab-link-highlight
             display: none
         a.tab-link
-            padding-top: 12px
-            padding-bottom: 12px
+            padding-top: 15px
+            padding-bottom: 15px
     .add-circle
         position: absolute
-        z-index: 1500
-        margin-bottom: 0px
         bottom: 0px
         left: 50%
         transform: translateX(-50%)
     &.toolbar-bottom::after
         display: none
+
+.sheet-modal
+    --f7-sheet-bg-color: #fff
+    box-shadow: -2.56075px 2.56075px 19.2056px rgba(16, 43, 200, 0.2)
+    .list
+        margin: 50px 20px 20px 0px
+        .item-link
+            color: $dark-blue
+    .close-sheet
+        z-index: 50
+        position: absolute
+        top: -56px
+        left: 50%
+        transform: translateX(-50%)
+    i
+        margin-left: 5%
+        margin-right: 5%
+        text-align: center
+        vertical-align: middle
+        color: $dark-blue
+    &:before,ul:before,ul:after,a:after
+        content: none

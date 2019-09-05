@@ -1,74 +1,70 @@
-// Custom color theme properties
 \:root
-  //--f7-theme-color: #2F80ED
-  --f7-theme-text-color: #2F80ED
-  --f7-theme-color: #2F80ED
-  --f7-login-screen-list-button-text-color: #fff
-  --f7-theme-color-rgb: 47, 128, 237
-  --f7-theme-color-shade: #136be0
-  --f7-theme-color-tint: #5597f0
-  --f7-list-item-min-height: 40px
-  --f7-font-family: 'Nunito'
-  --f7-preloader-modal-bg-color: rgba(255,255,255,0)
-.md .item-input-wrap:after
-  background: transparent !important
-// Left Panel right border when it is visible by breakpoint
+    @import variables
+    @import colors
+    @import headers
+    @import inputs
+    @import buttons
+    --f7-list-item-padding-horizontal: 25px
+    --f7-list-item-min-height: 40px
+    --f7-input-height: 40px
+    --f7-font-family: 'Nunito'
+    --f7-theme-color: #029AF0
+    .page-content
+        background: $back-color
+        &.login-screen-content
+            .login-screen-title
+                margin-top: 25%
+                img
+                    height: 140px
+                    width: 140px
+        .list
+            &.buttons
+                position: absolute
+                bottom: 10%
+                width: 100%
+                .btn-rounded
+                    position: absolute
+                    right: 25px
+                    &.center           
+                        left: 50%
+                        transform: translate(-50%)
+                .btn-simple
+                    position: absolute
+                    left: 35px    
+            &.no-mar
+                margin: 0px
+        p
+            font: $Body-1
+        h1
+            font: $H1
+        h1,p
+            line-height: 120%
+            text-align: left
+        &.center
+            h1,p
+                text-align: center
+            img
+                display: block
+                margin: 25% auto 0% auto 
+@import variables
+@import photoModule
+@import recovery
+@import intro
+@import menu-bar
+@import navbar
+@import schedule
+@import cards
 
-.md .item-input-with-error-message
-
-
-  .item-input-wrap
-    // box-shadow: -2px 2px 5px rgba(16, 43, 200, 0.2)
-    // box-shadow: -2.57394px 2.57394px 19.3046px rgba(200, 16, 16, 0.564)
-
-.md .item-input-error-message
-  margin-left: 46px
-.panel-left.panel-visible-by-breakpoint:before
-  position: absolute
-  right: 0
-  top: 0
-  height: 100%
-  width: 1px
-  background: rgba(0, 0, 0, 0.1)
-  content: ''
-  z-index: 6000
-
-// Hide navbar link which opens left panel when it is visible by breakpoint
-.panel-left.panel-visible-by-breakpoint ~ .view .navbar .panel-open[data-panel="left"]
-  display: none
-
-//Extra borders for main view and left panel for iOS theme when it behaves as panel (before breakpoint size)
-.ios .panel-left:not(.panel-visible-by-breakpoint).panel-active ~ .view-main:before,
-.ios .panel-left:not(.panel-visible-by-breakpoint).panel-closing ~ .view-main:before
-  position: absolute
-  left: 0
-  top: 0
-  height: 100%
-  width: 1px
-  background: rgba(0, 0, 0, 0.1)
-  content: ''
-  z-index: 6000
-@import url('https://fonts.googleapis.com/css?family=Nunito:300,400')
-
-*
-  font-family: 'Nunito', sans-serif
-
-
-h1
-  font-family: 'Nunito', sans-serif
-  font-weight: 300
-  font-size: 28px
-  color: #2F80ED
-h4
-  font-family: 'Nunito', sans-serif
-  font-weight: 300
-  font-size: 16px
-  color: #2F80ED
-
-@import "login"
-@import "intro-splash"
-@import "cards"
-@import "menu"
-@import "schedule"
-@import "panel"
-@import "settings"
+.ios
+    .page
+        &:not(.schedule,.home)
+            .page-content
+                padding-top: 0px
+        &.schedule
+            .page-content
+                padding-top: 160px
+        &.home
+            .page-content
+                padding-top: 80px
+        
+            

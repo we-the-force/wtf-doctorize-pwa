@@ -32,13 +32,12 @@
         <div class="toolbar tabbar tabbar-labels toolbar-bottom menu">
             <div class="toolbar-inner">
                 <a href="/home" class="tab-link" id='tab1'>
-                    <!-- Different icons for iOS and MD themes -->
                     <i class="icon material-icons">home</i>
                 </a>
                 <a href="#" class="tab-link  tab-link-active" id='tab2'>
                     <i class="icon material-icons">today</i>
                 </a>
-                <a href="#" class="tab-link">
+                <a href="#" class="tab-link dynamic-sheet">
                 </a>
                 <a href="#" class="tab-link" id='tab3'>
                     <i class="icon material-icons">monetization_on</i>
@@ -49,7 +48,7 @@
             </div>
             <div class="add-circle">
                 <a>
-                    <img src="/static/images/add_circle_24px.svg" class="dynamic-sheet" alt="">
+                    <img src="/static/images/add_circle_24px_v2.svg" class="dynamic-sheet" alt="">
                 </a>
             </div>
         </div>
@@ -85,7 +84,7 @@
                 while (z.isBefore(y)) {
                     $$('#subnavtoolbar-inner').append(
                         '<a href="#tab-' + i + '" class="tab-link" id="' + z.format("DD-MMM") + '" data-date="' + moment(z).format("YYYY-MM-DD") + '">' +
-                        '<p>' + z.date() + ' </p>' +
+                        '<p class="num">' + z.date() + ' </p>' +
                         '<p>' + monthNames[z.month()] + ' </p>' +
                         '</a>');
                     $$('.tabs').append(
@@ -232,9 +231,7 @@
                     let flag = true;
 
                     app.data.store.getItem('doctor').then(function (value) {
-                        app.data.doctor = value;/* 
-                        $$(".doctor .name").text(app.data.doctor.name);
-                        $$(".doctor .mail").text(app.data.doctor.email); */
+                        app.data.doctor = value;
                         /* limpia la pagina antes de poner algo */
                         $$(x).children('.list').children('ul').empty();
 
@@ -434,9 +431,10 @@
                                     let hour = moment(), minute;
                                     flag = true;
                                     if (hour.minute() >= 30) {
-                                        minute = '30';
+                                        minute = '00';
+                                        hour.add(1,'H');
                                     } else {
-                                        minute = '00'
+                                        minute = '30'
                                     }
                                     $$(x).children('.list').children('ul').append(
                                         '<li class="item-divider">' +
@@ -446,38 +444,40 @@
                                         '</li>' +
                                         '<li>' +
                                         '<div class="row">' +
-                                        '<div class="col-35"></div>' +
-                                        '<div class="col-30">' +
+                                        '<div class="col-30"></div>' +
+                                        '<div class="col-40">' +
                                         '<div class="schedule-icon">' +
-                                        '<img src="/static/icons/calendar_today_24px.png">' +
+                                        '<i class="material-icons">event_note</i>' +
                                         '</div>' +
                                         '</div>' +
-                                        '<div class="col-35"></div>' +
+                                        '<div class="col-30"></div>' +
                                         '</div>' +
                                         '</li>' +
+                                        '<li>' +
                                         '<div class="row">' +
                                         '<div class="col-15"></div>' +
                                         '<div class="col-70">' +
-                                        '<h4 style="text-align: center;">' +
-                                        'No cuentas con citas este dia. <br> Agrega una.' +
-                                        '</h4>' +
+                                        '<p>' +
+                                        'No se tienen citas el día de hoy.<br>Agregar una.' +
+                                        '</p>' +
                                         '</div>' +
                                         '<div class="col-15"></div>' +
                                         '</div>' +
+                                        '</li>' +
                                         '<li>' +
-                                        '<div class="item-content">' +
-                                        '<div class="item-inner">' +
-                                        '<div class="fab fab-center-center item-fab">' +
-                                        '<a href="#">' +
-                                        '<i class="icon material-icons">add</i>' +
-                                        '</a>' +
+                                        '<div class="row">' +
+                                        '<div class="col-30"></div>' +
+                                        '<div class="col-40">' +
+                                        '<div class="icon-fab">' +
+                                        '<i class="icon material-icons">add_circle</i>' +
                                         '</div>' +
                                         '</div>' +
+                                        '<div class="col-30"></div>' +
                                         '</div>' +
                                         '</li>'
                                     );
                                 }
-                                $$('.item-fab').click(function (e) {
+                                $$('.icon-fab').click(function (e) {
                                     app.methods.redirectTo('agendar-cita');
                                 });
 
@@ -501,14 +501,14 @@
                             '<hr>' +
                             '</li>' +
                             '<li>' +
-                            '<div class="item-content">' +
-                            '<div class="item-inner">' +
-                            '<div class="fab fab-center-center item-fab">' +
-                            '<a href="#">' +
-                            '<i class="icon material-icons">add</i>' +
-                            '</a>' +
+                            '<div class="row">' +
+                            '<div class="col-30"></div>' +
+                            '<div class="col-40">' +
+                            '<div class="icon-fab">' +
+                            '<i class="icon material-icons">add_circle</i>' +
                             '</div>' +
                             '</div>' +
+                            '<div class="col-30"></div>' +
                             '</div>' +
                             '</li>'
                         );

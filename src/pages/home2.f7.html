@@ -1,16 +1,33 @@
 <template>
-  <div class="page" data-name="home" id="home">
+  <div class="page home" id="home">
+
+    <div class="navbar" id="nav1">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <div class="fab fab-left-middle color-white profile panel-open">
+            <i class="icon material-icons">photo</i>
+          </div>
+        </div>
+        <div class="right">
+          <div class="fab fab-right-middle color-white search">
+            <a href="#">
+              <i class="icon material-icons">search</i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     <div class="toolbar tabbar tabbar-labels toolbar-bottom menu">
       <div class="toolbar-inner">
         <a href="/home" class="tab-link tab-link-active">
-          <!-- Different icons for iOS and MD themes -->
           <i class="icon material-icons">home</i>
         </a>
         <a href="/schedule" class="tab-link">
           <i class="icon material-icons">today</i>
         </a>
-        <a href="#" class="tab-link">
+        <a href="#" class="tab-link dynamic-sheet">
         </a>
         <a href="#" class="tab-link">
           <i class="icon material-icons">monetization_on</i>
@@ -20,35 +37,30 @@
         </a>
       </div>
       <div class="add-circle">
-        <a>
-          <img src="/static/images/add_circle_24px_v2.svg" class="dynamic-sheet" alt="">
-        </a>
+        <img src="/static/images/add_circle_24px_v2.svg" class="dynamic-sheet" alt="">
       </div>
     </div>
-
     <div class="page-content login-screen-content">
       <div class="list">
         <ul>
           <li>
             <div class="row">
               <div class="col">
-                <a href="/intro-splash-01" data-view=".view-main"
-                  class="item-link list-button login-register-button">Intro</a>
+                <a href="/intro-splash-01" data-view=".view-main" class="item-link list-button btn-simple">Intro</a>
               </div>
             </div>
           </li>
           <li>
             <div class="row">
               <div class="col">
-                <a href="#" data-view=".view-main"
-                  class="item-link list-button login-register-button panel-open">Ajustes</a>
+                <a href="#" data-view=".view-main" class="item-link list-button btn-simple panel-open">Ajustes</a>
               </div>
             </div>
           </li>
           <li>
             <div class="row">
               <div class="col">
-                <a href="/" data-view=".view-main" class="item-link list-button login-register-button logout">Salir</a>
+                <a href="/" data-view=".view-main" class="item-link list-button btn-simple logout">Salir</a>
               </div>
             </div>
           </li>
@@ -65,6 +77,11 @@
       pageInit: function (e, page) {
         var self = this;
         var app = self.$app;
+
+        app.data.store.getItem('doctor').then(function (value) {
+          app.data.doctor = value;
+          $$(".navbar .profile").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
+        });
 
         $$('.logout').click(function (params) {
           app.data.store.clear();
@@ -100,7 +117,7 @@
               '<li>' +
               '<div class="row">' +
               '<div class="col">' +
-              '<a href="#" data-view=".view-main" class="item-link list-button login-register-button consultorios">' +
+              '<a href="#" data-view=".view-main" class="item-link list-button btn-simple consultorios">' +
               '<i class="material-icons">local_hospital</i>' +
               'Consultorios</a>' +
               '</div>' +
@@ -109,7 +126,7 @@
               '<li>' +
               '<div class="row">' +
               '<div class="col">' +
-              '<a href="#" data-view=".view-main" class="item-link list-button login-register-button asistentes">' +
+              '<a href="#" data-view=".view-main" class="item-link list-button btn-simple asistentes">' +
               '<i class="material-icons">headset_mic</i>' +
               'Asistentes</a>' +
               '</div>' +
@@ -118,7 +135,7 @@
               '<li>' +
               '<div class="row">' +
               '<div class="col">' +
-              '<a href="#" data-view=".view-main" class="item-link list-button login-register-button cita">' +
+              '<a href="#" data-view=".view-main" class="item-link list-button btn-simple cita">' +
               '<i class="material-icons">event</i>' +
               'Nueva cita</a>' +
               '</div>' +
@@ -127,7 +144,7 @@
               '<li>' +
               '<div class="row">' +
               '<div class="col">' +
-              '<a href="#" data-view=".view-main" class="item-link list-button login-register-button paciente">' +
+              '<a href="#" data-view=".view-main" class="item-link list-button btn-simple paciente">' +
               '<i class="material-icons">person_add</i>' +
               'Nuevo Paciente</a>' +
               '</div>' +

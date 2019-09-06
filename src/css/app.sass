@@ -9,43 +9,30 @@
     --f7-input-height: 40px
     --f7-font-family: 'Nunito'
     --f7-theme-color: #029AF0
-    .page-content
-        background: $back-color
-        &.login-screen-content
-            .login-screen-title
-                margin-top: 25%
-                img
-                    height: 140px
-                    width: 140px
-        .list
-            &.buttons
-                position: absolute
-                bottom: 10%
-                width: 100%
-                .btn-rounded
-                    position: absolute
-                    right: 25px
-                    &.center           
-                        left: 50%
-                        transform: translate(-50%)
-                .btn-simple
-                    position: absolute
-                    left: 35px    
-            &.no-mar
-                margin: 0px
-        p
-            font: $Body-1
-        h1
-            font: $H1
-        h1,p
-            line-height: 120%
-            text-align: left
-        &.center
+    .page
+        display: grid
+        grid-template-rows: 1fr auto
+        .page-content
+            background: $back-color
+            &.login-screen-content
+                .login-screen-title
+                    margin-top: 25%
+                    img
+                        height: 140px
+                        width: 140px
+            p
+                font: $Body-1
+            h1
+                font: $H1
             h1,p
-                text-align: center
-            img
-                display: block
-                margin: 25% auto 0% auto 
+                line-height: 120%
+                text-align: left
+            &.center
+                h1,p
+                    text-align: center
+                img
+                    display: block
+                    margin: 25% auto 0% auto 
 @import variables
 @import photoModule
 @import recovery
@@ -55,7 +42,26 @@
 @import schedule
 @import cards
 
+.list
+    &.buttons
+        grid-row-start: 2
+        grid-row-end: 3
+        .btn-rounded
+            position: absolute
+            right: 25px
+            &.center           
+                left: 50%
+                transform: translate(-50%)
+        .btn-simple
+            position: absolute
+            left: 35px    
+    &.no-mar
+        margin: 0px
+    ul::after,ul::before
+        content: none
+
 .ios
+    --f7-input-invalid-border-color: #ff0000
     .page
         &:not(.schedule,.home)
             .page-content
@@ -66,5 +72,5 @@
         &.home
             .page-content
                 padding-top: 80px
-        
-            
+    .item-input-invalid
+            color: #ff0000

@@ -1,3 +1,72 @@
 .card
+    width: 100%
+    --f7-card-border-radius: 10px
+    --f7-card-margin-horizontal: 20px
+    --f7-card-margin-vertical: 10px
+    --f7-card-content-padding-horizontal: 19%
+    --f7-card-content-padding-vertical: 3%
+    p
+        margin-block-start: 3px
+        margin-block-end: 3px
+    .rectangle
+        position: absolute
+        width: 5%
+        height: 100%
+        border-top-left-radius: 10px
+        border-bottom-left-radius: 10px
+        &.turquoise
+            background: $turquoise-2
+        &.blue  
+            background: #2F80ED  
+    &.offices
+        box-shadow: -2px 2px 15px rgba(16, 43, 200, 0.2)
+        p
+            &.text
+                font: $text-1-card
+            &.title
+                font: $title-card
+            &.footer    
+                font: $footer-card
+        .dynamic-popover
+            position: absolute
+            top: 10px
+            right: 10px
+            display: block
+        i
+            font-size: 30px
+            &.icon
+                position: absolute
+                top: 7%
+                left: 8%
     &.card-expandable
         height: 120px
+
+.popover
+    --f7-toggle-active-color: #2FCFBC
+    background: $white
+    width: 242px
+    p
+        font: $Body-2
+        font-weight: normal
+        margin-block-start: 14px
+        margin-block-end: 14px
+    .block
+        margin: 0%
+        padding: 0%
+    .list
+        .row
+            padding-left: 14px
+            padding-right: 14px
+            .edit-office,.edit-assistant
+                width: 100%
+                padding: 0px
+                position: relative
+                i
+                    line-height: 20px
+                    position: absolute
+                    right: 0px
+            .delete-office,.delete-assistant
+                width: 100%
+
+
+    

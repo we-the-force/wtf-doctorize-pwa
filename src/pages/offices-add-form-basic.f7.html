@@ -1,64 +1,55 @@
 <template>
     <div class="page" data-name="offices-add-form-basic" id="offices-add-form-basic">
-        <div class="page-content login-screen-content">
-            <div class="login-screen-content nav-bar-rect">
-                <div class="row">
-                    <div class="col-15">
-                        <a href='/offices-show' data-view=".view-main" class="item-link list-button back-button"
-                            id="cancel">
-                            <i class="material-icons">chevron_left</i>
-                        </a>
-                    </div>
-                    <div class="col-85"></div>
-                </div>
+        <div class="page-content login-screen-content offices-add-form-basi">
+            <div class="login-screen-content header-turquoise">
                 <div class="list">
                     <ul>
                         <li>
-                            <div class="row">
-                                <div class="col-10"></div>
-                                <div class="col-90">
-                                    <h2>Agregar Consultorio</h2>
-                                </div>
+                            <div class="row" style="visibility: hidden">
+                                <a href='/offices-show' class="item-link btn-back" id="back">
+                                    <i class="material-icons">chevron_left</i>
+                                </a>
                             </div>
                         </li>
                         <li>
                             <div class="row">
-                                <div class="col-10"></div>
-                                <div class="col-70">
-                                    <h4>Agrega la información básica de tu consultorio.</h4>
-                                </div>
-                                <div class="col-20"></div>
+                                <h3>Agregar consultorio</h3>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <p>Añadir información básica del consultorio.</p>
                             </div>
                         </li>
                     </ul>
                 </div>
             </div>
             <div>
-                <div class="list no-hairlines-md">
+                <div class="list">
                     <ul>
-                        <li class="item-content item-input">
+                        <li class="item-content item-input linear">
                             <div class="item-inner">
-                                <div class="item-label blue">Nombre del Consultorio</div>
-                                <div class="item-input-wrap asistentes-input">
+                                <div class="item-label dark-blue">Nombre del Consultorio</div>
+                                <div class="item-input-wrap">
                                     <input type="text" name="nombre" id="nombre" placeholder="Nombre" required validate>
                                     <span class="input-clear-button"></span>
                                 </div>
                             </div>
                         </li>
-                        <li class="item-content item-input">
+                        <li class="item-content item-input linear">
                             <div class="item-inner">
-                                <div class="item-label blue">Correo Electrónico</div>
-                                <div class="item-input-wrap asistentes-input">
+                                <div class="item-label dark-blue">Correo Electrónico</div>
+                                <div class="item-input-wrap">
                                     <input type="email" name="email" id="email" placeholder="Correo Electrónico"
                                         required validate>
                                     <span class="input-clear-button"></span>
                                 </div>
                             </div>
                         </li>
-                        <li class="item-content item-input">
+                        <li class="item-content item-input linear">
                             <div class="item-inner">
-                                <div class="item-label blue">Telefono</div>
-                                <div class="item-input-wrap asistentes-input">
+                                <div class="item-label dark-blue">Telefono</div>
+                                <div class="item-input-wrap">
                                     <input type="text" name="phone" id="phone" placeholder="teléfono" required validate
                                         pattern="[0-9]*" data-error-message="Only numbers please!">
                                     <span class="input-clear-button"></span>
@@ -67,20 +58,15 @@
                         </li>
                     </ul>
                 </div>
-                <div class="list">
+                <div class="list buttons">
                     <ul>
                         <li>
                             <div class="row">
-                                <div class="col-50">
-                                    <a href="/offices-show" data-view=".view-main"
-                                        class="item-link list-button login-register-button" id="cancel">Cancelar</a>
-                                </div>
-                                <div class="col-50">
-                                    <a href="#" class="item-link list-button login-button asistente">
-                                        <p>Siguiente </p>
-                                        <i class="material-icons">chevron_right</i>
-                                    </a>
-                                </div>
+                                <a href="/offices-show" class="item-link btn-simple">Cancelar</a>
+                                <a href="#" class="item-link list-button btn-rounded">
+                                    <p>Siguiente </p>
+                                    <i class="material-icons">chevron_right</i>
+                                </a>
                             </div>
                         </li>
                     </ul>
@@ -103,7 +89,7 @@
                 app.data.store.getItem('office').then(function (value) {
                     app.data.consultorio = value;
                     console.log(value);
-                    
+
                     disableButton();
 
                     if (app.data.consultorio.edit) {
@@ -184,9 +170,9 @@
                         app.data.consultorio.nombre = nombre;
                         app.data.consultorio.email = email;
                         app.data.consultorio.phone = phone;
-                        $$('#offices-add-form-basic .login-button').removeClass('grey');
-                        $$('#offices-add-form-basic .login-button').off('click');
-                        $$('#offices-add-form-basic .login-button').on('click', function (e) {
+                        $$('#offices-add-form-basic .btn-rounded').removeClass('grey');
+                        $$('#offices-add-form-basic .btn-rounded').off('click');
+                        $$('#offices-add-form-basic .btn-rounded').on('click', function (e) {
                             app.data.store.setItem("office", app.data.consultorio)
                                 .then(function (value) {
                                     app.methods.redirectTo('offices-add-form-map');
@@ -201,8 +187,8 @@
                 }
 
                 function disableButton() {
-                    $$('#offices-add-form-basic .login-button').addClass('grey');
-                    $$('#offices-add-form-basic .login-button').off('click');
+                    $$('#offices-add-form-basic .btn-rounded').addClass('grey');
+                    $$('#offices-add-form-basic .btn-rounded').off('click');
                 }
             }
         }

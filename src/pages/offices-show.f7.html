@@ -37,23 +37,7 @@
             </div>
             <div>
                 <div class="list">
-                    <ul id="consultorios">
-                        <!-- <li>
-                            <div class="row">
-                                <div class="card card-outline elevation-3">
-                                    <div class="rectangle"></div>
-                                    <i class="material-icons icon">local_hospital</i>
-                                    <div class="card-content card-content-padding">
-                                        <h4 class="purple-blue">Test Card</h4>
-                                        <h3 class="blue">This is just a test</h3>
-                                        <h4 class="light-blue">Ajoy</h4>
-                                    </div>
-                                    <i class="material-icons more">more_vert
-                                        <a class="link dynamic-popover" href="#"></a>
-                                    </i>
-                                </div>
-                            </div>
-                        </li> -->
+                    <ul class="consultorios">
                     </ul>
                 </div>
             </div>
@@ -83,18 +67,18 @@
                         function (e) {
                             var x = JSON.parse(e);
                             for (var i = 0; i < x.length; i++) {
-                                $$('#consultorios').append('<li>' +
+                                $$('.consultorios').append('<li>' +
                                     '<div class="row">' +
-                                    '<div class="card card-outline elevation-3">' +
-                                    '<div class="rectangle"></div>' +
-                                    '<i class="material-icons icon">local_hospital</i>' +
+                                    '<div class="card card-outline offices">' +
+                                    '<div class="rectangle turquoise"></div>' +
+                                    '<i class="material-icons icon turquoise-2">local_hospital</i>' +
                                     '<div class="card-content card-content-padding">' +
-                                    '<h4 class="purple-blue">' + x[i].hospital + '</h4>' +
-                                    '<h3 class="blue">' + x[i].name + '</h3>' +
-                                    '<h4 class="light-blue">' + x[i].startTime + ' - ' + x[i].closeTime + '</h4>' +
+                                    '<p class="title dark-blue">' + x[i].hospital + '</p>' +
+                                    '<p class="text dark-blue">' + x[i].name + '</p>' +
+                                    '<p class="footer light-blue">' + x[i].startTime + ' - ' + x[i].closeTime + '</p>' +
                                     '</div>' +
                                     '<div class="link dynamic-popover" data-officeId="' + x[i].id + '">' +
-                                    '<i class="material-icons more">more_vert' +
+                                    '<i class="material-icons more light-blue">more_vert' +
                                     '</i>' +
                                     '</div>' +
                                     '</div>' +
@@ -114,7 +98,7 @@
                                         '<ul id="consultorios">' +
                                         '<li>' +
                                         '<div class="row">' +
-                                        '<h4 class="blue">Desactivar</h4>' +
+                                        '<p class="dark-blue">Desactivar</p>' +
                                         '<label class="toggle toggle-init color-blue-toggle">' +
                                         '<input type="checkbox" name="chbx" value="1" style="display:none" checked>' +
                                         '<span class="toggle-icon"></span>' +
@@ -123,17 +107,17 @@
                                         '<li>' +
                                         '<li>' +
                                         '<div class="row">' +
-                                        '<a href="#" data-view=".view-main" class="item-link list-button edit-office">' +
-                                        '<h4 class="blue">Editar' +
+                                        '<a href="#" data-view=".view-main" class="edit-office">' +
+                                        '<p class="dark-blue">Editar' +
                                         '<i class="icon material-icons blue">chevron_right</i>' +
-                                        '</h4>' +
+                                        '</p>' +
                                         '</a>' +
                                         '</div>' +
                                         '<li>' +
                                         '<li>' +
                                         '<div class="row">' +
                                         '<div  class="item-link delete-office">' +
-                                        '<h4 class="blue">Eliminar</h4>' +
+                                        '<p class="dark-blue">Eliminar</p>' +
                                         '</div>' +
                                         '</div>' +
                                         '<li>' +

@@ -1,33 +1,24 @@
 <template>
-    <div class="page" data-name="offices-add-form-schedule" id="offices-add-form-schedule">
-        <div class="page-content login-screen-content">
-            <div class="login-screen-content nav-bar-rect">
-                <div class="row">
-                    <div class="col-15">
-                        <a href='/offices-add-form-map' data-view=".view-main" class="item-link list-button back-button"
-                            id="back">
-                            <i class="material-icons">chevron_left</i>
-                        </a>
-                    </div>
-                    <div class="col-85"></div>
-                </div>
+    <div class="page" id="offices-add-form-schedule">
+        <div class="page-content login-screen-content offices-add-form-schedule">
+            <div class="login-screen-content header-turquoise">
                 <div class="list">
                     <ul>
                         <li>
-                            <div class="row">
-                                <div class="col-10"></div>
-                                <div class="col-90">
-                                    <h2>Horarios</h2>
-                                </div>
+                            <div class="row" style="visibility: hidden">
+                                <a href='#' class="item-link btn-back" id="back">
+                                    <i class="material-icons">chevron_left</i>
+                                </a>
                             </div>
                         </li>
                         <li>
                             <div class="row">
-                                <div class="col-10"></div>
-                                <div class="col-70">
-                                    <h4>Selecciona los días de atención y sus respectivos horarios.</h4>
-                                </div>
-                                <div class="col-20"></div>
+                                <h3>Horarios</h3>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <p>Seleccionar los días de atención y sus respectivos horarios.</p>
                             </div>
                         </li>
                     </ul>
@@ -72,19 +63,19 @@
                 </div>
                 <div class="list">
                     <ul>
-                        <li class="item-content item-input">
+                        <li class="item-content item-input linear">
                             <div class="item-inner">
-                                <div class="item-label blue">Hora de Apertura</div>
-                                <div class="item-input-wrap asistentes-input">
+                                <div class="item-label dark-blue">Hora de apertura</div>
+                                <div class="item-input-wrap">
                                     <input type="time" name="startTime" id="startTime" required validate>
                                     <span class="inpt-clear-button"></span>
                                 </div>
                             </div>
                         </li>
-                        <li class="item-content item-input">
+                        <li class="item-content item-input linear">
                             <div class="item-inner">
-                                <div class="item-label blue">Hora de Cierre</div>
-                                <div class="item-input-wrap asistentes-input">
+                                <div class="item-label dark-blue">Hora de cierre</div>
+                                <div class="item-input-wrap">
                                     <input type="time" name="closeTime" id="closeTime" required validate>
                                     <span class="input-clear-button"></span>
                                 </div>
@@ -94,19 +85,19 @@
                 </div>
                 <div class="list">
                     <ul>
-                        <li class="item-content item-input">
+                        <li class="item-content item-input linear">
                             <div class="item-inner">
-                                <div class="item-label blue">Hora de inicio de comida</div>
-                                <div class="item-input-wrap asistentes-input">
+                                <div class="item-label dark-blue">Hora de inicio de comida</div>
+                                <div class="item-input-wrap">
                                     <input type="time" name="lunchStartTime" id="lunchStartTime" required validate>
                                     <span class="input-clear-button"></span>
                                 </div>
                             </div>
                         </li>
-                        <li class="item-content item-input">
+                        <li class="item-content item-input linear">
                             <div class="item-inner">
-                                <div class="item-label blue">Hora de fin de comida</div>
-                                <div class="item-input-wrap asistentes-input">
+                                <div class="item-label dark-blue">Hora de fin de comida</div>
+                                <div class="item-input-wrap">
                                     <input type="time" name="lunchCloseTime" id="lunchCloseTime" required validate>
                                     <span class="input-clear-button"></span>
                                 </div>
@@ -114,7 +105,8 @@
                         </li>
                     </ul>
                 </div>
-                <div class="list">
+
+                <!-- <div class="list">
                     <ul>
                         <li>
                             <div class="row">
@@ -123,7 +115,7 @@
                                         class="item-link list-button login-register-button ">Cancelar</a>
                                 </div>
                                 <div class="col-50">
-                                    <a href="#" class="item-link list-button login-button asistente">
+                                    <a href="#" class="item-link list-button btn-rounded asistente">
                                         <p>Siguiente </p>
                                         <i class="material-icons">chevron_right</i>
                                     </a>
@@ -131,9 +123,24 @@
                             </div>
                         </li>
                     </ul>
-                </div>
+                </div> -->
             </div>
+
         </div>
+
+        <div class="list buttons">
+                <ul>
+                    <li>
+                        <div class="row">
+                            <a href="/offices-add-form-map" class="item-link btn-simple" id="cancel">Cancelar</a>
+                            <a href="#" class="item-link list-button btn-rounded">
+                                <p>Siguiente </p>
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
     </div>
 </template>
 <script>
@@ -222,9 +229,9 @@
                 });
 
                 function enableButton() {
-                    $$('#offices-add-form-schedule .login-button').removeClass('grey');
-                    $$('#offices-add-form-schedule .login-button').off('click');
-                    $$('#offices-add-form-schedule .login-button').on('click', function (e) {
+                    $$('#offices-add-form-schedule .btn-rounded').removeClass('grey');
+                    $$('#offices-add-form-schedule .btn-rounded').off('click');
+                    $$('#offices-add-form-schedule .btn-rounded').on('click', function (e) {
                         app.data.consultorio.startTime = $$('[name="startTime"]').val();
                         app.data.consultorio.closeTime = $$('[name="closeTime"]').val();
                         app.data.consultorio.lunchStartTime = $$('[name="lunchStartTime"]').val();
@@ -314,8 +321,8 @@
 
 
                 function disableButton() {
-                    $$('#offices-add-form-schedule .login-button').addClass('grey');
-                    $$('#offices-add-form-schedule .login-button').off('click');
+                    $$('#offices-add-form-schedule .btn-rounded').addClass('grey');
+                    $$('#offices-add-form-schedule .btn-rounded').off('click');
                 }
             }
         }

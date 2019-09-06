@@ -1,5 +1,5 @@
 .item-input
-    & .item-inner
+    .item-inner
         height: 56px
     &-wrap
         &.rounded
@@ -24,8 +24,16 @@
                 background: transparent !important
             .input-clear-button
                 right: 15px
-        &.linear
+    &.linear
+        padding-left: 20px
+        .item-inner
+            height: 65px            
+        .item-label
+            font: 16px/20px 'Nunito'
     &-focused
         .rounded
             transform: scale(1.01)
             box-shadow: -2px 2px 15px rgba(16, 43, 200, 0.2)
+        &.linear
+            .item-label
+                color: $dark-blue

@@ -1,6 +1,6 @@
 <template>
     <div class="page" data-name="photo-module" id="photo-module">
-        <div class="page-content login-screen-content photo-module">
+        <div class="page-content login-screen-content photo-module btns">
 
             <div class="screen-title header-blue">
                 <div class="list">
@@ -21,41 +21,41 @@
             </div>
             <div class="border">
                 <div class="upload-photo" id="upload-photo">
-                        <img src="../static/images/add_a_photo_24px.svg" class="camera" alt="">
+                    <img src="../static/images/add_a_photo_24px.svg" class="camera" alt="">
                 </div>
             </div>
-            <div class="list buttons">
-                <ul>
-                    <li class="mar-bot">
-                        <div class="item-content item-input" id="picker" style="visibility:hidden">
-                            <div class="item-inner">
-                                <div class="item-input-wrap rounded">
-                                    <div class="row">
-                                        <div class="col-10">
-                                            <i class="material-icons">local_hospital</i>
-                                        </div>
-                                        <div class="col-90">
-                                            <input type="text" name="specialty" placeholder="Especialidad"
-                                                readonly="readonly" id="specialty-picker">
-                                            <i class="material-icons right">keyboard_arrow_down</i>
-                                        </div>
+        </div>
+        <div class="list buttons">
+            <ul>
+                <li style="margin-bottom: 4%;">
+                    <div class="item-content item-input" id="picker" style="visibility:hidden">
+                        <div class="item-inner">
+                            <div class="item-input-wrap rounded">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <i class="material-icons">local_hospital</i>
                                     </div>
-
+                                    <div class="col-90">
+                                        <input type="text" name="specialty" placeholder="Especialidad"
+                                            readonly="readonly" id="specialty-picker">
+                                        <i class="material-icons right">keyboard_arrow_down</i>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
-                    </li>
-                    <li>
-                        <div class="row">
-                            <a href="#" class="item-link btn-simple">Regresar</a>
-                            <a href="#" class="item-link list-button btn-rounded">
-                                <p>Guardar </p>
-                                <i class="material-icons">chevron_right</i>
-                            </a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="row">
+                        <a href="#" class="item-link btn-simple">Regresar</a>
+                        <a href="#" class="item-link list-button btn-rounded">
+                            <p>Guardar </p>
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 </template>

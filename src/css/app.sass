@@ -9,11 +9,13 @@
     --f7-input-height: 40px
     --f7-font-family: 'Nunito'
     --f7-theme-color: #029AF0
+    --f7-list-bg-color: transparent
     .page
-        display: grid
-        grid-template-rows: 1fr auto
+        margin: 0
+        background: $back-color 
         .page-content
-            background: $back-color
+            height: 100%
+            background: inherit
             &.login-screen-content
                 .login-screen-title
                     margin-top: 25%
@@ -32,7 +34,26 @@
                     text-align: center
                 img
                     display: block
-                    margin: 25% auto 0% auto 
+                    margin: 25% auto 0% auto
+            &.btns
+                height: calc(100% - 70px)
+        .list
+            &.buttons
+                height: 70px
+                margin: 0px 
+                .btn-rounded
+                    position: absolute
+                    right: 25px
+                    &.center           
+                        left: 50%
+                        transform: translate(-50%)
+                .btn-simple
+                    position: absolute
+                    left: 35px                       
+            &.no-mar
+                margin: 0px
+            ul::after,ul::before
+                content: none 
 @import variables
 @import photoModule
 @import recovery
@@ -41,24 +62,6 @@
 @import navbar
 @import schedule
 @import cards
-
-.list
-    &.buttons
-        grid-row-start: 2
-        grid-row-end: 3
-        .btn-rounded
-            position: absolute
-            right: 25px
-            &.center           
-                left: 50%
-                transform: translate(-50%)
-        .btn-simple
-            position: absolute
-            left: 35px    
-    &.no-mar
-        margin: 0px
-    ul::after,ul::before
-        content: none
 
 .ios
     --f7-input-invalid-border-color: #ff0000

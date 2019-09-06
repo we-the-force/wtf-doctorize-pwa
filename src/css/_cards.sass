@@ -18,6 +18,11 @@
             background: $turquoise-2
         &.blue  
             background: #2F80ED  
+    .dynamic-popover
+        position: absolute
+        top: 10px
+        right: 10px
+        display: block
     &.offices
         box-shadow: -2px 2px 15px rgba(16, 43, 200, 0.2)
         p
@@ -27,17 +32,26 @@
                 font: $title-card
             &.footer    
                 font: $footer-card
-        .dynamic-popover
-            position: absolute
-            top: 10px
-            right: 10px
-            display: block
         i
             font-size: 30px
             &.icon
                 position: absolute
                 top: 7%
                 left: 8%
+    &.asistentes
+        .card-content-padding
+            padding-left: 85px
+            padding-right: 5%
+        .avatar
+            float: left
+            position: absolute
+            left: 7.5%
+            top: 9%
+            img 
+                width: 45px
+                height: 45px
+                border-radius: 50%
+                box-shadow: 0px 1.89189px 14.1892px rgba(16, 43, 200, 0.2)
     &.card-expandable
         height: 120px
 

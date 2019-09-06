@@ -1,38 +1,30 @@
 <template>
     <div class="page" data-name="asistentes-invitar-01" id='asistentes-invitar-01'>
         <div class="page-content login-screen-content">
-            <div class="login-screen-content nav-bar-rect">
-                <div class="row">
-                    <div class="col-15">
-                        <a href='/home' data-view=".view-main" class="item-link list-button back-button" id="back">
-                            <i class="material-icons">chevron_left</i>
-                        </a>
-                    </div>
-                    <div class="col-85"></div>
-                </div>
+            <div class="login-screen-content header-turquoise">
                 <div class="list">
                     <ul>
                         <li>
                             <div class="row">
-                                <div class="col-10"></div>
-                                <div class="col-90">
-                                    <h1>Asistentes</h1>
-                                </div>
+                                <a href='/home' class="item-link btn-back" id="back">
+                                    <i class="material-icons">chevron_left</i>
+                                </a>
                             </div>
                         </li>
                         <li>
                             <div class="row">
-                                <div class="col-10"></div>
-                                <div class="col-70">
-                                    <h4>Administre sus asistentes disponibles o agregue uno nuevo.</h4>
-                                </div>
-                                <div class="col-20"></div>
+                                    <h3>Asistentes</h3>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                    <p>Administre sus asistentes disponibles o agregue uno nuevo.</p>
                             </div>
                         </li>
                         <li>
                             <div class="row">
                                 <div class="item-inner">
-                                    <div class="fab fab-right-middle color-lime">
+                                    <div class="fab btn-fab color-lime">
                                         <a href="/asistentes-invitar-02">
                                             <i class="material-icons">add</i>
                                         </a>
@@ -75,7 +67,7 @@
                             $$('#asistentes').append('<li>' +
                                 '<div class="row">' +
                                 '<div class="card card-outline elevation-3 asistentes">' +
-                                '<div class="rectangle"></div>' +
+                                '<div class="rectangle turquoise"></div>' +
                                 '<div class="avatar">' +
                                 '<img src="' + app.data.url + '/' + x[i].photo + '200.png">' +
                                 '</div>' +

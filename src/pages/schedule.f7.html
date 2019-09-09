@@ -118,14 +118,14 @@
                 $$(document).on('card:open', function (e) {
                     $$('.subnavbar').hide();
                     $$('.add-circle').hide();
-                    $$(e.srcElement).find('.card-header').addClass('header-rect');
+                    $$(e.srcElement).find('.card-header').addClass('header-turquoise');
 
                 });
                 /* regresa la subnavbar y el icono de la tool bar cuando la carta se comprime */
                 $$(document).on('card:close', function (e) {
                     $$('.subnavbar').show();
                     $$('.add-circle').show();
-                    $$(e.srcElement).find('.card-header').removeClass('header-rect');
+                    $$(e.srcElement).find('.card-header').removeClass('header-turquoise');
                 });
 
                 $$('.panel-open').click(function (e) {
@@ -249,11 +249,6 @@
                                         } else if (moment(a.date).isAfter(moment(b.date))) {
                                             return 1;
                                         }
-                                        /* if (moment(a.date).hour() < moment(b.date).hour()) {
-                                            return -1;
-                                        } else if (moment(a.date).hour() > moment(b.date).hour()) {
-                                            return 1;
-                                        } */
                                         return 0;
                                     });
                                     //dejar de checar cuando se arregle la pantalla de cita
@@ -298,74 +293,74 @@
                                         $$(x).children('.list').children('ul').append(
                                             '<li>' +
                                             '<div class="row">' +
-                                            '<div class="card card-expandable" id="cita01">' +
-                                            '<div class="rectangle card-opened-fade-out"></div>' +
+                                            '<div class="card card-expandable">' +
+                                            '<div class="rectangle turquoise card-opened-fade-out"></div>' +
                                             '<div class="card-content">' +
                                             '<div class="card-header display-block">' +
-                                            '<h6 class="light-blue2 card-opened-fade-out">CONSULTA</h6>' +
-                                            '<h3 class="blue card-opened-fade-out">' + z[i].name + '</h3>' +
-                                            '<h5 class="light-blue card-opened-fade-out">Hospital General Zona 2</h5>' +/* agregar nombre del consultorio */
-                                            '<h4 class="purple-blue card-opened-fade-out">' +
-                                            '<i class="icon material-icons time">watch_later</i>' +
-                                            j.hour() + ':' + minute2 + ' - ' + n.hour() + ':' + minute +
-                                            '</h4>' +
-                                            '<a href="#" class="link card-close card-opened-fade-in color-white">' +
-                                            '<i class="icon material-icons white">close</i>' +
-                                            '<h3 class="label">CERRAR</h3>' +
-                                            '</a>' +
-                                            '<div class="row">' +
-                                            '<div class="col-5"></div>' +
-                                            '<div class="col-90">' +
-                                            '<div class="item-content card-opened-fade-in details-event">' +
-                                            '<div class="fab fab-left-middle color-white photo">' +
-                                            '<a href="#">' +
-                                            '<i class="icon material-icons">photo</i>' +
-                                            '</a>' +
-                                            '</div>' +
-                                            '<ul>' +
-                                            '<li>' +
-                                            '<div class="item-inner">' +
-                                            '<h2 class="white">' + z[i].name + '</h2>' +
-                                            '</div>' +
-                                            '</li>' +
-                                            '<li>' +
-                                            '<div class="item-inner">' +
-                                            '<div class="fab fab-middle color-white contact comment">' +
-                                            '<a href="#">' +
-                                            '<i class="icon material-icons">comment</i>' +
-                                            '</a>' +
-                                            '</div>' +
-                                            '<div class="fab fab-middle color-white contact email">' +
-                                            '<a href="#">' +
-                                            '<i class="icon material-icons">email</i>' +
-                                            '</a>' +
-                                            '</div>' +
-                                            '<div class="fab fab-middle color-white contact phone">' +
-                                            '<a href="#">' +
-                                            '<i class="icon material-icons">local_phone</i>' +
-                                            '</a>' +
-                                            '</div>' +
-                                            '<div class="stars">' +
-                                            '<i class="icon material-icons"' +
-                                            'style="left:0px">star</i>' +
-                                            '<i class="icon material-icons"' +
-                                            'style="left:20px">star</i>' +
-                                            '<i class="icon material-icons"' +
-                                            'style="left:40px">star</i>' +
-                                            '<i class="icon material-icons"' +
-                                            'style="left:60px">star</i>' +
-                                            '<i class="icon material-icons"' +
-                                            'style="left:80px">star_half</i>' +
-                                            '</div>' +
-                                            '</div>' +
-                                            '</li>' +
-                                            '</ul>' +
-                                            '</div>' +
-                                            '</div>' +
-                                            '<div class="col-5"></div>' +
-                                            '</div>' +
-                                            '</div>' +
-                                            '<i class="icon f7-icons chevron card-opened-fade-out">chevron_right</i>' +
+                                                '<p class="title dark-blue card-opened-fade-out">CONSULTA</p>' +
+                                                '<p class="text-1 dark-blue card-opened-fade-out">' + z[i].name + '</p>' +
+                                                '<p class="text-2 dark-blue card-opened-fade-out">Hospital General Zona 2</p>' +/* agregar nombre del consultorio */
+                                                '<p class="footer light-blue card-opened-fade-out">' +
+                                                '<i class="icon material-icons time">watch_later</i>' +
+                                                j.hour() + ':' + minute2 + ' - ' + n.hour() + ':' + minute +
+                                                '</p>' +
+                                                '<a href="#" class="link card-close card-opened-fade-in color-white">' +
+                                                '<i class="icon material-icons white">close</i>' +
+                                                '<h3 class="label">CERRAR</h3>' +
+                                                '</a>' +
+                                                '<div class="row">' +
+                                                    '<div class="col-5"></div>' +
+                                                    '<div class="col-90">' +
+                                                    '<div class="item-content card-opened-fade-in details-event">' +
+                                                    '<div class="fab fab-left-middle color-white photo">' +
+                                                    '<a href="#">' +
+                                                    '<i class="icon material-icons">photo</i>' +
+                                                    '</a>' +
+                                                    '</div>' +
+                                                    '<ul>' +
+                                                    '<li>' +
+                                                    '<div class="item-inner">' +
+                                                    '<h2 class="white">' + z[i].name + '</h2>' +
+                                                    '</div>' +
+                                                    '</li>' +
+                                                    '<li>' +
+                                                    '<div class="item-inner">' +
+                                                    '<div class="fab fab-middle color-white contact comment">' +
+                                                    '<a href="#">' +
+                                                    '<i class="icon material-icons">comment</i>' +
+                                                    '</a>' +
+                                                    '</div>' +
+                                                    '<div class="fab fab-middle color-white contact email">' +
+                                                    '<a href="#">' +
+                                                    '<i class="icon material-icons">email</i>' +
+                                                    '</a>' +
+                                                    '</div>' +
+                                                    '<div class="fab fab-middle color-white contact phone">' +
+                                                    '<a href="#">' +
+                                                    '<i class="icon material-icons">local_phone</i>' +
+                                                    '</a>' +
+                                                    '</div>' +
+                                                    '<div class="stars">' +
+                                                    '<i class="icon material-icons"' +
+                                                    'style="left:0px">star</i>' +
+                                                    '<i class="icon material-icons"' +
+                                                    'style="left:20px">star</i>' +
+                                                    '<i class="icon material-icons"' +
+                                                    'style="left:40px">star</i>' +
+                                                    '<i class="icon material-icons"' +
+                                                    'style="left:60px">star</i>' +
+                                                    '<i class="icon material-icons"' +
+                                                    'style="left:80px">star_half</i>' +
+                                                    '</div>' +
+                                                    '</div>' +
+                                                    '</li>' +
+                                                    '</ul>' +
+                                                    '</div>' +
+                                                    '</div>' +
+                                                    '<div class="col-5"></div>' +
+                                                    '</div>' +  
+                                                '</div>' +
+                                            '<i class="icon f7-icons chevron card-opened-fade-out">chevron_right</i>' +//fix position
                                             '<div class="card-content-padding list">' +
                                             '<ul>' +
                                             '<li>' +
@@ -432,7 +427,7 @@
                                     flag = true;
                                     if (hour.minute() >= 30) {
                                         minute = '00';
-                                        hour.add(1,'H');
+                                        hour.add(1, 'H');
                                     } else {
                                         minute = '30'
                                     }

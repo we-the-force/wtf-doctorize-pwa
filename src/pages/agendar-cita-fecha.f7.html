@@ -1,33 +1,24 @@
 <template>
     <div class="page" data-name="agendar-cita-fecha" id="agendar-cita-fecha">
-        <div class="page-content login-screen-content">
-            <div class="login-screen-content nav-bar-rect">
-                <div class="row">
-                    <div class="col-15">
-                        <a href='/agendar-cita' data-view=".view-main" class="item-link list-button back-button"
-                            id="back">
-                            <i class="material-icons">close</i>
-                        </a>
-                    </div>
-                    <div class="col-85"></div>
-                </div>
+        <div class="page-content login-screen-content btns">
+            <div class="login-screen-content header-turquoise">
                 <div class="list">
                     <ul>
                         <li>
                             <div class="row">
-                                <div class="col-10"></div>
-                                <div class="col-90">
-                                    <h2>Agendar Cita</h2>
-                                </div>
+                                <a href='/agendar-cita' class=" item-link btn-back" id="back">
+                                    <i class="material-icons">close</i>
+                                </a>
                             </div>
                         </li>
                         <li>
                             <div class="row">
-                                <div class="col-10"></div>
-                                <div class="col-70">
-                                    <h4>Agrega los datos básicos de la consulta.</h4>
-                                </div>
-                                <div class="col-20"></div>
+                                <h3>Agendar consulta</h3>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <p>Agregar los datos básicos de la consulta.</p>
                             </div>
                         </li>
                     </ul>
@@ -36,19 +27,19 @@
             <div>
                 <div class="list no-hairlines-md" id="inputs">
                     <ul>
-                        <li class="item-content item-input">
+                        <li class="item-content item-input linear">
                             <div class="item-inner">
-                                <div class="item-label blue">Fecha</div>
-                                <div class="item-input-wrap asistentes-input">
+                                <div class="item-label dark-blue">Fecha</div>
+                                <div class="item-input-wrap">
                                     <input type="text" name="datetime" readonly="readonly" id="date"
                                         placeholder="Selecciona la fecha" required validate>
                                 </div>
                             </div>
                         </li>
-                        <li class="item-content item-input">
+                        <li class="item-content item-input linear">
                             <div class="item-inner">
-                                <div class="item-label blue">Horarios Disponibles</div>
-                                <div class="item-input-wrap asistentes-input">
+                                <div class="item-label dark-blue">Horarios Disponibles</div>
+                                <div class="item-input-wrap">
                                     <input type="text" name="time" readonly="readonly" id="time"
                                         placeholder="Selecciona la hora" required validate>
                                 </div>
@@ -56,25 +47,19 @@
                         </li>
                     </ul>
                 </div>
-                <div class="list">
-                    <ul>
-                        <li>
-                            <div class="row">
-                                <div class="col-50">
-                                    <a href="/agendar-cita" data-view=".view-main"
-                                        class="item-link list-button login-register-button ">Cancelar</a>
-                                </div>
-                                <div class="col-50">
-                                    <a href="#" class="item-link list-button login-button asistente">
-                                        <p>Agendar </p>
-                                        <i class="material-icons">chevron_right</i>
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
             </div>
+        </div>
+        <div class="list buttons">
+            <ul>
+                <li>
+                    <div class="row">
+                        <a href="#" class="item-link list-button btn-rounded">
+                            <p>Agendar </p>
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
@@ -213,9 +198,9 @@
                 });
 
                 function enableButton(z, y) {
-                    $$('#agendar-cita-fecha .login-button').removeClass('grey');
-                    $$('#agendar-cita-fecha .login-button').off('click');
-                    $$('#agendar-cita-fecha .login-button').click(function (e) {
+                    $$('#agendar-cita-fecha .btn-rounded').removeClass('grey');
+                    $$('#agendar-cita-fecha .btn-rounded').off('click');
+                    $$('#agendar-cita-fecha .btn-rounded').click(function (e) {
                         app.data.store.getItem('patient').then(function (patient) {
                             app.data.patient = patient;
                             datetime = moment(z.format("YYYY-MM-DD") + 'T' + y);
@@ -238,10 +223,10 @@
                         });
                     });
                 };
-                
+
                 function disableButton() {
-                    $$('#agendar-cita-fecha .login-button').addClass('grey');
-                    $$('#agendar-cita-fecha .login-button').off('click');
+                    $$('#agendar-cita-fecha .btn-rounded').addClass('grey');
+                    $$('#agendar-cita-fecha .btn-rounded').off('click');
                 }
 
             }

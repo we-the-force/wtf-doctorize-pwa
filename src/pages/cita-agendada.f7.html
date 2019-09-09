@@ -1,64 +1,58 @@
 <template>
-    <div class="page" data-name="asistentes-confirmar">
-        <div class="page-content login-screen-content grad-blue">
-            <div class="list">
+    <div class="page back-blue" data-name="asistentes-confirmar">
+        <div class="page-content login-screen-content center btns">
+            <div class="list" style="margin-bottom: 0px" >
                 <ul>
                     <li>
                         <div class="row">
                             <div class="col-20"></div>
                             <div class="col-60">
-                                    <img src="/static/images/done.svg" class="done-img" alt="">
+                                <img src="/static/images/done.svg" alt="">
                             </div>
                             <div class="col-20"></div>
                         </div>
                     </li>
                 </ul>
             </div>
-            <div class="list">
-                <ul>
-                    <div class="screen-title"> 
+            <div class="screen-title header-white" >
+                <div class="list" style="margin: 0px">
+                    <ul>
+                        <li>
+                            <div class="row">
+                                <div class="col-15"></div>
+                                <div class="col-70">
+                                    <h1>Se agendó la consulta en el calendario</h2>
+                                </div>
+                                <div class="col-15"></div>
+                            </div>
+                        </li>
                         <li>
                             <div class="row">
                                 <div class="col-10"></div>
                                 <div class="col-80">
-                                    <h2 class="margin">Se agendó la consulta en tu calendario</h2>
+                                    <p>
+                                        El paciente recibió un correo con la fecha, hora y lugar de la consulta.
+                                    </p>
                                 </div>
                                 <div class="col-10"></div>
                             </div>
                         </li>
-                    </div>
-                    <li>
-                        <div class="row">
-                            <div class="col-10"></div>
-                            <div class="col-80">
-                                <h4 class="margin">
-                                    El paciente recibió un correo con la fecha, hora y lugar de la consulta.
-                                </h4>
-                            </div>
-                            <div class="col-10"></div>
-                        </div>
-                    </li>
-                </ul>
+                    </ul>
+                </div>
             </div>
-            <div>
-                    <div class="list">
-                        <ul>   
-                            <li>
-                                <div class="row">
-                                    <div class="col-20"></div>
-                                    <div class="col-60">
-                                        <a href="/home" class="item-link list-button login-button aceptar-button white-button">
-                                        <p>Aceptar </p>
-                                        <i class="material-icons">done</i>
-                                        </a>
-                                    </div> 
-                                    <div class="col-20"></div>
-                                </div>
-                            </li> 
-                        </ul>  
-                    </div> 
-                </div> 
-        </div>                
+        </div>
+        <div class="list buttons">
+            <ul>
+                <li>
+                    <div class="row">
+                        <a href="/home" class="item-link list-button btn-rounded center white">
+                            <p>Aceptar </p>
+                            <i class="material-icons">done</i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 <script>

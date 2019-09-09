@@ -1,32 +1,24 @@
 <template>
     <div class="page" data-name="agendar-cita" id="agendar-cita">
-        <div class="page-content login-screen-content">
-            <div class="login-screen-content nav-bar-rect">
-                <div class="row">
-                    <div class="col-15">
-                        <a href='/home' data-view=".view-main" class="item-link list-button back-button" id="back">
-                            <i class="material-icons">close</i>
-                        </a>
-                    </div>
-                    <div class="col-85"></div>
-                </div>
+        <div class="page-content login-screen-content btns">
+            <div class="login-screen-content header-turquoise">
                 <div class="list">
                     <ul>
                         <li>
                             <div class="row">
-                                <div class="col-10"></div>
-                                <div class="col-90">
-                                    <h2>Agendar Cita</h2>
-                                </div>
+                                <a href='/home' class=" item-link btn-back" id="back">
+                                    <i class="material-icons">close</i>
+                                </a>
                             </div>
                         </li>
                         <li>
                             <div class="row">
-                                <div class="col-10"></div>
-                                <div class="col-70">
-                                    <h4>Agrega los datos básicos de la consulta.</h4>
-                                </div>
-                                <div class="col-20"></div>
+                                <h3>Agendar consulta</h3>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <p>Agregar los datos básicos de la consulta.</p>
                             </div>
                         </li>
                     </ul>
@@ -35,48 +27,38 @@
             <div>
                 <div class="list no-hairlines-md" id="inputs">
                     <ul>
-                        <li class="item-content item-input">
+                        <li class="item-content item-input linear">
                             <div class="item-inner">
-                                <div class="item-label blue">Consultorio</div>
-                                <div class="item-input-wrap asistentes-input">
+                                <div class="item-label dark-blue">Consultorio</div>
+                                <div class="item-input-wrap">
                                     <select name="consultorio" id="consultorio" placeholder="Please choose...">
 
                                     </select>
                                 </div>
                             </div>
-                        </li><!-- 
-                        <li class="item-content item-input">
+                        </li>
+                        <li class="item-content item-input linear">
                             <div class="item-inner">
-                                <div class="item-label blue">Fecha y Hora</div>
-                                <div class="item-input-wrap asistentes-input">
-                                    <input type="datetime-local" name="datetime" id="datetime"
-                                        placeholder="Fecha y Hora" required validate>
-                                    <span class="input-clear-button"></span>
-                                </div>
-                            </div>
-                        </li> -->
-                        <li class="item-content item-input">
-                            <div class="item-inner">
-                                <div class="item-label blue">Nombre</div>
-                                <div class="item-input-wrap asistentes-input">
+                                <div class="item-label dark-blue">Nombre</div>
+                                <div class="item-input-wrap">
                                     <input type="text" name="nombre" id="nombre" placeholder="Nombre" required validate>
                                     <span class="input-clear-button"></span>
                                 </div>
                             </div>
                         </li>
-                        <li class="item-content item-input">
+                        <li class="item-content item-input linear">
                             <div class="item-inner">
-                                <div class="item-label blue">Correo</div>
-                                <div class="item-input-wrap asistentes-input">
+                                <div class="item-label dark-blue">Correo</div>
+                                <div class="item-input-wrap">
                                     <input type="email" name="email" id="email" placeholder="email" required validate>
                                     <span class="input-clear-button"></span>
                                 </div>
                             </div>
                         </li>
-                        <li class="item-content item-input">
+                        <li class="item-content item-input linear">
                             <div class="item-inner">
-                                <div class="item-label blue">Celular</div>
-                                <div class="item-input-wrap asistentes-input">
+                                <div class="item-label dark-blue">Celular</div>
+                                <div class="item-input-wrap">
                                     <input type="tel" name="phone" id="phone" placeholder="teléfono" required validate
                                         pattern="^([0-9]){10}$" data-error-message="Ingrese su telefono">
                                     <span class="input-clear-button"></span>
@@ -85,25 +67,19 @@
                         </li>
                     </ul>
                 </div>
-                <div class="list">
-                    <ul>
-                        <li>
-                            <div class="row">
-                                <div class="col-50">
-                                    <a href="/home" data-view=".view-main"
-                                        class="item-link list-button login-register-button ">Cancelar</a>
-                                </div>
-                                <div class="col-50">
-                                    <a href="#" class="item-link list-button login-button asistente">
-                                        <p>Agendar </p>
-                                        <i class="material-icons">chevron_right</i>
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
             </div>
+        </div>
+        <div class="list buttons">
+            <ul>
+                <li>
+                    <div class="row">
+                        <a href="#" class="item-link list-button btn-rounded">
+                            <p>Siguiente </p>
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
@@ -120,7 +96,7 @@
                 var moment = require('moment');
                 moment().format();
 
-                /* app.preloader.show('blue'); */
+                app.preloader.show('blue');
                 app.data.store.getItem('doctor').then(function (value) {
                     app.data.doctor = value;
                     app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/offices',//id=99 
@@ -138,15 +114,6 @@
 
 
                 disableButton();
-
-                /* $$(document).on('input:notempty', '#datetime', function (e) {
-                    if (name != '' && email != '' && phone != '') {
-                        appointment = moment($$('#datetime').val());
-                        enableButton();
-                    } else {
-                        appointment = moment($$('#datetime').val());
-                    }
-                }); */
 
                 $$(document).on('input:notempty', '#nombre', function (e) {
                     if (email != '' && phone != '') {
@@ -180,12 +147,10 @@
                 });
 
                 function enableButton() {
-                    /* today = moment();
-                    if (appointment.isSameOrAfter(today.add(1, 'h'))) { */
                     if (regex.test(email) && regex2.test(phone)) {
-                        $$('#agendar-cita .login-button').removeClass('grey');
-                        $$('#agendar-cita .login-button').off('click');
-                        $$('#agendar-cita .login-button').on('click', function (e) {
+                        $$('#agendar-cita .btn-rounded').removeClass('grey');
+                        $$('#agendar-cita .btn-rounded').off('click');
+                        $$('#agendar-cita .btn-rounded').on('click', function (e) {
                             app.data.paciente.nombre = name;
                             app.data.paciente.email = email;
                             app.data.paciente.phone = phone;
@@ -195,35 +160,15 @@
                                     app.methods.redirectTo('agendar-cita-fecha');
                                 });
                             });
-                            /* datetime = new Date($$('#datetime').val());
-                            var office = $$('#consultorio').val();
-                            app.preloader.show('blue');
-                            app.request.postJSON(app.data.url + '/doctors/' + app.data.doctor.id + '/appointments', {
-                                "email": app.data.paciente.email,
-                                "doctorId": app.data.doctor.id,
-                                "officeId": office,
-                                "name": app.data.paciente.nombre,
-                                "phone": app.data.paciente.phone,
-                                "date": datetime,
-                            }, function (e) {
-                                app.preloader.hide(); */
-                            /* app.methods.redirectTo('agendar-cita-fecha'); */
-                            /* },
-                                function (e) {
-                                    app.preloader.hide();
-                                }); */
                         });
                     } else {
                         disableButton();
                     }
-                    /* } else {
-                        disableButton();
-                    } */
                 }
 
                 function disableButton() {
-                    $$('#agendar-cita .login-button').addClass('grey');
-                    $$('#agendar-cita .login-button').off('click');
+                    $$('#agendar-cita .btn-rounded').addClass('grey');
+                    $$('#agendar-cita .btn-rounded').off('click');
                 }
 
             }

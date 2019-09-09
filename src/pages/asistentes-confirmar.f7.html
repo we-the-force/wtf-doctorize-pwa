@@ -1,67 +1,61 @@
 <template>
-        <div class="page" data-name="asistentes-confirmar">
-            <div class="page-content login-screen-content grad-blue">           
-                <div class="screen-title">
-                    <div class="list" style="margin-top: 20%">
-                        <ul>
-                            <li>
-                                <div class="row">
-                                    <div class="col-5"></div>
-                                    <div class="col-90">
-                                        <h2>Se agregó nuevo Asistente</h2>                                    
-                                    </div>
-                                    <div class="col-5"></div>
+    <div class="page back-blue " data-name="asistentes-confirmar">
+        <div class="page-content login-screen-content center btns">
+            <div class="screen-title header-white">
+                <div class="list">
+                    <ul>
+                        <li>
+                            <div class="row">
+                                <div class="col-15"></div>
+                                <div class="col-70">
+                                    <h1>Se agregó nuevo Asistente</h1>
                                 </div>
-                            </li>
-                            <li>
-                                <div class="row">
-                                    <div class="col-10"></div>
-                                    <div class="col-80">
-                                        <h4>Su asistente será agregado una vez que acepte la solicitud enviada.</h4>
-                                    </div>
-                                    <div class="col-10"></div>
+                                <div class="col-15"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-10"></div>
+                                <div class="col-80">
+                                    <p>Agregaremos al asistente una vez que acepte la solicitud enviada.</p>
                                 </div>
-                            </li>
-                        </ul>
-                    </div>
+                                <div class="col-10"></div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <div>
-                    <div class="list">
-                        <ul>     
-                            <li>
-                                <div class="row">
-                                    <div class="col-20"></div>
-                                    <div class="col-60">
-                                            <img src="/static/images/headset_mic_24px.svg" class="asistente-img" alt="">
-                                    </div>
-                                    <div class="col-20"></div>
-                                </div>                         
-                            </li>
-                        </ul>  
-                    </div>  
-                </div>   
-                <div>
-                    <div class="list">
-                        <ul>   
-                            <li>
-                                <div class="row">
-                                    <div class="col-20"></div>
-                                    <div class="col-60">
-                                        <a href="/assistants-show" class="item-link list-button login-button aceptar-button white-button elevation-5">
-                                        <p>Aceptar </p>
-                                        <i class="material-icons">done</i>
-                                        </a>
-                                    </div> 
-                                    <div class="col-20"></div>
+            </div>
+            <div>
+                <div class="list" style="margin-top: 0px">
+                    <ul>
+                        <li>
+                            <div class="row">
+                                <div class="col-25"></div>
+                                <div class="col-50">
+                                    <img src="/static/images/headset_mic_24px.svg" style="margin-top: 0px" alt="">
                                 </div>
-                            </li> 
-                        </ul>  
-                    </div> 
-                </div>                      
-            </div>                
+                                <div class="col-25"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </template>
-    <script>
-        import $$ from 'dom7';
-        export default {}
-    </script>
+        <div class="list buttons">
+            <ul>
+                <li>
+                    <div class="row">
+                        <a href="/assistants-show" class="item-link list-button btn-rounded center white">
+                            <p>Aceptar </p>
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+    export default {}
+</script>

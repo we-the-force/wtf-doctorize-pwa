@@ -62,7 +62,6 @@
                     app.data.doctor = value;
                     app.data.store.getItem('assistant').then(function (assistantValue) {
                         app.data.assistant = assistantValue;
-                        console.log(assistantValue);
 
                         app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/offices',
                             function (e) {
@@ -77,7 +76,7 @@
                                         '<div class="item-subtitle light-blue">' + x[i].hospital + '</div>' +
                                         '<div class="item-text dark-blue">' + x[i].address + '</div>' +
                                         '</div>' +
-                                        '<input type="radio" id="radio" name="demo-radio-inline" data-Name="' + x[i].name + '" value="' + x[i].id + '"/>' +
+                                        '<input type="radio" id="radio" name="demo-radio" data-Name="' + x[i].name + '" value="' + x[i].id + '"/>' +
                                         '<i class="icon-radio"></i>' +
                                         '</label>' +
                                         '</li> ').appendTo("#consultorios");
@@ -85,7 +84,7 @@
                                 app.preloader.hide();
                                 if (app.data.assistant.addOffice) {
                                     $$('.header').find('h3').text('Asigne un nuevo consultorio a su asistente.');
-                                    items = $$('#radio');
+                                    items = $$('[name="demo-radio"]');
                                     var z = false;
                                     items.forEach(element => {
                                         if (app.data.assistant.consultorio.name == $$(element).data('Name')) {
@@ -125,7 +124,7 @@
                     $$('#asistentes-invitar-03 .btn-rounded').removeClass('grey');
                     $$('#asistentes-invitar-03 .btn-rounded').off('click');
                     $$('#asistentes-invitar-03 .btn-rounded').on('click', function (e) {
-                        items = $$('#radio');
+                        items = $$('[name="demo-radio"]');
                         app.data.assistant.consultorio.id = '';
                         for (var i = 0; i < items.length; i++) {
                             if (items[i].checked == true) {
@@ -133,6 +132,8 @@
                                 break;
                             }
                         }
+                        console.log(app.data.assistant.consultorio.id);
+                        
                         app.data.store.setItem("assistant", app.data.assistant)
                             .then(function (value) {
                                 app.methods.redirectTo('asistentes-invitar-04');

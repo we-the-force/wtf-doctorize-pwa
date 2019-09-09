@@ -16,7 +16,7 @@
         background: $back-color 
         .page-content
             height: 100%
-            background: inherit
+            background: transparent
             &.login-screen-content
                 .login-screen-title
                     margin-top: 25%
@@ -37,9 +37,12 @@
                     display: block
                     margin: 25% auto 0% auto
             &.btns
-                height: calc(100% - 70px)
+                height: calc(100% - 25%)
+                @media screen and (max-height: 600px)
+                    height: calc(100% - 70px)
         .list
             &.buttons
+                background: transparent
                 height: 70px
                 margin: 0px 
                 .btn-rounded
@@ -55,6 +58,8 @@
                 margin: 0px
             ul::after,ul::before
                 content: none 
+    .back-blue
+        background: radial-gradient(1128.21px at 57.54% 104.51%, #00A1C5 0%, #2FCFBC 100%)
 @import variables
 @import photoModule
 @import recovery

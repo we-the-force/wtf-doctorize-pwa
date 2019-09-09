@@ -10,6 +10,7 @@
     --f7-font-family: 'Nunito'
     --f7-theme-color: #029AF0
     --f7-list-bg-color: transparent
+    --f7-toggle-active-color: #2FCFBC
     .page
         margin: 0
         background: $back-color 
@@ -63,8 +64,12 @@
 @import schedule
 @import cards
 @import checkbox
+@import radio
+@import assistants
 
 .ios
+    --f7-toggle-height: 24px
+    --f7-toggle-width: 48px
     --f7-input-invalid-border-color: #ff0000
     .page
         &:not(.schedule,.home)

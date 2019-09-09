@@ -66,16 +66,16 @@
                             }
                             $$('#asistentes').append('<li>' +
                                 '<div class="row">' +
-                                '<div class="card card-outline elevation-3 asistentes">' +
+                                '<div class="card card-outline asistentes">' +
                                 '<div class="rectangle turquoise"></div>' +
                                 '<div class="avatar">' +
                                 '<img src="' + app.data.url + '/' + x[i].photo + '200.png">' +
                                 '</div>' +
                                 '<div class="card-content card-content-padding">' +
-                                '<h3 class="light-blue2">' + x[i].name + '</h3>' +
+                                '<p class="dark-blue">' + x[i].name + '</p>' +
                                 '</div>' +
                                 '<div class="link dynamic-popover" data-AssistantId="' + x[i].id + '">' +
-                                '<i class="material-icons more">more_vert</i>' +
+                                '<i class="material-icons light-blue">more_vert</i>' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -91,10 +91,10 @@
                                     '<div class="popover-inner">' +
                                     '<div class="block">' +
                                     '<div class="list">' +
-                                    '<ul id="consultorios">' +
+                                    '<ul>' +
                                     '<li>' +
                                     '<div class="row">' +
-                                    '<h4 class="blue">Desactivar</h4>' +
+                                    '<p class="dark-blue">Desactivar</p>' +
                                     '<label class="toggle toggle-init color-blue-toggle">' +
                                     '<input type="checkbox" name="chbx" value="1" style="display:none" checked>' +
                                     '<span class="toggle-icon"></span>' +
@@ -103,17 +103,17 @@
                                     '<li>' +
                                     '<li>' +
                                     '<div class="row">' +
-                                    '<a href="#" data-view=".view-main" class="item-link list-button edit-assistant">' +
-                                    '<h4 class="blue">Editar' +
+                                    '<a href="#" data-view=".view-main" class="item-link edit-assistant">' +
+                                    '<p class="dark-blue">Editar' +
                                     '<i class="icon material-icons blue">chevron_right</i>' +
-                                    '</h4>' +
+                                    '</p>' +
                                     '</a>' +
                                     '</div>' +
                                     '<li>' +
                                     '<li>' +
                                     '<div class="row">' +
-                                    '<div  class="item-link delete-assistant">' +
-                                    '<h4 class="blue">Eliminar</h4>' +
+                                    '<div class="item-link delete-assistant">' +
+                                    '<p class="dark-blue">Eliminar</p>' +
                                     '</div>' +
                                     '</div>' +
                                     '<li>' +

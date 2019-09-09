@@ -1,32 +1,24 @@
 <template>
     <div class="page" data-name="asistentes-invitar-04" id='asistentes-invitar-04'>
-        <div class="page-content login-screen-content">
-            <div class="login-screen-content nav-bar-rect">
-                <div class="row">
-                    <div class="col-15">
-                        <a href='#' data-view=".view-main" class="item-link list-button back-button" id="cancel">
-                            <i class="material-icons">chevron_left</i>
-                        </a>
-                    </div>
-                    <div class="col-85"></div>
-                </div>
+        <div class="page-content login-screen-content asistentes-invitar-04 btns">
+            <div class="login-screen-content header-turquoise">
                 <div class="list">
                     <ul class="header">
                         <li>
                             <div class="row">
-                                <div class="col-10"></div>
-                                <div class="col-90">
-                                    <h1>Permisos de Asistente</h1>
-                                </div>
+                                <a href='#' class="item-link btn-back" id="cancel">
+                                    <i class="material-icons">close</i>
+                                </a>
                             </div>
                         </li>
                         <li>
                             <div class="row">
-                                <div class="col-10"></div>
-                                <div class="col-80">
-                                    <h4>Activa los permisos que podrá tener su asistente.</h4>
-                                </div>
-                                <div class="col-10"></div>
+                                <h3>Permisos de Asistente</h3>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <p><br><br></p>
                             </div>
                         </li>
                     </ul>
@@ -37,44 +29,44 @@
                     <ul>
                         <li>
                             <span>
-                                <div class="item-inner permisos-asistente">
-                                    <div class="item-title">Agenda</div>
+                                <div class="item-inner">
+                                    <div class="item-title blue">Agenda</div>
                                 </div>
                             </span>
-                            <label class="toggle toggle-init color-blue-toggle">
+                            <label class="toggle toggle-init">
                                 <input type="checkbox" name="chbx" value="1" style="display:none" checked>
                                 <span class="toggle-icon"></span>
                             </label>
                         </li>
                         <li>
                             <span>
-                                <div class="item-inner permisos-asistente">
-                                    <div class="item-title">Pacientes</div>
+                                <div class="item-inner">
+                                    <div class="item-title blue">Pacientes</div>
                                 </div>
                             </span>
-                            <label class="toggle toggle-init color-blue-toggle">
+                            <label class="toggle toggle-init">
                                 <input type="checkbox" name="chbx" value="2" style="display:none" checked>
                                 <span class="toggle-icon"></span>
                             </label>
                         </li>
                         <li>
                             <span>
-                                <div class="item-inner permisos-asistente">
-                                    <div class="item-title">Expedientes</div>
+                                <div class="item-inner">
+                                    <div class="item-title blue">Expedientes</div>
                                 </div>
                             </span>
-                            <label class="toggle toggle-init color-blue-toggle">
+                            <label class="toggle toggle-init">
                                 <input type="checkbox" name="chbx" value="3" style="display:none" checked>
                                 <span class="toggle-icon"></span>
                             </label>
                         </li>
                         <li>
                             <span>
-                                <div class="item-inner permisos-asistente">
-                                    <div class="item-title">Pagos</div>
+                                <div class="item-inner">
+                                    <div class="item-title blue">Pagos</div>
                                 </div>
                             </span>
-                            <label class="toggle toggle-init color-blue-toggle">
+                            <label class="toggle toggle-init">
                                 <input type="checkbox" name="chbx" value="4" style="display:none" checked>
                                 <span class="toggle-icon"></span>
                             </label>
@@ -82,7 +74,7 @@
                     </ul>
                 </div>
             </div>
-            <div>
+            <!-- <div>
                 <div class="list">
                     <ul>
                         <li>
@@ -92,7 +84,7 @@
                                         class="item-link list-button login-register-button " id="cancel">Cancelar</a>
                                 </div>
                                 <div class="col-50">
-                                    <a href="#" class="item-link list-button login-button asistente">
+                                    <a href="#" class="item-link list-button btn-rounded asistente">
                                         <p>Guardar </p>
                                         <i class="material-icons">chevron_right</i>
                                     </a>
@@ -101,8 +93,20 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+            </div> -->
         </div>
+        <div class="list buttons">
+                <ul>
+                    <li>
+                        <div class="row">
+                            <a href="#" class="item-link list-button btn-rounded">
+                                <p>Guardar </p>
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
     </div>
 </template>
 <script>
@@ -118,20 +122,22 @@
                     app.data.store.getItem('assistant').then(function (assistantValue) {
                         app.data.assistant = assistantValue;
                         console.log(assistantValue);
-                        
+
 
                         $$('#asistentes-invitar-04 #cancel').on('click', function (e) {
                             if (app.data.assistant.edit) {
                                 app.data.assistant.edit = false;
-                                app.methods.redirectTo('assistants-offices');
+                                app.data.store.setItem("assistant", app.data.assistant)
+                                    .then(function (value) {
+                                        app.methods.redirectTo('assistants-offices');
+                                    });
                             } else {
                                 app.methods.redirectTo('asistentes-invitar-03');
                             }
                         });
 
                         if (app.data.assistant.edit) {
-                            $$('.header').find('h1').text(app.data.assistant.consultorio.name);
-                            $$('.header').find('h4').text('Permisos del Asistente');
+                            $$('.header').find('h3').html(app.data.assistant.consultorio.name + '<br>Permisos del asistente');
                             items = $$('[name="chbx"]');
                             items.forEach(x => {
                                 var z = false;
@@ -147,7 +153,7 @@
                             });
                         }
 
-                        $$('#asistentes-invitar-04 .login-button').on('click', function (e) {
+                        $$('#asistentes-invitar-04 .btn-rounded').on('click', function (e) {
                             items = $$('[name="chbx"]');
                             app.data.assistant.permisos = [];
                             for (var i = 0; i < items.length; i++) {

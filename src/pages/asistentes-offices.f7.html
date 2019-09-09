@@ -1,39 +1,30 @@
 <template>
     <div class="page" data-name="asistentes-offices" id='asistentes-offices'>
         <div class="page-content login-screen-content">
-            <div class="login-screen-content nav-bar-rect">
-                <div class="row">
-                    <div class="col-15">
-                        <a href='/assistants-show' data-view=".view-main" class="item-link list-button back-button"
-                            id="back">
-                            <i class="material-icons">chevron_left</i>
-                        </a>
-                    </div>
-                    <div class="col-85"></div>
-                </div>
+            <div class="login-screen-content header-turquoise">
                 <div class="list">
                     <ul>
                         <li>
                             <div class="row">
-                                <div class="col-10"></div>
-                                <div class="col-90">
-                                    <h2>Consultorios del asistente</h2>
-                                </div>
+                                <a href='/assistants-show' class="item-link btn-back" id="back">
+                                    <i class="material-icons">chevron_left</i>
+                                </a>
                             </div>
                         </li>
                         <li>
                             <div class="row">
-                                <div class="col-10"></div>
-                                <div class="col-70">
-                                    <br>
-                                </div>
-                                <div class="col-20"></div>
+                                <h3>Consultorios del asistente</h3>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <p style="visibility: hidden"><br><br></p>
                             </div>
                         </li>
                         <li>
                             <div class="row">
                                 <div class="item-inner">
-                                    <div class="fab fab-right-middle color-lime" style="top:45px;">
+                                    <div class="fab btn-fab color-lime">
                                         <a href="#">
                                             <i class="material-icons">add</i>
                                         </a>
@@ -76,21 +67,21 @@
                                 //si doctor id es igual lo hace
                                 $$('#offices').append('<li>' +
                                     '<div class="row">' +
-                                    '<div class="card card-outline elevation-3 assistants-office" data-OfficeId="' + x.offices[i].officeId + '">' +
-                                    '<div class="rectangle blue"></div>' +
-                                    '<i class="material-icons icon assistant-office blue2">local_hospital</i>' +
+                                    '<div class="card card-outline elevation-3 assistant-offices" data-OfficeId="' + x.offices[i].officeId + '">' +
+                                    '<div class="rectangle light-blue"></div>' +
+                                    '<i class="material-icons icon light-blue">local_hospital</i>' +
                                     '<div class="card-content card-content-padding">' +
-                                    '<h3 class="blue2">' + x.offices[i].officeName + '</h3>' +
+                                    '<p class="light-blue">' + x.offices[i].officeName + '</p>' +
                                     '</div>' +
                                     '<div class="link permissions-link">' +
-                                    '<i class="material-icons next">chevron_right</i>' +
+                                    '<i class="material-icons next light-blue">chevron_right</i>' +
                                     '</div>' +
                                     '</div>' +
                                     '</div>' +
                                     '</li>');
                             }
                             app.preloader.hide();
-                            $$('.assistants-office').on('click', function (e) {
+                            $$('.assistant-offices').on('click', function (e) {
                                 var officeId = $$(this).data('OfficeId');
                                 for (var i = 0; i < x.offices.length; i++) {
                                     if (x.offices[i].officeId == officeId) {

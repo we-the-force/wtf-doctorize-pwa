@@ -55,6 +55,12 @@
 
         <!--tabs-->
         <div class="tabs">
+            <div id="tab-1" class="page-content login-screen-content tab hide-navbar-on-scroll tab tab-active">
+                <div class="list">
+                    <ul>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -291,119 +297,98 @@
                                         }
                                         /* pone la carta de la cita */
                                         $$(x).children('.list').children('ul').append(
+
                                             '<li>' +
                                             '<div class="row">' +
                                             '<div class="card card-expandable">' +
                                             '<div class="rectangle turquoise card-opened-fade-out"></div>' +
                                             '<div class="card-content">' +
                                             '<div class="card-header display-block">' +
-                                                '<p class="title dark-blue card-opened-fade-out">CONSULTA</p>' +
-                                                '<p class="text-1 dark-blue card-opened-fade-out">' + z[i].name + '</p>' +
-                                                '<p class="text-2 dark-blue card-opened-fade-out">Hospital General Zona 2</p>' +/* agregar nombre del consultorio */
-                                                '<p class="footer light-blue card-opened-fade-out">' +
-                                                '<i class="icon material-icons time">watch_later</i>' +
-                                                j.hour() + ':' + minute2 + ' - ' + n.hour() + ':' + minute +
-                                                '</p>' +
-                                                '<a href="#" class="link card-close card-opened-fade-in color-white">' +
-                                                '<i class="icon material-icons white">close</i>' +
-                                                '<h3 class="label">CERRAR</h3>' +
-                                                '</a>' +
-                                                '<div class="row">' +
-                                                    '<div class="col-5"></div>' +
-                                                    '<div class="col-90">' +
-                                                    '<div class="item-content card-opened-fade-in details-event">' +
-                                                    '<div class="fab fab-left-middle color-white photo">' +
-                                                    '<a href="#">' +
-                                                    '<i class="icon material-icons">photo</i>' +
-                                                    '</a>' +
-                                                    '</div>' +
-                                                    '<ul>' +
-                                                    '<li>' +
-                                                    '<div class="item-inner">' +
-                                                    '<h2 class="white">' + z[i].name + '</h2>' +
-                                                    '</div>' +
-                                                    '</li>' +
-                                                    '<li>' +
-                                                    '<div class="item-inner">' +
-                                                    '<div class="fab fab-middle color-white contact comment">' +
-                                                    '<a href="#">' +
-                                                    '<i class="icon material-icons">comment</i>' +
-                                                    '</a>' +
-                                                    '</div>' +
-                                                    '<div class="fab fab-middle color-white contact email">' +
-                                                    '<a href="#">' +
-                                                    '<i class="icon material-icons">email</i>' +
-                                                    '</a>' +
-                                                    '</div>' +
-                                                    '<div class="fab fab-middle color-white contact phone">' +
-                                                    '<a href="#">' +
-                                                    '<i class="icon material-icons">local_phone</i>' +
-                                                    '</a>' +
-                                                    '</div>' +
-                                                    '<div class="stars">' +
-                                                    '<i class="icon material-icons"' +
-                                                    'style="left:0px">star</i>' +
-                                                    '<i class="icon material-icons"' +
-                                                    'style="left:20px">star</i>' +
-                                                    '<i class="icon material-icons"' +
-                                                    'style="left:40px">star</i>' +
-                                                    '<i class="icon material-icons"' +
-                                                    'style="left:60px">star</i>' +
-                                                    '<i class="icon material-icons"' +
-                                                    'style="left:80px">star_half</i>' +
-                                                    '</div>' +
-                                                    '</div>' +
-                                                    '</li>' +
-                                                    '</ul>' +
-                                                    '</div>' +
-                                                    '</div>' +
-                                                    '<div class="col-5"></div>' +
-                                                    '</div>' +  
-                                                '</div>' +
-                                            '<i class="icon f7-icons chevron card-opened-fade-out">chevron_right</i>' +//fix position
+                                            '<p class="title dark-blue card-opened-fade-out">CONSULTA</p>' +
+                                            '<p class="text-1 dark-blue card-opened-fade-out">' + z[i].name + '</p>' +
+                                            '<p class="text-2 dark-blue card-opened-fade-out">Hospital General Zona 2</p>' +
+                                            '<p class="footer light-blue card-opened-fade-out">' +
+                                            '<i class="icon material-icons time">watch_later</i>' +
+                                            j.hour() + ':' + minute2 + ' - ' + n.hour() + ':' + minute +
+                                            '</p>' +
+                                            '<div class="item-content card-opened-fade-in details-event">' +
+                                            '<div class="fab fab-left-middle color-white photo">' +
+                                            '<a href="#">' +
+                                            '<i class="icon material-icons">photo</i>' +
+                                            '</a>' +
+                                            '</div>' +
+                                            '<ul style="overflow: hidden">' +
+                                            '<li>' +
+                                            '<div class="row">' +
+                                            '<a href="#" class="item-link btn-back card-close">' +
+                                            '<i class="material-icons">close</i>' +
+                                            '</a>' +
+                                            '</div>' +
+                                            '</li>' +
+                                            '<li class="mar">' +
+                                            '<div class="item-inner">' +
+                                            '<p class="white">' + z[i].name + '</p>' +
+                                            '</div>' +
+                                            '</li>' +
+                                            '<li>' +
+                                            '<div class="item-inner">' +
+                                            '<div class="fab fab-middle color-white contact comment">' +
+                                            '<a href="#">' +
+                                            '<i class="icon material-icons">comment</i>' +
+                                            '</a>' +
+                                            '</div>' +
+                                            '<div class="fab fab-middle color-white contact email">' +
+                                            '<a href="#">' +
+                                            '<i class="icon material-icons">email</i>' +
+                                            '</a>' +
+                                            '</div>' +
+                                            '<div class="fab fab-middle color-white contact phone">' +
+                                            '<a href="#">' +
+                                            '<i class="icon material-icons">local_phone</i>' +
+                                            '</a>' +
+                                            '</div>' +
+                                            '<div class="stars">' +
+                                            '<i class="icon material-icons">star</i>' +
+                                            '<p>4.5</p>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '</li>' +
+                                            '</ul>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '<i class="icon f7-icons chevron card-opened-fade-out">chevron_right</i>' +
                                             '<div class="card-content-padding list">' +
                                             '<ul>' +
                                             '<li>' +
                                             '<div class="row">' +
-                                            '<div class="col-70">' +
-                                            '<h2 class="blue2">CONSULTA</h2>' +
-                                            '</div>' +
-                                            '<div class="col-30">' +
-                                            '<h2 class="blue2">$500</h2>' +
-                                            '</div>' +
+                                            '<h1 class="title dark-blue">CONSULTA</h1>' +
+                                            '<h1 class="price light-blue">$500</h1>' +
                                             '</div>' +
                                             '</li>' +
                                             '<li>' +
                                             '<div class="row">' +
                                             '<div class="col-5">' +
-                                            '<i class="icon material-icons time light-blue2">watch_later</i>' +
+                                            '<i class="icon material-icons time light-blue">watch_later</i>' +
                                             '</div>' +
                                             '<div class="col-95">' +
-                                            '<h3 class="light-blue2">' + j.hour() + ':' + minute2 + ' - ' + n.hour() + ':' + minute + '</h3>' +
+                                            '<p class="time light-blue">' + j.hour() + ':' + minute2 + ' - ' + n.hour() + ':' + minute + '</p>' +
                                             '</div>' +
                                             '</div>' +
                                             '</li>' +
                                             '<li>' +
                                             '<div class="row">' +
-                                            '<div class="col-60">' +
-                                            '<h3 class="blue2">Centro Hospitalario la Concepción</h3>' +/* agregar nombre del consultorio */
-                                            '</div>' +
-                                            '<div class="col-40"></div>' +
+                                            '<p class="place dark-blue">Centro Hospitalario la Concepción</p>' +
                                             '</div>' +
                                             '</li>' +
                                             '<li>' +
                                             '<div class="row">' +
-                                            '<div class="col-55">' +
                                             '</div>' +
-                                            '<div class="col-45">' +
-                                            '<a href="#" class="item-link list-button login-button">' +
+                                            '</li>' +
+                                            '</ul>' +
+                                            '<a href="#" class="item-link list-button btn-rounded">' +
                                             '<p>Navegar</p>' +
                                             '<i class="material-icons">directions</i>' +
                                             '</a>' +
-                                            '</div>' +
-                                            '</div> ' +
-                                            '</li>' +
-                                            '</ul>' +
                                             '</div>' +
                                             '</div>' +
                                             '</div>' +

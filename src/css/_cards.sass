@@ -90,10 +90,55 @@
             padding-top: 3%
             padding-bottom: 3%
             .details-event
-                padding-left: 0px
-                bottom: 25%
+                height: 220px  
+                width: 100%
                 position: absolute
-                display: list-item
+                top: 0px
+                left: 0px
+                padding: 0px
+                ul
+                    top: 0px
+                    position: absolute
+                    padding: 7% 7% 3% 7%
+                i
+                    font-size: 29px
+                p
+                    font: $title-2
+                    font-weight: 600
+                    opacity: 1
+                .contact
+                    --f7-fab-size: 37px 
+                    i
+                        color: $light-blue
+                        font-size: 23px
+                    &.comment
+                    &.email
+                        left: 45px
+                    &.phone
+                        left: 90px
+                .stars      
+                    display: inline-flex              
+                    position: absolute
+                    left: 50%
+                    i
+                        line-height: 50px
+                        font-size: 25px
+                        color: #FFD66D
+                    p
+                        line-height: 50px
+                        font-size: 16px
+                .item-inner
+                    margin-left: 72px
+                    &::after
+                        content: none
+                .photo
+                    --f7-fab-size: 72px
+                    bottom: 13%
+                    i
+                        font-size: 35px
+                        color: $light-blue
+                .mar
+                    margin-top: 16%
             p
                 margin-block-start: 2px
                 margin-block-end: 2px
@@ -120,7 +165,48 @@
                 top: 7%
                 left: unset
                 color: #102BC8
+        .card-content-padding
+            position: relative
+            height: calc( 100% - 320px)
+            &.list
+                padding-top: 35px
+                padding-left: 0px
+                padding-right: 0px
+                padding-bottom: 35px
+                h1
+                    margin-block-start: 2px
+                    margin-block-end: 2px
+                    &.title
+                        font: $title-2
+                    &.price
+                        font: $title-2
+                p
+                    &.time
+                        text-align: left
+                        font: $Body-2
+                    &.place
+                        font: $text-2-card
+                ul
+                    padding-left: 35px
+                    padding-right: 35px
+                    i
+                        &.time
+                            font-size: 18px
+                .item-link
+                    padding-right: 16px
+                    width: 55%
+            .btn-rounded
+                position: absolute
+                right: 25px
+                bottom: 15px
+                p
+                    opacity: 1
 
+
+.card-backdrop
+    z-index: 0
+.card-expandable.card-opened .card-opened-fade-out 
+    opacity: 0 !important
 
 .popover
     background: $white

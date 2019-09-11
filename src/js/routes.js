@@ -20,7 +20,7 @@ import officesShow from '../pages/offices-show.f7.html';
 import officesAddFormBasic from '../pages/offices-add-form-basic.f7.html';
 import officesAddFormMap from '../pages/offices-add-form-map.f7.html';
 import officesAddFormSchedule from '../pages/offices-add-form-schedule.f7.html';
-import home from '../pages/home2.f7.html';
+import home from '../pages/home.f7.html';
 import AgendarCita from '../pages/agendar-cita.f7.html';
 import AgendarCitaFecha from '../pages/agendar-cita-fecha.f7.html';
 import CitaAgendada from '../pages/cita-agendada.f7.html';

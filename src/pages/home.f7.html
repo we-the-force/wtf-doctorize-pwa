@@ -1,103 +1,189 @@
 <template>
-  <div class="page" data-name="home">
-    <!-- Top Navbar -->
-    <div class="navbar">
-      <div class="navbar-inner">
+  <div class="page home" id="home">
+
+    <div class="navbar" id="nav1">
+      <div class="navbar-inner sliding">
         <div class="left">
-          <a href="#" class="link icon-only panel-open" data-panel="left">
-            <i class="icon f7-icons if-not-md">menu</i>
-            <i class="icon material-icons if-md">menu</i>
-          </a>
+          <div class="fab fab-left-middle color-white profile panel-open">
+            <i class="icon material-icons">photo</i>
+          </div>
         </div>
-        <div class="title sliding">doctorize-pwa</div>
         <div class="right">
-          <a href="#" class="link icon-only panel-open" data-panel="right">
-            <i class="icon f7-icons if-not-md">menu</i>
-            <i class="icon material-icons if-md">menu</i>
-          </a>
-        </div>
-        <div class="title-large">
-          <div class="title-large-text">doctorize-pwa</div>
+          <div class="fab fab-right-middle color-white search">
+            <a href="#">
+              <i class="icon material-icons">search</i>
+            </a>
+          </div>
         </div>
       </div>
     </div>
-    <!-- Toolbar-->
-    <div class="toolbar toolbar-bottom">
+
+
+    <div class="toolbar tabbar tabbar-labels toolbar-bottom menu">
       <div class="toolbar-inner">
-        <a href="#" class="link">Left Link</a>
-        <a href="#" class="link">Right Link</a>
+        <a href="/home" class="tab-link tab-link-active">
+          <i class="icon material-icons">home</i>
+        </a>
+        <a href="/schedule" class="tab-link">
+          <i class="icon material-icons">today</i>
+        </a>
+        <a href="#" class="tab-link dynamic-sheet">
+        </a>
+        <a href="#" class="tab-link">
+          <i class="icon material-icons">monetization_on</i>
+        </a>
+        <a href="#" class="tab-link">
+          <i class="icon material-icons">settings</i>
+        </a>
+      </div>
+      <div class="add-circle">
+        <img src="/static/images/add_circle_24px_v2.svg" class="dynamic-sheet" alt="">
       </div>
     </div>
-    <!-- Scrollable page content-->
-    <div class="page-content">
-      <div class="block block-strong">
-        <p>This is an example of split view application layout, commonly used on tablets. The main approach of such kind of layout is that you can see different views at the same time.</p>
-
-        <p>Each view may have different layout, different navbar type (dynamic, fixed or static) or without navbar.</p>
-
-        <p>The fun thing is that you can easily control one view from another without any line of JavaScript just using "data-view" attribute on links.</p>
-      </div>
-
-      <div class="block-title">Navigation</div>
+    <div class="page-content login-screen-content">
       <div class="list">
         <ul>
           <li>
-            <a href="/about/" class="item-content item-link">
-              <div class="item-inner">
-                <div class="item-title">About</div>
+            <div class="row">
+              <div class="col">
+                <a href="/intro-splash-01" data-view=".view-main" class="item-link list-button btn-simple">Intro</a>
               </div>
-            </a>
+            </div>
           </li>
           <li>
-            <a href="/form/" class="item-content item-link">
-              <div class="item-inner">
-                <div class="item-title">Form</div>
+            <div class="row">
+              <div class="col">
+                <a href="#" data-view=".view-main" class="item-link list-button btn-simple panel-open">Ajustes</a>
               </div>
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <div class="block-title">Modals</div>
-      <div class="block block-strong">
-        <div class="row">
-          <div class="col-50">
-            <a href="#" class="button button-raised button-fill popup-open" data-popup="#my-popup">Popup</a>
-          </div>
-          <div class="col-50">
-            <a href="#" class="button button-raised button-fill login-screen-open" data-login-screen="#my-login-screen">Login Screen</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="block-title">Panels</div>
-      <div class="block block-strong">
-        <div class="row">
-          <div class="col-50">
-            <a href="#" class="button button-raised button-fill panel-open" data-panel="left">Left Panel</a>
-          </div>
-          <div class="col-50">
-            <a href="#" class="button button-raised button-fill panel-open" data-panel="right">Right Panel</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="list links-list">
-        <ul>
-          <li>
-            <a href="/dynamic-route/blog/45/post/125/?foo=bar#about">Dynamic (Component) Route</a>
+            </div>
           </li>
           <li>
-            <a href="/load-something-that-doesnt-exist/">Default Route (404)</a>
-          </li>
-          <li>
-            <a href="/request-and-load/user/123456/">Request Data & Load</a>
+            <div class="row">
+              <div class="col">
+                <a href="/" data-view=".view-main" class="item-link list-button btn-simple logout">Salir</a>
+              </div>
+            </div>
           </li>
         </ul>
       </div>
     </div>
   </div>
+
 </template>
 <script>
-export default {}
+  import $$ from 'dom7';
+  export default {
+    on: {
+      pageInit: function (e, page) {
+        var self = this;
+        var app = self.$app;
+
+        app.data.store.getItem('doctor').then(function (value) {
+          app.data.doctor = value;
+          $$(".navbar .profile").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
+        });
+
+        $$('.logout').click(function (params) {
+          app.data.store.clear();
+          app.methods.redirectTo('root');
+        });
+
+        $$('.panel-open').click(function (e) {
+          app.data.store.getItem('doctor').then(function (value) {
+            app.data.doctor = value;
+            $$(".panel .name").text(app.data.doctor.name);
+            $$(".panel .mail").text(app.data.doctor.email);
+            $$(".panel .avatar").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
+          });
+          var panel = app.panel.create({
+            el: '.panel',
+          });
+          panel.open();
+          $$(".panel #personal-settings").click(function (e) {
+            panel.close();
+            app.methods.redirectTo('settings');
+          });
+        });
+
+        $$('.dynamic-sheet').on('click', function () {
+          var dynamicSheet = app.sheet.create({
+            content: '<div class="sheet-modal">' +
+              '<div class="close-sheet">' +
+              '<img src="/static/images/cancel_24px.svg" alt="" class="close">' +
+              '</div>' +
+              '<div class="sheet-modal-inner">' +
+              '<div class="list">' +
+              '<ul>' +
+              '<li>' +
+              '<div class="row">' +
+              '<div class="col">' +
+              '<a href="#" data-view=".view-main" class="item-link list-button btn-simple consultorios">' +
+              '<i class="material-icons">local_hospital</i>' +
+              'Consultorios</a>' +
+              '</div>' +
+              '</div>' +
+              '</li>' +
+              '<li>' +
+              '<div class="row">' +
+              '<div class="col">' +
+              '<a href="#" data-view=".view-main" class="item-link list-button btn-simple asistentes">' +
+              '<i class="material-icons">headset_mic</i>' +
+              'Asistentes</a>' +
+              '</div>' +
+              '</div>' +
+              '</li>' +
+              '<li>' +
+              '<div class="row">' +
+              '<div class="col">' +
+              '<a href="#" data-view=".view-main" class="item-link list-button btn-simple cita">' +
+              '<i class="material-icons">event</i>' +
+              'Nueva cita</a>' +
+              '</div>' +
+              '</div>' +
+              '</li>' +
+              '<li>' +
+              '<div class="row">' +
+              '<div class="col">' +
+              '<a href="#" data-view=".view-main" class="item-link list-button btn-simple paciente">' +
+              '<i class="material-icons">person_add</i>' +
+              'Nuevo Paciente</a>' +
+              '</div>' +
+              '</div>' +
+              '</li>' +
+              '</ul>' +
+              '</div>' +
+              '</div>' +
+              '</div>',
+            on: {
+              open: function (sheet) {
+                console.log('Sheet open');
+              },
+              opened: function (sheet) {
+                $$('.sheet-modal .close').on('click', function () {
+                  dynamicSheet.close();
+                });
+                $$('.sheet-modal .consultorios').click(function () {
+                  dynamicSheet.close();
+                  app.methods.redirectTo('offices-show');
+                });
+                $$('.sheet-modal .asistentes').click(function () {
+                  dynamicSheet.close();
+                  app.methods.redirectTo('asistentes-invitar-01');
+                });
+                $$('.sheet-modal .cita').click(function () {
+                  dynamicSheet.close();
+                  app.methods.redirectTo('agendar-cita');
+                });
+                $$('.sheet-modal .paciente').click(function () {
+                  dynamicSheet.close();
+                  app.methods.redirectTo('nuevo-paciente');
+                });
+              },
+            }
+          });
+          dynamicSheet.open();
+        });
+      }
+    }
+  }
 </script>

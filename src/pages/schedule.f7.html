@@ -131,8 +131,8 @@
                 $$('.panel-open').click(function (e) {
                     app.data.store.getItem('doctor').then(function (value) {
                         app.data.doctor = value;
-                        $$(".doctor .name").text(app.data.doctor.name);
-                        $$(".doctor .mail").text(app.data.doctor.email);
+                        $$(".panel .name").text(app.data.doctor.name);
+                        $$(".panel .mail").text(app.data.doctor.email);
                         $$(".panel .avatar").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
                     });
                     var panel = app.panel.create({

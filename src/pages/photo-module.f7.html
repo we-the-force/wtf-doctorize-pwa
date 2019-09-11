@@ -473,7 +473,7 @@
 
                 function modificarDoctor() {
                     $$('h1').text('Foto de Perfil');
-                    $$('p').text('Agrega tu foto de perfil');
+                    $$('.header-blue p').text('Agrega tu foto de perfil');
                     app.data.store.getItem('doctor').then(function (value) {
                         app.data.doctor = value;
                         $$('#photo-module .btn-rounded').off('click');

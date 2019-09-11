@@ -1,16 +1,18 @@
 <template>
-    <div class="page personal-settings" data-name="personal-settings" id="personal-settings">
-        <div class="page-content login-screen-content">
-            <div class="login-screen-content nav-bar-rect">
-                <div class="block" style="margin: 0px;">
-                    <a href='#' class="item-link list-button back-button">
-                        <i class="material-icons close">chevron_left</i>
-                    </a>
-                    <h3 class="title">Información Personal</h3>
-                </div>
+    <div class="page" id="personal-settings">
+        <div class="page-content login-screen-content personal-settings">
+            <div class="login-screen-content header-turquoise photo personal-settings">
                 <div class="list photo">
                     <ul>
                         <li>
+                            <div class="row">
+                                <a href='#' class=" item-link btn-back" id="back">
+                                    <i class="material-icons">chevron_left</i>
+                                </a>
+                                <p>Información Personal</p>
+                            </div>
+                        </li>
+                        <li style="margin-top: 3%">
                             <div class="row">
                                 <div class="col-15"></div>
                                 <div class="col-70">
@@ -25,7 +27,7 @@
                             <div class="row">
                                 <div class="col-30"></div>
                                 <div class="col-40">
-                                    <h4 style="text-align: center; margin-top: 5px;">Agregar foto</h4>
+                                    <h4 style="text-align: center">Agregar foto</h4>
                                 </div>
                                 <div class="col-30"></div>
                             </div>
@@ -36,37 +38,37 @@
             <div>
                 <div class="list no-hairlines-md" id="inputs">
                     <ul>
-                        <li class="item-content item-input">
+                        <li class="item-content item-input linear">
                             <div class="item-inner">
-                                <div class="item-label blue">Nombre</div>
-                                <div class="item-input-wrap asistentes-input"  id="set-name">
+                                <div class="item-label dark-blue">Nombre</div>
+                                <div class="item-input-wrap" id="set-name">
                                     <input type="text" name="set-name">
                                     <i class="material-icons">chevron_right</i>
                                 </div>
                             </div>
                         </li>
-                        <li class="item-content item-input">
+                        <li class="item-content item-input linear">
                             <div class="item-inner">
-                                <div class="item-label blue">Email</div>
-                                <div class="item-input-wrap asistentes-input" id="set-mail">
+                                <div class="item-label dark-blue">Email</div>
+                                <div class="item-input-wrap" id="set-mail">
                                     <input type="text" name="set-mail">
                                     <i class="material-icons">chevron_right</i>
                                 </div>
                             </div>
                         </li>
-                        <li class="item-content item-input">
+                        <li class="item-content item-input linear">
                             <div class="item-inner">
-                                <div class="item-label blue">Celular</div>
-                                <div class="item-input-wrap asistentes-input" id="set-cel">
+                                <div class="item-label dark-blue">Celular</div>
+                                <div class="item-input-wrap" id="set-cel">
                                     <input type="text" name="set-cel">
                                     <i class="material-icons">chevron_right</i>
                                 </div>
                             </div>
                         </li>
-                        <li class="item-content item-input">
+                        <li class="item-content item-input linear">
                             <div class="item-inner">
-                                <div class="item-label blue">Especialidad</div>
-                                <div class="item-input-wrap asistentes-input" id="set-special">
+                                <div class="item-label dark-blue">Especialidad</div>
+                                <div class="item-input-wrap" id="set-special">
                                     <input type="text" name="set-special">
                                     <i class="material-icons">chevron_right</i>
                                 </div>
@@ -89,7 +91,7 @@
                 app.data.store.getItem('doctor').then(function (value) {
                     app.data.doctor = value;
                     console.log(app.data.doctor);
-                    
+
                     $$("#set-name input").val(app.data.doctor.name);
                     $$("#set-mail input").val(app.data.doctor.email);
                     $$("#set-cel input").val(app.data.doctor.cellphone);
@@ -97,7 +99,7 @@
                     $$(".photo .edit").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
                 });
 
-                $$(".back-button").click(function (e) {
+                $$(".btn-back").click(function (e) {
                     app.data.flow = 'default';
                     app.data.store.removeItem('flow').then(function (value) {
                         app.methods.redirectTo('home');

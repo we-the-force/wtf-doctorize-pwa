@@ -1,22 +1,34 @@
 <template>
     <div class="page settings-edit" data-name="settings-edit" id="settings-edit">
-        <div class="page-content login-screen-content">
-            <div class="login-screen-content nav-bar-rect">
-                <div class="block" style="margin: 0px;">
+        <div class="page-content login-screen-content btns">
+            <div class="login-screen-content header-turquoise photo">
+                <div class="list">
+                    <ul>
+                        <li>
+                            <div class="row">
+                                <a href='#' class="item-link btn-back" id="cancel">
+                                    <i class="material-icons">chevron_left</i>
+                                </a>
+                                <p class="title"></p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- <div class="block" style="margin: 0px;">
                     <a href='#' class="item-link list-button back-button">
                         <i class="material-icons close">chevron_left</i>
                     </a>
                     <h3 class="title"></h3>
-                </div>
+                </div> -->
 
             </div>
             <div>
-                <div class="list no-hairlines-md" id="inputs">
+                <div class="list" id="inputs">
                     <ul>
-                        <li class="item-content item-input">
+                        <li class="item-content item-input linear">
                             <div class="item-inner">
-                                <div class="item-label blue"></div>
-                                <div class="item-input-wrap asistentes-input">
+                                <div class="item-label dark-blue"></div>
+                                <div class="item-input-wrap">
                                     <input type="text" required validate>
                                     <span class="input-clear-button"></span>
                                 </div>
@@ -25,11 +37,23 @@
                     </ul>
                 </div>
             </div>
-            <a href="#" class="item-link list-button login-button">
+            <!-- <a href="#" class="item-link list-button btn-rounded">
                 <p>Guardar </p>
                 <i class="material-icons">chevron_right</i>
-            </a>
+            </a> -->
         </div>
+        <div class="list buttons">
+                <ul>
+                    <li>
+                        <div class="row">
+                            <a href="#" class="item-link list-button btn-rounded">
+                                <p>Guardar </p>
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
     </div>
 </template>
 <script>
@@ -66,7 +90,7 @@
                 });
 
 
-                $$(".back-button").click(function (e) {
+                $$(".btn-back").click(function (e) {
                     app.data.flow = 'default';
                     app.data.store.removeItem('flow').then(function (value) {
                         app.methods.redirectTo('settings');
@@ -115,9 +139,9 @@
 
                 function inputCheck() {
                     $$(document).on('input:notempty', ".settings-edit input", function (e) {
-                        $$('#settings-edit .login-button').removeClass('grey');
-                        $$('#settings-edit .login-button').off('click');
-                        $$("#settings-edit .login-button").click(function (e) {
+                        $$('#settings-edit .btn-rounded').removeClass('grey');
+                        $$('#settings-edit .btn-rounded').off('click');
+                        $$("#settings-edit .btn-rounded").click(function (e) {
                             callApi($$(".settings-edit input").val());
                         });
                     });
@@ -178,8 +202,8 @@
                 }
 
                 function disableButton() {
-                    $$('#settings-edit .login-button').addClass('grey');
-                    $$('#settings-edit .login-button').off('click');
+                    $$('#settings-edit .btn-rounded').addClass('grey');
+                    $$('#settings-edit .btn-rounded').off('click');
                 }
             }
         }

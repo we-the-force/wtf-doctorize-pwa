@@ -14,13 +14,6 @@
                         </li>
                     </ul>
                 </div>
-                <!-- <div class="block" style="margin: 0px;">
-                    <a href='#' class="item-link list-button back-button">
-                        <i class="material-icons close">chevron_left</i>
-                    </a>
-                    <h3 class="title"></h3>
-                </div> -->
-
             </div>
             <div>
                 <div class="list" id="inputs">
@@ -37,10 +30,6 @@
                     </ul>
                 </div>
             </div>
-            <!-- <a href="#" class="item-link list-button btn-rounded">
-                <p>Guardar </p>
-                <i class="material-icons">chevron_right</i>
-            </a> -->
         </div>
         <div class="list buttons">
                 <ul>
@@ -64,6 +53,8 @@
                 var self = this;
                 var app = self.$app;
                 var specialties, specialityID;
+
+                disableButton();
 
                 app.data.store.getItem('doctor').then(function (value) {
                     app.data.doctor = value;

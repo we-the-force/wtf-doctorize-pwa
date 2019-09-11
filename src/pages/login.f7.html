@@ -135,11 +135,11 @@
                                         .setItem("doctor", e)
                                         .then(function(value) {
                                             console.log(value);
+                                            app.methods.redirectTo('home');
                                         })
                                         .catch(function(err) {
                                             console.log(err);
                                         });
-                                    app.methods.redirectTo('home');
                                 },
                                 function(e) {
                                     app.preloader.hide();

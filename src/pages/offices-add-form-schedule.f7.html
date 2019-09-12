@@ -135,7 +135,7 @@
                     app.data.doctor = value;
                     app.data.store.getItem('office').then(function (value) {
                         app.data.consultorio = value;
-
+                        
                         disableButton();
 
                         if (app.data.consultorio.edit) {
@@ -219,10 +219,31 @@
                         app.data.consultorio.days = [];
                         for (var i = 0; i < days.length; i++) {
                             if (days[i].checked == true) {
-                                app.data.consultorio.days.push(days[i].value);
+                                switch (days[i].value) {
+                                    case "1":
+                                    app.data.consultorio.days.push(1);
+                                        break;
+                                    case "2":
+                                    app.data.consultorio.days.push(2);
+                                        break;
+                                    case "3":
+                                    app.data.consultorio.days.push(3);
+                                        break;
+                                    case "4":
+                                    app.data.consultorio.days.push(4);
+                                        break;
+                                    case "5":
+                                    app.data.consultorio.days.push(5);
+                                        break;
+                                }
+                                
                             }
                         }
                         app.preloader.show('blue');
+
+                        console.log(app.data.consultorio);
+                        console.log('ahoy');
+                        
                         if (app.data.consultorio.edit) {
                             // patch put
                             console.log(app.data.consultorio);
@@ -255,7 +276,6 @@
                                             app.methods.redirectTo('offices-show');
                                         })
                                         .catch(function (err) {
-                                            console.log(err);
                                         });
                                 },
                                 error: function (e) {

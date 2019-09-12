@@ -378,12 +378,12 @@
                         var $inputField = $$('#file-upload');
                         $inputField.off('change');
                         $inputField.on('change', function (e) {
-                            $$('.upload-photo').off('click');
 
                             var file = e.target.files[0];
 
                             if (file) {
                                 if (/^image\//i.test(file.type)) {
+                                    $$('.upload-photo').off('click');
                                     readFile(file);
                                 } else {
                                     alert('Not a valid image!');
@@ -463,6 +463,7 @@
                                         app.methods.redirectTo('register-s4');
                                     });
                                 }, function (e) {
+                                    app.dialog.alert("error");
                                     app.preloader.hide();
                                 });
 
@@ -500,6 +501,7 @@
                                         });
                                     },
                                     error: function (e) {
+                                        app.dialog.alert("error");
                                         app.preloader.hide();
                                     }
                                 });
@@ -531,6 +533,7 @@
                                     });
                                 }, function (e) {
                                     app.preloader.hide();
+                                    app.dialog.alert("Error");
                                 });
                             });
                         });

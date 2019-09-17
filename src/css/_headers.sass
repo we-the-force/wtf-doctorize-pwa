@@ -52,17 +52,47 @@
             font-size: 14px
             line-height: 17px
         &.nuevo-paciente
-            .web-cam
+            .border
+                position: inherit
                 width: 110px
                 height: 110px
+                padding: 0px
                 margin-left: auto
                 margin-right: auto
+                top: unset
+                left: unset
+                transform: unset
                 border-radius: 50%
-                -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%)
-                background-image: url(/static/images/camera.svg)
-                background-repeat: no-repeat
-                background-size: contain
-                background-position: 50% 50%
+                border: 4px solid white
+                background: unset
+                box-shadow: 0px 2.59567px 19.4675px rgba(16, 43, 200, 0.2)
+                .upload-photo
+                    background: $back-color
+                    width: 110px
+                    height: 110px
+                    border-radius: 50%
+                    -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%)
+                    position: absolute
+                    top: 50%
+                    left: 50%
+                    transform: translate(-50%, -50%)
+                    .camera
+                        width: 110px
+                        height: 110px
+                        position: absolute
+                        top: 50%
+                        left: 50%
+                        transform: translate(-56%, -55%)
+                .avatar
+                    width: 110px
+                    height: 110px
+                    margin-left: auto
+                    margin-right: auto
+                    border-radius: 50%
+                    -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%)
+                    background-repeat: no-repeat
+                    background-size: contain
+                    background-position: 50% 50%
         &.personal-settings
             img 
                 display: block

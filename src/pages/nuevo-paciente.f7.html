@@ -13,19 +13,19 @@
                             </div>
                         </li>
                         <li>
-                            <div class="row">
-                                <div class="col-15"></div>
-                                <div class="col-70">
-                                    <div class="web-cam paciente" id="web-cam"></div>
+                            <div class="row" style="margin-top: 5px">
+                                <div class="border">
+                                    <div class="upload-photo" id="upload-photo">
+                                        <img src="../static/images/add_a_photo_24px.svg" class="camera" alt="">
+                                    </div>
                                 </div>
-                                <div class="col-15"></div>
                             </div>
                         </li>
                         <li>
                             <div class="row">
                                 <div class="col-30"></div>
                                 <div class="col-40">
-                                    <h4 style="text-align: center">Agregar foto</h4>
+                                    <h4 style="text-align: center; margin-top: 10px">Agregar foto</h4>
                                 </div>
                                 <div class="col-30"></div>
                             </div>
@@ -242,7 +242,7 @@
                     $$('#nuevo-paciente .btn-rounded').off('click');
                 }
 
-                $$('.web-cam').on('click', function () {
+                $$('.nuevo-paciente .upload-photo').on('click', function () {
                     ac.open();
 
                     $$('.actions-group #cancel').on('click', function () {
@@ -253,12 +253,12 @@
                         var $inputField = $$('#file-upload');
                         $inputField.off('change');
                         $inputField.on('change', function (e) {
-                            $$('.web-cam').off('click');
 
                             var file = e.target.files[0];
 
                             if (file) {
                                 if (/^image\//i.test(file.type)) {
+                                    $$('.nuevo-paciente .upload-photo').off('click');
                                     readFile(file);
                                 } else {
                                     alert('Not a valid image!');
@@ -338,7 +338,7 @@
 
                 function sendFile(dataURL) {
                     var imgHtml = '<img id="web-img" src="' + dataURL + '" alt="">';
-                    $$('.web-cam').html(imgHtml);
+                    $$('.nuevo-paciente .upload-photo').html(imgHtml);
                     c = new croppie(document.getElementById('web-img'), {
                         viewport: {
                             width: 110,

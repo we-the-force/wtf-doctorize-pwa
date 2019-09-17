@@ -473,7 +473,7 @@
                 }
 
                 function modificarDoctor() {
-                    $$('h1').text('Foto de Perfil');
+                    $$('.photo-module h1').text('Foto de Perfil');
                     $$('.header-blue p').text('Agrega tu foto de perfil');
                     app.data.store.getItem('doctor').then(function (value) {
                         app.data.doctor = value;
@@ -513,8 +513,8 @@
                 function registrarAsistente() {
                     app.data.store.getItem('assistant').then(function (value) {
                         app.data.assistant = value;
-                        $$('h1').text('Foto de Perfil');
-                        $$('h4').text('Agrega tu foto de perfil');
+                        $$('.photo-module h1').text('Foto de Perfil');
+                        $$('.photo-module h4').text('Agrega tu foto de perfil');
 
                         $$('#photo-module .btn-rounded').off('click');
                         $$('#photo-module .btn-rounded').on('click', function (e) {

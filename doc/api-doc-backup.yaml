@@ -14,7 +14,7 @@ servers:
 
 info:
   description: Endpoints for Doctorize API
-  version: 3.0.0
+  version: 2.0.0
   title: Doctorize API
   contact:
     email: will.alvarez@gmail.com
@@ -24,16 +24,14 @@ info:
 tags:
   - name: doctors
     description: Basic doctor operations
-  - name: doctors - schedule
-    description: Basic operations for doctor's Schedule
+  - name: doctors - offices
+    description: Basic operations for doctor's offices
   - name: doctors - assistants
     description: Basic operations for doctor assistants
   - name: doctors - appointments
     description: Basic operations for doctor's appointments
   - name: doctors - patients
     description: Basic operations for doctor's patients
-  - name: patients - expedient
-    description: Basic operations for patient's expedient
   - name: account
     description: Basic account operations
 
@@ -53,7 +51,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Doctor'
+                  $ref: '#/components/schemas/UserCreated'
         400:
           description: bad input parameter
         409:
@@ -141,14 +139,14 @@ paths:
         description: edit a doctor
 
 
-  /doctors/{id}/schedule:
+  /doctors/{id}/offices:
     get:
       tags:
         - doctors
-          - schedule
-      description: List doctor's schedule
-      summary: List doctor's schedule
-      operationId: showSchedule
+          - offices
+      description: List doctor's offices
+      summary: List doctor's offices
+      operationId: showOffices
       parameters:
         - in: path
           name: id
@@ -159,13 +157,13 @@ paths:
             format: int64
       responses:
         200:
-          description: List of doctor's schedule
+          description: List of doctor's offices
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Schedule'
+                  $ref: '#/components/schemas/Office'
         400:
           description: bad input parameters
         404:
@@ -173,10 +171,10 @@ paths:
     post:
       tags:
         - doctors
-          - schedule
-      description: Create a doctor's schedule
-      summary: Create a doctor's schedule
-      operationId: addSchedule
+          - offices
+      description: Create a doctor's office
+      summary: Create a doctor's office
+      operationId: addOffices
       parameters:
         - in: path
           name: id
@@ -187,36 +185,36 @@ paths:
             format: int64
       responses:
         200:
-          description: schedule created
+          description: office created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Schedule'
+                $ref: '#/components/schemas/Office'
         400:
           description: bad input parameter
         409:
-          description: schedule already exists
+          description: office already exists
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Schedule'
-        description: schedule to add
+              $ref: '#/components/schemas/Office'
+        description: Office to add
 
-  /doctors/{id}/schedule/{scheduleId}:
+  /offices/{officeId}:
     get:
       tags:
         - doctors
-          - schedule
-      description: return the details of an schedule
-      summary: Search a schedule
-      operationId: searcSchedule
+          - offices
+      description: return the details of an office
+      summary: Search an office
+      operationId: searchOffice
       parameters:
         - in: path
-          name: scheduleId
+          name: officeId
           required: true
-          description: schedule id
+          description: office id
           schema:
             type: integer
             format: int64
@@ -226,60 +224,60 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Schedule'
+                $ref: '#/components/schemas/Office'
         400:
           description: bad input parameter
     delete:
       tags:
         - doctors
-          - schedule
-      description: delete a Schedule
-      summary: delete a Schedule
-      operationId: deleteSchedule
+          - offices
+      description: delete an office
+      summary: delete an office
+      operationId: deleteOffice
       parameters:
         - in: path
-          name: ScheduleId
+          name: officeId
           required: true
-          description: Schedule id
+          description: office id
           schema:
             type: integer
             format: int64
       responses:
         200:
-          description: Schedule deleted successfully
+          description: office deleted successfully
         400:
           description: Invalid parameters
         404:
-          description: Schedule not found
+          description: office not found
     patch:
       tags:
         - doctors
-          - schedule
-      description: edit Schedule info
-      summary: edit Schedule info
-      operationId: editSchedule
+          - offices
+      description: edit office info
+      summary: edit office info
+      operationId: editOffice
       parameters:
         - in: path
-          name: ScheduleId
+          name: officeId
           required: true
-          description: Schedule id
+          description: office id
           schema:
             type: integer
             format: int64
       responses:
         200:
-          description: Schedule Details Updated
+          description: office Details Updated
         400:
           description: bad input parameter
         404:
-          description: Schedule not found
+          description: office not found
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Schedule'
-        description: edit schedule
+              $ref: '#/components/schemas/Office'
+        description: edit office
 
   /doctors/{id}/appointments:
     get:
@@ -571,156 +569,6 @@ paths:
               $ref: '#/components/schemas/Patient'
         description: edit patient
 
-  /patients/{patientId}/expedient:
-    get:
-      tags:
-        - patients
-          - expedient
-      description: List patient expedient
-      summary: List patient expedient
-      operationId: listExpedient
-      parameters:
-        - in: path
-          name: id
-          required: true
-          description: doctor id
-          schema:
-            type: integer
-            format: int64
-        - in: query
-          name: filter
-          description: 'filtrar por el campo...'
-          schema:
-            type: string
-        - in: query
-          name: search
-          description: 'que contenga la siguiente búsqueda...'
-          schema:
-            type: string
-      responses:
-        200:
-          description: List of patient expedient
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Expedient'
-        400:
-          description: bad input parameters
-        404:
-          description: Expedient not found
-    post:
-      tags:
-        - patients
-          - expedient
-      description: Create a patient expedient
-      summary: Create a patient expedient
-      operationId: addExpedient
-      parameters:
-        - in: path
-          name: id
-          required: true
-          description: doctor id
-          schema:
-            type: integer
-            format: int64
-      responses:
-        200:
-          description: expedient created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Expedient'
-        400:
-          description: bad input parameter
-        409:
-          description: expedient already exists
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Expedient'
-        description: expedient to add
-
-  /patients/{patientId}/expedient/{expedientId}:
-    get:
-      tags:
-        - patients
-          - expedient
-      description: return details of a expedient
-      summary: search a expedient
-      operationId: searchExpedient
-      parameters:
-        - in: path
-          name: expedientId
-          required: true
-          description: expedient id
-          schema:
-            type: integer
-            format: int64
-      responses:
-        200:
-          description: search results matching criteria
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Expedient'
-        400:
-          description: bad input parameter
-    delete:
-      tags:
-        - patients
-          - expedient
-      description: delete an expedient
-      summary: delete an expedient
-      operationId: deleteExpedient
-      parameters:
-        - in: path
-          name: expedientId
-          required: true
-          description: expedient id
-          schema:
-            type: integer
-            format: int64
-      responses:
-        200:
-          description: expedient deleted successfully
-        400:
-          description: Invalid parameters
-        404:
-          description: expedient not found
-    patch:
-      tags:
-          - patients
-            - expedient
-      description: edit expedient info
-      summary: edit expedient info
-      operationId: editExpedient
-      parameters:
-        - in: path
-          name: expedientId
-          required: true
-          description: expedient id
-          schema:
-            type: integer
-            format: int64
-      responses:
-        200:
-          description: expedient Details Updated
-        400:
-          description: bad input parameter
-        404:
-          description: expedient not found
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Expedient'
-        description: edit expedient
-
   /doctors/{id}/assistants:
     get:
       tags:
@@ -782,13 +630,13 @@ paths:
           description: bad input parameter
         409:
           description: assistant already exists
-      #requestBody:
-        #required: true
-        #content:
-          #application/json:
-            #schema:
-             # $ref: '#/components/schemas/InviteAssistant'
-       # description: Assistant to add
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InviteAssistant'
+        description: Assistant to add
 
   /assistants/{assistantId}:
     get:
@@ -945,29 +793,7 @@ paths:
         content:
           application/json:
             schema:
-              required:
-                - email
-                - code
-                - password
-                - name
-                - imageData
-              properties:
-                email:
-                  type: string
-                  example: 'will.alvarez@gmail.com'
-                code:
-                  type: string
-                  example: 'hxr1s9'
-                password:
-                  type: string
-                  format: password
-                  example: '****'
-                name:
-                  type: string
-                  example: 'William Alv'
-                imageData:
-                  type: string
-                  format: base64
+              $ref: '#/components/schemas/confirmationAssistant'
       responses:
         200:
           description: Account confirmation successfully
@@ -1007,28 +833,13 @@ paths:
       summary: account login
       operationId: passwordConfirmation
       description: Recover user's password with email
+
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              required:
-                - email
-                - password
-                - confirmPassword
-                - code
-              properties:
-                email:
-                  type: string
-                  format: email
-                password:
-                  type: string
-                  format: password
-                confirmPassword:
-                  type: string
-                  format: password
-                code:
-                  type: string
+              $ref: '#/components/schemas/PasswordConfirmation'
             example:
               email: 'will.alvarez@gmail.com'
               password: '****'
@@ -1044,82 +855,158 @@ paths:
 
 components:
   schemas:
+
+    User:
+      type: object
+      required:
+        - name
+        - email
+        - cellphone
+        - password
+        - imageData
+      properties:
+        password:
+          type: string
+          format: password
+        name:
+          type: string
+          example: Will Alvarez
+        email:
+          type: string
+          example: will.alvarez@gmail.com
+        cellphone:
+          type: string
+          example: '8442614767'
+        imageData:
+          type: string
+
     Doctor:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        email: 
-          type: string
-        password:
-          type: string
-          format: password 
-        cédula:
-          type: string
-        imageData:
-          type: string
-        speciality:
+      allOf:     # Combines the BasicErrorModel and the inline model
+        - $ref: '#/components/schemas/User'
+        - type: object
+          required:
+            - speciality
+          properties:
+            id:
+              type: integer
+            speciality:
               type: object
               properties:
                 id:
                   type: integer
-        sub-speciality:
-              type: object
-              properties:
-                id:
-                  type: integer
-        phone:
-          type: string
-        birthdate:
-          type: string
-          format: date-time
-    
+
     Assistant:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        email: 
-          type: string
-        password:
-          type: string
-          format: password 
-        imageData:
-          type: string
-        phone:
-          type: string
-        birthdate:
-          type: string
-          format: date-time
+      allOf:     # Combines the BasicErrorModel and the inline model
+        - $ref: '#/components/schemas/User'
+        - type: object
+          required:
+            - doctorId
+            - offices
+            - permissions
+          properties:
+            id:
+              type: integer
+            doctorId:
+              type: integer
+            offices:
+              type: array
+              items:
+                type: object
+                properties:
+                  officeId:
+                    type: integer
+                  officeName:
+                    type: string
+                  permissions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+
 
     Appointment:
-      type: object
+      required:
+        - doctorId
+        - officeId
+        - date
+        - name
+        - email
+        - phone
       properties:
-        id: 
+        id:
           type: integer
-        email: 
+        email:
+          type: string
+          example: cristof_tb@hotmail.com
+        doctor:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 99
+            name:
+              type: string
+              example: 'Dr Name'
+
+        office:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 32
+            name:
+              type: string
+              example: 'Office name'
+        name:
+          type: string
+          example: cristopher
+        phone:
+          type: string
+          example: '8441234567'
+        date:
+          type: string
+          format: date-time
+          example: '2018-11-16T15:31:46.437-06'
+
+    Office:
+      type: object
+      required:
+        - email
+        - name
+        - phone
+        - address
+        - userId
+        - lat
+        - lng
+        - startTime
+        - closeTime
+        - days
+        - lunchStartTime
+        - lunchCloseTime
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+        userId:
+          type: integer
+        name:
           type: string
         phone:
           type: string
-        name:
+          format: phone
+        hospital:
           type: string
-        date:
+        number:
           type: string
-          format: date-time 
-        office: 
-          type: string 
-
-    Schedule:
-      type: object
-      properties:
-        id: 
-          type: integer
-        office:
+        address:
           type: string
+        lat:
+          type: number
+        lng:
+          type: number
         startTime:
           type: string
         closeTime:
@@ -1128,97 +1015,184 @@ components:
           type: array
           items:
             type: integer
+        lunchStartTime:
+          type: string
+        lunchCloseTime:
+          type: string
+        assistant:
+          type: object
+          properties:
+            assistantId:
+              type: integer
+            assistantName:
+              type: integer
+            permissions:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
 
     Patient:
+      allOf:     # Combines the BasicErrorModel and the inline model
+        - $ref: '#/components/schemas/User'
+        - type: object
+          properties:
+            id:
+              type: integer
+            birthdate:
+              type: string
+              format: date-time
+              example: '2018-11-16T15:31:46.437'
+            gender:
+              type: integer
+              example: 1
+            maritalStatus:
+              type: integer
+              example: 1
+            bloodType:
+              type: string
+            bloodPressure:
+              type: string
+            weight:
+              type: integer
+            height:
+              description: 'height in meters'
+              type: integer
+            doctor:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 99
+            office:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 19
+            medicalAppointment:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 7
+
+    InviteAssistant:
       type: object
+      required:
+        - email
+        - doctorId
+        - officeId
+        - permissions
+      properties:
+        email:
+          type: string
+        doctorId:
+          type: integer
+        officeId:
+          type: integer
+        permissions:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+
+    UserCreated:
+      required:
+        - name
+        - password
+        - email
+        - cellphone
+        - imageData
+        - speciality
       properties:
         id:
           type: integer
-        email: 
-          type: string
-        phone:
-          type: string
+          example: 14
         name:
           type: string
-        direction:
+          example: Will Alvarez
+        password:
           type: string
-        gender:
+          example: '$2a$10$P.RAVEFnDOeP3bqON.W0IeRnGrx48B0RzqdBzICTjdDI7JLYydFce'
+        email:
           type: string
-        birthdate:
+          example: will.alvarez@gmail.com
+        cellphone:
+          type: string
+          example: '8442614767'
+          # changes
+        roleId:
+          type: string
+          example: null
+        photo:
+          type: string
+          example: 'files/user/userdetails/17/'
+        status:
+          type: integer
+          example: 2
+        confirmationCode:
+          type: string
+          example: '2e1cbd'
+        createDate:
           type: string
           format: date-time
-        curp:
+          example: null
+        token:
           type: string
-        
-    Expedient:
-      type: object
-      properties:
-        id:
-          type: integer
-        patientId:
-          type: integer
-        cost: 
-          type: integer
-        vitals:
+          example: null
+        imageData:
+          type: string
+        speciality:
           type: object
           properties:
-            Blood_Pressure:
+            id:
               type: integer
-            Height:
-              type: integer
-            Weight:
-              type: integer
-            Temperature:
-              type: integer
-            Pressure:
-              type: integer
-            Pulse:
-              type: integer
-        Diagnostic:
-          type: string
-        habits:
-          type: string
-        condition:
-          type: string
-        ailment:
-          type: string
-        medicine:
-          type: object
-          properties:
-            name:
-              type: string
-            time: 
-              type: string
-            duration: 
-              type: string
-            dose: 
-              type: string
-            concentration:
-              type: string
-            others:
-              type: string
-        procedure:
-          type: object
-          properties:
-            name: 
-              type: string
-            specialist:
-              type: string
-            description:
-              type: string
-        transfer:
-          type: object
-          properties:
-            from:
-              type: string
-            to:
-              type: string
-            specialist:
-              type: string
-        document:
-          type: string
-        date:
-          type: string
-          format: date-time
-      
 
+    confirmationAssistant:
+      required:
+        - email
+        - code
+        - password
+        - name
+        - imageData
+      properties:
+        email:
+          type: string
+          example: 'will.alvarez@gmail.com'
+        code:
+          type: string
+          example: 'hxr1s9'
+        password:
+          type: string
+          format: password
+          example: '****'
+        name:
+          type: string
+          example: 'William Alv'
+        imageData:
+          type: string
+          format: base64
+
+    PasswordConfirmation:
+      required:
+        - email
+        - password
+        - confirmPassword
+        - code
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+        confirmPassword:
+          type: string
+          format: password
+        code:
+          type: string

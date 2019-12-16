@@ -1112,6 +1112,8 @@ components:
           format: date-time 
         office: 
           type: string 
+        assistantId:
+          type: integer
 
     Schedule:
       type: object

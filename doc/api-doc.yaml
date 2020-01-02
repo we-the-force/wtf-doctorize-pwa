@@ -1151,6 +1151,8 @@ components:
           format: date-time
         curp:
           type: string
+        bloodType:
+          type: string
         
     Expedient:
       type: object

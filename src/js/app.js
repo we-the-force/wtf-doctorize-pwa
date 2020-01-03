@@ -96,7 +96,7 @@ var app = new Framework7({
                 blood: '',
                 pressure: '',
             },
-            url: '//api.mydoctorize.com'
+            url: 'https://api.mydoctorize.com'
         };
     },
     // App root methods

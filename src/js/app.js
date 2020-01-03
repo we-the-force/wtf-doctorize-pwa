@@ -18,7 +18,8 @@ import routes from './routes.js';
 import register from './register.js';
 
 Framework7.request.setup({
-    contentType: "application/json"
+    contentType: "application/json",
+    "Referrer-Policy": "origin-when-cross-origin"
 });
 
 

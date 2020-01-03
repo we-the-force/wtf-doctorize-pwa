@@ -19,7 +19,9 @@ import register from './register.js';
 
 Framework7.request.setup({
     contentType: "application/json",
-    "Referrer-Policy": "origin-when-downgrade"
+    referrerPolicy: "origin-when-downgrade",
+    crossDomain: true,
+    "Access-Control-Allow-Origin": "*"
 });
 
 

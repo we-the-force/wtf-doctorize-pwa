@@ -143,7 +143,6 @@ var app = new Framework7({
     },
     flow: 'default' //RA registrar asistente, RD registrar doctor, RP registrar paciente, UA update asistente, UD update doctor, UP update patient
 });
-app.use(cors());
 
 if (getCookie("landingPage") != 'visited') {
     app.methods.redirectTo('intro-splash-01');

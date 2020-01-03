@@ -117,7 +117,7 @@ var routes = [
         name: 'intro-splash-01',
         path: '/intro-splash-01',
         component: IntroSplash1,
-    }, 
+    },
     {
         name: 'agendar-cita',
         path: '/agendar-cita',
@@ -212,11 +212,11 @@ var routes = [
                     about: 'Hello, i am creator of Framework7! Hope you like it!',
                     links: [{
                             title: 'Framework7 Website',
-                            url: 'http://framework7.io',
+                            url: 'https://framework7.io',
                         },
                         {
                             title: 'Framework7 Forum',
-                            url: 'http://forum.framework7.io',
+                            url: 'https://forum.framework7.io',
                         },
                     ]
                 };

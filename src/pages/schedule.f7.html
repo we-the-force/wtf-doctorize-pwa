@@ -143,6 +143,11 @@
                         panel.close();
                         app.methods.redirectTo('settings');
                     });
+                    $$(".panel #log-out").click(function (params) {
+                        panel.close();
+                        app.data.store.clear();
+                        app.methods.redirectTo('root');
+                    });
                 });
 
                 /* abre la lista de la toolbar */

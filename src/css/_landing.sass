@@ -1,0 +1,179 @@
+.landing
+    padding-bottom: 200vh
+    background-color: #EBEFF2 !important
+    background-image: url('../static/images/HOME.png'),url('../static/images/FOOTER.png') !important
+    background-attachment: local, local !important
+    background-repeat: no-repeat, no-repeat !important
+    background-size: contain, 115% 40% !important
+    background-position: left top, left bottom !important
+    .row
+        margin-top: 40px
+        margin-bottom: 40px
+        padding-top: 40px
+        position: relative
+        top: 120px
+        .cell2
+            position: absolute
+            right: 0
+            top: -220px
+        .info
+            display: flex
+            flex-direction: column
+            justify-content: center
+            align-items: center
+            padding-left: 50px
+            padding-right: 50px
+            .dot
+                border-radius: 50%
+                width: 116px
+                height: 116px
+                background: linear-gradient(285.87deg, #2FCFBC 10.07%, #029AF0 86.62%)
+                display: flex
+                justify-content: center
+                align-items: center
+                color: white
+                z-index: 1
+                .icon
+                    font-size: 60px
+            .card
+                position: relative
+                top: -60px
+                width: 100%
+                height: 150px
+                display: flex
+                justify-content: flex-start
+                align-items: center
+                flex-direction: column
+                padding-top: 50px
+                h2
+                    margin-top: 10px
+                    margin-bottom: 10px
+                    font-family: Avenir-Medium
+                    font-size: 30px
+                    line-height: 32px
+                    text-align: center
+                    letter-spacing: 2px
+                    color: #029AF0
+                p
+                    font-family: Avenir-Medium
+                    font-size: 18px
+                    line-height: 20px
+                    text-align: center
+                    color: #029AF0
+                    padding-right: 45px
+                    padding-left: 45px
+                    margin-bottom: 10px
+    .parr1
+        position: relative
+        top: 200px
+        left: 160px
+        width: 450px
+        h2
+            font-family: Avenir-Medium
+            font-size: 28px
+            font-weight: 900
+            line-height: 32px
+            letter-spacing: 2px
+            color: #029AF0
+        p
+            font-size: 18px !important
+            line-height: 20px !important
+            color: #029AF0
+    .parr2
+        font-family: Avenir-Medium
+        font-size: 25px
+        line-height: 27px
+        text-align: right
+        color: #004F88
+        transform: translate(40px, 140px)
+    .cell1
+        position: relative
+        top: 192px
+        left: -10px
+        display: flex
+        button
+            font-family: Avenir-Medium
+            font-size: 17px
+            line-height: 23px
+            background-color: #FDBC5D
+            position: relative
+            left: -66px
+            top: 250px
+            width: 149px
+            height: 48px
+    .cells
+        position: relative
+        top: 100px
+        .img1
+            position: absolute
+            top: 0
+            left: 50%
+            transform: translate(-90%, 0%)
+        .img2
+            position: absolute
+            top: 0
+            left: 50%
+            transform: translate(-50%, 35%)
+        .img3
+            position: absolute
+            top: 0
+            left: 50%
+            transform: translate(-10%, 70%)
+    .header
+        overflow: hidden
+        padding: 20px 50px
+        a
+            float: left
+            color: black
+            text-align: center
+            padding: 12px
+            text-decoration: none
+            font-size: 16px
+            line-height: 20px
+            color: #88A8C9
+            border-radius: 4px
+            &.logo
+                font-size: 25px
+                font-weight: bold
+        .header-right
+            position: absolute
+            right: 70px
+            top: 30px
+        @media screen and (max-width: 640px)
+            a
+                float: none
+                display: block
+                text-align: left
+            .header-right
+                float: none
+                position: unset
+.footer
+    position: static
+    display: flex
+    align-items: center
+    justify-content: space-between
+    height: 300px
+    right: 0
+    bottom: 0
+    left: 0
+    padding: 1rem
+    background-color: #004F88
+    .location,.home
+        float: left
+        margin: 50px
+    .social
+        display: flex
+        margin: 50px
+        .dot
+            display: flex
+            justify-content: center
+            align-items: center
+            font-size: 30px
+            color: #004F88
+            background: #1164A0
+            border-radius: 50%
+            width: 80px
+            height: 80px
+            margin: 50px
+    h3,p,a
+        color: #E5E9F2

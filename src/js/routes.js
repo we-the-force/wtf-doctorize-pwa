@@ -1,4 +1,5 @@
 // import HomePage from '../pages/home.f7.html';
+import LandingPage from '../pages/landing.f7.html'
 import LoginPage from '../pages/login.f7.html';
 import RecoveryPage from '../pages/recovery.f7.html';
 import RegisterS1Page from '../pages/register-step1.f7.html';
@@ -38,6 +39,11 @@ var routes = [
         name: "root",
         path: '/',
         component: LoginPage,
+    },
+    {
+        name: "landing",
+        path: '/landing',
+        component: LandingPage,
     },
     {
         name: "home",

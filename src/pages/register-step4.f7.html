@@ -1,23 +1,20 @@
-
 <template>
-<div class="page recovery-sent-page" data-name="register-step3">
-    <div class="page-content login-screen-content">
-      <div class="screen-title">
+  <div class="page recovery-sent-page" data-name="register-step4">
+    <div class="page-content login-screen-content register-step4 center btns">
+      <div class="screen-title header-blue">
         <div class="list">
           <ul>
             <li>
               <div class="row">
-                <div class="col-10"></div>
-                <div class="col-80">
+                <div class="col-15"></div>
+                <div class="col-70">
                   <h1>Hemos enviado un correo</h1>
-              
                 </div>
-                <div class="col-10"></div>
+                <div class="col-15"></div>
               </div>
             </li>
           </ul>
         </div>
-        
       </div>
       <div class="list">
         <ul>
@@ -25,13 +22,12 @@
             <div class="row">
               <div class="col-30"></div>
               <div class="col-40">
-
-                <img src="/static/images/mail_outline_24px.svg" class="recovery-sent-img" alt="">
+                <img src="../static/images/email_24px.svg" alt="">
               </div>
               <div class="col-30"></div>
             </div>
           </li>
-          
+
         </ul>
       </div>
       <div class="list">
@@ -40,37 +36,35 @@
             <div class="row">
               <div class="col-10"></div>
               <div class="col-80">
-                <h4>
-                  Para poder terminar el proceso de registro te enviamos un correo con un link para validar que no eres un robot.
-                </h4>
+                <p class='dark-blue'>
+                  Hemos enviado un correo con un link para activar la cuenta.
+                </p>
               </div>
               <div class="col-10"></div>
             </div>
           </li>
         </ul>
       </div>
-      <div class="list">
-        <ul>
-          <li>
-            <div class="row">
-              <div class="col-30"></div>
-              <div class="col-40">
-                <a href="/" class="item-link list-button login-button aceptar-button">
-                  <p>Aceptar </p>
-                  <i class="material-icons">chevron_right</i>
-                </a>
-              </div> 
-              <div class="col-30"></div>
-            </div>
-              
-            
-          </li>
-        </ul>
-        <!-- <div class="block-footer">Some text about login information.<br>Click "Sign In" to close Login Screen</div> -->
-      </div>
+    </div>
+    <div class="list buttons">
+      <ul>
+        <li>
+          <div class="row">
+            <a href="/account/signup/confirmation" class="item-link list-button btn-rounded center">
+              <p>Aceptar </p>
+              <i class="material-icons">chevron_right</i>
+            </a>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 <script>
-  export default {}
+  import $$ from 'dom7';
+  import Framework7 from 'framework7/framework7.esm.bundle.js';
+  import routes from '../js/routes.js';
+
+  export default {
+  }
 </script>

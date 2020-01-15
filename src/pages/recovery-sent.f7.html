@@ -1,23 +1,20 @@
-
 <template>
-<div class="page recovery-sent-page" data-name="recovery-sent">
-    <div class="page-content login-screen-content">
-      <div class="screen-title">
+  <div class="page recovery-sent-page" data-name="recovery-sent">
+    <div class="page-content login-screen-content recovery-sent center btns">
+      <div class="screen-title header-blue">
         <div class="list">
           <ul>
             <li>
               <div class="row">
-                <div class="col-10"></div>
-                <div class="col-80">
+                <div class="col-15"></div>
+                <div class="col-70">
                   <h1>Hemos enviado un correo</h1>
-              
                 </div>
-                <div class="col-10"></div>
+                <div class="col-15"></div>
               </div>
             </li>
           </ul>
         </div>
-        
       </div>
       <div class="list">
         <ul>
@@ -25,13 +22,12 @@
             <div class="row">
               <div class="col-30"></div>
               <div class="col-40">
-
-                <img src="/static/images/mail_outline_24px.svg" class="recovery-sent-img" alt="">
+                <img src="../static/images/email_24px.svg" class="recovery-sent-img" alt="">
               </div>
               <div class="col-30"></div>
             </div>
           </li>
-          
+
         </ul>
       </div>
       <div class="list">
@@ -40,31 +36,28 @@
             <div class="row">
               <div class="col-10"></div>
               <div class="col-80">
-                <h4>
-                  Para ayudarte a recuperar tu cuenta hemos enviado un correo con un link para resetear la contraseña.
-                </h4>
+                <p class='dark-blue'>
+                  Para recuperar la cuenta hemos enviado un correo con un link para reestablecer la contraseña.
+                </p>
               </div>
               <div class="col-10"></div>
             </div>
           </li>
         </ul>
       </div>
-      <div class="list">
-        <ul>
-          <li>
-            <div class="row">
-              <div class="col-30"></div>
-              <div class="col-40">
-                <a href="/" class="item-link list-button login-button aceptar-button">
-                  <p>Aceptar </p>
-                  <i class="material-icons">chevron_right</i>
-                </a>
-              </div> 
-              <div class="col-30"></div>
-            </div>
-          </li>
-        </ul>
-      </div>
+
+    </div>
+    <div class="list buttons">
+      <ul>
+        <li>
+          <div class="row">
+            <a href="/" class="item-link list-button btn-rounded center">
+              <p>Aceptar </p>
+              <i class="material-icons">chevron_right</i>
+            </a>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </template>

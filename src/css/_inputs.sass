@@ -1,0 +1,41 @@
+.item-input
+    .item-inner
+        height: 56px
+    &-wrap
+        &.rounded
+            height: 40px
+            background-color: $white
+            border-radius: 20px
+            box-shadow: -2px 2px 15px rgba(16, 43, 200, 0.2)
+            transition: all 0.2s
+            transform: scale(1)
+            --f7-grid-gap: 50px
+            i
+                color: $light-blue
+                position: absolute
+                width: 24px
+                height: 24px
+                top: 8px
+                left: 8px
+                &.right
+                    right: 8px
+                    left: unset
+            &:after
+                background: transparent !important
+            .input-clear-button
+                right: 15px
+            .pass
+                -webkit-text-security: disc
+    &.linear
+        padding-left: 20px
+        .item-inner
+            height: 65px            
+        .item-label
+            font: 16px/20px 'Nunito'
+    &-focused
+        .rounded
+            transform: scale(1.01)
+            box-shadow: -2px 2px 15px rgba(16, 43, 200, 0.2)
+        &.linear
+            .item-label
+                color: $dark-blue

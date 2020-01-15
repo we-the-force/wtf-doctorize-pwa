@@ -1,25 +1,24 @@
 <template>
   <div class="page" data-name="login" id="login">
 
-    <div class="page-content login-screen-content">
+    <div class="page-content login-screen-content btns">
       <div class="login-screen-title">
-        <img src="/static/images/logo.png"
-          srcset="/static/images/logo@2x.png 2x, /static/images/logo@3x.png 3x, /static/images/logo@4x.png 4x">
+        <img src="/static/images/logo_v2.png"
+          srcset="/static/images/logo@2x_v2.png 2x, /static/images/logo@3x_v2.png 3x, /static/images/logo@4x_v2.png 4x">
       </div>
       <div class="list">
         <ul>
           <li class="item-content item-input">
             <div class="item-inner">
-              <!-- <div class="item-title item-label">Username</div> -->
-              <div class="item-input-wrap">
-                <div class="row no-gap">
+              <div class="item-input-wrap rounded">
+                <div class="row">
                   <div class="col-10">
                     <i class="material-icons">person</i>
-
+                    
                   </div>
                   <div class="col-90">
-                    <input type="email" name="username" id="username" placeholder="correo electrónico" required validate>
-
+                    <input type="email" name="username" id="username" placeholder="Correo electrónico" required validate>
+                    <span class="input-clear-button"></span>
                   </div>
                 </div>
               </div>
@@ -27,58 +26,136 @@
           </li>
           <li class="item-content item-input">
             <div class="item-inner">
-              <!-- <div class="item-title item-label">Password</div> -->
-              <div class="item-input-wrap">
-                <div class="row no-gap">
+              <div class="item-input-wrap rounded">
+                <div class="row">
                   <div class="col-10">
                     <i class="material-icons">vpn_key</i>
 
                   </div>
                   <div class="col-90">
-                    <input type="password" name="password" id="password" placeholder="contraseña">
-
+                    <input type="password" name="password" id="password" placeholder="*******" required validate>
+                    <span class="input-clear-button"></span>
                   </div>
                 </div>
-
               </div>
             </div>
           </li>
           <li>
             <div class="row">
-              <div class="col-60">
-                <a href="/account/password/reset" data-view=".view-main" class="item-link list-button login-recovery-button">Olvidé mi contraseña</a>
+              <div class="col-80">
+                <a href="/account/password/reset"  style="text-align: left;"
+                  class="item-link list-button btn-simple" id="recovery">Reestablecer contraseña</a>
               </div>
             </div>
           </li>
         </ul>
       </div>
 
-      <div class="list">
+      
+
+    </div>
+    <div class="list buttons">
         <ul>
           <li>
-
             <div class="row">
-              <div class="col-50">
                 <a href="/register-s1/" data-view=".view-main"
-                  class="item-link list-button login-register-button">Regístrate</a>
-              </div>
-              <div class="col-50">
-                <a href="#" class="item-link list-button login-button">
+                  class="item-link btn-simple">Regístrate</a>
+      
+                <a href="#" class="item-link list-button btn-rounded" id="login-button">
                   <p>Ingresar </p>
                   <i class="material-icons">chevron_right</i>
                 </a>
-              </div>
             </div>
-
-
-
           </li>
+
         </ul>
-        <!-- <div class="block-footer">Some text about login information.<br>Click "Sign In" to close Login Screen</div> -->
       </div>
-    </div>
   </div>
 </template>
 <script>
-  export default {}
+    import $$ from 'dom7';
+
+    export default {
+        on: {
+            pageInit: function(e, page) {
+                var self = this;
+                var app = self.$app;
+                var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                var email_login = '',
+                    password_login = '';
+                var errorPopup = app.popup.create({
+                    content: '<div class="popup popup-swipe-to-close">' +
+                        '<div class="block text-align-center">' +
+                        '<p>Tus datos de acceso son incorrectos. <br/><br/>Intenta nuevamente.</p>' +
+                        '<div class="list"> <ul> <li><a class="item-link list-button popup-close" href="#">Cerrar</a></li> </ul> </div>' +
+                        '</div>' +
+                        '</div>'
+                });
+
+                disableButton();
+
+                $$().click();
+
+                $$(document).on('input:notempty', '#username', function(e) {
+                    if (password_login != '') {
+                        email_login = $$('#username').val();
+                        enableButton();
+                    } else {
+                        email_login = $$('#username').val();
+                    }
+                });
+
+                $$(document).on('input:notempty', '#password', function(e) {
+                    if (email_login != '') {
+                        password_login = $$('#password').val();
+                        enableButton();
+                    } else {
+                        password_login = $$('#password').val();
+                    }
+                });
+
+                $$(document).on('input:empty', function(e) {
+                    disableButton();
+                });
+
+                function enableButton() {
+                    if (regex.test(email_login)) {
+                        $$('#login .btn-rounded').removeClass('grey');
+                        $$('#login .btn-rounded').off('click');
+                        $$('#login .btn-rounded').on('click', function(e) {
+                            e.preventDefault();
+                            app.preloader.show('blue');
+                            app.request.postJSON(app.data.url + '/account/login', {
+                                    "email": email_login,
+                                    "password": password_login
+                                },
+                                function(e) {
+                                    app.preloader.hide();
+                                    app.data.store
+                                        .setItem("doctor", e)
+                                        .then(function(value) {
+                                            console.log(value);
+                                            app.methods.redirectTo('home');
+                                        })
+                                        .catch(function(err) {
+                                            console.log(err);
+                                        });
+                                },
+                                function(e) {
+                                    app.preloader.hide();
+                                    errorPopup.open();
+                                });
+                        });
+                    } else {
+                        disableButton();
+                    }
+                }
+
+                function disableButton() {
+                    $$('#login .btn-rounded').addClass('grey');
+                    $$('#login .btn-rounded').off('click');
+                }
+            }
+        }
+    }
 </script>

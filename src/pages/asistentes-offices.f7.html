@@ -1,0 +1,120 @@
+<template>
+    <div class="page" data-name="asistentes-offices" id='asistentes-offices'>
+        <div class="page-content login-screen-content">
+            <div class="login-screen-content header-turquoise">
+                <div class="list">
+                    <ul>
+                        <li>
+                            <div class="row">
+                                <a href='/assistants-show' class="item-link btn-back" id="back">
+                                    <i class="material-icons">chevron_left</i>
+                                </a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <h3>Consultorios del asistente</h3>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <p style="visibility: hidden"><br><br></p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="item-inner">
+                                    <div class="fab btn-fab color-lime">
+                                        <a href="#">
+                                            <i class="material-icons">add</i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div class="list">
+                    <ul id="offices">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                console.log(app.data.assistant.id);
+                app.preloader.show('blue');
+                app.data.store.getItem('doctor').then(function (value) {
+                    app.data.doctor = value;
+
+                    app.data.store.getItem('assistant').then(function (assistantValue) {
+                        app.data.assistant = assistantValue;
+                        console.log(assistantValue);
+
+                        app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/assistants/' + app.data.assistant.id, function (e) {
+                            var x = JSON.parse(e);
+                            app.data.assistant.name = x.name;
+                            for (var i = 0; i < x.offices.length; i++) {
+                                //si doctor id es igual lo hace
+                                $$('#offices').append('<li>' +
+                                    '<div class="row">' +
+                                    '<div class="card card-outline elevation-3 assistant-offices" data-OfficeId="' + x.offices[i].officeId + '">' +
+                                    '<div class="rectangle light-blue"></div>' +
+                                    '<i class="material-icons icon light-blue">local_hospital</i>' +
+                                    '<div class="card-content card-content-padding">' +
+                                    '<p class="light-blue">' + x.offices[i].officeName + '</p>' +
+                                    '</div>' +
+                                    '<div class="link permissions-link">' +
+                                    '<i class="material-icons next light-blue">chevron_right</i>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</li>');
+                            }
+                            app.preloader.hide();
+                            $$('.assistant-offices').on('click', function (e) {
+                                var officeId = $$(this).data('OfficeId');
+                                for (var i = 0; i < x.offices.length; i++) {
+                                    if (x.offices[i].officeId == officeId) {
+                                        app.data.assistant.consultorio.id = x.offices[i].officeId;
+                                        app.data.assistant.consultorio.name = x.offices[i].officeName;
+                                        app.data.assistant.permisos = x.offices[i].permissions;
+                                        app.data.assistant.edit = true;
+                                        break;
+                                    }
+                                }
+                                app.data.store.setItem("assistant", app.data.assistant)
+                                    .then(function (value) {
+                                        app.methods.redirectTo('asistentes-invitar-04');
+                                    });
+                            });
+                        },
+                            function (e) {
+                                app.preloader.hide();
+                            });
+                    }).catch(function (err) { });
+
+                }).catch(function (err) { });
+
+
+
+                $$('.fab').on('click', function (e) {
+                    app.data.assistant.addOffice = true;
+                    app.data.store.setItem("assistant", app.data.assistant)
+                        .then(function (value) {
+                            app.methods.redirectTo('asistentes-invitar-03');
+                        });
+                });
+            }
+        }
+    }
+</script>

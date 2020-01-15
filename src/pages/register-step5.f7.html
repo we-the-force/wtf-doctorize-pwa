@@ -1,0 +1,107 @@
+<template>
+    <div class="page" data-name="register-step5" id='register-step5'>
+        <div class="page-content login-screen-content register-step5 btns">
+            <div class="screen-title header-blue">
+                <div class="list">
+                    <ul>
+                        <li>
+                            <div class="row">
+                                <div class="col-10"></div>
+                                <div class="col-80">
+                                    <h1>Ingresa el codigo de verificacion</h1>
+                                </div>
+                                <div class="col-10"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="list">
+                <ul>
+                    <li class="item-content item-input">
+                        <div class="item-inner">
+                            <div class="item-input-wrap rounded">
+                                <div class="row ">
+                                    <div class="col-10">
+                                        <i class="material-icons">vpn_key</i>
+                                    </div>
+                                    <div class="col-90">
+                                        <input type="text" id="code" placeholder="Codigo" required
+                                            validate>
+                                        <span class="input-clear-button"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+        <div class="list buttons">
+                <ul>
+                    <li>
+                        <div class="row">
+                                <a href='/'class="item-link list-button btn-rounded">
+                                    <p>Confirmar </p>
+                                    <i class="material-icons">chevron_right</i>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+    import Framework7 from 'framework7/framework7.esm.bundle.js';
+    import routes from '../js/routes.js';
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                let urlParams = (new URL(document.location)).searchParams;
+                var query = app.utils.parseUrlQuery(window.location.href);
+                let code = query.code;
+                let email = query.email;
+
+                if (!app.methods.isEmpty(query)) {
+                    makeRequest();
+                } else {
+                    app.data.store.getItem('register').then(function (value) {
+                        app.data.register = value;
+                        $$('#register-step5 .btn-rounded').addClass('grey');
+                        $$('#register-step5 .btn-rounded').off('click');
+                        $$(document).on('input:notempty', '#code', function (e) {
+                            code = $$('#code').val();
+                            email = app.data.register.email;
+                            $$('#register-step5 .btn-rounded').removeClass('grey');
+                            $$('#register-step5 .btn-rounded').off('click');
+                            $$('#register-step5 .btn-rounded').on('click', function (e) {
+                                makeRequest();
+                            });
+                        });
+                    });
+                }
+
+                function makeRequest() {
+                    app.preloader.show('blue');
+                    app.request.postJSON(app.data.url + '/account/confirmation', {
+                        "email": email,
+                        "code": code
+                    }, function (e) {
+                        console.log(e);
+                        app.preloader.hide();
+                        location.href = '/';
+                    }, function (e) {
+                        app.preloader.hide();
+                        app.dialog.alert("Error");
+                    });
+                }
+            }
+        }
+
+    }
+</script>

@@ -1,0 +1,626 @@
+<template>
+    <div class="page" data-name="nuevo-paciente" id="nuevo-paciente">
+        <div class="page-content login-screen-content btns">
+            <div class="login-screen-content header-turquoise photo nuevo-paciente">
+                <div class="list" style="margin-top: 10px;">
+                    <ul>
+                        <li>
+                            <div class="row">
+                                <a href='/home' class=" item-link btn-back" id="back">
+                                    <i class="material-icons">close </i>
+                                </a>
+                                <p>Nuevo paciente</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row" style="margin-top: 5px">
+                                <div class="border">
+                                    <div class="upload-photo" id="upload-photo">
+                                        <img src="../static/images/add_a_photo_24px.svg" class="camera" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-30"></div>
+                                <div class="col-40">
+                                    <h4 style="text-align: center; margin-top: 10px">Agregar foto</h4>
+                                </div>
+                                <div class="col-30"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div class="list" id="inputs">
+                    <ul>
+                        <li class="item-content item-input linear">
+                            <div class="item-inner">
+                                <div class="item-label dark-blue">Fecha de Nacimiento</div>
+                                <div class="item-input-wrap">
+                                    <input type="date" name="birthdate" id="birthdate" placeholder="Fecha de Nacimiento"
+                                        required validate>
+                                    <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input linear">
+                            <div class="item-inner">
+                                <div class="item-label dark-blue">Género</div>
+                                <div class="item-input-wrap input-dropdown-wrap">
+                                    <select name="gender" id="gender" placeholder="Please choose...">
+                                        <option value="Hombre">Hombre</option>
+                                        <option value="Mujer">Mujer</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input linear">
+                            <div class="item-inner">
+                                <div class="item-label dark-blue">Estado civil</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" name="civil-status" id="civil-status" placeholder="Estado civil"
+                                        required validate>
+                                    <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input linear">
+                            <div class="item-inner">
+                                <div class="item-label dark-blue">Peso</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" name="weight" id="weight" placeholder="Peso" required validate>
+                                    <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input linear">
+                            <div class="item-inner">
+                                <div class="item-label dark-blue">Estatura</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" name="height" id="height" placeholder="Estatura" required
+                                        validate>
+                                    <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input linear">
+                            <div class="item-inner">
+                                <div class="item-label dark-blue">Tipo de Sangre</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" name="blood" id="blood" placeholder="Tipo de Sangre" required
+                                        validate>
+                                    <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input linear">
+                            <div class="item-inner">
+                                <div class="item-label dark-blue">Presión Sanguínea</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" name="pressure" id="pressure" placeholder="Presión Sanguínea"
+                                        required validate>
+                                    <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="list buttons">
+            <ul>
+                <li>
+                    <div class="row">
+                        <a href="#" class="item-link list-button btn-rounded">
+                            <p>Siguiente </p>
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</template>
+
+<script>
+    import $$ from 'dom7';
+    import croppie from 'croppie';
+    import {
+        orderBy
+    } from 'lodash';
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                var regex2 = /^([0-9]){10}$/;
+                var c, birthdate = '', civilStatus = '', weight = '', height = '', blood = '', pressure = '';
+                var ac = app.actions.create({
+                    content: '<div class="actions-modal">' +
+                        '<div class="actions-group">' +
+                        '<label for="file-upload">' +
+                        '<div class="actions-button">' +
+                        '<i class="material-icons" style="margin-top: auto; margin-bottom: auto; width: 24px;">photo_alternate</i>' +
+                        '<div class="actions-button-text" style="margin-left: 10px;">' +
+                        'Subir Foto' +
+                        '</div>' +
+                        '</div>' +
+                        '</label>' +
+                        '<input id="file-upload" type="file" style="display: none;"/>' +
+                        '<div class="actions-button color-red" id="cancel">' +
+                        '<i class="material-icons" style="margin-top: auto; margin-bottom: auto; width: 24px;">cancel</i>' +
+                        '<div class="actions-button-text" style="margin-left: 10px;"> Cancel' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>',
+                    buttons: [{}]
+                });
+
+                disableButton();
+
+                $$(document).on('input:notempty', '#birthdate', function (e) {
+                    if (civilStatus != '' && weight != '' && height != '' && blood != '' && pressure != '') {
+                        birthdate = new Date($$('#birthdate').val());
+                        enableButton();
+                    } else {
+                        birthdate = new Date($$('#birthdate').val());
+                    }
+                });
+
+                $$(document).on('input:notempty', '#civil-status', function (e) {
+                    if (birthdate != '' && weight != '' && height != '' && blood != '' && pressure != '') {
+                        civilStatus = new Date($$('#civil-status').val());
+                        enableButton();
+                    } else {
+                        civilStatus = new Date($$('#civil-status').val());
+                    }
+                });
+
+                $$(document).on('input:notempty', '#weight', function (e) {
+                    if (birthdate != '' && civilStatus != '' && height != '' && blood != '' && pressure != '') {
+                        weight = new Date($$('#weight').val());
+                        enableButton();
+                    } else {
+                        weight = new Date($$('#weight').val());
+                    }
+                });
+
+                $$(document).on('input:notempty', '#height', function (e) {
+                    if (birthdate != '' && civilStatus != '' && weight != '' && blood != '' && pressure != '') {
+                        height = new Date($$('#height').val());
+                        enableButton();
+                    } else {
+                        height = new Date($$('#height').val());
+                    }
+                });
+
+                $$(document).on('input:notempty', '#blood', function (e) {
+                    if (birthdate != '' && civilStatus != '' && weight != '' && height != '' && pressure != '') {
+                        blood = new Date($$('#blood').val());
+                        enableButton();
+                    } else {
+                        blood = new Date($$('#blood').val());
+                    }
+                });
+
+                $$(document).on('input:notempty', '#pressure', function (e) {
+                    if (birthdate != '' && civilStatus != '' && weight != '' && height != '' && blood != '') {
+                        pressure = new Date($$('#pressure').val());
+                        enableButton();
+                    } else {
+                        pressure = new Date($$('#pressure').val());
+                    }
+                });
+
+
+                $$(document).on('input:empty', function (e) {
+                    disableButton();
+                });
+
+                function enableButton() {
+                    app.data.paciente.birthdate = birthdate;
+                    app.data.paciente.civilStatus = civilStatus;
+                    app.data.paciente.weight = weight;
+                    app.data.paciente.height = height;
+                    app.data.paciente.blood = blood;
+                    app.data.paciente.pressure = pressure;
+                    $$('#nuevo-paciente .btn-rounded').removeClass('grey');
+                    $$('#nuevo-paciente .btn-rounded').off('click');
+                    $$('#nuevo-paciente .btn-rounded').on('click', function (e) {
+                        console.log(app.data.paciente);
+                        app.methods.redirectTo('home');
+
+                    });
+                }
+
+                function disableButton() {
+                    $$('#nuevo-paciente .btn-rounded').addClass('grey');
+                    $$('#nuevo-paciente .btn-rounded').off('click');
+                }
+
+                $$('.nuevo-paciente .upload-photo').on('click', function () {
+                    ac.open();
+
+                    $$('.actions-group #cancel').on('click', function () {
+                        ac.close();
+                    });
+
+                    if (window.File && window.FileReader && window.FormData) {
+                        var $inputField = $$('#file-upload');
+                        $inputField.off('change');
+                        $inputField.on('change', function (e) {
+
+                            var file = e.target.files[0];
+
+                            if (file) {
+                                if (/^image\//i.test(file.type)) {
+                                    $$('.nuevo-paciente .upload-photo').off('click');
+                                    readFile(file);
+                                } else {
+                                    alert('Not a valid image!');
+                                    console.log('Not a valid image!');
+                                }
+                            } else {
+                                console.log('Not a FILE');
+                            }
+                        });
+                    } else {
+                        alert("File upload is not supported!");
+                        console.log('File upload is not supported!');
+                    }
+
+                });
+
+                function readFile(file) {
+                    var reader = new FileReader();
+
+                    reader.onloadend = function () {
+                        processFile(reader.result, file.type);
+                    }
+
+                    reader.onerror = function () {
+                        alert('There was an error reading the file!');
+                    }
+
+                    reader.readAsDataURL(file);
+                }
+
+                function processFile(dataURL, fileType) {
+                    var maxWidth = 440;
+                    var maxHeight = 440;
+
+                    var image = new Image();
+                    image.src = dataURL;
+
+                    image.onload = function () {
+                        var width = image.width;
+                        var height = image.height;
+                        var shouldResize = (width > maxWidth) || (height > maxHeight);
+
+                        if (!shouldResize) {
+                            sendFile(dataURL);
+                            return;
+                        }
+
+                        var newWidth;
+                        var newHeight;
+
+                        if (width > height) {
+                            newHeight = height * (maxWidth / width);
+                            newWidth = maxWidth;
+                        } else {
+                            newWidth = width * (maxHeight / height);
+                            newHeight = maxHeight;
+                        }
+
+                        var canvas = document.createElement('canvas');
+
+                        canvas.width = newWidth;
+                        canvas.height = newHeight;
+
+                        var context = canvas.getContext('2d');
+
+                        context.drawImage(this, 0, 0, newWidth, newHeight);
+
+                        dataURL = canvas.toDataURL(fileType);
+
+                        sendFile(dataURL);
+                    };
+
+                    image.onerror = function () {
+                        alert('There was an error processing your file!');
+                    };
+                }
+
+                function sendFile(dataURL) {
+                    var imgHtml = '<img id="web-img" src="' + dataURL + '" alt="">';
+                    $$('.nuevo-paciente .upload-photo').html(imgHtml);
+                    c = new croppie(document.getElementById('web-img'), {
+                        viewport: {
+                            width: 110,
+                            height: 110,
+                            type: 'circle'
+                        },
+                        boundary: {
+                            width: 110,
+                            height: 110
+                        },
+                        showZoomer: false,
+                    });
+                }
+
+            }
+        }
+    }
+</script>
+<style>
+    .croppie-container {
+        width: 100%;
+        height: 100%;
+    }
+
+    .croppie-container .cr-image {
+        z-index: -1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform-origin: 0 0;
+        max-height: none;
+        max-width: none;
+    }
+
+    .croppie-container .cr-boundary {
+        position: relative;
+        overflow: hidden;
+        margin: 0 auto;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+    }
+
+    .croppie-container .cr-viewport,
+    .croppie-container .cr-resizer {
+        position: absolute;
+        border: 0px solid #fff;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        box-shadow: 0 0 2000px 2000px rgba(0, 0, 0, 0.5);
+        z-index: 0;
+    }
+
+    .croppie-container .cr-resizer {
+        z-index: 2;
+        box-shadow: none;
+        pointer-events: none;
+    }
+
+    .croppie-container .cr-resizer-vertical,
+    .croppie-container .cr-resizer-horisontal {
+        position: absolute;
+        pointer-events: all;
+    }
+
+    .croppie-container .cr-resizer-vertical::after,
+    .croppie-container .cr-resizer-horisontal::after {
+        display: block;
+        position: absolute;
+        box-sizing: border-box;
+        border: 1px solid black;
+        background: #fff;
+        width: 10px;
+        height: 10px;
+        content: '';
+    }
+
+    .croppie-container .cr-resizer-vertical {
+        bottom: -5px;
+        cursor: row-resize;
+        width: 100%;
+        height: 10px;
+    }
+
+    .croppie-container .cr-resizer-vertical::after {
+        left: 50%;
+        margin-left: -5px;
+    }
+
+    .croppie-container .cr-resizer-horisontal {
+        right: -5px;
+        cursor: col-resize;
+        width: 10px;
+        height: 100%;
+    }
+
+    .croppie-container .cr-resizer-horisontal::after {
+        top: 50%;
+        margin-top: -5px;
+    }
+
+    .croppie-container .cr-original-image {
+        display: none;
+    }
+
+    .croppie-container .cr-vp-circle {
+        border-radius: 50%;
+    }
+
+    .croppie-container .cr-overlay {
+        z-index: 1;
+        position: absolute;
+        cursor: move;
+        touch-action: none;
+    }
+
+    .croppie-container .cr-slider-wrap {
+        width: 75%;
+        margin: 15px auto;
+        text-align: center;
+    }
+
+    .croppie-result {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .croppie-result img {
+        position: absolute;
+    }
+
+    .croppie-container .cr-image,
+    .croppie-container .cr-overlay,
+    .croppie-container .cr-viewport {
+        -webkit-transform: translateZ(0);
+        -moz-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+
+    /*************************************/
+    /***** STYLING RANGE INPUT ***********/
+    /*************************************/
+    /*http://brennaobrien.com/blog/2014/05/style-input-type-range-in-every-browser.html */
+    /*************************************/
+
+    .cr-slider {
+        -webkit-appearance: none;
+        /*removes default webkit styles*/
+        /*border: 1px solid white; */
+        /*fix for FF unable to apply focus style bug */
+        width: 300px;
+        /*required for proper track sizing in FF*/
+        max-width: 100%;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        background-color: transparent;
+    }
+
+    .cr-slider::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 3px;
+        background: rgba(0, 0, 0, 0.5);
+        border: 0;
+        border-radius: 3px;
+    }
+
+    .cr-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        border: none;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background: #ddd;
+        margin-top: -6px;
+    }
+
+    .cr-slider:focus {
+        outline: none;
+    }
+
+    /*
+.cr-slider:focus::-webkit-slider-runnable-track {
+background: #ccc;
+}
+*/
+
+    .cr-slider::-moz-range-track {
+        width: 100%;
+        height: 3px;
+        background: rgba(0, 0, 0, 0.5);
+        border: 0;
+        border-radius: 3px;
+    }
+
+    .cr-slider::-moz-range-thumb {
+        border: none;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background: #ddd;
+        margin-top: -6px;
+    }
+
+    /*hide the outline behind the border*/
+
+    .cr-slider:-moz-focusring {
+        outline: 1px solid white;
+        outline-offset: -1px;
+    }
+
+    .cr-slider::-ms-track {
+        width: 100%;
+        height: 5px;
+        background: transparent;
+        /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+        border-color: transparent;
+        /*leave room for the larger thumb to overflow with a transparent border */
+        border-width: 6px 0;
+        color: transparent;
+        /*remove default tick marks*/
+    }
+
+    .cr-slider::-ms-fill-lower {
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+    }
+
+    .cr-slider::-ms-fill-upper {
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+    }
+
+    .cr-slider::-ms-thumb {
+        border: none;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background: #ddd;
+        margin-top: 1px;
+    }
+
+    .cr-slider:focus::-ms-fill-lower {
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    .cr-slider:focus::-ms-fill-upper {
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    /*******************************************/
+    /***********************************/
+    /* Rotation Tools */
+    /***********************************/
+
+    .cr-rotate-controls {
+        position: absolute;
+        bottom: 5px;
+        left: 5px;
+        z-index: 1;
+    }
+
+    .cr-rotate-controls button {
+        border: 0;
+        background: none;
+    }
+
+    .cr-rotate-controls i:before {
+        display: inline-block;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 22px;
+    }
+
+    .cr-rotate-l i:before {
+        content: '↺';
+    }
+
+    .cr-rotate-r i:before {
+        content: '↻';
+    }
+</style>

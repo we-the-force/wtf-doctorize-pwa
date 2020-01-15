@@ -1,0 +1,202 @@
+<template>
+    <div class="page settings-edit" data-name="settings-edit" id="settings-edit">
+        <div class="page-content login-screen-content btns">
+            <div class="login-screen-content header-turquoise photo">
+                <div class="list">
+                    <ul>
+                        <li>
+                            <div class="row">
+                                <a href='#' class="item-link btn-back" id="cancel">
+                                    <i class="material-icons">chevron_left</i>
+                                </a>
+                                <p class="title"></p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div class="list" id="inputs">
+                    <ul>
+                        <li class="item-content item-input linear">
+                            <div class="item-inner">
+                                <div class="item-label dark-blue"></div>
+                                <div class="item-input-wrap">
+                                    <input type="text" required validate>
+                                    <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="list buttons">
+                <ul>
+                    <li>
+                        <div class="row">
+                            <a href="#" class="item-link list-button btn-rounded">
+                                <p>Guardar </p>
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                var specialties, specialityID;
+
+                disableButton();
+
+                app.data.store.getItem('doctor').then(function (value) {
+                    app.data.doctor = value;
+                    app.data.store.getItem('flow').then(function (e) {
+                        app.data.flow = e;
+                        switch (app.data.flow) {
+                            case 'SN':
+                                setName();
+                                break;
+                            case 'SM':
+                                setMail();
+                                break;
+                            case 'SC':
+                                setPhone();
+                                break;
+                            case 'SS':
+                                setSpeciality();
+                                break;
+                            default:
+                                app.methods.redirectTo('settings');
+                                break;
+                        }
+                    });
+                });
+
+
+                $$(".btn-back").click(function (e) {
+                    app.data.flow = 'default';
+                    app.data.store.removeItem('flow').then(function (value) {
+                        app.methods.redirectTo('settings');
+                    });
+                });
+
+                function setSpeciality() {
+                    $$(".settings-edit .title").text("Edita tu especialidad");
+                    $$(".settings-edit .item-label").text("Especialidad");
+                    $$(".settings-edit input").attr("type", "text");
+                    $$(".settings-edit input").attr("id", "picker");
+                    $$(".settings-edit input").val(app.data.doctor.specialty.name);
+                    specialties = app.data.specialties;
+                    var picker = app.picker.create({
+                        inputEl: '#picker',
+                        cols: [{
+                            values: specialties.values,
+                            displayValues: specialties.displayValues,
+                        }]
+                    });
+                    inputCheck();
+                }
+
+                function setPhone() {
+                    $$(".settings-edit .title").text("Edita tu celular");
+                    $$(".settings-edit .item-label").text("Celular");
+                    $$(".settings-edit input").attr("type", "tel");
+                    $$(".settings-edit input").val(app.data.doctor.cellphone);
+                    inputCheck();
+                }
+
+                function setMail() {
+                    $$(".settings-edit .title").text("Edita tu correo");
+                    $$(".settings-edit .item-label").text("Correo");
+                    $$(".settings-edit input").attr("type", "email");
+                    $$(".settings-edit input").val(app.data.doctor.email);
+                    inputCheck();
+                }
+
+                function setName() {
+                    $$(".settings-edit .title").text("Edita tu nombre");
+                    $$(".settings-edit .item-label").text("Nombre");
+                    $$(".settings-edit input").val(app.data.doctor.name);
+                    inputCheck();
+                }
+
+                function inputCheck() {
+                    $$(document).on('input:notempty', ".settings-edit input", function (e) {
+                        $$('#settings-edit .btn-rounded').removeClass('grey');
+                        $$('#settings-edit .btn-rounded').off('click');
+                        $$("#settings-edit .btn-rounded").click(function (e) {
+                            callApi($$(".settings-edit input").val());
+                        });
+                    });
+                    $$(document).on('input:empty', function (e) {
+                        disableButton();
+                    });
+                }
+
+                function callApi(value) {
+                    var j;
+                    switch (app.data.flow) {
+                        case "SN":
+                            j = {
+                                "name": value
+                            }
+                            break;
+                        case "SM":
+                            j = {
+                                "email": value
+                            }
+                            break;
+                        case "SC":
+                            j = {
+                                "cellphone": value
+                            }
+                            break;
+                        case "SS":
+                            specialityID = specialties.values.indexOf(value);
+                            specialityID++;
+                            j = {
+                                "specialty": {
+                                    "id": specialityID,
+                                }
+                            }
+                            break;
+                    }
+                    app.request({
+                        url: app.data.url + '/doctors/' + app.data.doctor.id,
+                        method: "PATCH",
+                        crossDomain: true,
+                        data: j,
+                        success: function (e) {
+                            app.data.store.removeItem('flow').then(function (e) {
+                                app.request.get(app.data.url + '/doctors/' + app.data.doctor.id,
+                                    function (i) {
+                                        var x = JSON.parse(i);
+                                        app.preloader.hide();
+                                        app.data.store.setItem("doctor", x);
+                                        app.methods.redirectTo('settings');
+                                        location.reload();
+                                    });
+                            });
+                        },
+                        error: function (e) {
+                            app.preloader.hide();
+                        }
+                    });
+                }
+
+                function disableButton() {
+                    $$('#settings-edit .btn-rounded').addClass('grey');
+                    $$('#settings-edit .btn-rounded').off('click');
+                }
+            }
+        }
+    }
+</script>

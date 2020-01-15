@@ -1,0 +1,106 @@
+<template>
+    <div class="page" data-name="asistentes-invitar-02" id='asistentes-invitar-02'>
+        <div class="page-content login-screen-content btns">
+            <div class="login-screen-content header-turquoise">
+                <div class="list">
+                    <ul>
+                        <li>
+                            <div class="row">
+                                <a href='/assistants-show' class="item-link btn-back" id="cancel">
+                                    <i class="material-icons">close</i>
+                                </a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <h3>Correo del asistente</h3>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <p><br><br></p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div class="list">
+                    <ul>
+                        <li class="item-content item-input linear">
+                            <div class="item-inner">
+                                <div class="item-label dark-blue">Correo electrónico</div>
+                                <div class="item-input-wrap">
+                                    <input type="email" id="email" placeholder="asistente@hospital.com" required
+                                        validate>
+                                    <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="list buttons">
+            <ul>
+                <li>
+                    <div class="row">
+                        <a href="#" class="item-link list-button btn-rounded">
+                            <p>Siguiente </p>
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                var email = '';
+
+                disableButton();
+
+                $$(document).on('input:empty', function (e) {
+                    disableButton();
+                });
+
+                $$(document).on('input:notempty', '#email', function (e) {
+                    email = $$('#email').val();
+                    enableButton();
+                });
+
+                function enableButton() {
+                    if (regex.test(email)) {
+                        $$('#asistentes-invitar-02 .btn-rounded').removeClass('grey');
+                        $$('#asistentes-invitar-02 .btn-rounded').off('click');
+                        $$('#asistentes-invitar-02 .btn-rounded').on('click', function (e) {
+                            app.data.assistant.email = $$('#email').val();
+                            app.data.store.setItem("assistant", app.data.assistant).then(function (params) {
+                                app.methods.redirectTo('asistentes-invitar-03');
+                            });
+                        });
+                    } else {
+                        disableButton();
+                    }
+                }
+
+                $$('#cancel').on('click', function (e) {/* 
+                    app.data.assistant.flag = false; */
+                    app.methods.redirectTo('asistentes-invitar-01');
+                });
+
+                function disableButton() {
+                    $$('#asistentes-invitar-02 .btn-rounded').addClass('grey');
+                    $$('#asistentes-invitar-02 .btn-rounded').off('click');
+                }
+            }
+        }
+    }
+</script>

@@ -1,0 +1,272 @@
+.card
+    width: 100%
+    box-shadow: -2px 2px 15px rgba(16, 43, 200, 0.2)
+    --f7-card-border-radius: 10px
+    --f7-card-margin-horizontal: 20px
+    --f7-card-margin-vertical: 10px
+    --f7-card-content-padding-horizontal: 19%
+    --f7-card-content-padding-vertical: 3%
+    p
+        margin-block-start: 3px
+        margin-block-end: 3px
+    .rectangle
+        position: absolute
+        width: 5%
+        height: 100%
+        border-top-left-radius: 10px
+        border-bottom-left-radius: 10px
+        &.turquoise
+            background: $turquoise-2
+        &.light-blue  
+            background: $light-blue
+        &.yellow
+            background: $yellow
+    .dynamic-popover,.permissions-link
+        position: absolute
+        top: 10px
+        right: 10px
+        display: block
+    &.home
+        width: auto
+        margin-right: 10px
+        .card-content-padding
+            padding-left: 12%
+            padding-right: 12%
+        p
+            &.text
+                font: $text-1-card
+            &.text2
+                font: $text-2-card
+            &.title
+                font: $title-card
+            &.footer    
+                font: $footer-card
+    &.offices
+        p
+            &.text
+                font: $text-1-card
+            &.title
+                font: $title-card
+            &.footer    
+                font: $footer-card
+        i
+            font-size: 30px
+            &.icon
+                position: absolute
+                top: 7%
+                left: 8%
+    &.assistant-offices
+        p
+            font: $title-2 !important
+            font-weight: normal !important
+            margin-top: 4px
+            margin-bottom: 4px
+        i
+            font-size: 30px
+            &.next
+                position: absolute
+                font-size: 35px
+                right: 2%
+            &.icon
+                position: absolute
+                top: 22% 
+                left: 7%
+    &.asistentes
+        .dynamic-popover
+            line-height: 56px
+            i
+                font-size: 30px
+                &.icon
+                    position: absolute
+                    top: 7%
+                    left: 8%
+        p
+            font: $title-2 !important
+            font-weight: normal !important
+            margin-top: 4px
+            margin-bottom: 4px
+        .card-content-padding
+            padding-left: 85px
+            padding-right: 5%
+        .avatar
+            height: 45px
+            float: left
+            position: absolute
+            left: 7.5%
+            top: 10%
+            img 
+                width: 45px
+                height: 45px
+                border-radius: 50%
+                box-shadow: 0px 1.89189px 14.1892px rgba(16, 43, 200, 0.2)
+    &.settings
+        height: auto
+        p
+            font: $text-1-card
+            line-height: 28px
+            text-align: left
+        .icon,.arrow
+            font-size: 25px
+            position: absolute
+            top: 50%
+            transform: translate(-50%, -50%)
+        .icon
+            left: 13%
+        .arrow
+            right: 0%
+
+    &.card-expandable
+        height: 120px
+        .card-header
+            padding-left: 7%
+            padding-right: 7%
+            padding-top: 3%
+            padding-bottom: 3%
+            .details-event
+                height: 220px  
+                width: 100%
+                position: absolute
+                top: 0px
+                left: 0px
+                padding: 0px
+                ul
+                    top: 0px
+                    position: absolute
+                    padding: 7% 7% 3% 7%
+                    width: 90%
+                i
+                    font-size: 29px
+                p
+                    font: $title-2
+                    font-weight: 600
+                    opacity: 1
+                .contact
+                    --f7-fab-size: 37px 
+                    i
+                        color: $light-blue
+                        font-size: 23px
+                    &.comment
+                    &.email
+                        left: 45px
+                    &.phone
+                        left: 90px
+                .stars      
+                    display: inline-flex              
+                    position: absolute
+                    left: 45%
+                    i
+                        line-height: 50px
+                        font-size: 25px
+                        color: #FFD66D
+                    p
+                        line-height: 50px
+                        font-size: 16px
+                .item-inner
+                    margin-left: 72px
+                    &::after
+                        content: none
+                .photo
+                    --f7-fab-size: 72px
+                    bottom: 13%
+                    i
+                        font-size: 35px
+                        color: $light-blue
+                .mar
+                    margin-top: 36px
+            p
+                margin-block-start: 2px
+                margin-block-end: 2px
+                text-align: left !important
+                &.title
+                    font: $title-card
+                &.text-1
+                    font: $text-1-card
+                    font-weight: 300
+                &.text-2
+                    font: $text-2-card
+                &.footer
+                    font: $footer-card
+        i 
+            &.time
+                font-size: 16px
+                color: $light-blue
+                position: inherit
+                vertical-align: middle
+            &.chevron
+                font-size: 30px
+                position: absolute
+                right: 50px
+                top: 45px
+                left: unset
+                color: #102BC8
+        .card-content-padding
+            position: relative
+            height: calc( 100% - 320px)
+            &.list
+                padding-top: 35px
+                padding-left: 0px
+                padding-right: 0px
+                padding-bottom: 35px
+                h1
+                    margin-block-start: 2px
+                    margin-block-end: 2px
+                    &.title
+                        font: $title-2
+                    &.price
+                        font: $title-2
+                p
+                    &.time
+                        text-align: left
+                        font: $Body-2
+                    &.place
+                        font: $text-2-card
+                ul
+                    padding-left: 35px
+                    padding-right: 35px
+                    i
+                        &.time
+                            font-size: 18px
+                .item-link
+                    padding-right: 16px
+                    width: 55%
+            .btn-rounded
+                position: absolute
+                right: 25px
+                bottom: 15px
+                p
+                    opacity: 1
+
+
+.card-backdrop
+    z-index: 0
+.card-expandable.card-opened .card-opened-fade-out 
+    opacity: 0 !important
+
+.popover
+    background: $white
+    width: 242px
+    p
+        font: $Body-2
+        font-weight: normal
+        margin-block-start: 14px
+        margin-block-end: 14px
+    .block
+        margin: 0%
+        padding: 0%
+    .list
+        .row
+            padding-left: 14px
+            padding-right: 14px
+            .edit-office,.edit-assistant
+                width: 100%
+                padding: 0px
+                position: relative
+                i
+                    line-height: 20px
+                    position: absolute
+                    right: 0px
+            .delete-office,.delete-assistant
+                width: 100%
+
+
+    

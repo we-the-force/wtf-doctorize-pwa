@@ -1,38 +1,34 @@
-
 <template>
-<div class="page" data-name="register-step1">
-    <div class="page-content login-screen-content">
-      <div class="screen-title">
+  <div class="page" data-name="register-step1" id="register-step1">
+    <div class="page-content login-screen-content register-step1 btns">
+      <div class="screen-title header-blue">
         <div class="list">
           <ul>
             <li>
               <div class="row">
                 <div class="col-10"></div>
                 <div class="col-80">
-                  <h1>Nombre <br>y Clave</h1>
-                  <h4>Escribe tu nombre y clave para continuar con el proceso de registro.</h4>
+                  <h1>Nombre y contraseña</h1>
+                  <p>Ingresar nombre y contraseña para continuar con el proceso de registro.</p>
                 </div>
                 <div class="col-10"></div>
               </div>
             </li>
           </ul>
         </div>
-        
       </div>
       <div class="list">
         <ul>
           <li class="item-content item-input">
             <div class="item-inner">
-              <!-- <div class="item-title item-label">email</div> -->
-              <div class="item-input-wrap">
-                <div class="row no-gap">
+              <div class="item-input-wrap rounded">
+                <div class="row">
                   <div class="col-10">
                     <i class="material-icons">person</i>
-                    
                   </div>
                   <div class="col-90">
-                    <input type="text" name="fullname" placeholder="nombre completo">
-
+                    <input type="text" id="fullname" placeholder="Nombre completo" required validate>
+                    <span class="input-clear-button"></span>
                   </div>
                 </div>
               </div>
@@ -40,49 +36,95 @@
           </li>
           <li class="item-content item-input">
             <div class="item-inner">
-              <!-- <div class="item-title item-label">email</div> -->
-              <div class="item-input-wrap">
-                <div class="row no-gap">
+              <div class="item-input-wrap rounded">
+                <div class="row">
                   <div class="col-10">
                     <i class="material-icons">vpn_key</i>
-                    
-                  </div>
+                  </div> 
                   <div class="col-90">
-                    <input type="text" name="password" placeholder="contraseña">
-
+                    <input type="text" id="pass" class="pass" placeholder="Contraseña" required validate>
+                    <span class="input-clear-button"></span>
                   </div>
                 </div>
               </div>
             </div>
           </li>
-          
         </ul>
       </div>
       
-      <div class="list">
+    </div>
+    <div class="list buttons">
         <ul>
           <li>
             <div class="row">
-              <div class="col-50">
-                <a href="/" data-view=".view-main" class="item-link list-button login-register-button">Cancelar</a>
-
-              </div>
-              <div class="col-50">
-                <a href="/register-s2/" data-view=".view-main"  class="item-link list-button login-button">
-                  <p>Siguiente </p>
-                  <i class="material-icons">chevron_right</i>
-                </a>
-              </div> 
+              <a href="/" class="item-link btn-simple">Cancelar</a>
+              <a href="#" class="item-link list-button btn-rounded">
+                <p>Siguiente </p>
+                <i class="material-icons">chevron_right</i>
+              </a>
             </div>
-              
-            
           </li>
         </ul>
-        <!-- <div class="block-footer">Some text about login information.<br>Click "Sign In" to close Login Screen</div> -->
       </div>
-    </div>
   </div>
 </template>
 <script>
-  export default {}
+  import $$ from 'dom7';
+  export default {
+    on: {
+      pageInit: function (e, page) {
+        var self = this;
+        var app = self.$app;
+
+        let urlParams = (new URL(document.location)).searchParams;
+        var query = app.utils.parseUrlQuery(window.location.href);
+        let code = query.code;
+        let email = query.email;
+
+        if (!app.methods.isEmpty(query)) {
+          app.data.flow = 'RA';
+        } else {
+          app.data.flow = 'RD';
+        }
+
+        $$('#register-step1 #cancel').on('click', function (e) {
+          app.data.flow = 'default';
+          app.data.store.removeItem('flow');
+          app.methods.redirectTo('root');
+        });
+
+        $$('#register-step1 .btn-rounded').addClass('grey');
+        $$('#register-step1 .btn-rounded').off('click');
+        $$(document).on('input:notempty', '#fullname', function (e) {
+          $$(document).on('input:notempty', '#pass', function (e) {
+            $$('#register-step1 .btn-rounded').removeClass('grey');
+            $$('#register-step1 .btn-rounded').off('click');
+            $$('#register-step1 .btn-rounded').on('click', function (e) {
+              if (app.data.flow == 'RD') {
+                app.data.register.username = $$('#fullname').val();
+                app.data.register.password = $$('#pass').val();
+                app.data.store.setItem('flow', app.data.flow).then(function (value) {
+                  app.data.store.setItem('register', app.data.register).then(function (value) {
+                    app.methods.redirectTo('register-s2');
+                  });
+                });
+              } else if (app.data.flow == 'RA') {
+                app.data.assistant.name = $$('#fullname').val();
+                app.data.assistant.password = $$('#pass').val();
+                app.data.assistant.email = email;
+                app.data.assistant.code = code;
+                app.data.store.setItem('flow', app.data.flow).then(function (value) {
+                  app.data.store.setItem('assistant', app.data.assistant).then(function (value) {
+                    app.methods.redirectTo('photo-module');
+                  });
+                });
+              } else {
+                app.methods.redirectTo('root');//avisar de error
+              }
+            });
+          });
+        });
+      }
+    }
+  }
 </script>

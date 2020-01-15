@@ -1,0 +1,193 @@
+<template>
+    <div class="page intro-splash-page" data-name="intro-splash-01" id="intro-splash">
+        <div class="page-content login-screen-content center intro-splash btns">
+            <div data-speed="900" data-pagination='{"el": ".swiper-pagination"}' data-space-between="50"
+                class="swiper-container swiper-init demo-swiper">
+                <div class="swiper-pagination"></div>
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="list">
+                            <ul>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-10"></div>
+                                        <div class="col-80">
+                                            <img src="/static/images/Botiquin.svg" class="intro-splash-img" alt="">
+                                        </div>
+                                        <div class="col-10"></div>
+                                    </div>
+                                </li>
+                                <div class="screen-title light-blue">
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-10"></div>
+                                            <div class="col-80">
+                                                <h1>Un consultorio pórtatil</h1>
+                                            </div>
+                                            <div class="col-10"></div>
+                                        </div>
+                                    </li>
+                                </div>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-10"></div>
+                                        <div class="col-80">
+                                            <p class="dark-blue">
+                                                La información de los pacientes en el bolsillo siempre que se necesite.
+                                            </p>
+                                        </div>
+                                        <div class="col-10"></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="list">
+                            <ul>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-10"></div>
+                                        <div class="col-80">
+                                            <img src="/static/images/Calendario.svg" class="intro-splash-img" alt="">
+                                        </div>
+                                        <div class="col-10"></div>
+                                    </div>
+                                </li>
+                                <div class="screen-title light-blue">
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-10"></div>
+                                            <div class="col-80">
+                                                <h1>Agenda diaria de las citas</h1>
+                                            </div>
+                                            <div class="col-10"></div>
+                                        </div>
+                                    </li>
+                                </div>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-10"></div>
+                                        <div class="col-80">
+                                            <p class="dark-blue">
+                                                Todas las cirugías, consultas y citas organizadas de forma intuitiva.
+                                            </p>
+                                        </div>
+                                        <div class="col-10"></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="list">
+                            <ul>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-10"></div>
+                                        <div class="col-80">
+                                            <img src="/static/images/Billetes.svg" class="intro-splash-img" alt="">
+                                        </div>
+                                        <div class="col-10"></div>
+                                    </div>
+                                </li>
+                                <div class="screen-title light-blue">
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-10"></div>
+                                            <div class="col-80">
+                                                <h1>Ingresos inteligentes</h1>
+                                            </div>
+                                            <div class="col-10"></div>
+                                        </div>
+                                    </li>
+                                </div>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-10"></div>
+                                        <div class="col-80">
+                                            <p class="dark-blue">
+                                                Registro de forma automática de todos los ingresos.
+                                            </p>
+                                        </div>
+                                        <div class="col-10"></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="list">
+                            <ul>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-10"></div>
+                                        <div class="col-80">
+                                            <img src="/static/images/Escudo.svg" class="intro-splash-img" alt="">
+                                        </div>
+                                        <div class="col-10"></div>
+                                    </div>
+                                </li>
+                                <div class="screen-title light-blue">
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-10"></div>
+                                            <div class="col-80">
+                                                <h1>Seguridad de la información</h1>
+                                            </div>
+                                            <div class="col-10"></div>
+                                        </div>
+                                    </li>
+                                </div>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-10"></div>
+                                        <div class="col-80">
+                                            <p class="dark-blue">
+                                                La información del consultorio y los expedientes están encriptados y
+                                                protegidos con control de acceso.
+                                            </p>
+                                        </div>
+                                        <div class="col-10"></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="list buttons">
+            <ul>
+                <li>
+                    <div class="row">
+                        <a href="#" class="item-link list-button btn-rounded center">
+                            <p>Siguiente </p>
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                document.cookie = "landingPage=visited; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+                var self = this;
+                var app = self.$app;
+
+                $$('#intro-splash .btn-rounded').on('click', function () {
+                    var swiper = app.swiper.get('.swiper-container');
+                    if (swiper.isEnd) {
+                        app.methods.redirectTo('root');
+                    }
+                    swiper.slideNext();
+                });
+            }
+        }
+    }
+</script>

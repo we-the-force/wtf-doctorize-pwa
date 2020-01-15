@@ -217,7 +217,7 @@ if ('serviceWorker' in navigator) {
         }
       });
     });
-    const title = 'Push Doctorize';
+    /* const title = 'Push Doctorize';
     const options = {
       body: 'arrg',
       icon: 'images/icon.png',
@@ -225,7 +225,7 @@ if ('serviceWorker' in navigator) {
     };
 
     Notification.requestPermission();
-    reg.showNotification(title, options);
+    reg.showNotification(title, options); */
   }).catch(function (err) {
     // registration failed :(
     console.log('ServiceWorker registration failed: ', err);

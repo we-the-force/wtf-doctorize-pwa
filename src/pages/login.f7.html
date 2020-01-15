@@ -14,10 +14,11 @@
                 <div class="row">
                   <div class="col-10">
                     <i class="material-icons">person</i>
-                    
+
                   </div>
                   <div class="col-90">
-                    <input type="email" name="username" id="username" placeholder="Correo electrónico" required validate>
+                    <input type="email" name="username" id="username" placeholder="Correo electrónico" required
+                      validate>
                     <span class="input-clear-button"></span>
                   </div>
                 </div>
@@ -43,119 +44,134 @@
           <li>
             <div class="row">
               <div class="col-80">
-                <a href="/account/password/reset"  style="text-align: left;"
-                  class="item-link list-button btn-simple" id="recovery">Reestablecer contraseña</a>
+                <a href="/account/password/reset" style="text-align: left;" class="item-link list-button btn-simple"
+                  id="recovery">Reestablecer contraseña</a>
               </div>
             </div>
           </li>
         </ul>
       </div>
 
-      
+
 
     </div>
     <div class="list buttons">
-        <ul>
-          <li>
-            <div class="row">
-                <a href="/register-s1/" data-view=".view-main"
-                  class="item-link btn-simple">Regístrate</a>
-      
-                <a href="#" class="item-link list-button btn-rounded" id="login-button">
-                  <p>Ingresar </p>
-                  <i class="material-icons">chevron_right</i>
-                </a>
-            </div>
-          </li>
+      <ul>
+        <li>
+          <div class="row">
+            <a href="/register-s1/" data-view=".view-main" class="item-link btn-simple">Regístrate</a>
 
-        </ul>
-      </div>
+            <a href="#" class="item-link list-button btn-rounded" id="login-button">
+              <p>Ingresar </p>
+              <i class="material-icons">chevron_right</i>
+            </a>
+          </div>
+        </li>
+
+      </ul>
+    </div>
   </div>
 </template>
 <script>
-    import $$ from 'dom7';
+  import $$ from 'dom7';
 
-    export default {
-        on: {
-            pageInit: function(e, page) {
-                var self = this;
-                var app = self.$app;
-                var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-                var email_login = '',
-                    password_login = '';
-                var errorPopup = app.popup.create({
-                    content: '<div class="popup popup-swipe-to-close">' +
-                        '<div class="block text-align-center">' +
-                        '<p>Tus datos de acceso son incorrectos. <br/><br/>Intenta nuevamente.</p>' +
-                        '<div class="list"> <ul> <li><a class="item-link list-button popup-close" href="#">Cerrar</a></li> </ul> </div>' +
-                        '</div>' +
-                        '</div>'
+  export default {
+    on: {
+      pageInit: function (e, page) {
+        var self = this;
+        var app = self.$app;
+        var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        var email_login = '',
+          password_login = '';
+        var errorPopup = app.popup.create({
+          content: '<div class="popup popup-swipe-to-close">' +
+            '<div class="block text-align-center">' +
+            '<p>Tus datos de acceso son incorrectos. <br/><br/>Intenta nuevamente.</p>' +
+            '<div class="list"> <ul> <li><a class="item-link list-button popup-close" href="#">Cerrar</a></li> </ul> </div>' +
+            '</div>' +
+            '</div>'
+        });
+/* 
+        var notification = app.notification.create({
+          icon: '<i class="icon demo-icon">7</i>',
+          title: 'Framework7',
+          titleRightText: 'now',
+          subtitle: 'This is a subtitle',
+          text: 'This is a simple notification message',
+          closeTimeout: 3000,
+        })
+
+        notification.open(); */
+
+        Notification.requestPermission();
+        navigator.serviceWorker.getRegistration().then(function (reg) {
+          reg.showNotification('ahoy');
+        });
+
+        disableButton();
+
+        $$().click();
+
+        $$(document).on('input:notempty', '#username', function (e) {
+          if (password_login != '') {
+            email_login = $$('#username').val();
+            enableButton();
+          } else {
+            email_login = $$('#username').val();
+          }
+        });
+
+        $$(document).on('input:notempty', '#password', function (e) {
+          if (email_login != '') {
+            password_login = $$('#password').val();
+            enableButton();
+          } else {
+            password_login = $$('#password').val();
+          }
+        });
+
+        $$(document).on('input:empty', function (e) {
+          disableButton();
+        });
+
+        function enableButton() {
+          if (regex.test(email_login)) {
+            $$('#login .btn-rounded').removeClass('grey');
+            $$('#login .btn-rounded').off('click');
+            $$('#login .btn-rounded').on('click', function (e) {
+              e.preventDefault();
+              app.preloader.show('blue');
+              app.request.postJSON(app.data.url + '/account/login', {
+                "email": email_login,
+                "password": password_login
+              },
+                function (e) {
+                  app.preloader.hide();
+                  app.data.store
+                    .setItem("doctor", e)
+                    .then(function (value) {
+                      console.log(value);
+                      app.methods.redirectTo('home');
+                    })
+                    .catch(function (err) {
+                      console.log(err);
+                    });
+                },
+                function (e) {
+                  app.preloader.hide();
+                  errorPopup.open();
                 });
-
-                disableButton();
-
-                $$().click();
-
-                $$(document).on('input:notempty', '#username', function(e) {
-                    if (password_login != '') {
-                        email_login = $$('#username').val();
-                        enableButton();
-                    } else {
-                        email_login = $$('#username').val();
-                    }
-                });
-
-                $$(document).on('input:notempty', '#password', function(e) {
-                    if (email_login != '') {
-                        password_login = $$('#password').val();
-                        enableButton();
-                    } else {
-                        password_login = $$('#password').val();
-                    }
-                });
-
-                $$(document).on('input:empty', function(e) {
-                    disableButton();
-                });
-
-                function enableButton() {
-                    if (regex.test(email_login)) {
-                        $$('#login .btn-rounded').removeClass('grey');
-                        $$('#login .btn-rounded').off('click');
-                        $$('#login .btn-rounded').on('click', function(e) {
-                            e.preventDefault();
-                            app.preloader.show('blue');
-                            app.request.postJSON(app.data.url + '/account/login', {
-                                    "email": email_login,
-                                    "password": password_login
-                                },
-                                function(e) {
-                                    app.preloader.hide();
-                                    app.data.store
-                                        .setItem("doctor", e)
-                                        .then(function(value) {
-                                            console.log(value);
-                                            app.methods.redirectTo('home');
-                                        })
-                                        .catch(function(err) {
-                                            console.log(err);
-                                        });
-                                },
-                                function(e) {
-                                    app.preloader.hide();
-                                    errorPopup.open();
-                                });
-                        });
-                    } else {
-                        disableButton();
-                    }
-                }
-
-                function disableButton() {
-                    $$('#login .btn-rounded').addClass('grey');
-                    $$('#login .btn-rounded').off('click');
-                }
-            }
+            });
+          } else {
+            disableButton();
+          }
         }
+
+        function disableButton() {
+          $$('#login .btn-rounded').addClass('grey');
+          $$('#login .btn-rounded').off('click');
+        }
+      }
     }
+  }
 </script>

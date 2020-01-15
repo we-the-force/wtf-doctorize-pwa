@@ -167,11 +167,6 @@
           $$(".navbar .profile").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
         });
 
-        $$('.logout').click(function (params) {
-          app.data.store.clear();
-          app.methods.redirectTo('root');
-        });
-
         $$('.panel-open').click(function (e) {
           app.data.store.getItem('doctor').then(function (value) {
             app.data.doctor = value;
@@ -183,10 +178,18 @@
             el: '.panel',
           });
           panel.open();
+
           $$(".panel #personal-settings").click(function (e) {
             panel.close();
             app.methods.redirectTo('settings');
           });
+
+          $$(".panel #log-out").click(function (params) {
+            panel.close();
+            app.data.store.clear();
+            app.methods.redirectTo('root');
+          });
+
         });
 
         $$('.dynamic-sheet').on('click', function () {

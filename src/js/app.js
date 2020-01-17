@@ -183,6 +183,9 @@ app.init(function () {
 
 
 let newWorker;
+let isSubscribed = false;
+let swRegistration = null;
+const applicationServerPublicKey = '';
 
 var toastWithCallback = app.toast.create({
   text: 'A new version of this app is available.',
@@ -217,15 +220,11 @@ if ('serviceWorker' in navigator) {
         }
       });
     });
-    /* const title = 'Push Doctorize';
-    const options = {
-      body: 'arrg',
-      icon: 'images/icon.png',
-      badge: 'images/badge.png'
-    };
 
+    swRegistration = reg;
     Notification.requestPermission();
-    reg.showNotification(title, options); */
+    initializeUI();
+
   }).catch(function (err) {
     // registration failed :(
     console.log('ServiceWorker registration failed: ', err);
@@ -241,6 +240,73 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+//suscribe notifications
+
+function initializeUI() {
+  
+  if (!isSubscribed) {
+    subscribeUser();
+  }
+
+  // Set the initial subscription value
+  swRegistration.pushManager.getSubscription()
+    .then(function (subscription) {
+      isSubscribed = !(subscription === null);
+      update();
+    });
+}
+
+function update() {
+  if (Notification.permission === 'denied') {
+    updateSubscriptionOnServer(null);
+    return;
+  }
+}
+
+function subscribeUser() {
+  const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
+  swRegistration.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey: applicationServerKey
+  })
+    .then(function (subscription) {
+
+      updateSubscriptionOnServer(subscription);
+
+      isSubscribed = true;
+
+      update();
+    })
+    .catch(function (err) {
+      console.log('Failed to subscribe the user: ', err);
+      update();
+    });
+}
+
+function urlB64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding)
+    .replace(/\-/g, '+')
+    .replace(/_/g, '/');
+
+  const rawData = window.atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+
+  for (let i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
+}
+
+function updateSubscriptionOnServer(subscription) {
+  // TODO: Send subscription to application server
+  let jsonSubscription;
+  if (subscription) {
+    jsonSubscription = JSON.stringify(subscription);
+  } else {
+    jsonSubscription = null;
+  }
+}
 /* $$(document).on('panel:open',function (e) {
   app.data.store.getItem('doctor').then(function (value) {
     app.data.doctor = value;

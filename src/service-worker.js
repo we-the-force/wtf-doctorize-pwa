@@ -7,3 +7,17 @@ self.addEventListener('message', function(event) {
         self.skipWaiting();
     }
 });
+
+self.addEventListener('push', function (event) {
+    console.log('[Service Worker] Push Received.');
+    console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
+    let x = event.data.text();
+
+    const title = 'Push Codelab';
+    const options = {
+        body: event.data.text(),
+        icon: 'images/icon.png',
+        badge: 'images/badge.png'
+    };
+    event.waitUntil(self.registration.showNotification(title, options));
+});

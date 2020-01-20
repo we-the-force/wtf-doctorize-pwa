@@ -6,16 +6,23 @@
     background-repeat: no-repeat, no-repeat !important
     background-size: contain, 115% 40% !important
     background-position: left top, left bottom !important
+    .cell2
+        position: relative
+        top: -550px
+        width: 100%
+        overflow-x: hidden
+        display: flex
+        flex-direction: row-reverse
+        margin-bottom: -750px
+        img
+            right: -450px
+            position: relative
     .row
         margin-top: 40px
         margin-bottom: 40px
         padding-top: 40px
         position: relative
         top: 120px
-        .cell2
-            position: absolute
-            right: 0
-            top: -220px
         .info
             display: flex
             flex-direction: column
@@ -85,7 +92,7 @@
         line-height: 27px
         text-align: right
         color: #004F88
-        transform: translate(40px, 140px)
+        transform: translate(0px, 140px)
     .cell1
         position: relative
         top: 192px
@@ -129,6 +136,7 @@
             padding: 12px
             text-decoration: none
             font-size: 16px
+            font-weight: 700
             line-height: 20px
             color: #88A8C9
             border-radius: 4px
@@ -139,15 +147,199 @@
             position: absolute
             right: 70px
             top: 30px
-        @media screen and (max-width: 640px)
+        .dot
+            display: none !important
+    .parr1-mobile
+        display: none
+    .button-mobile
+        display: none
+    @media screen and (max-width: 1280px)
+        padding-bottom: 170vh
+        background-image: url('../static/images/FOOTER.png') !important
+        background-attachment: local !important
+        background-repeat: no-repeat !important
+        background-size: 115% 33% !important
+        background-position: left bottom !important
+        .parr1
+            display: block
+            margin-left: auto
+            margin-right: auto
+            top: unset
+            left: unset
+        .cell1
+            width: fit-content
+            margin-left: auto
+            margin-right: auto
+            top: -60px
+            left: unset
+        .row
+            top: unset
+            margin-top: unset
+            margin-bottom: unset
+            padding-top: unset
+            &.cards
+                padding-left: 40px
+                padding-right: 40px
+                .info
+                    --f7-cols-per-row: 2
+                    padding-left: 20px
+                    padding-right: 20px
+        .block2
+            margin-top: -100px
+            display: inline-block
+            margin-bottom: 140px
+            width: 100%
+            .parr2
+                position: relative
+                top: -150px
+                width: 55%
+                text-align: center
+                margin-left: auto
+                margin-right: auto
+        .cell2
+            top: -850px
+        .cells
+            top: -75px
+    @media screen and (max-width: 1024px)
+        padding-bottom: 50vh
+        background-size: 115% 25% !important
+        .header
             a
+                font-size: 20px
+                margin-top: 10px
                 float: none
                 display: block
                 text-align: left
+                margin-left: 10px
+                margin-right: 10px
             .header-right
                 float: none
                 position: unset
-.footer
+                display: flex
+        .cells
+            width: 100%
+            overflow-x: hidden
+            display: flex
+            .img1
+                position: relative
+                top: 0
+                left: 50%
+                transform: translate(-105%, 0%)
+            .img2
+                position: relative
+                top: 0
+                left: 50%
+                transform: translate(-150%, 0%)
+            .img3
+                position: relative
+                top: 0
+                left: 50%
+                transform: translate(-190%, 0%)
+        .parr2
+            width: 75% !important
+    @media screen and (max-width: 768px)
+        background-size: 115% 20% !important
+        .parr1
+            width: 90% !important
+            p
+                font-size: 20px !important
+        .parr2
+            width: 85% !important
+            font-size: 27px
+        button
+            font-size: 20px !important
+            left: -115px !important
+            top: 330px !important
+            width: 170px !important
+            height: 60px !important
+        .row
+            .info
+                --f7-cols-per-row: 1 !important
+    @media screen and (max-width: 640px)
+        background-size: 115% 15% !important
+        .header
+            display: flex
+            padding: 0px
+            justify-content: space-between
+            align-items: center
+            .dot
+                border-radius: 50%
+                width: 30px
+                height: 30px
+                background: linear-gradient(285.87deg, #2FCFBC 10.07%, #029AF0 86.62%)
+                display: flex !important
+                justify-content: center
+                align-items: center
+                color: white
+                marg
+                .icon
+                    font-size: 25px
+            .logo
+                width: fit-content
+                margin-right: 0px
+                margin-top: 15px
+                margin-left: 5px
+            a
+                margin-left: 0px
+                padding: 5px
+            .header-right
+                display: none !important
+        .cell2
+            display: none
+        .block2
+            display: none
+        .parr1
+            display: none
+        .cell1
+            top: unset
+            img
+                width: 100%
+                top: 45%
+            button
+                display: none
+        .block3
+            display: flex
+            flex-direction: column-reverse
+            .cards
+                padding: 0px
+            .cells
+                top: 0px
+                .img1,.img2,.img3
+                    width: 284.35px
+                    height: 227.39px
+        .parr1-mobile
+            display: block
+            position: relative
+            width: 90%
+            margin-left: auto
+            margin-right: auto
+            text-align: center
+            top: -25px
+            h2
+                font-family: Avenir-Medium
+                font-size: 20px
+                font-weight: 900
+                line-height: 32px
+                letter-spacing: 2px
+                color: #029AF0
+                margin-bottom: 10px
+            p
+                font-size: 16px !important
+                line-height: 20px !important
+                color: #029AF0
+                text-align: center !important
+        .button-mobile
+            display: block
+            button
+                font-family: Avenir-Medium
+                font-size: 17px
+                line-height: 23px
+                background-color: #FDBC5D
+                position: relative
+                top: 0px !important
+                left: 50% !important
+                transform: translate(-50%, 0%)
+.footer-landing
     position: static
     display: flex
     align-items: center
@@ -168,12 +360,36 @@
             display: flex
             justify-content: center
             align-items: center
-            font-size: 30px
+            font-size: 30px !important
             color: #004F88
             background: #1164A0
             border-radius: 50%
             width: 80px
             height: 80px
-            margin: 50px
+            margin: 40px
     h3,p,a
         color: #E5E9F2
+        font-size: 18px !important
+    @media screen and (max-width: 1024px)
+        flex-direction: column
+        height: fit-content
+        .left
+            position: relative
+            display: block
+            margin-right: auto
+        .social
+            margin: 0px
+            position: relative
+            top: 50%
+            left: 50%
+            transform: translate(-50%, 0%)
+    @media screen and (max-width: 640px)
+        .dot
+            width: 60px !important
+            height: 60px !important
+            margin: 30px !important
+    @media screen and (max-width: 480px)
+        .location,.home
+            margin: 20px !important
+        .dot
+            margin: 10px !important

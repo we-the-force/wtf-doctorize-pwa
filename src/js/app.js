@@ -18,220 +18,295 @@ import routes from './routes.js';
 import register from './register.js';
 
 Framework7.request.setup({
-    contentType: "application/json",
-    referrerPolicy: "origin-when-downgrade",
-    crossDomain: true,
-    "Access-Control-Allow-Origin": "*"
+  contentType: "application/json",
+  referrerPolicy: "origin-when-downgrade",
+  crossDomain: true,
+  "Access-Control-Allow-Origin": "*"
 });
 
 
 var app = new Framework7({
-    root: '#app', // App root element
+  root: '#app', // App root element
 
-    name: 'Doctorize', // App name
-    theme: 'auto', // Automatic theme detection
-    // App root data
+  name: 'Doctorize', // App name
+  theme: 'auto', // Automatic theme detection
+  // App root data
 
-    data: function() {
-        return {
-            store: localForage.createInstance({
-                name: "datastore"
-            }),
-            specialties: {
-                values: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
-                displayValues: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
-            },
-            register: {
-                username: '',
-                password: '',
-                email: '',
-                phone: '',
-            },
-            assistant: {
-                id: '',
-                flag: false,
-                edit: false,
-                addOffice: false,
-                code: '',
-                name: '',
-                password: '',
-                email: '',
-                consultorio: {
-                    id: '',
-                    name: '',
-                },
-                permisos: [],
-            },
-            doctor: {
-                id: '',
-                email: '',
-                name: '',
-                cellphone: '',
-                specialty: {
-                    id: '',
-                    name: '',
-                },
-                photo: '',
-            },
-            consultorio: {
-                id: '',
-                nombre: '',
-                email: '',
-                phone: '',
-                hospital: '',
-                address: '',
-                number: '',
-                startTime: '',
-                closeTime: '',
-                lunchStartTime: '',
-                lunchCloseTime: '',
-                days: [],
-                edit: false,
-            },
-            paciente: {
-                nombre: '',
-                email: '',
-                phone: '',
-                birthdate: '',
-                civilStatus: '',
-                weight: '',
-                height: '',
-                blood: '',
-                pressure: '',
-            },
-            url: '//api.mydoctorize.com'
-        };
+  data: function () {
+    return {
+      store: localForage.createInstance({
+        name: "datastore"
+      }),
+      specialties: {
+        values: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
+        displayValues: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
+      },
+      register: {
+        username: '',
+        password: '',
+        email: '',
+        phone: '',
+      },
+      assistant: {
+        id: '',
+        flag: false,
+        edit: false,
+        addOffice: false,
+        code: '',
+        name: '',
+        password: '',
+        email: '',
+        consultorio: {
+          id: '',
+          name: '',
+        },
+        permisos: [],
+      },
+      doctor: {
+        id: '',
+        email: '',
+        name: '',
+        cellphone: '',
+        specialty: {
+          id: '',
+          name: '',
+        },
+        photo: '',
+      },
+      consultorio: {
+        id: '',
+        nombre: '',
+        email: '',
+        phone: '',
+        hospital: '',
+        address: '',
+        number: '',
+        startTime: '',
+        closeTime: '',
+        lunchStartTime: '',
+        lunchCloseTime: '',
+        days: [],
+        edit: false,
+      },
+      paciente: {
+        nombre: '',
+        email: '',
+        phone: '',
+        birthdate: '',
+        civilStatus: '',
+        weight: '',
+        height: '',
+        blood: '',
+        pressure: '',
+      },
+      url: '//api.mydoctorize.com'
+    };
+  },
+  // App root methods
+  methods: {
+    helloWorld: function () {
+      app.dialog.alert('Hello World!');
     },
-    // App root methods
-    methods: {
-        helloWorld: function() {
-            app.dialog.alert('Hello World!');
-        },
-        previousPage: function() {
-            app.views.main.router.back();
-        },
-        redirectTo: function(pathTo) {
-            // console.log(app);
+    previousPage: function () {
+      app.views.main.router.back();
+    },
+    redirectTo: function (pathTo) {
+      // console.log(app);
 
-            app.views.main.router.navigate({
-                name: pathTo
-            });
-        },
-        isEmpty: function(obj) {
-            for (var key in obj) {
-                if (obj.hasOwnProperty(key))
-                    return false;
-            }
-            return true;
-        }
+      app.views.main.router.navigate({
+        name: pathTo
+      });
     },
-    // App routes
-    routes: routes,
-    // Enable panel left visibility breakpoint
-    panel: {
-        leftBreakpoint: 960,
-        swipe: 'left',
-        swipeOnlyClose: true,
-    },
-    // Register service worker
-    serviceWorker: {
-        path: '/service-worker.js',
-    },
-    view: {
-        pushState: true
-    },
-    navbar: {
-        showOnPageScrollEnd: false
-    },
-    flow: 'default' //RA registrar asistente, RD registrar doctor, RP registrar paciente, UA update asistente, UD update doctor, UP update patient
+    isEmpty: function (obj) {
+      for (var key in obj) {
+        if (obj.hasOwnProperty(key))
+          return false;
+      }
+      return true;
+    }
+  },
+  // App routes
+  routes: routes,
+  // Enable panel left visibility breakpoint
+  panel: {
+    leftBreakpoint: 960,
+    swipe: 'left',
+    swipeOnlyClose: true,
+  },
+  // Register service worker
+  serviceWorker: {
+    path: '/service-worker.js',
+  },
+  view: {
+    pushState: true
+  },
+  navbar: {
+    showOnPageScrollEnd: false
+  },
+  flow: 'default' //RA registrar asistente, RD registrar doctor, RP registrar paciente, UA update asistente, UD update doctor, UP update patient
 });
 
 if (getCookie("landingPage") != 'visited') {
-    app.methods.redirectTo('intro-splash-01');
+  app.methods.redirectTo('intro-splash-01');
 }
 
 function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
     }
-    return "";
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
 }
 
-app.init(function() {
-    console.log('init');
+app.init(function () {
+  console.log('init');
 
-    window.addEventListener('beforeinstallprompt', (e) => {
-        // Prevent Chrome 67 and earlier from automatically showing the prompt
-        e.preventDefault();
-        // Stash the event so it can be triggered later.
-        deferredPrompt = e;
-        // Update UI notify the user they can add to home screen
-        btnAdd.style.display = 'block';
-    });
+  window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevent Chrome 67 and earlier from automatically showing the prompt
+    e.preventDefault();
+    // Stash the event so it can be triggered later.
+    deferredPrompt = e;
+    // Update UI notify the user they can add to home screen
+    btnAdd.style.display = 'block';
+  });
 
 });
 
 
 
 let newWorker;
+let isSubscribed = false;
+let swRegistration = null;
+const applicationServerPublicKey = '';
 
 var toastWithCallback = app.toast.create({
-    text: 'A new version of this app is available.',
-    closeButton: true,
-    closeButtonText: 'Update',
-    on: {
-        close: function() {
-            newWorker.postMessage({ action: 'skipWaiting' });
-        },
-    }
+  text: 'A new version of this app is available.',
+  closeButton: true,
+  closeButtonText: 'Update',
+  on: {
+    close: function () {
+      newWorker.postMessage({ action: 'skipWaiting' });
+    },
+  }
 });
 
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./service-worker.js').then(reg => {
-        reg.addEventListener('updatefound', () => {
+  navigator.serviceWorker.register('./service-worker.js').then(reg => {
+    reg.addEventListener('updatefound', () => {
 
-            // An updated service worker has appeared in reg.installing!
-            newWorker = reg.installing;
+      // An updated service worker has appeared in reg.installing!
+      newWorker = reg.installing;
 
-            newWorker.addEventListener('statechange', () => {
+      newWorker.addEventListener('statechange', () => {
 
-                // Has service worker state changed?
-                switch (newWorker.state) {
-                    case 'installed':
+        // Has service worker state changed?
+        switch (newWorker.state) {
+          case 'installed':
 
-                        // There is a new service worker available, show the notification
-                        if (navigator.serviceWorker.controller) {
-                            toastWithCallback.open();
-                        }
+            // There is a new service worker available, show the notification
+            if (navigator.serviceWorker.controller) {
+              toastWithCallback.open();
+            }
 
-                        break;
-                }
-            });
-        });
-    }).catch(function(err) {
-        // registration failed :(
-        console.log('ServiceWorker registration failed: ', err);
+            break;
+        }
+      });
     });
 
-    let refreshing;
-    // The event listener that is fired when the service worker updates
-    // Here we reload the page
-    navigator.serviceWorker.addEventListener('controllerchange', function() {
-        if (refreshing) return;
-        window.location.reload();
-        refreshing = true;
+    swRegistration = reg;
+    Notification.requestPermission();
+    initializeUI();
+
+  }).catch(function (err) {
+    // registration failed :(
+    console.log('ServiceWorker registration failed: ', err);
+  });
+
+  let refreshing;
+  // The event listener that is fired when the service worker updates
+  // Here we reload the page
+  navigator.serviceWorker.addEventListener('controllerchange', function () {
+    if (refreshing) return;
+    window.location.reload();
+    refreshing = true;
+  });
+}
+
+//suscribe notifications
+
+function initializeUI() {
+  
+  if (!isSubscribed) {
+    subscribeUser();
+  }
+
+  // Set the initial subscription value
+  swRegistration.pushManager.getSubscription()
+    .then(function (subscription) {
+      isSubscribed = !(subscription === null);
+      update();
     });
 }
 
+function update() {
+  if (Notification.permission === 'denied') {
+    updateSubscriptionOnServer(null);
+    return;
+  }
+}
+
+function subscribeUser() {
+  const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
+  swRegistration.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey: applicationServerKey
+  })
+    .then(function (subscription) {
+
+      updateSubscriptionOnServer(subscription);
+
+      isSubscribed = true;
+
+      update();
+    })
+    .catch(function (err) {
+      console.log('Failed to subscribe the user: ', err);
+      update();
+    });
+}
+
+function urlB64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding)
+    .replace(/\-/g, '+')
+    .replace(/_/g, '/');
+
+  const rawData = window.atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+
+  for (let i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
+}
+
+function updateSubscriptionOnServer(subscription) {
+  // TODO: Send subscription to application server
+  let jsonSubscription;
+  if (subscription) {
+    jsonSubscription = JSON.stringify(subscription);
+  } else {
+    jsonSubscription = null;
+  }
+}
 /* $$(document).on('panel:open',function (e) {
   app.data.store.getItem('doctor').then(function (value) {
     app.data.doctor = value;

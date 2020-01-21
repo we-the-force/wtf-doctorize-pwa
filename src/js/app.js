@@ -183,9 +183,9 @@ app.init(function () {
 
 
 let newWorker;
-let isSubscribed = false;
-let swRegistration = null;
-const applicationServerPublicKey = '';
+//let isSubscribed = false;
+//let swRegistration = null;
+//const applicationServerPublicKey = '';
 
 var toastWithCallback = app.toast.create({
   text: 'A new version of this app is available.',
@@ -221,9 +221,9 @@ if ('serviceWorker' in navigator) {
       });
     });
 
-    swRegistration = reg;
+/*     swRegistration = reg;
     Notification.requestPermission();
-    initializeUI();
+    initializeUI(); */
 
   }).catch(function (err) {
     // registration failed :(

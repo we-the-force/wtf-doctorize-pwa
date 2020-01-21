@@ -14,7 +14,6 @@ import '../css/app.sass';
 // Import Routes
 import routes from './routes.js';
 
-
 import register from './register.js';
 
 Framework7.request.setup({
@@ -242,7 +241,7 @@ if ('serviceWorker' in navigator) {
 
 //suscribe notifications
 
-function initializeUI() {
+/* function initializeUI() {
   
   if (!isSubscribed) {
     subscribeUser();
@@ -254,16 +253,16 @@ function initializeUI() {
       isSubscribed = !(subscription === null);
       update();
     });
-}
+} */
 
-function update() {
+/* function update() {
   if (Notification.permission === 'denied') {
     updateSubscriptionOnServer(null);
     return;
   }
-}
+} */
 
-function subscribeUser() {
+/* function subscribeUser() {
   const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
   swRegistration.pushManager.subscribe({
     userVisibleOnly: true,
@@ -281,9 +280,9 @@ function subscribeUser() {
       console.log('Failed to subscribe the user: ', err);
       update();
     });
-}
+} */
 
-function urlB64ToUint8Array(base64String) {
+/* function urlB64ToUint8Array(base64String) {
   const padding = '='.repeat((4 - base64String.length % 4) % 4);
   const base64 = (base64String + padding)
     .replace(/\-/g, '+')
@@ -296,9 +295,9 @@ function urlB64ToUint8Array(base64String) {
     outputArray[i] = rawData.charCodeAt(i);
   }
   return outputArray;
-}
+} */
 
-function updateSubscriptionOnServer(subscription) {
+/* function updateSubscriptionOnServer(subscription) {
   // TODO: Send subscription to application server
   let jsonSubscription;
   if (subscription) {
@@ -306,7 +305,7 @@ function updateSubscriptionOnServer(subscription) {
   } else {
     jsonSubscription = null;
   }
-}
+} */
 /* $$(document).on('panel:open',function (e) {
   app.data.store.getItem('doctor').then(function (value) {
     app.data.doctor = value;

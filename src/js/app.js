@@ -135,7 +135,7 @@ var app = new Framework7({
   },
   // Register service worker
   serviceWorker: {
-    path: '/service-worker.js',
+    path: '/OneSignalSDKWorker.js',
   },
   view: {
     pushState: true
@@ -199,7 +199,7 @@ var toastWithCallback = app.toast.create({
 });
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./service-worker.js').then(reg => {
+  navigator.serviceWorker.register('./OneSignalSDKWorker.js').then(reg => {
     reg.addEventListener('updatefound', () => {
 
       // An updated service worker has appeared in reg.installing!

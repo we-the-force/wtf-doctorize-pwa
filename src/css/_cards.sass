@@ -17,10 +17,12 @@
         border-bottom-left-radius: 10px
         &.turquoise
             background: $turquoise-2
-        &.light-blue  
+        &.light-blue
             background: $light-blue
         &.yellow
             background: $yellow
+        &.red
+            background: $red
     .dynamic-popover,.permissions-link
         position: absolute
         top: 10px
@@ -39,7 +41,7 @@
                 font: $text-2-card
             &.title
                 font: $title-card
-            &.footer    
+            &.footer
                 font: $footer-card
     &.offices
         p
@@ -47,7 +49,7 @@
                 font: $text-1-card
             &.title
                 font: $title-card
-            &.footer    
+            &.footer
                 font: $footer-card
         i
             font-size: 30px
@@ -69,7 +71,7 @@
                 right: 2%
             &.icon
                 position: absolute
-                top: 22% 
+                top: 22%
                 left: 7%
     &.asistentes
         .dynamic-popover
@@ -94,7 +96,7 @@
             position: absolute
             left: 7.5%
             top: 10%
-            img 
+            img
                 width: 45px
                 height: 45px
                 border-radius: 50%
@@ -123,7 +125,7 @@
             padding-top: 3%
             padding-bottom: 3%
             .details-event
-                height: 220px  
+                height: 220px
                 width: 100%
                 position: absolute
                 top: 0px
@@ -141,7 +143,7 @@
                     font-weight: 600
                     opacity: 1
                 .contact
-                    --f7-fab-size: 37px 
+                    --f7-fab-size: 37px
                     i
                         color: $light-blue
                         font-size: 23px
@@ -150,8 +152,8 @@
                         left: 45px
                     &.phone
                         left: 90px
-                .stars      
-                    display: inline-flex              
+                .stars
+                    display: inline-flex
                     position: absolute
                     left: 45%
                     i
@@ -186,7 +188,7 @@
                     font: $text-2-card
                 &.footer
                     font: $footer-card
-        i 
+        i
             &.time
                 font-size: 16px
                 color: $light-blue
@@ -235,11 +237,58 @@
                 bottom: 15px
                 p
                     opacity: 1
-
-
+    &.doc-horarios
+        width: 80%
+        margin: auto
+        hr
+            margin: 0px
+            border: 0.8px solid #E5E9F2
+            margin-left: 5%
+        .card-header
+            border: none
+            width: auto
+            margin-left: 5%
+            .clock
+                &.light_blue
+                    color: $light-blue
+                &.red
+                    color: $red
+                &.yellow
+                    color: $yellow
+            .points
+                color: $dark_blue
+            p
+                color: $dark_blue
+                font: $Body-2
+                font-weight: bold
+                margin-right: auto
+                margin-left: 5px
+        .card-content-padding
+            width: auto
+            margin-left: 5%
+            padding-left: 5.5%
+            padding-right: 5.5%
+            .days
+                font: $Body-2
+            .time_disable
+                display: flex
+                justify-content: space-between
+                .time
+                    font: $Body-3
+            .asist,.place
+                display: flex
+                .label
+                    font: $Body-2
+                    color: $grey
+                .data
+                    font: $Body-2
+                    font-weight: 600
+                    text-align: left
+                    color: $dark-blue
+                    margin: auto
 .card-backdrop
     z-index: 0
-.card-expandable.card-opened .card-opened-fade-out 
+.card-expandable.card-opened .card-opened-fade-out
     opacity: 0 !important
 
 .popover
@@ -267,6 +316,3 @@
                     right: 0px
             .delete-office,.delete-assistant
                 width: 100%
-
-
-    

@@ -1,0 +1,134 @@
+<template>
+    <div class="page" data-name="doctor-horarios" id="doctor-horarios">
+        <div class="page-content">
+            <div class="header">
+                <div class="doc-horarios">
+                    <h1>Horarios</h1>
+                    <div class="fab btn-fab">
+                        <a href="#">
+                            <i class="material-icons">add</i>
+                        </a>
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <div class="list">
+                <ul>
+                    <li>
+                        <div class="card card-outline doc-horarios">
+                            <div class="rectangle light-blue"></div>
+                            <div class="card-header">
+                                <i class="clock material-icons light-blue">
+                                    timelapse
+                                </i>
+                                <p>Nombre del horario</p>
+                                <i class="points material-icons">
+                                    more_horiz
+                                </i>
+                            </div>
+                            <hr>
+                            <div class="card-content card-content-padding">
+                                <p class="days dark-blue">L M X J V S</p>
+                                <div class="time_disable">
+                                    <p class="time dark-blue">09:00 - 14:00</p>
+                                    <label class="toggle toggle-init">
+                                        <input type="checkbox" name="chbx" value="1" style="display:none" checked>
+                                        <span class="toggle-icon"></span>
+                                    </label>
+                                </div>
+                                <div class="asist">
+                                    <p class="label">Asistente:</p>
+                                    <p class="data">Alejandra G.</p>
+                                </div>
+                                <div class="place">
+                                    <p class="label">Lugar:</p>
+                                    <p class="data">Hospital H.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <hr>
+                    <li>
+                        <div class="card card-outline doc-horarios">
+                            <div class="rectangle red"></div>
+                            <div class="card-header">
+                                <i class="clock material-icons red">
+                                    timelapse
+                                </i>
+                                <p>Otro Horario</p>
+                                <i class="points material-icons">
+                                    more_horiz
+                                </i>
+                            </div>
+                            <hr>
+                            <div class="card-content card-content-padding">
+                                <p class="days dark-blue">L M V S</p>
+                                <div class="time_disable">
+                                    <p class="time dark-blue">16:00 - 22:00</p>
+                                    <label class="toggle toggle-init">
+                                        <input type="checkbox" name="chbx" value="1" style="display:none" checked>
+                                        <span class="toggle-icon"></span>
+                                    </label>
+                                </div>
+                                <div class="asist">
+                                    <p class="label">Asistente:</p>
+                                    <p class="data">Candelario Glz.</p>
+                                </div>
+                                <div class="place">
+                                    <p class="label">Lugar:</p>
+                                    <p class="data">Hospital z.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <hr>
+                    <li>
+                        <div class="card card-outline doc-horarios">
+                            <div class="rectangle yellow"></div>
+                            <div class="card-header">
+                                <i class="clock material-icons yellow">
+                                    timelapse
+                                </i>
+                                <p>Otro Horario otra vez</p>
+                                <i class="points material-icons">
+                                    more_horiz
+                                </i>
+                            </div>
+                            <hr>
+                            <div class="card-content card-content-padding">
+                                <p class="days dark-blue">D</p>
+                                <div class="time_disable">
+                                    <p class="time dark-blue">10:00 - 14:00</p>
+                                    <label class="toggle toggle-init">
+                                        <input type="checkbox" name="chbx" value="1" style="display:none" checked>
+                                        <span class="toggle-icon"></span>
+                                    </label>
+                                </div>
+                                <div class="asist">
+                                    <p class="label">Asistente:</p>
+                                    <p class="data">Candelario Glz.</p>
+                                </div>
+                                <div class="place">
+                                    <p class="label">Lugar:</p>
+                                    <p class="data">Hospital z.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <hr>
+                </ul>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+
+    export default {
+        on: {
+            pageInit: function (e, page) {
+
+            }
+        }
+    }
+</script>

@@ -27,7 +27,7 @@ import AgendarCitaFecha from '../pages/agendar-cita-fecha.f7.html';
 import CitaAgendada from '../pages/cita-agendada.f7.html';
 import NuevoPaciente from '../pages/nuevo-paciente.f7.html';
 import schedule from '../pages/schedule.f7.html';
-
+import DoctorHorarios from '../pages/doctor-horarios.f7.html';
 import DynamicRoutePage from '../pages/dynamic-route.f7.html';
 import PhotoModule from '../pages/photo-module.f7.html';
 import Settings from '../pages/settings.f7.html';
@@ -39,6 +39,11 @@ var routes = [
         name: "root",
         path: '/',
         component: LoginPage,
+    },
+    {
+        name: "doctor-horarios",
+        path: '/doctor/horarios',
+        component: DoctorHorarios,
     },
     {
         name: "landing",

@@ -1,0 +1,42 @@
+.popup
+    &.popup-timetable
+        width: 90%
+        height: 85%
+        top: 50%
+        left: 50%
+        transform: translate3d(-50%, 50%, 0)
+        border-radius: 10px
+        padding: 30px 18px 30px 18px
+        &.modal-in
+            transform: translate3d(-50%, -50%, 0)
+            display: flex !important
+            flex-direction: column
+        .title
+            font: $title-2
+            color: $grey
+            margin: 0px auto 0px auto
+        .list
+            margin: 10px auto 10px auto
+            width: 92%
+            .item-inner
+                padding-top: 0px
+                padding-bottom: 0px
+                height: fit-content
+                .item-input-wrap:after
+                    border: 1px solid #D3DCE6
+                    border-radius: 8px
+                input
+                    text-align: center
+                    color: $turquoise-2
+        hr
+            margin: 0px -18px 14px 20px
+            border: 1px solid #E5E9F2
+        .days-container
+            margin-top: 10px
+            flex-wrap: nowrap
+            padding: 0px 10px 0px 10px
+            .days
+                --f7-checkbox-inactive-color: #E5E9F2
+                i
+                    margin: 0px
+                    color: #C2CEDB

@@ -5,7 +5,7 @@
                 <div class="doc-horarios">
                     <h1>Horarios</h1>
                     <div class="fab btn-fab">
-                        <a href="#">
+                        <a class="link popup-open" href="#" data-popup=".popup-timetable">
                             <i class="material-icons">add</i>
                         </a>
                     </div>
@@ -119,6 +119,59 @@
                 </ul>
             </div>
         </div>
+        <div class="popup popup-timetable">
+            <div class="row pop-header">
+                <a class="link popup-close" href="#"><i class="material-icons">close</i></a>
+                <label class="toggle toggle-init">
+                    <input type="checkbox" name="chbx" value="1" style="display:none" checked>
+                    <span class="toggle-icon"></span>
+                </label>
+            </div>
+            <p class="title">Nombre</p>
+            <div class="list no-hairlines-md">
+                <ul>
+                    <li class="item-content item-input item-input-outline">
+                        <div class="item-inner">
+                            <div class="item-input-wrap">
+                                <input type="text" placeholder="Nombre">
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <hr>
+            <p class="title">Días</p>
+            <div class="row days-container">
+                <label class="item-checkbox item-content days">
+                    <input type="checkbox" name="chbx" value="7">
+                    <i class="icon icon-checkbox days" id="07">D</i>
+                </label>
+                <label class="item-checkbox item-content days">
+                    <input type="checkbox" name="chbx" value="1">
+                    <i class="icon icon-checkbox days" id="01">L</i>
+                </label>
+                <label class="item-checkbox item-content days">
+                    <input type="checkbox" name="chbx" value="2">
+                    <i class="icon icon-checkbox days" id="02">M</i>
+                </label>
+                <label class="item-checkbox item-content days">
+                    <input type="checkbox" name="chbx" value="3">
+                    <i class="icon icon-checkbox days" id="03">X</i>
+                </label>
+                <label class="item-checkbox item-content days">
+                    <input type="checkbox" name="chbx" value="4">
+                    <i class="icon icon-checkbox days" id="04">J</i>
+                </label>
+                <label class="item-checkbox item-content days">
+                    <input type="checkbox" name="chbx" value="5">
+                    <i class="icon icon-checkbox days" id="05">V</i>
+                </label>
+                <label class="item-checkbox item-content days">
+                    <input type="checkbox" name="chbx" value="6">
+                    <i class="icon icon-checkbox days" id="06">S</i>
+                </label>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -127,7 +180,10 @@
     export default {
         on: {
             pageInit: function (e, page) {
-
+                $$('[name="chbx"]').on('change',function (x) {
+                    console.log($$(this));
+                    
+                });
             }
         }
     }

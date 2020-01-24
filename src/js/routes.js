@@ -42,7 +42,7 @@ var routes = [
     },
     {
         name: "doctor-horarios",
-        path: '/doctor/horarios',
+        path: '/doctor/timetable',
         component: DoctorHorarios,
     },
     {

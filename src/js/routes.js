@@ -33,6 +33,7 @@ import Settings from '../pages/settings.f7.html';
 import SettingsEdit from '../pages/settings-edit.f7.html';
 import DoctorHorariosAdd from '../pages/doctor-horarios-add.f7.html';
 import DoctorHorarios from '../pages/doctor-horarios.f7.html';
+import DoctorHorariosSelect from '../pages/doctor-horarios-select.f7.html';
 
 var routes = [
 
@@ -50,6 +51,11 @@ var routes = [
         name: "doctor-horarios-add",
         path: '/doctor/timetable/new',
         component: DoctorHorariosAdd,
+    },
+    {
+        name: "doctor-horarios-select",
+        path: '/doctor/timetable/select',
+        component: DoctorHorariosSelect,
     },
     {
         name: "landing",

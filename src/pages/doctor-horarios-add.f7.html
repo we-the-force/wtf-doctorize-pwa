@@ -86,11 +86,20 @@
     export default {
         on: {
             pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
                 $$('.btn-rounded').click(function (x) {
                     console.log("button click");
                 });
                 $$('.card.add').click(function (x) {
                     console.log("click " + $$(this).attr('id'));
+                    switch ($$(this).attr('id')) {
+                        case 'asist':
+                            app.methods.redirectTo('doctor-horarios-select');
+                            break;
+                        default:
+                            break;
+                    }
                 });
             }
         }

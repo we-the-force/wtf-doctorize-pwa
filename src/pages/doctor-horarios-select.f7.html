@@ -1,0 +1,58 @@
+<template>
+    <div class="page" data-name="doctor-horarios-select" id="doctor-horarios-select">
+        <div class="page-content">
+            <div class="header">
+                <div class="doc-horarios-add">
+                    <a class="back" href="javascript:history.back()">
+                        <i class="material-icons">chevron_left</i>
+                    </a>
+                    <p class="title1">Asistente</p>
+                </div>
+            </div>
+            <div class="list" id="inputs">
+                <ul>
+                    <li class="item-content item-input linear">
+                        <div class="item-inner">
+                            <div class="item-label grey">
+                                Asistente
+                            </div>
+                            <div class="item-input-wrap">
+                                <input type="text" readonly value="Alejandro">
+                                <i class="material-icons">chevron_right</i>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="item-content item-input linear">
+                        <div class="item-inner">
+                            <div class="item-label grey">
+                                Asistente
+                            </div>
+                            <div class="item-input-wrap">
+                                <input type="text" readonly value="Aglaee">
+                                <i class="material-icons">chevron_right</i>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <a class="new_asisstant" href="">
+                    <i class="material-icons">add_circle</i>
+                    <p>Agregar asistente</p>
+                </a>
+            </div>
+            <hr>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+
+    export default {
+        on: {
+            pageInit: function (e, page) {
+
+            }
+        }
+    }
+</script>

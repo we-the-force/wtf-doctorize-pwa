@@ -9,60 +9,73 @@
                     <p class="title1">Agregar horario</p>
                 </div>
             </div>
+            <div class="list name">
+                <ul>
+                    <li class="item-content item-input">
+                        <div class="item-inner">
+                            <div class="item-input-wrap rounded">
+                                <i class="clock material-icons grey">
+                                    timelapse
+                                </i>
+                                <input type="email" name="name" id="name" placeholder="Nombre del horario" required
+                                    validate>
+                                <span class="input-clear-button"></span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
             <div class="list">
                 <ul>
                     <li>
-                        <div class="card card-outline doc-horarios">
+                        <div class="card card-outline doc-horarios add" id="asist">
                             <div class="rectangle light-blue"></div>
                             <i class="clock material-icons light-blue">
-                                timelapse
+                                person
                             </i>
                             <div class="card-content card-content-padding">
-                                <p>Horario 1</p>
-                                <p class="asist">Alejandra G.</p>
-                                <hr>
-                                <p class="place">Hospital H.</p>
+                                <p>Asistente</p>
                             </div>
-                            <i class="points material-icons">
-                                more_horiz
+                            <i class="points material-icons light-blue">
+                                chevron_right
                             </i>
                         </div>
                     </li>
                     <li>
-                        <div class="card card-outline doc-horarios">
+                        <div class="card card-outline doc-horarios add" id="hosp">
                             <div class="rectangle red"></div>
                             <i class="clock material-icons red">
-                                timelapse
+                                room
                             </i>
                             <div class="card-content card-content-padding">
-                                <p>Horario 2</p>
-                                <p class="asist">Alejandra G.</p>
-                                <hr>
-                                <p class="place">Hospital H.</p>
+                                <p>Hospital</p>
                             </div>
-                            <i class="points material-icons">
-                                more_horiz
+                            <i class="points material-icons red">
+                                chevron_right
                             </i>
                         </div>
                     </li>
                     <li>
-                        <div class="card card-outline doc-horarios">
-                            <div class="rectangle yellow"></div>
-                            <i class="clock material-icons yellow">
+                        <div class="card card-outline doc-horarios add" id="hora">
+                            <div class="rectangle turquoise"></div>
+                            <i class="clock material-icons turquoise">
                                 timelapse
                             </i>
                             <div class="card-content card-content-padding">
-                                <p>Horario 3</p>
-                                <p class="asist">Alejandra G.</p>
-                                <hr>
-                                <p class="place">Hospital H.</p>
+                                <p>Horarios</p>
                             </div>
-                            <i class="points material-icons">
-                                more_horiz
+                            <i class="points material-icons turquoise">
+                                chevron_right
                             </i>
                         </div>
                     </li>
                 </ul>
+            </div>
+            <div class="row btn">
+                <a href="#" class="item-link list-button btn-rounded">
+                    <p>Guardar </p>
+                    <i class="material-icons">chevron_right</i>
+                </a>
             </div>
         </div>
     </div>
@@ -73,9 +86,11 @@
     export default {
         on: {
             pageInit: function (e, page) {
-                $$('[name="chbx"]').on('change', function (x) {
-                    console.log($$(this));
-
+                $$('.btn-rounded').click(function (x) {
+                    console.log("button click");
+                });
+                $$('.card.add').click(function (x) {
+                    console.log("click " + $$(this).attr('id'));
                 });
             }
         }

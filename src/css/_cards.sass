@@ -240,7 +240,7 @@
     &.doc-horarios
         display: flex
         width: auto
-        .clock
+        .material-icons
             padding-left: calc( 5% + 10px )
             padding-right: 15px
             padding-top: 10px
@@ -251,6 +251,8 @@
                 color: $red
             &.yellow
                 color: $yellow
+            &.turquoise
+                color: $turquoise-2
         .card-content-padding
             width: 100%
             padding: 9px 0px 9px 0px
@@ -271,6 +273,12 @@
         .points
             color: $dark_blue
             padding: 10px 10px 0px 15px
+    &.doc-horarios.add
+        align-items: center
+        .material-icons
+            padding-top: 0px
+        
+
 
 .card-backdrop
     z-index: 0

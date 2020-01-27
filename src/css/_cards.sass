@@ -238,54 +238,40 @@
                 p
                     opacity: 1
     &.doc-horarios
-        width: 80%
-        margin: auto
-        hr
-            margin: 0px
-            border: 0.8px solid #E5E9F2
-            margin-left: 5%
-        .card-header
-            border: none
-            width: auto
-            margin-left: 5%
-            .clock
-                &.light_blue
-                    color: $light-blue
-                &.red
-                    color: $red
-                &.yellow
-                    color: $yellow
-            .points
-                color: $dark_blue
+        display: flex
+        width: auto
+        .clock
+            padding-left: calc( 5% + 10px )
+            padding-right: 15px
+            padding-top: 10px
+            font-size: 30px
+            &.light_blue
+                color: $light-blue
+            &.red
+                color: $red
+            &.yellow
+                color: $yellow
+        .card-content-padding
+            width: 100%
+            padding: 9px 0px 9px 0px
+            .asist,.place
+                display: flex
+                font: $text-2-card
+                text-align: left
+                margin: auto
+                color: $grey
             p
                 color: $dark_blue
                 font: $Body-2
                 font-weight: bold
                 margin-right: auto
-                margin-left: 5px
-        .card-content-padding
-            width: auto
-            margin-left: 5%
-            padding-left: 5.5%
-            padding-right: 5.5%
-            .days
-                font: $Body-2
-            .time_disable
-                display: flex
-                justify-content: space-between
-                .time
-                    font: $Body-3
-            .asist,.place
-                display: flex
-                .label
-                    font: $Body-2
-                    color: $grey
-                .data
-                    font: $Body-2
-                    font-weight: 600
-                    text-align: left
-                    color: $dark-blue
-                    margin: auto
+            hr
+                margin: 0px !important
+                border: 0.8px solid #E5E9F2 !important
+        .points
+            color: $dark_blue
+            padding: 10px 10px 0px 15px
+
 .card-backdrop
     z-index: 0
 .card-expandable.card-opened .card-opened-fade-out

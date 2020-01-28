@@ -55,21 +55,21 @@
                 var app = self.$app;
                 app.data.store.getItem('select').then(function (value) {
                     if (value == 'asist') {
-                        $$('.title1').text('Asistente');
+                        $$('#doctor-horarios-select .title1').text('Asistente');
                         fill(value);
-                        $$('.new_asisstant').find('p').text('Agregar asistente');
+                        $$('#doctor-horarios-select .new_asisstant').find('p').text('Agregar asistente');
                     } else if (value = 'hosp') {
-                        $$('.title1').text('Hospital');
+                        $$('#doctor-horarios-select .title1').text('Hospital');
                         fill(value);
-                        $$('.new_asisstant').find('p').text('Agregar hospital');
+                        $$('#doctor-horarios-select .new_asisstant').find('p').text('Agregar hospital');
                     }
 
-                    $$('input').click(function (val) {
+                    $$('#doctor-horarios-select input').click(function (val) {
                         //redirect to add and fill
                         console.log($$(this).data('id'));
                     });
 
-                    $$('.new_asisstant').click(function (val) {
+                    $$('#doctor-horarios-select .new_asisstant').click(function (val) {
                         console.log('click to new');
                         if (value == 'asist') {
                             //redirect to new asistent

@@ -1,0 +1,36 @@
+<template>
+    <div class="page" data-name="doctor-horarios-edit" id="doctor-horarios-edit">
+        <div class="page-content">
+            <div class="header">
+                <div class="doc-horarios-add">
+                    <a class="back" href="javascript:history.back()">
+                        <i class="material-icons">chevron_left</i>
+                    </a>
+                    <p class="title1">Editar horarios</p>
+                </div>
+            </div>
+            <div class="list" id="cards">
+                <ul>
+                </ul>
+            </div>
+            <div class="row btn">
+                <a href="#" class="item-link list-button btn-rounded">
+                    <p>Aceptar </p>
+                    <i class="material-icons">chevron_right</i>
+                </a>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+            }
+        }
+    }
+</script>

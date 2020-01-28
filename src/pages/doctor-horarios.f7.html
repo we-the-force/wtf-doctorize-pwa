@@ -104,7 +104,7 @@
                 //leer horarios
                 for (var i = 1; i < 4; i++) {
                     //leer si esta activo, color??, nombre, asistente, id
-                    $$('#cards').append('<li id="card' + i + '">' +
+                    $$('#doctor-horarios #cards').append('<li id="card' + i + '">' +
                         '<div class="card card-outline doc-horarios active">' +
                         '<div class="rectangle ' + color + '"></div>' +
                         '<i class="clock material-icons ' + color + '">' +
@@ -132,17 +132,17 @@
                 }
                 app.preloader.hide();
 
-                $$('.card.active .clock,.card.active .card-content').click(function (val) {
+                $$('#doctor-horarios .card.active .clock,#doctor-horarios .card.active .card-content').click(function (val) {
                     console.log('see horario' + $$(this).siblings('a').children('i').data('id'));
                     //save id and redirecto to see horario
                 });
 
-                $$('.points').click(function (e) {
+                $$('#doctor-horarios .points').click(function (e) {
                     timetable = $$(this).data('id');
                     if ($$(this).closest('li').children().hasClass('active')) {
-                        $$('.popover-set').find('li .state').text('Desactivar');
+                        $$('#doctor-horarios .popover-set').find('li .state').text('Desactivar');
                     } else if ($$(this).closest('li').children().hasClass('inactive')) {
-                        $$('.popover-set').find('li .state').text('Activar');
+                        $$('#doctor-horarios .popover-set').find('li .state').text('Activar');
                     }
                 });
 

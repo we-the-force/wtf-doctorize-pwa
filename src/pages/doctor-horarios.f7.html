@@ -88,19 +88,6 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="popover popover-set inactive">
-            <div class="popover-inner">
-                <div class="list">
-                    <ul>
-                        <li><a class="list-button item-link edit" href="#">Editar</a></li>
-                        <hr>
-                        <li><a class="list-button item-link act" href="#">Activar</a></li>
-                        <hr>
-                        <li><a class="list-button item-link delete" href="#">Eliminar</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div> -->
     </div>
 </template>
 <script>
@@ -145,6 +132,11 @@
                 }
                 app.preloader.hide();
 
+                $$('.card.active .clock,.card.active .card-content').click(function (val) {
+                    console.log('see horario' + $$(this).siblings('a').children('i').data('id'));
+                    //save id and redirecto to see horario
+                });
+
                 $$('.points').click(function (e) {
                     timetable = $$(this).data('id');
                     if ($$(this).closest('li').children().hasClass('active')) {
@@ -158,32 +150,42 @@
                     //send to page
                     console.log('edit' + timetable);
                 });
+
                 $$('.item-link.state').click(function (x) {
                     $$('#cards').find('li#card' + timetable).children().toggleClass('active');
                     $$('#cards').find('li#card' + timetable).children().toggleClass('inactive');
                     //mandar desactivar
                     app.popover.close();
                 });
+
                 $$('.item-link.delete').click(function (x) {
                     app.popover.close();
                     var dialog = app.dialog.create({
-                        title: 'Esta seguro que desea eliminar este horario?',
-                        text: 'Esta operación es irreversible',
+                        cssClass: 'delete' ,
+                        title: '<i class="material-icons">error</i>',
+                        text: 'Esta seguro que desea eliminar este horario?',
+                        content: 'Esta operación es irreversible',
                         buttons: [
                             {
-                                text: 'Cancel',
-                                onClick: 
-                                function (x,y) {
-                                    dialog.close();
-                                }
+                                text: '<p>Cancelar</p> <i class="material-icons">chevron_right</i>',
+                                cssClass: 'cancel' ,
+                                onClick:
+                                    function (x, y) {
+                                        dialog.close();
+                                        console.log('do not delete ' + timetable);
+                                        
+                                    }
                             },
                             {
-                                text: 'Eliminar',
-                                onClick: 
-                                function (x,y) {
-                                    //mandar eliminar el horario
-                                    dialog.close();
-                                }
+                                text: '<p>Eliminar</p> <i class="material-icons">chevron_right</i>',
+                                cssClass: 'delete' ,
+                                onClick:
+                                    function (x, y) {
+                                        //mandar eliminar el horario
+                                        dialog.close();
+                                        console.log('delete ' + timetable);
+                                        
+                                    }
                             }
                         ]
                     });

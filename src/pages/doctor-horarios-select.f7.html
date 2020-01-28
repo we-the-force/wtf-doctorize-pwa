@@ -11,7 +11,7 @@
             </div>
             <div class="list" id="inputs">
                 <ul>
-                    <li class="item-content item-input linear">
+                    <!-- <li class="item-content item-input linear">
                         <div class="item-inner">
                             <div class="item-label grey">
                                 Asistente
@@ -32,7 +32,7 @@
                                 <i class="material-icons">chevron_right</i>
                             </div>
                         </div>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             <div class="row">
@@ -51,7 +51,58 @@
     export default {
         on: {
             pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                app.data.store.getItem('select').then(function (value) {
+                    if (value == 'asist') {
+                        $$('.title1').text('Asistente');
+                        fill(value);
+                        $$('.new_asisstant').find('p').text('Agregar asistente');
+                    } else if (value = 'hosp') {
+                        $$('.title1').text('Hospital');
+                        fill(value);
+                        $$('.new_asisstant').find('p').text('Agregar hospital');
+                    }
 
+                    $$('input').click(function (val) {
+                        //redirect to add and fill
+                        console.log($$(this).data('id'));
+                    });
+
+                    $$('.new_asisstant').click(function (val) {
+                        console.log('click to new');
+                        if (value == 'asist') {
+                            //redirect to new asistent
+                            console.log('redirect to new asist');
+                        } else if (value = 'hosp') {
+                            //redirect to new hospital
+                            console.log('redirect to new hospital');
+                        }
+                    });
+                });
+
+                function fill(x) {
+                    let label
+                    if (x == 'asist') {
+                        label = 'Asistente';
+                    } else {
+                        label = 'Hospital';
+                    }
+                    //consultar
+                    for (var i = 1; i < 3; i++) {
+                        //leer nombre e id
+                        $$('#doctor-horarios-select ul').append('<li class="item-content item-input linear">' +
+                            '<div class="item-inner">' +
+                            '<div class="item-label grey">' + label +
+                            '</div>' +
+                            '<div class="item-input-wrap">' +
+                            '<input type="text" readonly value="Aglaee" data-id="' + i + '">' +
+                            '<i class="material-icons">chevron_right</i>' +
+                            '</div>' +
+                            '</div>' +
+                            '</li>');
+                    }
+                }
             }
         }
     }

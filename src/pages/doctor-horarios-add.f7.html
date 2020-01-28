@@ -92,10 +92,17 @@
                     console.log("button click");
                 });
                 $$('.card.add').click(function (x) {
-                    console.log("click " + $$(this).attr('id'));
                     switch ($$(this).attr('id')) {
+                        case 'hosp':
                         case 'asist':
-                            app.methods.redirectTo('doctor-horarios-select');
+                            app.data.store.setItem('select', $$(this).attr('id')).then(function (value) {
+                                app.methods.redirectTo('doctor-horarios-select');
+                            });
+                            break;
+                        case 'hora':
+                            //redirect to horarios
+                            console.log('click hora');
+                            
                             break;
                         default:
                             break;

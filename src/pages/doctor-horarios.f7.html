@@ -17,58 +17,8 @@
             </div>
             <hr>
             <div class="list">
-                <ul>
-                    <li>
-                        <div class="card card-outline doc-horarios">
-                            <div class="rectangle light-blue"></div>
-                            <i class="clock material-icons light-blue">
-                                timelapse
-                            </i>
-                            <div class="card-content card-content-padding">
-                                <p>Horario 1</p>
-                                <p class="asist">Alejandra G.</p>
-                                <hr>
-                                <p class="place">Hospital H.</p>
-                            </div>
-                            <i class="points material-icons">
-                                more_horiz
-                            </i>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="card card-outline doc-horarios">
-                            <div class="rectangle red"></div>
-                            <i class="clock material-icons red">
-                                timelapse
-                            </i>
-                            <div class="card-content card-content-padding">
-                                <p>Horario 2</p>
-                                <p class="asist">Alejandra G.</p>
-                                <hr>
-                                <p class="place">Hospital H.</p>
-                            </div>
-                            <i class="points material-icons">
-                                more_horiz
-                            </i>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="card card-outline doc-horarios">
-                            <div class="rectangle yellow"></div>
-                            <i class="clock material-icons yellow">
-                                timelapse
-                            </i>
-                            <div class="card-content card-content-padding">
-                                <p>Horario 3</p>
-                                <p class="asist">Alejandra G.</p>
-                                <hr>
-                                <p class="place">Hospital H.</p>
-                            </div>
-                            <i class="points material-icons">
-                                more_horiz
-                            </i>
-                        </div>
-                    </li>
+                <ul id="cards">
+
                 </ul>
             </div>
         </div>
@@ -125,6 +75,32 @@
                 </label>
             </div>
         </div> -->
+        <div class="popover popover-set">
+            <div class="popover-inner">
+                <div class="list">
+                    <ul>
+                        <li><a class="list-button item-link edit" href="#">Editar</a></li>
+                        <hr>
+                        <li><a class="list-button item-link state" href="#">Desactivar</a></li>
+                        <hr>
+                        <li><a class="list-button item-link delete" href="#">Eliminar</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="popover popover-set inactive">
+            <div class="popover-inner">
+                <div class="list">
+                    <ul>
+                        <li><a class="list-button item-link edit" href="#">Editar</a></li>
+                        <hr>
+                        <li><a class="list-button item-link act" href="#">Activar</a></li>
+                        <hr>
+                        <li><a class="list-button item-link delete" href="#">Eliminar</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div> -->
     </div>
 </template>
 <script>
@@ -133,9 +109,85 @@
     export default {
         on: {
             pageInit: function (e, page) {
-                $$('[name="chbx"]').on('change', function (x) {
-                    console.log($$(this));
+                var self = this;
+                var app = self.$app;
+                var timetable;
+                app.preloader.show('blue');
+                let color = 'light-blue';
+                //leer horarios
+                for (var i = 1; i < 4; i++) {
+                    //leer si esta activo, color??, nombre, asistente, id
+                    $$('#cards').append('<li id="card' + i + '">' +
+                        '<div class="card card-outline doc-horarios active">' +
+                        '<div class="rectangle ' + color + '"></div>' +
+                        '<i class="clock material-icons ' + color + '">' +
+                        'timelapse' +
+                        '</i>' +
+                        '<div class="card-content card-content-padding">' +
+                        '<p>Horario ' + i + '</p>' +
+                        '<p class="asist">Alejandra G.</p>' +
+                        '<hr>' +
+                        '<p class="place">Hospital H.</p>' +
+                        '</div>' +
+                        '<a class="popover-open" data-popover=".popover-set">' +
+                        '<i class="points material-icons" data-id="' + i + '">' +
+                        'more_horiz' +
+                        '</i>' +
+                        '</a>' +
+                        '</div>' +
+                        '</li>');
+                    if (color == 'light-blue') {
+                        console.log(color);
+                        color = 'red';
+                    } else if (color == 'red') {
+                        color = 'yellow';
+                    }
+                }
+                app.preloader.hide();
 
+                $$('.points').click(function (e) {
+                    timetable = $$(this).data('id');
+                    if ($$(this).closest('li').children().hasClass('active')) {
+                        $$('.popover-set').find('li .state').text('Desactivar');
+                    } else if ($$(this).closest('li').children().hasClass('inactive')) {
+                        $$('.popover-set').find('li .state').text('Activar');
+                    }
+                });
+
+                $$('.item-link.edit').click(function (x) {
+                    //send to page
+                    console.log('edit' + timetable);
+                });
+                $$('.item-link.state').click(function (x) {
+                    $$('#cards').find('li#card' + timetable).children().toggleClass('active');
+                    $$('#cards').find('li#card' + timetable).children().toggleClass('inactive');
+                    //mandar desactivar
+                    app.popover.close();
+                });
+                $$('.item-link.delete').click(function (x) {
+                    app.popover.close();
+                    var dialog = app.dialog.create({
+                        title: 'Esta seguro que desea eliminar este horario?',
+                        text: 'Esta operación es irreversible',
+                        buttons: [
+                            {
+                                text: 'Cancel',
+                                onClick: 
+                                function (x,y) {
+                                    dialog.close();
+                                }
+                            },
+                            {
+                                text: 'Eliminar',
+                                onClick: 
+                                function (x,y) {
+                                    //mandar eliminar el horario
+                                    dialog.close();
+                                }
+                            }
+                        ]
+                    });
+                    dialog.open();
                 });
             }
         }

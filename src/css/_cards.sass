@@ -240,6 +240,8 @@
     &.doc-horarios
         display: flex
         width: auto
+        &.inactive
+            filter: saturate(0) opacity(0.6)
         .material-icons
             padding-left: calc( 5% + 10px )
             padding-right: 15px
@@ -273,6 +275,7 @@
         .points
             color: $dark_blue
             padding: 10px 10px 0px 15px
+            height: fit-content
     &.doc-horarios.add
         align-items: center
         .material-icons

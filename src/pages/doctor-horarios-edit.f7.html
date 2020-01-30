@@ -473,7 +473,14 @@
             </div>
             <hr>
             <p class="pop-title">Tiempo</p>
-            <p class="time">08:00 - 13:00 (5:00 h)</p>
+            <div class="time">
+                <p class="start-time">08:00</p>
+                <p>&nbsp-&nbsp</p>
+                <p class="end-time">13:00</p>
+                <p>&nbsp(</p>
+                <p class="total-time">5:00</p>
+                <p>&nbsph)&nbsp</p>
+            </div>
             <div class="time-selector">
                 <div class="head">
                     <a class="in">Entrada</a>
@@ -482,7 +489,7 @@
                 <hr>
                 <div class="body">
                     <div class="in-time active">
-                        <input type="time" name="time-in" id="time-in" value="08:00" required validate>
+                        <input type="time" name="time-in" id="time-in" value="07:00" required validate>
                     </div>
                     <i class="material-icons">chevron_right</i>
                     <div class="out-time">
@@ -507,6 +514,9 @@
                 var self = this;
                 var app = self.$app;
                 var new_x = false;
+                var moment = require('moment');
+                moment().format();
+
                 $$('.accordion-item').on('accordion:open', function () {
                     $$(this).find('.item-link').children('i').text('keyboard_arrow_up');
                     $$(this).find('.resume').css('display', 'none');
@@ -515,6 +525,25 @@
                 $$('.accordion-item').on('accordion:close', function () {
                     $$(this).find('.item-link').children('i').text('keyboard_arrow_down');
                     $$(this).find('.resume').css('display', 'block');
+                });
+
+                $$('.edit-timetable').on('popup:open', function (e) {
+                    let ti,to;
+                    if (new_x) {
+                        ti = moment($$(this).find('#time-in').val(),"hh:mm");
+                        to = moment($$(this).find('#time-out').val(),"hh:mm"); 
+                        $$('.start-time').text(ti.format("hh:mm"));
+                        $$('.end-time').text(to.format("hh:mm"));
+                    } else {
+                        //poner el valor de los inputs como el de las filas
+                        //poner el tiempo como el de los inputs
+                    }
+                    $$('.total-time').text(moment(to.diff(ti,'minutes')).format('h:mm'));
+                });
+
+                $$('.time-selector input').change(function (val) {
+                    console.log('ahoy');
+                    
                 });
 
                 $$('.popup .head .in').click(function (x) {

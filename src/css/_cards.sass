@@ -346,6 +346,13 @@
         .material-icons
             padding: 10px 5px 0px 5px
             color: $dark-blue
+        &.show 
+            .toggle
+                position: absolute
+                top: -5px
+                right: 0px
+            &.inactive
+                filter: saturate(0) opacity(0.6)
 
 .card-backdrop
     z-index: 0

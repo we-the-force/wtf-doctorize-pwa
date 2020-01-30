@@ -1,0 +1,227 @@
+<template>
+    <div class="page" data-name="doctor-horarios-show" id="doctor-horarios-show">
+        <div class="page-content">
+            <div class="header">
+                <div class="doc-horarios-add show">
+                    <a class="back" href="javascript:history.back()">
+                        <i class="material-icons">chevron_left</i>
+                    </a>
+                    <p class="title1">Horarios name</p>
+                    <a class="edit" href="#">
+                        <i class="material-icons">more_horiz</i>
+                    </a>
+                </div>
+            </div>
+            <div class="list" id="info">
+                <ul>
+                    <li>
+                        <div class="card card-outline doc-horarios add" id="asist">
+                            <div class="rectangle light-blue"></div>
+                            <i class="clock material-icons light-blue">
+                                person
+                            </i>
+                            <div class="card-content card-content-padding">
+                                <p>Karla Campos</p>
+                            </div>
+                            <i class="points material-icons light-blue">
+                                chevron_right
+                            </i>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card card-outline doc-horarios add" id="hosp">
+                            <div class="rectangle red"></div>
+                            <i class="clock material-icons red">
+                                room
+                            </i>
+                            <div class="card-content card-content-padding">
+                                <p>Hospital La Conchita</p>
+                            </div>
+                            <i class="points material-icons red">
+                                chevron_right
+                            </i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="list" id="cards">
+                <ul>
+                    <li id="lunes">
+                        <div class="card card-outline doc-horarios days show">
+                            <div class="rectangle turquoise"></div>
+                            <div class="card-header ">
+                                Lunes
+                            </div>
+                            <div class="card-content card-content-padding">
+                                <label class="toggle toggle-init color-black">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-icon"></span>
+                                </label>
+                                <div class="resume">
+                                    <p id="1">08:00 - 13:00</p>
+                                    <hr>
+                                    <p id="2">15:00 - 21:00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li id="martes">
+                        <div class="card card-outline doc-horarios days show">
+                            <div class="rectangle turquoise"></div>
+                            <div class="card-header ">
+                                Martes
+                            </div>
+                            <div class="card-content card-content-padding">
+                                <label class="toggle toggle-init color-black">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-icon"></span>
+                                </label>
+                                <div class="resume">
+                                    <p id="1">08:00 - 13:00</p>
+                                    <hr>
+                                    <p id="2">15:00 - 21:00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li id="miercoles">
+                        <div class="card card-outline doc-horarios days show">
+                            <div class="rectangle turquoise"></div>
+                            <div class="card-header ">
+                                Miercoles
+                            </div>
+                            <div class="card-content card-content-padding">
+                                <label class="toggle toggle-init color-black">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-icon"></span>
+                                </label>
+                                <div class="resume">
+                                    <p id="1">08:00 - 13:00</p>
+                                    <hr>
+                                    <p id="2">15:00 - 21:00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li id="jueves">
+                        <div class="card card-outline doc-horarios days show">
+                            <div class="rectangle turquoise"></div>
+                            <div class="card-header ">
+                                Jueves
+                            </div>
+                            <div class="card-content card-content-padding">
+                                <label class="toggle toggle-init color-black">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-icon"></span>
+                                </label>
+                                <div class="resume">
+                                    <p id="1">08:00 - 13:00</p>
+                                    <hr>
+                                    <p id="2">15:00 - 21:00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li id="viernes">
+                        <div class="card card-outline doc-horarios days show">
+                            <div class="rectangle turquoise"></div>
+                            <div class="card-header ">
+                                Viernes
+                            </div>
+                            <div class="card-content card-content-padding">
+                                <label class="toggle toggle-init color-black">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-icon"></span>
+                                </label>
+                                <div class="resume">
+                                    <p id="1">08:00 - 13:00</p>
+                                    <hr>
+                                    <p id="2">15:00 - 21:00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li id="sabado">
+                        <div class="card card-outline doc-horarios days show">
+                            <div class="rectangle turquoise"></div>
+                            <div class="card-header ">
+                                Sabado
+                            </div>
+                            <div class="card-content card-content-padding">
+                                <label class="toggle toggle-init color-black">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-icon"></span>
+                                </label>
+                                <div class="resume">
+                                    <p id="1">08:00 - 13:00</p>
+                                    <hr>
+                                    <p id="2">15:00 - 21:00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li id="domingo">
+                        <div class="card card-outline doc-horarios days show">
+                            <div class="rectangle turquoise"></div>
+                            <div class="card-header ">
+                                Domingo
+                            </div>
+                            <div class="card-content card-content-padding">
+                                <label class="toggle toggle-init color-black">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-icon"></span>
+                                </label>
+                                <div class="resume">
+                                    <p id="1">08:00 - 13:00</p>
+                                    <hr>
+                                    <p id="2">15:00 - 21:00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+
+                app.data.store.getItem('id-horario').then(function (value) {
+                    $$('#doctor-horarios-show .title1').text('Horario ' + value);
+                });
+
+                $$('.header .edit').click(function (x) {
+                    //send to page
+                    app.data.store.setItem('edit', true).then(function (value) {
+                        app.methods.redirectTo('doctor-horarios-add');
+                    });
+                });
+
+                $$('.toggle').change(function (val) {
+                    var toggle = app.toggle.get($$(this));
+                    if(!toggle.checked){
+                        $$(this).closest('.card').addClass('inactive');
+                        //desactivar horario
+                    }else{
+                        $$(this).closest('.card').removeClass('inactive');
+                        //activar horario
+                    }
+                    
+                });
+
+            }
+        }
+    }
+</script>

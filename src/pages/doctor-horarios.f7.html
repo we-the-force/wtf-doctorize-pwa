@@ -101,6 +101,7 @@
                 var timetable;
                 app.preloader.show('blue');
                 let color = 'light-blue';
+                app.data.store.removeItem('edit');
                 //leer horarios
                 for (var i = 1; i < 4; i++) {
                     //leer si esta activo, color??, nombre, asistente, id
@@ -148,7 +149,10 @@
 
                 $$('.item-link.edit').click(function (x) {
                     //send to page
-                    console.log('edit' + timetable);
+                    app.data.store.setItem('edit', true).then(function (value) {
+                        app.popover.close();
+                        app.methods.redirectTo('doctor-horarios-add');
+                    });
                 });
 
                 $$('.item-link.state').click(function (x) {
@@ -161,30 +165,30 @@
                 $$('.item-link.delete').click(function (x) {
                     app.popover.close();
                     var dialog = app.dialog.create({
-                        cssClass: 'delete' ,
+                        cssClass: 'delete',
                         title: '<i class="material-icons">error</i>',
                         text: 'Esta seguro que desea eliminar este horario?',
                         content: 'Esta operación es irreversible',
                         buttons: [
                             {
                                 text: '<p>Cancelar</p> <i class="material-icons">chevron_right</i>',
-                                cssClass: 'cancel' ,
+                                cssClass: 'cancel',
                                 onClick:
                                     function (x, y) {
                                         dialog.close();
                                         console.log('do not delete ' + timetable);
-                                        
+
                                     }
                             },
                             {
                                 text: '<p>Eliminar</p> <i class="material-icons">chevron_right</i>',
-                                cssClass: 'delete' ,
+                                cssClass: 'delete',
                                 onClick:
                                     function (x, y) {
                                         //mandar eliminar el horario
                                         dialog.close();
                                         console.log('delete ' + timetable);
-                                        
+
                                     }
                             }
                         ]

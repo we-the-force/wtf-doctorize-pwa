@@ -461,7 +461,7 @@
                 </ul>
             </div>
             <div class="row btn">
-                <a href="#" class="item-link list-button btn-rounded">
+                <a href="#" class="item-link list-button btn-rounded last">
                     <p>Aceptar </p>
                     <i class="material-icons">chevron_right</i>
                 </a>
@@ -491,7 +491,7 @@
                 </div>
             </div>
             <div class="row btn">
-                <a href="#" class="item-link list-button btn-rounded popup-close">
+                <a href="#" class="item-link list-button btn-rounded add">
                     <p>Aceptar </p>
                     <i class="material-icons">chevron_right</i>
                 </a>
@@ -506,6 +506,7 @@
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
+                var new_x = false;
                 $$('.accordion-item').on('accordion:open', function () {
                     $$(this).find('.item-link').children('i').text('keyboard_arrow_up');
                     $$(this).find('.resume').css('display', 'none');
@@ -517,20 +518,43 @@
                 });
 
                 $$('.popup .head .in').click(function (x) {
-                   $$('.popup .body .in-time').addClass('active');
-                   $$('.popup .body .out-time').removeClass('active'); 
-                   $$('.popup .body .out-time').children('input').prop('disabled', true);
-                   $$('.popup .body .in-time').children('input').prop('disabled', false);
+                    $$('.popup .body .in-time').addClass('active');
+                    $$('.popup .body .out-time').removeClass('active');
+                    $$('.popup .body .out-time').children('input').prop('disabled', true);
+                    $$('.popup .body .in-time').children('input').prop('disabled', false);
                 });
 
                 $$('.popup .head .out').click(function (x) {
-                   $$('.popup .body .out-time').addClass('active');
-                   $$('.popup .body .in-time').removeClass('active'); 
-                   $$('.popup .body .in-time').children('input').prop('disabled', true);
-                   $$('.popup .body .out-time').children('input').prop('disabled', false);
+                    $$('.popup .body .out-time').addClass('active');
+                    $$('.popup .body .in-time').removeClass('active');
+                    $$('.popup .body .in-time').children('input').prop('disabled', true);
+                    $$('.popup .body .out-time').children('input').prop('disabled', false);
                 });
 
-                
+                $$('.new_horario').click(function (x) {
+                    new_x = true;
+                    var popup = app.popup.create({
+                        el: '.edit-timetable'
+                    });
+                    popup.open();
+                });
+
+                $$('.btn .add').click(function (x) {
+                    //check if is new or edit
+                    //add or edit
+                    //close popup
+                    new_x = false;
+                    app.popup.close();
+                });
+
+                $$('.btn .last').click(function (x) {
+                    //save values
+                    //send to api
+                });
+
+                $$('a.close').click(function (x) {
+                    app.methods.cuteHide($$(this).closest('li'));
+                });
             }
         }
     }

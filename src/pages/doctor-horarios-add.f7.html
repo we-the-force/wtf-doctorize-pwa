@@ -88,6 +88,14 @@
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
+                app.data.store.getItem('edit').then(function (value) {
+                    if (value) {
+                        $$('#doctor-horarios-add .title1').text('Editar horario');
+                    } else {
+                        $$('#doctor-horarios-add .title1').text('Agregar horario');
+                    }
+                });
+
                 $$('.btn-rounded').click(function (x) {
                     console.log("button click");
                 });

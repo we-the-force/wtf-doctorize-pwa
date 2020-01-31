@@ -489,16 +489,17 @@
                 <hr>
                 <div class="body">
                     <div class="in-time active">
-                        <input type="time" name="time-in" id="time-in" value="07:00" required validate>
+                        <input type="time" name="time-in" id="time-in" class="time-in" value="07:00" required validate>
                     </div>
                     <i class="material-icons">chevron_right</i>
                     <div class="out-time">
-                        <input type="time" name="time-out" id="time-out" value="13:00" disabled required validate>
+                        <input type="time" name="time-out" id="time-out" class="time-out" value="13:00" disabled
+                            required validate>
                     </div>
                 </div>
             </div>
             <div class="row btn">
-                <a href="#" class="item-link list-button btn-rounded add">
+                <a class="item-link list-button btn-rounded add">
                     <p>Aceptar </p>
                     <i class="material-icons">chevron_right</i>
                 </a>
@@ -514,6 +515,7 @@
                 var self = this;
                 var app = self.$app;
                 var new_x = false;
+                var durhor, durmin, dow, nol;
                 var moment = require('moment');
                 moment().format();
 
@@ -528,22 +530,36 @@
                 });
 
                 $$('.edit-timetable').on('popup:open', function (e) {
-                    let ti,to;
+                    let ti, to;
                     if (new_x) {
-                        ti = moment($$(this).find('#time-in').val(),"hh:mm");
-                        to = moment($$(this).find('#time-out').val(),"hh:mm"); 
+                        ti = moment($$(this).find('#time-in').val(), "hh:mm");
+                        to = moment($$(this).find('#time-out').val(), "hh:mm");
                         $$('.start-time').text(ti.format("hh:mm"));
                         $$('.end-time').text(to.format("hh:mm"));
                     } else {
                         //poner el valor de los inputs como el de las filas
                         //poner el tiempo como el de los inputs
                     }
-                    $$('.total-time').text(moment(to.diff(ti,'minutes')).format('h:mm'));
+                    $$('.total-time').text(moment(to.diff(ti, 'minutes')).format('h:mm'));
                 });
 
                 $$('.time-selector input').change(function (val) {
-                    console.log('ahoy');
-                    
+                    let ti = moment($$('.edit-timetable').find('#time-in').val(), "hh:mm");
+                    let to = moment($$('.edit-timetable').find('#time-out').val(), "hh:mm");
+                    if ($$(this).hasClass('time-in')) {
+                        $$('.start-time').text(ti.format("HH:mm"))
+                    } else if ($$(this).hasClass('time-out')) {
+                        $$('.end-time').text(to.format("HH:mm"))
+                    }
+                    durhor = moment.duration(to.diff(ti)).get('hours');
+                    durmin = moment.duration(to.diff(ti)).get('minutes');
+                    $$('.total-time').text(durhor + ':' + durmin);
+
+                    if (durhor <= 0 || !$$(this).val()) {
+                        $$('.btn .add').addClass('grey');
+                    } else {
+                        $$('.btn .add').removeClass('grey');
+                    }
                 });
 
                 $$('.popup .head .in').click(function (x) {
@@ -561,6 +577,7 @@
                 });
 
                 $$('.new_horario').click(function (x) {
+                    dow = $$(this).closest('li').attr('id');
                     new_x = true;
                     var popup = app.popup.create({
                         el: '.edit-timetable'
@@ -568,7 +585,23 @@
                     popup.open();
                 });
 
+                $$('.popup-open').click(function (x) {
+                    nol = $$(this).closest('li').attr('id');
+                    dow = $$(this).closest('.accordion-item').attr('id');
+                    new_x = false;
+                });
+
                 $$('.btn .add').click(function (x) {
+                    if ($$(this).hasClass('grey')) {
+                        return;
+                    }
+                    let st = $$(this).closest('.edit-timetable').find('.time-in').val();
+                    let et = $$(this).closest('.edit-timetable').find('.time-out').val();
+                    if(new_x){
+                        console.log(dow);
+                    }else{
+                        console.log(dow+nol);
+                    }
                     //check if is new or edit
                     //add or edit
                     //close popup

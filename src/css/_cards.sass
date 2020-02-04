@@ -247,7 +247,7 @@
             padding-right: 15px
             padding-top: 10px
             font-size: 30px
-            &.light_blue
+            &.light-blue
                 color: $light-blue
             &.red
                 color: $red
@@ -269,6 +269,18 @@
                 font: $Body-2
                 font-weight: bold
                 margin-right: auto
+                margin-bottom: 0px
+                &.light-blue
+                    color: $light-blue
+                &.red
+                    color: $red
+                &.turquoise
+                    color: $turquoise-2
+                &.text
+                    font-weight: normal
+                    line-height: 20px
+                    color: $grey
+                    margin-top: 0px
             hr
                 margin: 0px !important
                 border: 0.8px solid #E5E9F2 !important
@@ -346,13 +358,33 @@
         .material-icons
             padding: 10px 5px 0px 5px
             color: $dark-blue
-        &.show 
+        &.show
             .toggle
                 position: absolute
                 top: -5px
                 right: 0px
             &.inactive
                 filter: saturate(0) opacity(0.6)
+    &.select-horarios
+        display: flex
+        width: auto
+        align-items: center
+        .avatar
+            height: 35px
+            padding-left: calc( 5% + 10px )
+            padding-right: 15px
+            padding-top: 8px
+            padding-bottom: 8px
+            img
+                width: 35px
+                height: 35px
+                border-radius: 50%
+                background: radial-gradient(123.92% 129.39% at 57.54% 104.51%, #00A1C5 0%, #2FCFBC 100%)
+        .card-content-padding
+            width: 100%
+            padding: 9px 0px 9px 0px
+            p
+                font: $Body-4
 
 .card-backdrop
     z-index: 0

@@ -3,7 +3,7 @@
         <div class="page-content">
             <div class="header">
                 <div class="doc-horarios-add">
-                    <a class="back" href="javascript:history.back()">
+                    <a class="back" href="/doctor/timetable/new">
                         <i class="material-icons">chevron_left</i>
                     </a>
                     <p class="title1">Asistente</p>
@@ -64,9 +64,18 @@
                         $$('#doctor-horarios-select .new_asisstant').find('p').text('Agregar hospital');
                     }
 
-                    $$('#doctor-horarios-select input').click(function (val) {
+                    $$('#doctor-horarios-select .data').click(function (val) {
                         //redirect to add and fill
                         console.log($$(this).data('id'));
+                        if (value == 'asist') {
+                            app.data.store.setItem('asist-json', $$(this).text()).then(function (value) {
+                                app.methods.redirectTo('doctor-horarios-add');
+                            });
+                        } else if (value = 'hosp') {
+                            app.data.store.setItem('hosp-json', $$(this).text()).then(function (value) {
+                                app.methods.redirectTo('doctor-horarios-add');
+                            });
+                        }
                     });
 
                     $$('#doctor-horarios-select .new_asisstant').click(function (val) {
@@ -82,26 +91,50 @@
                 });
 
                 function fill(x) {
-                    let label
                     if (x == 'asist') {
-                        label = 'Asistente';
+                        for (var i = 1; i < 3; i++) {
+                            $$('#doctor-horarios-select ul').append(
+                                '<li>' +
+                                '<div class="card card-outline select-horarios">' +
+                                '<div class="rectangle turquoise"></div>' +
+                                '<div class="avatar">' +
+                                '<img>' +
+                                '</div>' +
+                                '<div class="card-content card-content-padding">' +
+                                '<p class="dark-blue data" data-id="' + i + '">Angelica Galindo</p>' +
+                                '</div>' +
+                                '</div>' +
+                                '</li>');
+                        }
                     } else {
-                        label = 'Hospital';
+                        for (var i = 1; i < 3; i++) {
+                            $$('#doctor-horarios-select ul').append(
+                                '<li>' +
+                                '<div class="card card-outline select-horarios">' +
+                                '<div class="rectangle turquoise"></div>' +
+                                '<div class="avatar">' +
+                                '<img>' +
+                                '</div>' +
+                                '<div class="card-content card-content-padding">' +
+                                '<p class="dark-blue data" data-id="' + i + '">Seguro 2</p>' +
+                                '</div>' +
+                                '</div>' +
+                                '</li>');
+                        }
                     }
                     //consultar
-                    for (var i = 1; i < 3; i++) {
-                        //leer nombre e id
-                        $$('#doctor-horarios-select ul').append('<li class="item-content item-input linear">' +
-                            '<div class="item-inner">' +
-                            '<div class="item-label grey">' + label +
-                            '</div>' +
-                            '<div class="item-input-wrap">' +
-                            '<input type="text" readonly value="Aglaee" data-id="' + i + '">' +
-                            '<i class="material-icons">chevron_right</i>' +
-                            '</div>' +
-                            '</div>' +
-                            '</li>');
-                    }
+
+                    //leer nombre e id
+                    /*  $$('#doctor-horarios-select ul').append('<li class="item-content item-input linear">' +
+                         '<div class="item-inner">' +
+                         '<div class="item-label grey">' + label +
+                         '</div>' +
+                         '<div class="item-input-wrap">' +
+                         '<input type="text" readonly value="Aglaee" data-id="' + i + '">' +
+                         '<i class="material-icons">chevron_right</i>' +
+                         '</div>' +
+                         '</div>' +
+                         '</li>'); */
                 }
             }
         }

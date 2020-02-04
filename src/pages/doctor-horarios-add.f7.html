@@ -3,7 +3,7 @@
         <div class="page-content">
             <div class="header">
                 <div class="doc-horarios-add">
-                    <a class="back" href="javascript:history.back()">
+                    <a class="">
                         <i class="material-icons">chevron_left</i>
                     </a>
                     <p class="title1">Agregar horario</p>
@@ -17,7 +17,7 @@
                                 <i class="clock material-icons grey">
                                     timelapse
                                 </i>
-                                <input type="email" name="name" id="name" placeholder="Nombre del horario" required
+                                <input type="text" name="name" id="name" placeholder="Nombre del horario" required
                                     validate>
                                 <span class="input-clear-button"></span>
                             </div>
@@ -34,7 +34,8 @@
                                 person
                             </i>
                             <div class="card-content card-content-padding">
-                                <p>Asistente</p>
+                                <p class="light-blue">Asistente</p>
+                                <p class="text"></p>
                             </div>
                             <i class="points material-icons light-blue">
                                 chevron_right
@@ -48,7 +49,8 @@
                                 room
                             </i>
                             <div class="card-content card-content-padding">
-                                <p>Hospital</p>
+                                <p class="red">Hospital</p>
+                                <p class="text"></p>
                             </div>
                             <i class="points material-icons red">
                                 chevron_right
@@ -62,7 +64,8 @@
                                 timelapse
                             </i>
                             <div class="card-content card-content-padding">
-                                <p>Horarios</p>
+                                <p class="turquoise">Horarios</p>
+                                <p class="text"></p>
                             </div>
                             <i class="points material-icons turquoise">
                                 chevron_right
@@ -88,16 +91,85 @@
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
+                var asist, hosp, hora;
+
                 $$('#doctor-horarios-add .title1').text('Agregar horario');
-                app.data.store.getItem('edit').then(function (value) {
-                    if (value) {
-                        $$('#doctor-horarios-add .title1').text('Editar horario');
+                $$('#doctor-horarios-add .btn .btn-rounded').addClass('grey');
+
+                app.data.store.getItem('asist-json').then(function (value) {
+                    $$('li #asist p.text').text(value);
+                    if (value == null) {
+                        asist = false;
+                    } else {
+                        asist = true;
                     }
                 });
 
-                $$('.btn-rounded').click(function (x) {
-                    console.log("button click");
+                app.data.store.getItem('hosp-json').then(function (value) {
+                    $$('li #hosp p.text').text(value);
+                    if (value == null) {
+                        hosp = false;
+                    } else {
+                        hosp = true;
+                    }
                 });
+
+                app.data.store.getItem('horario-json').then(function (value) {
+                    hora = false;
+                    if (value != null) {
+                        let days = '';
+                        for (let i = 0; i < value.length; i++) {
+                            const element = value[i];
+                            if (element.active) {
+                                switch (i) {
+                                    case 0:
+                                        days = days + 'L '
+                                        break;
+                                    case 1:
+                                        days = days + 'M '
+                                        break;
+                                    case 2:
+                                        days = days + 'X '
+                                        break;
+                                    case 3:
+                                        days = days + 'J '
+                                        break;
+                                    case 4:
+                                        days = days + 'V '
+                                        break;
+                                    case 5:
+                                        days = days + 'S '
+                                        break;
+                                    case 6:
+                                        days = days + 'D '
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+                        $$('li #hora p.text').text(days);
+                        hora = true;
+                    }
+                });
+
+                app.data.store.getItem('edit').then(function (value) {
+                    if (value) {
+                        $$('#doctor-horarios-add .title1').text('Editar horario');
+
+                    }
+
+                    $$('.btn-rounded').click(function (x) {
+                        app.methods.redirectTo('doctor-horarios');
+                    });
+                });
+
+                $$('#doctor-horarios-add input').change(function (x) {
+                    if (asist && hosp && hora) {
+                        $$('#doctor-horarios-add .btn .btn-rounded').removeClass('grey');
+                    }
+                });
+
                 $$('.card.add').click(function (x) {
                     switch ($$(this).attr('id')) {
                         case 'hosp':
@@ -112,6 +184,12 @@
                         default:
                             break;
                     }
+                });
+
+                $$('#doctor-horarios-add .header a').click(function (val) {
+                    app.data.store.clear().then(function (x) {
+                        app.methods.redirectTo('doctor-horarios');
+                    });
                 });
             }
         }

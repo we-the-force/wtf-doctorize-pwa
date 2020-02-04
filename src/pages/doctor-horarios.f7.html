@@ -3,7 +3,7 @@
         <div class="page-content">
             <div class="header">
                 <div class="doc-horarios">
-                    <a class="back" href="javascript:history.back()">
+                    <a class="back" href="">
                         <i class="material-icons">chevron_left</i>
                     </a>
                     <h1>Horarios</h1>
@@ -101,7 +101,6 @@
                 var timetable;
                 app.preloader.show('blue');
                 let color = 'light-blue';
-                app.data.store.removeItem('edit');
                 //leer horarios
                 for (var i = 1; i < 4; i++) {
                     //leer si esta activo, color??, nombre, asistente, id
@@ -196,7 +195,7 @@
                                         //mandar eliminar el horario
                                         dialog.close();
                                         console.log('delete ' + timetable);
-
+                                        app.methods.cuteHide($$('#doctor-horarios ul li#card'+timetable));
                                     }
                             }
                         ]

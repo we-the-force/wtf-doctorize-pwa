@@ -3,7 +3,7 @@
         <div class="page-content">
             <div class="header">
                 <div class="doc-horarios-add">
-                    <a class="back" href="javascript:history.back()">
+                    <a class="" href="/doctor/timetable/new">
                         <i class="material-icons">chevron_left</i>
                     </a>
                     <p class="title1">Editar horarios</p>
@@ -674,7 +674,6 @@
                             json[i].hours[j].end = arr[1];
                         }
                     }
-                    console.log(json);
                     app.data.store.setItem('horario-json', json).then(function (value) {
                         app.methods.redirectTo('doctor-horarios-add');
                     });

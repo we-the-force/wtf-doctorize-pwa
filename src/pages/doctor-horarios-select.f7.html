@@ -11,28 +11,6 @@
             </div>
             <div class="list" id="inputs">
                 <ul>
-                    <!-- <li class="item-content item-input linear">
-                        <div class="item-inner">
-                            <div class="item-label grey">
-                                Asistente
-                            </div>
-                            <div class="item-input-wrap">
-                                <input type="text" readonly value="Alejandro">
-                                <i class="material-icons">chevron_right</i>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="item-content item-input linear">
-                        <div class="item-inner">
-                            <div class="item-label grey">
-                                Asistente
-                            </div>
-                            <div class="item-input-wrap">
-                                <input type="text" readonly value="Aglaee">
-                                <i class="material-icons">chevron_right</i>
-                            </div>
-                        </div>
-                    </li> -->
                 </ul>
             </div>
             <div class="row">
@@ -54,6 +32,10 @@
                 var self = this;
                 var app = self.$app;
                 app.data.store.getItem('select').then(function (value) {
+                    // selecciona si es ventana de horarios o de asistentes
+                    // cambia titulo de ventana
+                    // llena la ventana ************+
+                    // cambia texto de boton
                     if (value == 'asist') {
                         $$('#doctor-horarios-select .title1').text('Asistente');
                         fill(value);
@@ -65,13 +47,17 @@
                     }
 
                     $$('#doctor-horarios-select .data').click(function (val) {
-                        //redirect to add and fill
                         console.log($$(this).data('id'));
+                        //check if asist or hosp
                         if (value == 'asist') {
+                            //guardar datos************faltan
+                            //redirigir 
                             app.data.store.setItem('asist-json', $$(this).text()).then(function (value) {
                                 app.methods.redirectTo('doctor-horarios-add');
                             });
                         } else if (value = 'hosp') {
+                            //guardar datos************faltan
+                            //redirigir 
                             app.data.store.setItem('hosp-json', $$(this).text()).then(function (value) {
                                 app.methods.redirectTo('doctor-horarios-add');
                             });
@@ -81,10 +67,10 @@
                     $$('#doctor-horarios-select .new_asisstant').click(function (val) {
                         console.log('click to new');
                         if (value == 'asist') {
-                            //redirect to new asistent
+                            //redirect to new asistent************++
                             console.log('redirect to new asist');
                         } else if (value = 'hosp') {
-                            //redirect to new hospital
+                            //redirect to new hospital*************++
                             console.log('redirect to new hospital');
                         }
                     });
@@ -92,6 +78,8 @@
 
                 function fill(x) {
                     if (x == 'asist') {
+                        //mandar leer asistentes ********************++
+                        // llena con tarjetas de asistente**************
                         for (var i = 1; i < 3; i++) {
                             $$('#doctor-horarios-select ul').append(
                                 '<li>' +
@@ -107,6 +95,8 @@
                                 '</li>');
                         }
                     } else {
+                        //mandar leer hospitales ********************++
+                        // llena con tarjetas de hospitales**************
                         for (var i = 1; i < 3; i++) {
                             $$('#doctor-horarios-select ul').append(
                                 '<li>' +
@@ -122,19 +112,6 @@
                                 '</li>');
                         }
                     }
-                    //consultar
-
-                    //leer nombre e id
-                    /*  $$('#doctor-horarios-select ul').append('<li class="item-content item-input linear">' +
-                         '<div class="item-inner">' +
-                         '<div class="item-label grey">' + label +
-                         '</div>' +
-                         '<div class="item-input-wrap">' +
-                         '<input type="text" readonly value="Aglaee" data-id="' + i + '">' +
-                         '<i class="material-icons">chevron_right</i>' +
-                         '</div>' +
-                         '</div>' +
-                         '</li>'); */
                 }
             }
         }

@@ -99,11 +99,13 @@
                 var self = this;
                 var app = self.$app;
                 var timetable;
+                // preloader mientras se llena la pantalla
                 app.preloader.show('blue');
                 let color = 'light-blue';
-                //leer horarios
+                //leer horarios***************
                 for (var i = 1; i < 4; i++) {
-                    //leer si esta activo, color??, nombre, asistente, id
+                    //leer si esta activo, color??, nombre, asistente, id************+
+                    // llena las tarjetas************+
                     $$('#doctor-horarios #cards').append('<li id="card' + i + '">' +
                         '<div class="card card-outline doc-horarios active">' +
                         '<div class="rectangle ' + color + '"></div>' +
@@ -123,24 +125,29 @@
                         '</a>' +
                         '</div>' +
                         '</li>');
+                    //cambia el color de las tarjetas
                     if (color == 'light-blue') {
-                        console.log(color);
                         color = 'red';
                     } else if (color == 'red') {
                         color = 'yellow';
                     }
                 }
+                //cierra preloader
                 app.preloader.hide();
 
+                //click en la tarjeta para una previsualizacion del horario
                 $$('#doctor-horarios .card.active .clock,#doctor-horarios .card.active .card-content').click(function (val) {
+                    //guarda el id y redirecciona*************
                     app.data.store.setItem('id-horario', $$(this).siblings('a').children('i').data('id')).then(function (value) {
                         app.methods.redirectTo('doctor-horarios-show');
                     });
-                    //save id and redirecto to see horario
                 });
 
+                //evento al abrir el menu en las tarjetas
                 $$('#doctor-horarios .points').click(function (e) {
+                    //guarda el id del horario *****************
                     timetable = $$(this).data('id');
+                    //cambia el texto del menu dependiendo si el horario esta desactivado o no
                     if ($$(this).closest('li').children('div').hasClass('active')) {
                         $$('.popover-inner li').children('a.state').text('Desactivar');
                     } else if ($$(this).closest('li').children('div').hasClass('inactive')) {
@@ -148,29 +155,37 @@
                     }
                 });
 
+                //evento agregar horario
                 $$('.new_timetable').click(function (x) {
+                    //especifica que es un nuevo horario y redirecciopna
                     app.data.store.setItem('edit', false).then(function (value) {
                         app.methods.redirectTo('doctor-horarios-add');
                     });
                 });
 
+                //en el menu de las tarjetas evento del boton editar
                 $$('.item-link.edit').click(function (x) {
-                    //send to page
+                    //salva variable para saber que es edicion, cierra el popover y redirecciona
                     app.data.store.setItem('edit', true).then(function (value) {
                         app.popover.close();
                         app.methods.redirectTo('doctor-horarios-add');
                     });
                 });
 
+                //evento boton activp/desactivado
                 $$('.item-link.state').click(function (x) {
+                    //activa desactiva el horario
                     $$('#doctor-horarios #cards').find('li#card' + timetable).children().toggleClass('active');
                     $$('#doctor-horarios #cards').find('li#card' + timetable).children().toggleClass('inactive');
-                    //mandar desactivar
+                    //mandar desactivar*******************
                     app.popover.close();
                 });
 
+                //evento boton eliminar
                 $$('.item-link.delete').click(function (x) {
+                    //cierra pop over
                     app.popover.close();
+                    //crea cuadro de dialogo
                     var dialog = app.dialog.create({
                         cssClass: 'delete',
                         title: '<i class="material-icons">error</i>',
@@ -181,6 +196,7 @@
                                 text: '<p>Cancelar</p> <i class="material-icons">chevron_right</i>',
                                 cssClass: 'cancel',
                                 onClick:
+                                    //cancela la accion, cierra ventana
                                     function (x, y) {
                                         dialog.close();
                                         console.log('do not delete ' + timetable);
@@ -192,7 +208,8 @@
                                 cssClass: 'delete',
                                 onClick:
                                     function (x, y) {
-                                        //mandar eliminar el horario
+                                        //mandar eliminar el horario**********+
+                                        //cierra ventana, elimina tarjeta
                                         dialog.close();
                                         console.log('delete ' + timetable);
                                         app.methods.cuteHide($$('#doctor-horarios ul li#card'+timetable));
@@ -200,6 +217,7 @@
                             }
                         ]
                     });
+                    //abre cuadro de dialogo
                     dialog.open();
                 });
             }

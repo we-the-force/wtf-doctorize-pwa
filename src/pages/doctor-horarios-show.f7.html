@@ -192,25 +192,30 @@
                 var self = this;
                 var app = self.$app;
 
+                //llenar datos ***************
+
                 app.data.store.getItem('id-horario').then(function (value) {
+                    //llena nombre del horario (traer) ***************
                     $$('#doctor-horarios-show .title1').text('Horario ' + value);
                 });
 
                 $$('.header .edit').click(function (x) {
-                    //send to page
+                    //variable de edicion, y redirije
                     app.data.store.setItem('edit', true).then(function (value) {
                         app.methods.redirectTo('doctor-horarios-add');
                     });
                 });
 
+                //cuando un valor de un toggle cambie
                 $$('.toggle').change(function (val) {
                     var toggle = app.toggle.get($$(this));
+                    //toogle on/off
                     if(!toggle.checked){
                         $$(this).closest('.card').addClass('inactive');
-                        //desactivar horario
+                        //desactivar horario*****************
                     }else{
                         $$(this).closest('.card').removeClass('inactive');
-                        //activar horario
+                        //activar horario**********************+
                     }
                     
                 });

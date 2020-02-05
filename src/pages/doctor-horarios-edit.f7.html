@@ -519,48 +519,66 @@
                 var moment = require('moment');
                 moment().format();
 
+                //llenar datos ya guardarlos ********************
+
+                //cuando la tarjeta se expande cambia la direccion de la flecha y esconde el resumen de horarios
                 $$('.accordion-item').on('accordion:open', function () {
                     $$(this).find('.item-link').children('i').text('keyboard_arrow_up');
                     $$(this).find('.resume').css('display', 'none');
                 });
 
+                //cuando la tarjeta se contrae cambia la direccion de la flecha
                 $$('.accordion-item').on('accordion:close', function () {
                     $$(this).find('.item-link').children('i').text('keyboard_arrow_down');
+                    //si la tarjeta esta inactiva se queda escondido el resumen
                     if (!$$(this).children('.card').hasClass('inactive')) {
+                        //si no lo vuelve a mostrar
                         $$(this).find('.resume').css('display', 'block');
                     }
                 });
 
+                //evento al abrir el pop up de horario
                 $$('.edit-timetable').on('popup:open', function (e) {
                     let ti, to;
+                    //checa si es nuevo horario o edicion
                     if (new_x) {
+                        //da formato al input y lo pone en la linea de informacion de arriba
                         ti = moment($$(this).find('#time-in').val(), "hh:mm");
                         to = moment($$(this).find('#time-out').val(), "hh:mm");
                         $$('.start-time').text(ti.format("hh:mm"));
                         $$('.end-time').text(to.format("hh:mm"));
                     } else {
+                        //cambia el valor del input por el que se tiene en la tajeta que se va a editar
                         $$(this).find('#time-in').val(hours[0]);
                         $$(this).find('#time-out').val(hours[1]);
+                        //da formato al input
                         ti = moment($$(this).find('#time-in').val(), "hh:mm");
                         to = moment($$(this).find('#time-out').val(), "hh:mm");
+                        //pone los valores en la linea de informacion
                         $$('.start-time').text(ti.format("hh:mm"));
                         $$('.end-time').text(to.format("hh:mm"));
                     }
+                    //calcula las horas totales 
                     $$('.total-time').text(moment(to.diff(ti, 'minutes')).format('h:mm'));
                 });
 
+                //evento al cambiar la hora en el input
                 $$('.time-selector input').change(function (val) {
+                    //formato al los valores
                     let ti = moment($$('.edit-timetable').find('#time-in').val(), "hh:mm");
                     let to = moment($$('.edit-timetable').find('#time-out').val(), "hh:mm");
+                    //cambia el valor en la linea de informacion
                     if ($$(this).hasClass('time-in')) {
                         $$('.start-time').text(ti.format("HH:mm"))
                     } else if ($$(this).hasClass('time-out')) {
                         $$('.end-time').text(to.format("HH:mm"))
                     }
+                    //calcula la diferencia de horas y le da formato
                     durhor = moment.duration(to.diff(ti)).get('hours');
                     durmin = moment.duration(to.diff(ti)).get('minutes');
                     $$('.total-time').text(durhor + ':' + durmin);
 
+                    //abilita o desabilita el boton
                     if (durhor <= 0 || !$$(this).val()) {
                         $$('.btn .add').addClass('grey');
                     } else {
@@ -568,6 +586,7 @@
                     }
                 });
 
+                //funcionamiento de botones entrada salida
                 $$('.popup .head .in').click(function (x) {
                     $$('.popup .body .in-time').addClass('active');
                     $$('.popup .body .out-time').removeClass('active');
@@ -575,6 +594,7 @@
                     $$('.popup .body .in-time').children('input').prop('disabled', false);
                 });
 
+                //funcionamiento de botones entrada salida
                 $$('.popup .head .out').click(function (x) {
                     $$('.popup .body .out-time').addClass('active');
                     $$('.popup .body .in-time').removeClass('active');
@@ -582,7 +602,12 @@
                     $$('.popup .body .out-time').children('input').prop('disabled', false);
                 });
 
+                //evento nuevo horario dentro de la tarjeta
                 $$('.new_horario').click(function (x) {
+                    //guarda dia de la semana
+                    //varibale de nuevo horario
+                    //crea pop op
+                    //abre pop up
                     dow = $$(this).closest('li').attr('id');
                     new_x = true;
                     var popup = app.popup.create({
@@ -591,7 +616,13 @@
                     popup.open();
                 });
 
+                //cuando hace click en los horarios
                 $$('.popup_open').click(function (x) {
+                    //guarda el numero de linea
+                    //guarda dia de la semana
+                    //guarda horas de el horario
+                    //guarda variable de edicion
+                    //crea pop up y lo abre
                     nol = $$(this).closest('li').attr('id');
                     dow = $$(this).closest('.accordion-item').attr('id');
                     hours = $$(this).closest('li').children('p').text().split(' - ');
@@ -602,13 +633,18 @@
                     popup.open();
                 });
 
+                //dehabilita doble click del boton
                 $$('.btn .add').off('click');
+                //evento click del boton
                 $$('.btn .add').click(function (x) {
+                    //si esta deshabilitado sale de la funcion
                     if ($$(this).hasClass('grey')) {
                         return;
                     }
+                    //guarda hora de inicio y de fin
                     let st = $$(this).closest('.edit-timetable').find('.time-in').val();
                     let et = $$(this).closest('.edit-timetable').find('.time-out').val();
+                    //si es nuevo crea una nueva linea 
                     if (new_x) {
                         let nid = parseInt($$('#' + dow + ' .list ul').children(':last-child').attr('id')) + 1;
                         if (isNaN(nid)) {
@@ -633,23 +669,23 @@
                         $$('#' + dow + ' .resume').append('<p id="r' + nid + '"> ' + st + ' - ' + et + '</p>');
 
                     } else {
+                        //si no edita la existenten
                         $$('#' + dow + ' .list ul').children('.l' + nol).find('p.popup_open').text(st + ' - ' + et);
                         $$('#' + dow + ' .resume').find('p#r' + nol).text(st + ' - ' + et);
                     }
                     new_x = false;
                     app.popup.close();
-
+                    //si eliminan la hora lo quita bonito xD
                     $$('a.close').click(deleteHour);
                 });
-
+                //activa/deactiva horario
                 $$('.toggle').change(function (val) {
                     var toggle = app.toggle.get($$(this));
                     if (!toggle.checked) {
                         $$(this).closest('.card').addClass('inactive');
-                        //desactivar horario
                     } else {
                         $$(this).closest('.card').removeClass('inactive');
-                        //activar horario
+                        
                     }
                 });
 
@@ -674,28 +710,19 @@
                             json[i].hours[j].end = arr[1];
                         }
                     }
+                    //guarda datos y envia a la pagina anterior
                     app.data.store.setItem('horario-json', json).then(function (value) {
                         app.methods.redirectTo('doctor-horarios-add');
                     });
-
-                    //save values
-                    /* 'name': 'lunes',
-                    'active': '',
-                    'hours':[
-                        {
-                            'start': '',
-                            'end': '',
-                        },
-                    ],
-                }, */
-                    //send to api
                 });
 
+                //si eliminan la hora lo quita bonito xD
                 $$('a.close').click(deleteHour);
 
                 function deleteHour() {
                     let tid = $$(this).closest('li').attr('id');
                     app.methods.cuteHide($$(this).closest('li'));
+                    //quita del reumen
                     $$(this).closest('.card-content').children('.resume').children('p#r' + tid).prev().remove();
                     $$(this).closest('.card-content').children('.resume').children('p#r' + tid).remove();
                 }

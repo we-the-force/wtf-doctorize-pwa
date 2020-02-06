@@ -1,7 +1,7 @@
 <template>
   <div class="page home" id="home">
 
-    <div class="navbar" id="nav1">
+<!--     <div class="navbar" id="nav1">
       <div class="navbar-inner sliding">
         <div class="left">
           <div class="fab fab-left-middle color-white profile panel-open">
@@ -16,38 +16,47 @@
           </div>
         </div>
       </div>
-    </div>
-
+    </div> -->
 
     <div class="toolbar tabbar tabbar-labels toolbar-bottom menu">
       <div class="toolbar-inner">
-        <a href="/home" class="tab-link tab-link-active">
-          <i class="icon material-icons">home</i>
+        <a href="/home" class="tab-link tab-link-active profile">
+          <i class="icon material-icons">person</i>
+          <!-- <img src="//api.mydoctorize.com/files/user/userdetails/99/50.png" alt="not found"> -->
         </a>
         <a href="/schedule" class="tab-link">
           <i class="icon material-icons">today</i>
         </a>
-        <a href="#" class="tab-link dynamic-sheet">
+        <a href="#" class="tab-link">
         </a>
         <a href="#" class="tab-link">
           <i class="icon material-icons">monetization_on</i>
         </a>
         <a href="#" class="tab-link">
-          <i class="icon material-icons">settings</i>
+          <i class="icon material-icons">notifications</i>
         </a>
       </div>
-      <div class="add-circle">
+      <a class="add-circle popover-open" data-popover=".popover-menu">
         <img src="/static/images/add_circle_24px_v2.svg" class="dynamic-sheet" alt="">
+      </a>
+    </div>
+
+    <div class="popover popover-menu">
+      <div class="popover-angle"></div>
+      <div class="popover-inner">
+        <a class="add-block patient">
+          
+        </a>
+        <a class="add-block appointment">
+          
+        </a>
+        <a class="add-block pay">
+          
+        </a>
       </div>
     </div>
 
     <div class="page-content login-screen-content">
-
-
-
-
-
-
       <div class="list">
         <ul>
           <li>
@@ -162,11 +171,20 @@
         var self = this;
         var app = self.$app;
 
-        app.data.store.getItem('doctor').then(function (value) {
+        app.data.doctor = sessionStorage.getItem('doctor');
+
+        if (!(app.data.doctor == null || app.data.doctor == 'undefined' || app.data.doctor == '')) {
+          /* $$(".toolbar .profile").html('<i class="icon material-icons">person</i>'); */
+          $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
+        }/* else{
+          $$(".toolbar .profile").html('<i class="icon material-icons">person</i>');
+        } */
+
+        /* app.data.store.getItem('doctor').then(function (value) {
           app.data.doctor = value;
           $$(".navbar .profile").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
-        });
-
+        }); */
+/* 
         $$('.panel-open').click(function (e) {
           app.data.store.getItem('doctor').then(function (value) {
             app.data.doctor = value;
@@ -190,7 +208,7 @@
             app.methods.redirectTo('root');
           });
 
-        });
+        }); */
 
         $$('.dynamic-sheet').on('click', function () {
           var dynamicSheet = app.sheet.create({
@@ -268,7 +286,7 @@
               },
             }
           });
-          dynamicSheet.open();
+          /* dynamicSheet.open(); */
         });
       }
     }

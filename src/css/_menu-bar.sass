@@ -5,14 +5,28 @@
     .toolbar-inner
         .tab-link-highlight
             display: none
-        a.tab-link
-            padding-top: 15px
-            padding-bottom: 15px
+        a
+            &.tab-link
+                display: flex
+                align-items: center
+                justify-content: center
+                padding: 0px
+            &.tab-link-active
+                img
+                    box-shadow: 0 0 3pt 2pt #029AF0
+        .profile
+            img
+                height: 35px
+                width: 35px
+                border-radius: 50%
+                box-shadow: var(--f7-fab-box-shadow)
     .add-circle
+        display: flex
         position: absolute
-        bottom: 0px
+        bottom: 15px
         left: 50%
         transform: translateX(-50%)
+        z-index: 1
     &.toolbar-bottom::after
         display: none
 

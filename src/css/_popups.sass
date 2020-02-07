@@ -175,6 +175,24 @@
             .add-block
                 width: 70px
                 height: 80px
-                background: #000000
                 border-radius: 8px
                 margin: 0px 6px
+                display: flex
+                align-items: center
+                justify-content: center
+                flex-direction: column
+                i,p
+                    color: #ffffff
+                i
+                    font-size: 34px
+                p
+                    font: $title-card
+                    font-weight: normal
+                    margin: 0px
+                    margin-top: 5px
+                &.patient
+                    background: $light-blue
+                &.appointment
+                    background: $turquoise-2
+                &.pay
+                    background: #FDBC5D

@@ -13,8 +13,10 @@
     --f7-toggle-active-color: #2FCFBC
     .page
         margin: 0
-        background: $back-color 
+        background: $back-color
         .page-content
+            padding-left: 10px
+            padding-right: 10px
             height: 100%
             background: transparent
             &.login-screen-content
@@ -44,20 +46,20 @@
             &.buttons
                 background: transparent
                 height: 70px
-                margin: 0px 
+                margin: 0px
                 .btn-rounded
                     position: absolute
                     right: 25px
-                    &.center           
+                    &.center
                         left: 50%
                         transform: translate(-50%)
                 .btn-simple
                     position: absolute
-                    left: 35px                       
+                    left: 35px
             &.no-mar
                 margin: 0px
             ul::after,ul::before
-                content: none 
+                content: none
         .personal-settings
             .item-content
                 i
@@ -98,7 +100,7 @@
             .page-content
                 padding-top: 160px
     .item-input-invalid
-            color: #ff0000
+        color: #ff0000
 .md
     .popover-menu
         left: 50% !important

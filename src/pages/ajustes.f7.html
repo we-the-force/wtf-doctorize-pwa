@@ -1,13 +1,176 @@
 <template>
-    <div class="panel panel-left panel-cover panel-resizable">
-            <div class="block">
-                    <p>Left Panel content here</p>
-                    <p><a class="panel-close" href="#">Close me</a></p>
+    <div class="page" id="config">
+        <div class="page-content login-screen-content config">
+            <div class="header">
+                <div class="config">
+                    <a class="back" href="/home">
+                        <i class="material-icons">chevron_left</i>
+                    </a>
+                    <p class="title1">Ajustes</p>
                 </div>
-        <div class="view">
-            <div class="page">
-                
+            </div>
+            <div class="list">
+                <ul>
+                    <li>
+                        <div class="row">
+                            <div class="card card-outline elevation-3 settings" id="personal-settings">
+                                <div class="rectangle light-blue"></div>
+                                <i class="material-icons icon light-blue">person</i>
+                                <div class="card-content card-content-padding">
+                                    <p class="settings-name light-blue">Información Personal</p>
+                                </div>
+                                <div class="link arrow">
+                                    <i class="material-icons light-blue">chevron_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="card card-outline elevation-3 settings" id="offices-settings">
+                                <div class="rectangle light-blue"></div>
+                                <i class="material-icons icon light-blue">room</i>
+                                <div class="card-content card-content-padding">
+                                    <p class="settings-name light-blue">Consultorios</p>
+                                </div>
+                                <div class="link arrow">
+                                    <i class="material-icons light-blue">chevron_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="card card-outline elevation-3 settings" id="assistants-settings">
+                                <div class="rectangle light-blue"></div>
+                                <i class="material-icons icon light-blue">headset_mic</i>
+                                <div class="card-content card-content-padding">
+                                    <p class="settings-name light-blue">Asistentes</p>
+                                </div>
+                                <div class="link arrow">
+                                    <i class="material-icons light-blue">chevron_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="card card-outline elevation-3 settings" id="cash-settings">
+                                <div class="rectangle light-blue"></div>
+                                <i class="material-icons icon light-blue">account_balance</i>
+                                <div class="card-content card-content-padding">
+                                    <p class="settings-name light-blue">Bancos y Tarjetas</p>
+                                </div>
+                                <div class="link arrow">
+                                    <i class="material-icons light-blue">chevron_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="card card-outline elevation-3 settings" id="suscription-settings">
+                                <div class="rectangle light-blue"></div>
+                                <i class="material-icons icon light-blue">local_activity</i>
+                                <div class="card-content card-content-padding">
+                                    <p class="settings-name light-blue">Suscripción</p>
+                                </div>
+                                <div class="link arrow">
+                                    <i class="material-icons light-blue">chevron_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="card card-outline elevation-3 settings" id="help-settings">
+                                <div class="rectangle light-blue"></div>
+                                <i class="material-icons icon light-blue">help</i>
+                                <div class="card-content card-content-padding">
+                                    <p class="settings-name light-blue">Ayuda</p>
+                                </div>
+                                <div class="link arrow">
+                                    <i class="material-icons light-blue">chevron_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="card card-outline elevation-3 settings" id="law-settings">
+                                <div class="rectangle light-blue"></div>
+                                <i class="material-icons icon light-blue">gavel</i>
+                                <div class="card-content card-content-padding">
+                                    <p class="settings-name light-blue">Legales</p>
+                                </div>
+                                <div class="link arrow">
+                                    <i class="material-icons light-blue">chevron_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="card card-outline elevation-3 settings" id="notifications-settings">
+                                <div class="rectangle light-blue"></div>
+                                <i class="material-icons icon light-blue">notifications</i>
+                                <div class="card-content card-content-padding">
+                                    <p class="settings-name light-blue">Notificaciones</p>
+                                </div>
+                                <div class="link arrow">
+                                    <i class="material-icons light-blue">chevron_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="card card-outline elevation-3 settings" id="security-settings">
+                                <div class="rectangle light-blue"></div>
+                                <i class="material-icons icon light-blue">vpn_key</i>
+                                <div class="card-content card-content-padding">
+                                    <p class="settings-name light-blue">Sesión y Seguridad</p>
+                                </div>
+                                <div class="link arrow">
+                                    <i class="material-icons light-blue">chevron_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="card card-outline elevation-3 settings" id="log-out">
+                                <div class="rectangle light-blue"></div>
+                                <i class="material-icons icon light-blue">exit_to_app</i>
+                                <div class="card-content card-content-padding">
+                                    <p class="settings-name light-blue">Cerrar Sesion</p>
+                                </div>
+                                <div class="link arrow">
+                                    <i class="material-icons light-blue">chevron_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
 </template>
+<script>
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                $$(".config #personal-settings").click(function (e) {
+                    app.methods.redirectTo('settings');
+                });
+                $$(".config #log-out").click(function (params) {
+                    app.data.store.clear();
+                    app.methods.redirectTo('root');
+                });
+            }
+        }
+    }
+</script>

@@ -134,29 +134,6 @@
                     $$(e.srcElement).find('.card-header').removeClass('header-turquoise');
                 });
 
-                //usar para home
-                /* $$('.panel-open').click(function (e) {
-                    app.data.store.getItem('doctor').then(function (value) {
-                        app.data.doctor = value;
-                        $$(".panel .name").text(app.data.doctor.name);
-                        $$(".panel .mail").text(app.data.doctor.email);
-                        $$(".panel .avatar").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
-                    });
-                    var panel = app.panel.create({
-                        el: '.panel',
-                    });
-                    panel.open();
-                    $$(".panel #personal-settings").click(function (e) {
-                        panel.close();
-                        app.methods.redirectTo('settings');
-                    });
-                    $$(".panel #log-out").click(function (params) {
-                        panel.close();
-                        app.data.store.clear();
-                        app.methods.redirectTo('root');
-                    });
-                }); */
-
                 /* funcion para llenar la pagina dinamicamente */
                 function fillPage(x, y) {
                     let flag = true;

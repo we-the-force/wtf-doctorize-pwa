@@ -27,11 +27,15 @@ import AgendarCitaFecha from '../pages/agendar-cita-fecha.f7.html';
 import CitaAgendada from '../pages/cita-agendada.f7.html';
 import NuevoPaciente from '../pages/nuevo-paciente.f7.html';
 import schedule from '../pages/schedule.f7.html';
-
 import DynamicRoutePage from '../pages/dynamic-route.f7.html';
 import PhotoModule from '../pages/photo-module.f7.html';
 import Settings from '../pages/settings.f7.html';
 import SettingsEdit from '../pages/settings-edit.f7.html';
+import DoctorHorariosAdd from '../pages/doctor-horarios-add.f7.html';
+import DoctorHorarios from '../pages/doctor-horarios.f7.html';
+import DoctorHorariosSelect from '../pages/doctor-horarios-select.f7.html';
+import DoctorHorariosEdit from '../pages/doctor-horarios-edit.f7.html';
+import DoctorHorariosShow from '../pages/doctor-horarios-show.f7.html';
 
 var routes = [
 
@@ -39,6 +43,31 @@ var routes = [
         name: "root",
         path: '/',
         component: LoginPage,
+    },
+    {
+        name: "doctor-horarios",
+        path: '/doctor/timetable',
+        component: DoctorHorarios,
+    },
+    {
+        name: "doctor-horarios-add",
+        path: '/doctor/timetable/new',
+        component: DoctorHorariosAdd,
+    },
+    {
+        name: "doctor-horarios-select",
+        path: '/doctor/timetable/select',
+        component: DoctorHorariosSelect,
+    },
+    {
+        name: "doctor-horarios-edit",
+        path: '/doctor/timetable/edit',
+        component: DoctorHorariosEdit,
+    },
+    {
+        name: "doctor-horarios-show",
+        path: '/doctor/timetable/show',
+        component: DoctorHorariosShow,
     },
     {
         name: "landing",

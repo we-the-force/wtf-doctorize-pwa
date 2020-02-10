@@ -17,10 +17,12 @@
         border-bottom-left-radius: 10px
         &.turquoise
             background: $turquoise-2
-        &.light-blue  
+        &.light-blue
             background: $light-blue
         &.yellow
             background: $yellow
+        &.red
+            background: $red
     .dynamic-popover,.permissions-link
         position: absolute
         top: 10px
@@ -39,7 +41,7 @@
                 font: $text-2-card
             &.title
                 font: $title-card
-            &.footer    
+            &.footer
                 font: $footer-card
     &.offices
         p
@@ -47,7 +49,7 @@
                 font: $text-1-card
             &.title
                 font: $title-card
-            &.footer    
+            &.footer
                 font: $footer-card
         i
             font-size: 30px
@@ -69,7 +71,7 @@
                 right: 2%
             &.icon
                 position: absolute
-                top: 22% 
+                top: 22%
                 left: 7%
     &.asistentes
         .dynamic-popover
@@ -94,7 +96,7 @@
             position: absolute
             left: 7.5%
             top: 10%
-            img 
+            img
                 width: 45px
                 height: 45px
                 border-radius: 50%
@@ -123,7 +125,7 @@
             padding-top: 3%
             padding-bottom: 3%
             .details-event
-                height: 220px  
+                height: 220px
                 width: 100%
                 position: absolute
                 top: 0px
@@ -141,7 +143,7 @@
                     font-weight: 600
                     opacity: 1
                 .contact
-                    --f7-fab-size: 37px 
+                    --f7-fab-size: 37px
                     i
                         color: $light-blue
                         font-size: 23px
@@ -150,8 +152,8 @@
                         left: 45px
                     &.phone
                         left: 90px
-                .stars      
-                    display: inline-flex              
+                .stars
+                    display: inline-flex
                     position: absolute
                     left: 45%
                     i
@@ -186,7 +188,7 @@
                     font: $text-2-card
                 &.footer
                     font: $footer-card
-        i 
+        i
             &.time
                 font-size: 16px
                 color: $light-blue
@@ -235,11 +237,158 @@
                 bottom: 15px
                 p
                     opacity: 1
-
+    &.doc-horarios
+        display: flex
+        width: auto
+        &.inactive
+            filter: saturate(0) opacity(0.6)
+        .material-icons
+            padding-left: calc( 5% + 10px )
+            padding-right: 15px
+            padding-top: 10px
+            font-size: 30px
+            &.light-blue
+                color: $light-blue
+            &.red
+                color: $red
+            &.yellow
+                color: $yellow
+            &.turquoise
+                color: $turquoise-2
+        .card-content-padding
+            width: 100%
+            padding: 9px 0px 9px 0px
+            .asist,.place
+                display: flex
+                font: $text-2-card
+                text-align: left
+                margin: auto
+                color: $grey
+            p
+                color: $dark_blue
+                font: $Body-2
+                font-weight: bold
+                margin-right: auto
+                margin-bottom: 0px
+                &.light-blue
+                    color: $light-blue
+                &.red
+                    color: $red
+                &.turquoise
+                    color: $turquoise-2
+                &.text
+                    font-weight: normal
+                    line-height: 20px
+                    color: $grey
+                    margin-top: 0px
+            hr
+                margin: 0px !important
+                border: 0.8px solid #E5E9F2 !important
+        .points
+            color: $dark_blue
+            padding: 10px 10px 0px 15px
+            height: fit-content
+        a
+            height: fit-content
+    &.doc-horarios.add
+        align-items: center
+        .material-icons
+            padding-top: 0px
+    &.doc-horarios.days
+        flex-direction: column
+        .card-header
+            font: $text-2-card
+            font-weight: bold
+            min-height: unset
+            color: $dark-blue
+            padding: 5px 5px 0px 10px
+            margin-left: 5%
+            a
+                display: flex
+                justify-content: center
+                align-items: center
+                i
+                    padding: 0px 5px 0px 5px
+            &::after
+                content: none
+        .card-content
+            width: auto
+            margin-left: 5%
+            padding-left: 10px
+            padding-right: 5px
+            padding-top: 0px
+            margin-right: 5%
+            .resume p
+                font: $Body-2
+                color: #3C4858
+            .accordion-item-content
+                .state p
+                    font: $Body-2
+                    font-weight: normal
+                    color: #3C4858
+                    margin-bottom: 10px
+                    margin-top: 10px
+                .list
+                    border-top: 0.8px solid #E5E9F2
+                    li
+                        border-bottom: 0.8px solid #E5E9F2
+                        align-items: center
+                        i
+                            font-size: 20px
+                            padding: 10px 0px 10px 0px
+                        p
+                            width: auto
+                            margin-left: 15px
+                            font: $title-2
+                            font-weight: normal
+                            color: #3C4858
+                .new_horario
+                    display: flex
+                    align-items: center
+                    justify-content: flex-start
+                    margin-top: 10px
+                    i
+                        font-size: 25px
+                        margin-right: 5px
+                        color: #2FCFBC
+                        padding: 0px
+                    p
+                        font: $Body-2
+                        color: #2FCFBC
+        .material-icons
+            padding: 10px 5px 0px 5px
+            color: $dark-blue
+        &.show
+            .toggle
+                position: absolute
+                top: -5px
+                right: 0px
+            &.inactive
+                filter: saturate(0) opacity(0.6)
+    &.select-horarios
+        display: flex
+        width: auto
+        align-items: center
+        .avatar
+            height: 35px
+            padding-left: calc( 5% + 10px )
+            padding-right: 15px
+            padding-top: 8px
+            padding-bottom: 8px
+            img
+                width: 35px
+                height: 35px
+                border-radius: 50%
+                background: radial-gradient(123.92% 129.39% at 57.54% 104.51%, #00A1C5 0%, #2FCFBC 100%)
+        .card-content-padding
+            width: 100%
+            padding: 9px 0px 9px 0px
+            p
+                font: $Body-4
 
 .card-backdrop
     z-index: 0
-.card-expandable.card-opened .card-opened-fade-out 
+.card-expandable.card-opened .card-opened-fade-out
     opacity: 0 !important
 
 .popover
@@ -267,6 +416,3 @@
                     right: 0px
             .delete-office,.delete-assistant
                 width: 100%
-
-
-    

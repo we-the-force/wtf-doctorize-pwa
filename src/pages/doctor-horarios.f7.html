@@ -1,0 +1,226 @@
+<template>
+    <div class="page" data-name="doctor-horarios" id="doctor-horarios">
+        <div class="page-content">
+            <div class="header">
+                <div class="doc-horarios">
+                    <a class="back" href="">
+                        <i class="material-icons">chevron_left</i>
+                    </a>
+                    <h1>Horarios</h1>
+                </div>
+            </div>
+            <div class="row">
+                <a class="new_timetable" href="#">
+                    <i class="material-icons">add_circle</i>
+                    <p>Agregar horario</p>
+                </a>
+            </div>
+            <hr>
+            <div class="list">
+                <ul id="cards">
+
+                </ul>
+            </div>
+        </div>
+        <!-- <div class="popup popup-timetable">
+            <div class="row pop-header">
+                <a class="link popup-close" href="#"><i class="material-icons">close</i></a>
+                <label class="toggle toggle-init">
+                    <input type="checkbox" name="chbx" value="1" style="display:none" checked>
+                    <span class="toggle-icon"></span>
+                </label>
+            </div>
+            <p class="title">Nombre</p>
+            <div class="list no-hairlines-md">
+                <ul>
+                    <li class="item-content item-input item-input-outline">
+                        <div class="item-inner">
+                            <div class="item-input-wrap">
+                                <input type="text" placeholder="Nombre">
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <hr>
+            <p class="title">Días</p>
+            <div class="row days-container">
+                <label class="item-checkbox item-content days">
+                    <input type="checkbox" name="chbx" value="7">
+                    <i class="icon icon-checkbox days" id="07">D</i>
+                </label>
+                <label class="item-checkbox item-content days">
+                    <input type="checkbox" name="chbx" value="1">
+                    <i class="icon icon-checkbox days" id="01">L</i>
+                </label>
+                <label class="item-checkbox item-content days">
+                    <input type="checkbox" name="chbx" value="2">
+                    <i class="icon icon-checkbox days" id="02">M</i>
+                </label>
+                <label class="item-checkbox item-content days">
+                    <input type="checkbox" name="chbx" value="3">
+                    <i class="icon icon-checkbox days" id="03">X</i>
+                </label>
+                <label class="item-checkbox item-content days">
+                    <input type="checkbox" name="chbx" value="4">
+                    <i class="icon icon-checkbox days" id="04">J</i>
+                </label>
+                <label class="item-checkbox item-content days">
+                    <input type="checkbox" name="chbx" value="5">
+                    <i class="icon icon-checkbox days" id="05">V</i>
+                </label>
+                <label class="item-checkbox item-content days">
+                    <input type="checkbox" name="chbx" value="6">
+                    <i class="icon icon-checkbox days" id="06">S</i>
+                </label>
+            </div>
+        </div> -->
+        <div class="popover popover-set">
+            <div class="popover-inner">
+                <div class="list">
+                    <ul>
+                        <li><a class="list-button item-link edit" href="#">Editar</a></li>
+                        <hr>
+                        <li><a class="list-button item-link state" href="#">Desactivar</a></li>
+                        <hr>
+                        <li><a class="list-button item-link delete" href="#">Eliminar</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                var timetable;
+                // preloader mientras se llena la pantalla
+                app.preloader.show('blue');
+                let color = 'light-blue';
+                //leer horarios***************
+                for (var i = 1; i < 4; i++) {
+                    //leer si esta activo, color??, nombre, asistente, id************+
+                    // llena las tarjetas************+
+                    $$('#doctor-horarios #cards').append('<li id="card' + i + '">' +
+                        '<div class="card card-outline doc-horarios active">' +
+                        '<div class="rectangle ' + color + '"></div>' +
+                        '<i class="clock material-icons ' + color + '">' +
+                        'timelapse' +
+                        '</i>' +
+                        '<div class="card-content card-content-padding">' +
+                        '<p>Horario ' + i + '</p>' +
+                        '<p class="asist">Alejandra G.</p>' +
+                        '<hr>' +
+                        '<p class="place">Hospital H.</p>' +
+                        '</div>' +
+                        '<a class="popover-open" data-popover=".popover-set">' +
+                        '<i class="points material-icons" data-id="' + i + '">' +
+                        'more_horiz' +
+                        '</i>' +
+                        '</a>' +
+                        '</div>' +
+                        '</li>');
+                    //cambia el color de las tarjetas
+                    if (color == 'light-blue') {
+                        color = 'red';
+                    } else if (color == 'red') {
+                        color = 'yellow';
+                    }
+                }
+                //cierra preloader
+                app.preloader.hide();
+
+                //click en la tarjeta para una previsualizacion del horario
+                $$('#doctor-horarios .card.active .clock,#doctor-horarios .card.active .card-content').click(function (val) {
+                    //guarda el id y redirecciona*************
+                    app.data.store.setItem('id-horario', $$(this).siblings('a').children('i').data('id')).then(function (value) {
+                        app.methods.redirectTo('doctor-horarios-show');
+                    });
+                });
+
+                //evento al abrir el menu en las tarjetas
+                $$('#doctor-horarios .points').click(function (e) {
+                    //guarda el id del horario *****************
+                    timetable = $$(this).data('id');
+                    //cambia el texto del menu dependiendo si el horario esta desactivado o no
+                    if ($$(this).closest('li').children('div').hasClass('active')) {
+                        $$('.popover-inner li').children('a.state').text('Desactivar');
+                    } else if ($$(this).closest('li').children('div').hasClass('inactive')) {
+                        $$('.popover-inner li').children('a.state').text('Activar');
+                    }
+                });
+
+                //evento agregar horario
+                $$('.new_timetable').click(function (x) {
+                    //especifica que es un nuevo horario y redirecciopna
+                    app.data.store.setItem('edit', false).then(function (value) {
+                        app.methods.redirectTo('doctor-horarios-add');
+                    });
+                });
+
+                //en el menu de las tarjetas evento del boton editar
+                $$('.item-link.edit').click(function (x) {
+                    //salva variable para saber que es edicion, cierra el popover y redirecciona
+                    app.data.store.setItem('edit', true).then(function (value) {
+                        app.popover.close();
+                        app.methods.redirectTo('doctor-horarios-add');
+                    });
+                });
+
+                //evento boton activp/desactivado
+                $$('.item-link.state').click(function (x) {
+                    //activa desactiva el horario
+                    $$('#doctor-horarios #cards').find('li#card' + timetable).children().toggleClass('active');
+                    $$('#doctor-horarios #cards').find('li#card' + timetable).children().toggleClass('inactive');
+                    //mandar desactivar*******************
+                    app.popover.close();
+                });
+
+                //evento boton eliminar
+                $$('.item-link.delete').click(function (x) {
+                    //cierra pop over
+                    app.popover.close();
+                    //crea cuadro de dialogo
+                    var dialog = app.dialog.create({
+                        cssClass: 'delete',
+                        title: '<i class="material-icons">error</i>',
+                        text: 'Esta seguro que desea eliminar este horario?',
+                        content: 'Esta operación es irreversible',
+                        buttons: [
+                            {
+                                text: '<p>Cancelar</p> <i class="material-icons">chevron_right</i>',
+                                cssClass: 'cancel',
+                                onClick:
+                                    //cancela la accion, cierra ventana
+                                    function (x, y) {
+                                        dialog.close();
+                                        console.log('do not delete ' + timetable);
+
+                                    }
+                            },
+                            {
+                                text: '<p>Eliminar</p> <i class="material-icons">chevron_right</i>',
+                                cssClass: 'delete',
+                                onClick:
+                                    function (x, y) {
+                                        //mandar eliminar el horario**********+
+                                        //cierra ventana, elimina tarjeta
+                                        dialog.close();
+                                        console.log('delete ' + timetable);
+                                        app.methods.cuteHide($$('#doctor-horarios ul li#card'+timetable));
+                                    }
+                            }
+                        ]
+                    });
+                    //abre cuadro de dialogo
+                    dialog.open();
+                });
+            }
+        }
+    }
+</script>

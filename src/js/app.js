@@ -14,7 +14,6 @@ import '../css/app.sass';
 // Import Routes
 import routes from './routes.js';
 
-
 import register from './register.js';
 
 Framework7.request.setup({
@@ -123,6 +122,19 @@ var app = new Framework7({
           return false;
       }
       return true;
+    },
+    cuteHide: function (el) {
+      el.animate({ opacity: '0' }, {
+        duration: 150,
+        complete: function () {
+          el.animate({ height: '0px' }, {
+            duration: 150,
+            complete: function () {
+              el.remove();
+            }
+          });
+        }
+      });
     }
   },
   // App routes
@@ -135,7 +147,7 @@ var app = new Framework7({
   },
   // Register service worker
   serviceWorker: {
-    path: '/service-worker.js',
+    path: '/OneSignalSDKWorker.js',
   },
   view: {
     pushState: true
@@ -183,9 +195,9 @@ app.init(function () {
 
 
 let newWorker;
-let isSubscribed = false;
-let swRegistration = null;
-const applicationServerPublicKey = '';
+//let isSubscribed = false;
+//let swRegistration = null;
+//const applicationServerPublicKey = '';
 
 var toastWithCallback = app.toast.create({
   text: 'A new version of this app is available.',
@@ -199,7 +211,7 @@ var toastWithCallback = app.toast.create({
 });
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./service-worker.js').then(reg => {
+  navigator.serviceWorker.register('./OneSignalSDKWorker.js').then(reg => {
     reg.addEventListener('updatefound', () => {
 
       // An updated service worker has appeared in reg.installing!
@@ -221,9 +233,9 @@ if ('serviceWorker' in navigator) {
       });
     });
 
-    swRegistration = reg;
-    Notification.requestPermission();
-    initializeUI();
+    /*     swRegistration = reg;
+        Notification.requestPermission();
+        initializeUI(); */
 
   }).catch(function (err) {
     // registration failed :(
@@ -242,8 +254,8 @@ if ('serviceWorker' in navigator) {
 
 //suscribe notifications
 
-function initializeUI() {
-  
+/* function initializeUI() {
+
   if (!isSubscribed) {
     subscribeUser();
   }
@@ -254,16 +266,16 @@ function initializeUI() {
       isSubscribed = !(subscription === null);
       update();
     });
-}
+} */
 
-function update() {
+/* function update() {
   if (Notification.permission === 'denied') {
     updateSubscriptionOnServer(null);
     return;
   }
-}
+} */
 
-function subscribeUser() {
+/* function subscribeUser() {
   const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
   swRegistration.pushManager.subscribe({
     userVisibleOnly: true,
@@ -281,9 +293,9 @@ function subscribeUser() {
       console.log('Failed to subscribe the user: ', err);
       update();
     });
-}
+} */
 
-function urlB64ToUint8Array(base64String) {
+/* function urlB64ToUint8Array(base64String) {
   const padding = '='.repeat((4 - base64String.length % 4) % 4);
   const base64 = (base64String + padding)
     .replace(/\-/g, '+')
@@ -296,9 +308,9 @@ function urlB64ToUint8Array(base64String) {
     outputArray[i] = rawData.charCodeAt(i);
   }
   return outputArray;
-}
+} */
 
-function updateSubscriptionOnServer(subscription) {
+/* function updateSubscriptionOnServer(subscription) {
   // TODO: Send subscription to application server
   let jsonSubscription;
   if (subscription) {
@@ -306,7 +318,7 @@ function updateSubscriptionOnServer(subscription) {
   } else {
     jsonSubscription = null;
   }
-}
+} */
 /* $$(document).on('panel:open',function (e) {
   app.data.store.getItem('doctor').then(function (value) {
     app.data.doctor = value;

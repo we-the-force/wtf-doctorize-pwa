@@ -21,3 +21,5 @@ self.addEventListener('push', function (event) {
     };
     event.waitUntil(self.registration.showNotification(title, options));
 });
+
+importScripts('https://cdn.onesignal.com/sdks/OneSignalSDKWorker.js');

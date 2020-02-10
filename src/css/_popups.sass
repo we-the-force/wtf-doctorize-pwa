@@ -1,0 +1,148 @@
+.popup
+    &.popup-timetable
+        width: 90%
+        height: 85%
+        top: 50%
+        left: 50%
+        transform: translate3d(-50%, 50%, 0)
+        border-radius: 10px
+        padding: 30px 18px 30px 18px
+        &.modal-in
+            transform: translate3d(-50%, -50%, 0)
+            display: flex !important
+            flex-direction: column
+        .title
+            font: $title-2
+            color: $grey
+            margin: 0px auto 0px auto
+        .list
+            margin: 10px auto 10px auto
+            width: 92%
+            .item-inner
+                padding-top: 0px
+                padding-bottom: 0px
+                height: fit-content
+                .item-input-wrap:after
+                    border: 1px solid #D3DCE6
+                    border-radius: 8px
+                input
+                    text-align: center
+                    color: $turquoise-2
+        hr
+            margin: 0px -18px 14px 20px
+            border: 1px solid #E5E9F2
+        .days-container
+            margin-top: 10px
+            flex-wrap: nowrap
+            padding: 0px 10px 0px 10px
+            .days
+                --f7-checkbox-inactive-color: #E5E9F2
+                i
+                    margin: 0px
+                    color: #C2CEDB
+    &.edit-timetable
+        width: 90%
+        height: auto
+        top: 50%
+        left: 50%
+        transform: translate3d(-50%, 50%, 0)
+        border-radius: 10px
+        padding: 13px
+        &.modal-in
+            transform: translate3d(-50%, -50%, 0)
+            display: flex !important
+            flex-direction: column
+        hr
+            margin: 0px
+            border: 0.8px solid #E5E9F2
+        .pop-header
+            margin-bottom: 8px
+            i
+                color: $dark-blue
+        .pop-title
+            font: $text-2-card
+            font-weight: 600
+            color: $grey
+            width: auto
+            text-align: center
+            margin-bottom: 0px
+        .time
+            margin-top: 0px
+            margin-bottom: 10px
+            width: auto
+            display: flex
+            justify-content: center
+            p
+                margin: 0px
+                text-align: center
+                font: $title-card
+                font-weight: 600
+                color: #C2CEDB
+        .time-selector
+            .head
+                display: flex
+                justify-content: space-between
+                margin-bottom: 8px
+                width: 90%
+                margin: auto
+                a
+                    width: 40%
+                    text-align: center
+                    font: $title-2
+                    font-weight: normal
+                    color: $grey
+            .body
+                display: flex
+                justify-content: space-between
+                align-items: center
+                margin-top: 8px
+                width: 90%
+                margin: auto
+                .in-time,.out-time
+                    width: 40%
+                    display: flex
+                    justify-content: center
+                    align-items: center
+                    input
+                        font-family: 'Nunito'
+                        font-weight: normal
+                        font-size: 19px
+                        line-height: 38px
+                        left: 8px
+                        position: relative
+                        color: #C2CEDB
+                    &.active
+                        border-top: 1.5px solid #2FCFBC
+                        input
+                            color: #2FCFBC
+                i
+                    width: 20%
+                    text-align: center
+        .btn
+            width: auto
+            margin: auto
+            margin-top: 30px
+            margin-bottom: 15px
+            &:disabled
+                filter: saturate(0)
+
+
+.popover
+    width: 170px
+    border-radius: 15px
+    hr
+        margin: 0px 7px 0px 7px
+        border: 0.6px solid #E5E9F2
+    a
+        font: $title-2
+        font-weight: normal
+        color: $grey !important
+    ul
+        height: 140px
+        display: flex
+        flex-direction: column
+        justify-content: space-evenly
+    .item-link
+        text-align: left
+        &:after
+            content: none

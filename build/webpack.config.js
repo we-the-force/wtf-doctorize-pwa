@@ -211,7 +211,7 @@ module.exports = {
         ]),
 
         new WorkboxPlugin.InjectManifest({
-            swSrc: resolvePath('src/service-worker.js'),
+            swSrc: resolvePath('src/OneSignalSDKWorker.js'),
         }),
     ],
 };

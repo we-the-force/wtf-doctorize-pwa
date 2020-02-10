@@ -88,7 +88,7 @@
               <div data-slides-per-view="1.5" data-space-between="0" class="swiper-container swiper-init demo-swiper">
                 <div class="swiper-wrapper">
 
-                  
+
                 </div>
             </li>
           </ul>
@@ -108,13 +108,12 @@
         var moment = require('moment');
         moment.locale('es');
         moment().format();
-        var doctor = null;
-        doctor = JSON.parse(sessionStorage.getItem('doctor'));
-        
-        if (doctor != null) {
+        var doctor = JSON.parse(sessionStorage.getItem('user'));
+
+        if (doctor != null && doctor != 'undefined' && doctor != ''){ 
           $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + doctor.photo + '200.png" alt="not found">');
           $$('.transparent .ajustes img').attr('src', app.data.url + '/' + doctor.photo + '100.png');
-          $$('.background .name').text('Dr. '+ doctor.name);
+          $$('.background .name').text('Dr. ' + doctor.name);
         }
 
 

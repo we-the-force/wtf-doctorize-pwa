@@ -31,28 +31,26 @@
         <!--tool bar-->
         <div class="toolbar tabbar tabbar-labels toolbar-bottom menu">
             <div class="toolbar-inner">
-                <a href="/home" class="tab-link" id='tab1'>
-                    <i class="icon material-icons">home</i>
-                </a>
-                <a href="#" class="tab-link  tab-link-active" id='tab2'>
-                    <i class="icon material-icons">today</i>
-                </a>
-                <a href="#" class="tab-link dynamic-sheet">
-                </a>
-                <a href="#" class="tab-link" id='tab3'>
-                    <i class="icon material-icons">monetization_on</i>
-                </a>
-                <a href="#" class="tab-link" id='tab4'>
-                    <i class="icon material-icons">settings</i>
-                </a>
+              <a href="/home" class="tab-link profile">
+                <i class="icon material-icons">person</i>
+                <!-- <img src="//api.mydoctorize.com/files/user/userdetails/99/50.png" alt="not found"> -->
+              </a>
+              <a href="/schedule" class="tab-link tab-link-active ">
+                <i class="icon material-icons">today</i>
+              </a>
+              <a href="#" class="tab-link">
+              </a>
+              <a href="/doctor/pagos" class="tab-link">
+                <i class="icon material-icons">monetization_on</i>
+              </a>
+              <a href="#" class="tab-link">
+                <i class="icon material-icons">notifications</i>
+              </a>
             </div>
-            <div class="add-circle">
-                <a>
-                    <img src="/static/images/add_circle_24px_v2.svg" class="dynamic-sheet" alt="">
-                </a>
-            </div>
-        </div>
-
+            <a class="add-circle popover-open" data-popover=".popover-menu">
+              <img src="/static/images/add_circle_24px_v2.svg" class="dynamic-sheet" alt="">
+            </a>
+          </div>
         <!--tabs-->
         <div class="tabs">
         </div>
@@ -83,7 +81,7 @@
                 z = moment(), today = moment(), y = moment(z).add(1, 'M'), i = 1;
                 while (z.isBefore(y)) {
                     $$('#subnavtoolbar-inner').append(
-                        '<a href="#tab-' + i + '" class="tab-link" id="' + z.format("DD-MMM") + '" data-date="' + moment(z).format("YYYY-MM-DD") + '">' +
+                        '<a href="#tab-' + i + '" class="tab-link" id="D' + z.format("DD-MMMM") + '" data-date="' + moment(z).format("YYYY-MM-DD") + '">' +
                         '<p class="num">' + z.date() + ' </p>' +
                         '<p>' + monthNames[z.month()] + ' </p>' +
                         '</a>');
@@ -96,8 +94,8 @@
                         '</div>'
                     );
                     if (z.isSame(today)) {
-                        $$('#' + z.format("DD-MMM")).addClass('tab-link-active');
-                        $$('#' + z.format("DD-MMM")).addClass('tab-link-today');
+                        $$('#D' + z.format("DD-MMMM")).addClass('tab-link-active');
+                        $$('#D' + z.format("DD-MMMM")).addClass('tab-link-today');
                         $$('#tab-' + i).addClass('tab-active');
                     }
                     i++;

@@ -12,7 +12,7 @@
         </a>
         <a href="#" class="tab-link">
         </a>
-        <a href="/doctor/pagos" class="tab-link">
+        <a href="#" class="tab-link">
           <i class="icon material-icons">monetization_on</i>
         </a>
         <a href="#" class="tab-link">
@@ -53,19 +53,19 @@
               <div class="block">
                 <div class="row">
                   <a class="col">
-                    <img src="//api.mydoctorize.com/files/user/userdetails/299/50.png" alt="not found">
+                    <img src="../static/images/logo.png" alt="not found">
                   </a>
                   <a class="col">
-                    <img src="//api.mydoctorize.com/files/user/userdetails/299/50.png" alt="not found">
+                    <img src="../static/images/logo.png" alt="not found">
                   </a>
                   <a class="col">
-                    <img src="//api.mydoctorize.com/files/user/userdetails/299/50.png" alt="not found">
+                    <img src="../static/images/logo.png" alt="not found">
                   </a>
                   <a class="col">
-                    <img src="//api.mydoctorize.com/files/user/userdetails/299/50.png" alt="not found">
+                    <img src="../static/images/logo.png" alt="not found">
                   </a>
                   <a class="col">
-                    <img src="//api.mydoctorize.com/files/user/userdetails/299/50.png" alt="not found">
+                    <img src="../static/images/logo.png" alt="not found">
                   </a>
                 </div>
               </div>
@@ -111,7 +111,7 @@
         var doctor = JSON.parse(sessionStorage.getItem('user'));
 
         if (doctor != null && doctor != 'undefined' && doctor != ''){ 
-          $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + doctor.photo + '200.png" alt="not found">');
+          $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + doctor.photo + '50.png" alt="not found">');
           $$('.transparent .ajustes img').attr('src', app.data.url + '/' + doctor.photo + '100.png');
           $$('.background .name').text('Dr. ' + doctor.name);
         }

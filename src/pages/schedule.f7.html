@@ -36,26 +36,26 @@
         <!--tool bar-->
         <div class="toolbar tabbar tabbar-labels toolbar-bottom menu">
             <div class="toolbar-inner">
-              <a href="/home" class="tab-link profile">
-                <i class="icon material-icons">person</i>
-                <!-- <img src="//api.mydoctorize.com/files/user/userdetails/99/50.png" alt="not found"> -->
-              </a>
-              <a href="/schedule" class="tab-link tab-link-active ">
-                <i class="icon material-icons">today</i>
-              </a>
-              <a href="#" class="tab-link">
-              </a>
-              <a href="/doctor/pagos" class="tab-link">
-                <i class="icon material-icons">monetization_on</i>
-              </a>
-              <a href="#" class="tab-link">
-                <i class="icon material-icons">notifications</i>
-              </a>
+                <a href="/home" class="tab-link profile">
+                    <i class="icon material-icons">person</i>
+                    <!-- <img src="//api.mydoctorize.com/files/user/userdetails/99/50.png" alt="not found"> -->
+                </a>
+                <a href="/schedule" class="tab-link tab-link-active ">
+                    <i class="icon material-icons">today</i>
+                </a>
+                <a href="#" class="tab-link">
+                </a>
+                <a href="#" class="tab-link">
+                    <i class="icon material-icons">monetization_on</i>
+                </a>
+                <a href="#" class="tab-link">
+                    <i class="icon material-icons">notifications</i>
+                </a>
             </div>
             <a class="add-circle popover-open" data-popover=".popover-menu">
-              <img src="/static/images/add_circle_24px_v2.svg" class="dynamic-sheet" alt="">
+                <img src="/static/images/add_circle_24px_v2.svg" class="dynamic-sheet" alt="">
             </a>
-          </div>
+        </div>
         <!--tabs-->
         <div class="tabs">
         </div>
@@ -74,14 +74,14 @@
                 moment().format();
                 moment().locale('ES');
 
-                app.data.store.getItem('doctor').then(function (value) {
-                    app.data.doctor = value;
-                    /* $$(".navbar .profile").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">'); */
-                });
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
+
+                if (doctor != null && doctor != 'undefined' && doctor != '') {
+                    $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + doctor.photo + '50.png" alt="not found">');
+                }
 
                 app.preloader.show('blue');/* abre preloader */
 
-                app.preloader.hide();
                 /*
                     crea la subnavbar con los 30 dias a partir de hoy
                 */

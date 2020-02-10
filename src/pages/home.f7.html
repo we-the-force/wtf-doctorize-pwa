@@ -186,8 +186,11 @@
           let today = moment();
           console.log(today.format());
           let cards = 0;
+
+          console.log(e);
           for (const element of e) {
-            if (today.isBefore(moment(element.date)) && cards < 10) {
+            
+            /* if (today.isBefore(moment(element.date)) && cards < 10) {
               $$('#home li.appointments .swiper-wrapper').append(
                 '<div class="swiper-slide" id="id_' + element.id + '">' +
                 '<div class="card card-outline home appointments">' +
@@ -205,11 +208,11 @@
                 '</div>'
               );
               cards ++;
-            }
+            } */
           }
         });
         //consultar citas
-        /* for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 3; i++) {
           $$('#home li.appointments .swiper-wrapper').append(
             '<div class="swiper-slide" id="">' +
             '<div class="card card-outline home appointments">' +
@@ -227,7 +230,7 @@
             '</div>'
           );
 
-        } */
+        }
 
         //consultar cobros
         for (let i = 0; i < 3; i++) {

@@ -108,9 +108,10 @@
         var moment = require('moment');
         moment.locale('es');
         moment().format();
-        var doctor = JSON.parse(sessionStorage.getItem('doctor'));
+        var doctor = null;
+        doctor = JSON.parse(sessionStorage.getItem('doctor'));
         
-        if (doctor != null && doctor != 'undefined' && doctor != '') {
+        if (doctor != null) {
           $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + doctor.photo + '200.png" alt="not found">');
           $$('.transparent .ajustes img').attr('src', app.data.url + '/' + doctor.photo + '100.png');
           $$('.background .name').text('Dr. '+ doctor.name);

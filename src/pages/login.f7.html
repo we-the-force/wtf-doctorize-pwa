@@ -147,6 +147,7 @@
               },
                 function (e) {
                   app.preloader.hide();
+                  sessionStorage.setItem('user',e);
                   app.data.store
                     .setItem("doctor", e)
                     .then(function (value) {

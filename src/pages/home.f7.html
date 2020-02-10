@@ -1,154 +1,97 @@
 <template>
   <div class="page home" id="home">
 
-    <div class="navbar" id="nav1">
-      <div class="navbar-inner sliding">
-        <div class="left">
-          <div class="fab fab-left-middle color-white profile panel-open">
-            <i class="icon material-icons">photo</i>
-          </div>
-        </div>
-        <div class="right">
-          <div class="fab fab-right-middle color-white search">
-            <a href="#">
-              <i class="icon material-icons">search</i>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
     <div class="toolbar tabbar tabbar-labels toolbar-bottom menu">
       <div class="toolbar-inner">
-        <a href="/home" class="tab-link tab-link-active">
-          <i class="icon material-icons">home</i>
+        <a href="/home" class="tab-link tab-link-active profile">
+          <i class="icon material-icons">person</i>
+          <!-- <img src="//api.mydoctorize.com/files/user/userdetails/99/50.png" alt="not found"> -->
         </a>
         <a href="/schedule" class="tab-link">
           <i class="icon material-icons">today</i>
         </a>
-        <a href="#" class="tab-link dynamic-sheet">
-        </a>
         <a href="#" class="tab-link">
+        </a>
+        <a href="/doctor/pagos" class="tab-link">
           <i class="icon material-icons">monetization_on</i>
         </a>
         <a href="#" class="tab-link">
-          <i class="icon material-icons">settings</i>
+          <i class="icon material-icons">notifications</i>
         </a>
       </div>
-      <div class="add-circle">
+      <a class="add-circle popover-open" data-popover=".popover-menu">
         <img src="/static/images/add_circle_24px_v2.svg" class="dynamic-sheet" alt="">
+      </a>
+    </div>
+
+    <div class="header turquoise">
+      <div class="row logo">
+        <img src="/static/icons/logo.svg" alt="">
+        <img src="/static/icons/Doctorize.svg" alt="">
       </div>
     </div>
 
     <div class="page-content login-screen-content">
-
-
-
-
-
-
-      <div class="list">
-        <ul>
-          <li>
-            <div class="block-title">Pacientes</div>
-            <div class="block">
-              <div class="row">
-                <div class="col">
-                  <img src="//api.mydoctorize.com/files/user/userdetails/99/50.png" alt="not found">
-                </div>
-                <div class="col">
-                  <img src="//api.mydoctorize.com/files/user/userdetails/99/50.png" alt="not found">
-                </div>
-                <div class="col">
-                  <img src="//api.mydoctorize.com/files/user/userdetails/99/50.png" alt="not found">
-                </div>
-                <div class="col">
-                  <img src="//api.mydoctorize.com/files/user/userdetails/99/50.png" alt="not found">
-                </div>
-                <div class="col">
-                  <img src="//api.mydoctorize.com/files/user/userdetails/99/50.png" alt="not found">
+      <div class="rectangle transparent">
+        <a class="ajustes" href="/doctor/configuration">
+          <img src="//api.mydoctorize.com/files/user/userdetails/299/100.png" alt="not found">
+          <i class="icon material-icons">settings</i>
+        </a>
+      </div>
+      <div class="background">
+        <div class="doc_info">
+          <p class="saludo">Bienvenido</p>
+          <p class="name">Dr. Profesor Patricio</p>
+        </div>
+        <div class="list">
+          <ul>
+            <li class="patients">
+              <div class="block-title">Pacientes
+                <i class="icon material-icons">chevron_right</i>
+              </div>
+              <div class="block">
+                <div class="row">
+                  <a class="col">
+                    <img src="//api.mydoctorize.com/files/user/userdetails/99/50.png" alt="not found">
+                  </a>
+                  <a class="col">
+                    <img src="//api.mydoctorize.com/files/user/userdetails/99/50.png" alt="not found">
+                  </a>
+                  <a class="col">
+                    <img src="//api.mydoctorize.com/files/user/userdetails/99/50.png" alt="not found">
+                  </a>
+                  <a class="col">
+                    <img src="//api.mydoctorize.com/files/user/userdetails/99/50.png" alt="not found">
+                  </a>
+                  <a class="col">
+                    <img src="//api.mydoctorize.com/files/user/userdetails/99/50.png" alt="not found">
+                  </a>
                 </div>
               </div>
-            </div>
-          </li>
-          <li>
-            <div class="block-title">Citas Proximas</div>
-            <div data-slides-per-view="1.5" data-space-between="0" class="swiper-container swiper-init demo-swiper">
-              <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                  <div class="card card-outline home">
-                    <div class="rectangle turquoise"></div>
-                    <div class="card-content card-content-padding">
-                      <p class="title dark-blue">Cita</p>
-                      <p class="text dark-blue">Xavier Lopez</p>
-                      <p class="text2 dark-blue">Centro Hospitalario la Concepción</p>
-                      <p class="footer light-blue">08:00 - 21:00</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="card card-outline home">
-                    <div class="rectangle turquoise"></div>
-                    <div class="card-content card-content-padding">
-                      <p class="title dark-blue">Cita</p>
-                      <p class="text dark-blue">Xavier Lopez</p>
-                      <p class="text2 dark-blue">Centro Hospitalario la Concepción</p>
-                      <p class="footer light-blue">08:00 - 21:00</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="card card-outline home">
-                    <div class="rectangle turquoise"></div>
-                    <div class="card-content card-content-padding">
-                      <p class="title dark-blue">Cita</p>
-                      <p class="text dark-blue">Xavier Lopez</p>
-                      <p class="text2 dark-blue">Centro Hospitalario la Concepción</p>
-                      <p class="footer light-blue">08:00 - 21:00</p>
-                    </div>
-                  </div>
+            </li>
+            <li class="appointments">
+              <div class="block-title">Citas Proximas
+                <i class="icon material-icons">chevron_right</i>
+              </div>
+              <div data-slides-per-view="1.5" data-space-between="0" class="swiper-container swiper-init demo-swiper">
+                <div class="swiper-wrapper">
+
+
                 </div>
               </div>
-            </div>
-          </li>
-          <li>
-            <div class="block-title">Cobros</div>
-            <div data-slides-per-view="1.5" data-space-between="0" class="swiper-container swiper-init demo-swiper">
-              <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                  <div class="card card-outline home">
-                    <div class="rectangle yellow"></div>
-                    <div class="card-content card-content-padding">
-                      <p class="title dark-blue">Consulta</p>
-                      <p class="text dark-blue">Xavier Lopez</p>
-                      <p class="footer dark-blue">$400</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="card card-outline home">
-                    <div class="rectangle yellow"></div>
-                    <div class="card-content card-content-padding">
-                      <p class="title dark-blue">Consulta</p>
-                      <p class="text dark-blue">Xavier Lopez</p>
-                      <p class="footer dark-blue">$1200</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="card card-outline home">
-                    <div class="rectangle yellow"></div>
-                    <div class="card-content card-content-padding">
-                      <p class="title dark-blue">Consulta</p>
-                      <p class="text dark-blue">Xavier Lopez</p>
-                      <p class="footer dark-blue">$550</p>
-                    </div>
-                  </div>
-                </div>
+            </li>
+            <li class="payments">
+              <div class="block-title">Cobros
+                <i class="icon material-icons">chevron_right</i>
               </div>
-          </li>
-        </ul>
+              <div data-slides-per-view="1.5" data-space-between="0" class="swiper-container swiper-init demo-swiper">
+                <div class="swiper-wrapper">
+
+                  
+                </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -161,115 +104,67 @@
       pageInit: function (e, page) {
         var self = this;
         var app = self.$app;
+        var moment = require('moment');
+        moment.locale('es');
+        moment().format();
+        app.data.doctor = sessionStorage.getItem('doctor');
 
-        app.data.store.getItem('doctor').then(function (value) {
-          app.data.doctor = value;
-          $$(".navbar .profile").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
-        });
+        if (!(app.data.doctor == null || app.data.doctor == 'undefined' || app.data.doctor == '')) {
+          $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
+          $$('.tranparent .ajustes img').attr('src', app.data.url + '/' + app.data.doctor.photo + '100.png');
+        }
 
-        $$('.panel-open').click(function (e) {
-          app.data.store.getItem('doctor').then(function (value) {
-            app.data.doctor = value;
-            $$(".panel .name").text(app.data.doctor.name);
-            $$(".panel .mail").text(app.data.doctor.email);
-            $$(".panel .avatar").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
-          });
-          var panel = app.panel.create({
-            el: '.panel',
-          });
-          panel.open();
+        //consultar nombre y llenar
 
-          $$(".panel #personal-settings").click(function (e) {
-            panel.close();
-            app.methods.redirectTo('settings');
-          });
+        //consultar fotos de pacientes
+        for (let i = 0; i < $$('#home li.patients .row').children().length; i++) {
+          const element = $$('#home li.patients .row').children()[i];
+          console.log(element);
 
-          $$(".panel #log-out").click(function (params) {
-            panel.close();
-            app.data.store.clear();
-            app.methods.redirectTo('root');
-          });
+        }
 
-        });
+        //consultar citas
+        for (let i = 0; i < 3; i++) {
+          $$('#home li.appointments .swiper-wrapper').append(
+            '<div class="swiper-slide" id="">' +
+            '<div class="card card-outline home appointments">' +
+            '<div class="rectangle turquoise"></div>' +
+            '<div class="card-content card-content-padding">' +
+            '<p class="title dark-blue">Cita</p>' +
+            '<p class="text dark-blue">Javier Lopez</p>' +
+            '<p class="text2 dark-blue">Centro Hospitalario la Concepción</p>' +
+            '<div class="footer light-blue">' +
+            '<i class="icon material-icons">watch_later</i>' +
+            '<p>&nbsp;	08:00 - 21:00</p>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>'
+          );
 
-        $$('.dynamic-sheet').on('click', function () {
-          var dynamicSheet = app.sheet.create({
-            content: '<div class="sheet-modal">' +
-              '<div class="close-sheet">' +
-              '<img src="/static/images/cancel_24px.svg" alt="" class="close">' +
-              '</div>' +
-              '<div class="sheet-modal-inner">' +
-              '<div class="list">' +
-              '<ul>' +
-              '<li>' +
-              '<div class="row">' +
-              '<div class="col">' +
-              '<a href="#" data-view=".view-main" class="item-link list-button btn-simple consultorios">' +
-              '<i class="material-icons">local_hospital</i>' +
-              'Consultorios</a>' +
-              '</div>' +
-              '</div>' +
-              '</li>' +
-              '<li>' +
-              '<div class="row">' +
-              '<div class="col">' +
-              '<a href="#" data-view=".view-main" class="item-link list-button btn-simple asistentes">' +
-              '<i class="material-icons">headset_mic</i>' +
-              'Asistentes</a>' +
-              '</div>' +
-              '</div>' +
-              '</li>' +
-              '<li>' +
-              '<div class="row">' +
-              '<div class="col">' +
-              '<a href="#" data-view=".view-main" class="item-link list-button btn-simple cita">' +
-              '<i class="material-icons">event</i>' +
-              'Nueva cita</a>' +
-              '</div>' +
-              '</div>' +
-              '</li>' +
-              '<li>' +
-              '<div class="row">' +
-              '<div class="col">' +
-              '<a href="#" data-view=".view-main" class="item-link list-button btn-simple paciente">' +
-              '<i class="material-icons">person_add</i>' +
-              'Nuevo Paciente</a>' +
-              '</div>' +
-              '</div>' +
-              '</li>' +
-              '</ul>' +
-              '</div>' +
-              '</div>' +
-              '</div>',
-            on: {
-              open: function (sheet) {
-                console.log('Sheet open');
-              },
-              opened: function (sheet) {
-                $$('.sheet-modal .close').on('click', function () {
-                  dynamicSheet.close();
-                });
-                $$('.sheet-modal .consultorios').click(function () {
-                  dynamicSheet.close();
-                  app.methods.redirectTo('offices-show');
-                });
-                $$('.sheet-modal .asistentes').click(function () {
-                  dynamicSheet.close();
-                  app.methods.redirectTo('asistentes-invitar-01');
-                });
-                $$('.sheet-modal .cita').click(function () {
-                  dynamicSheet.close();
-                  app.methods.redirectTo('agendar-cita');
-                });
-                $$('.sheet-modal .paciente').click(function () {
-                  dynamicSheet.close();
-                  app.methods.redirectTo('nuevo-paciente');
-                });
-              },
-            }
-          });
-          dynamicSheet.open();
-        });
+        }
+
+        //consultar cobros
+        for (let i = 0; i < 3; i++) {
+          $$('#home li.payments .swiper-wrapper').append(
+            '<div class="swiper-slide" id="">' +
+            '<div class="card card-outline home payments">' +
+            '<div class="rectangle yellow"></div>' +
+            '<div class="card-content card-content-padding">' +
+            '<p class="title dark-blue">Consulta</p>' +
+            '<p class="text dark-blue">Xavier Lopez</p>' +
+            '<p class="cash dark-blue">$400</p>' +
+            '<div class="footer light-blue">' +
+            '<i class="icon material-icons">today</i>' +
+            '<p>&nbsp; 12 Ene 2020</p>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>'
+          );
+
+        }
+
       }
     }
   }

@@ -108,12 +108,12 @@
         var moment = require('moment');
         moment.locale('es');
         moment().format();
-        app.data.doctor = JSON.parse(sessionStorage.getItem('doctor'));
-
-        if (!(app.data.doctor == null || app.data.doctor == 'undefined' || app.data.doctor == '')) {
-          $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
-          $$('.transparent .ajustes img').attr('src', app.data.url + '/' + app.data.doctor.photo + '100.png');
-          $$('.background .name').text('Dr. '+ app.data.doctor.name);
+        var doctor = JSON.parse(sessionStorage.getItem('doctor'));
+        
+        if (doctor != null && doctor != 'undefined' && doctor != '') {
+          $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + doctor.photo + '200.png" alt="not found">');
+          $$('.transparent .ajustes img').attr('src', app.data.url + '/' + doctor.photo + '100.png');
+          $$('.background .name').text('Dr. '+ doctor.name);
         }
 
 

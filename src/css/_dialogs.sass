@@ -1,0 +1,42 @@
+.dialog
+    border-radius: 10px
+    &.delete
+        .dialog-inner
+            padding: 20px 20px 10px 20px
+            font: $text-2-card
+            color: $grey
+            text-align: center
+        .dialog-title
+            display: flex
+            justify-content: center
+            align-items: center
+            color: $red
+            i
+                font-size: 80px
+        .dialog-text
+            margin: 10px auto 7px auto
+            padding-bottom: 7px
+            border-bottom: 1px solid #E5E9F2
+            text-align: center
+            width: 95%
+            font: $title-2
+            font-weight: normal
+            color: $dark-blue
+        .dialog-buttons
+            display: flex
+            justify-content: center
+            margin-bottom: 20px
+            .dialog-button
+                border-radius: 20px
+                display: flex
+                align-items: center
+                color: $white
+                font: $Body-1
+                text-transform: none
+                padding-left: 20px   
+                padding-right: 10px
+                &.cancel
+                    background: $turquoise-2
+                &.delete
+                    background: $red
+                    margin-left: 10px

@@ -122,6 +122,19 @@ var app = new Framework7({
           return false;
       }
       return true;
+    },
+    cuteHide: function (el) {
+      el.animate({ opacity: '0' }, {
+        duration: 150,
+        complete: function () {
+          el.animate({ height: '0px' }, {
+            duration: 150,
+            complete: function () {
+              el.remove();
+            }
+          });
+        }
+      });
     }
   },
   // App routes
@@ -220,9 +233,9 @@ if ('serviceWorker' in navigator) {
       });
     });
 
-/*     swRegistration = reg;
-    Notification.requestPermission();
-    initializeUI(); */
+    /*     swRegistration = reg;
+        Notification.requestPermission();
+        initializeUI(); */
 
   }).catch(function (err) {
     // registration failed :(
@@ -242,7 +255,7 @@ if ('serviceWorker' in navigator) {
 //suscribe notifications
 
 /* function initializeUI() {
-  
+
   if (!isSubscribed) {
     subscribeUser();
   }

@@ -2,7 +2,7 @@
     <div class="page schedule" data-name="schedule" id="schedule">
 
         <!--Nav bar-->
-        <div class="navbar schedule" id="nav1">
+        <!-- <div class="navbar schedule" id="nav1">
             <div class="navbar-inner sliding schedule">
                 <div class="left">
                     <div class="fab fab-left-middle color-white profile panel-open">
@@ -25,8 +25,13 @@
                     </div>
                 </div>
             </div>
+        </div> -->
+        <div class="header schedule">
+            <div class="toolbar tabbar tabbar-scrollable toolbar-top" id='header-toolbar'>
+                <div class="toolbar-inner" id="header-toolbar-inner">
+                </div>
+            </div>
         </div>
-
 
         <!--tool bar-->
         <div class="toolbar tabbar tabbar-labels toolbar-bottom menu">
@@ -71,16 +76,18 @@
 
                 app.data.store.getItem('doctor').then(function (value) {
                     app.data.doctor = value;
-                    $$(".navbar .profile").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
+                    /* $$(".navbar .profile").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">'); */
                 });
 
                 app.preloader.show('blue');/* abre preloader */
+
+                app.preloader.hide();
                 /*
                     crea la subnavbar con los 30 dias a partir de hoy
                 */
                 z = moment(), today = moment(), y = moment(z).add(1, 'M'), i = 1;
                 while (z.isBefore(y)) {
-                    $$('#subnavtoolbar-inner').append(
+                    $$('#header-toolbar-inner').append(
                         '<a href="#tab-' + i + '" class="tab-link" id="D' + z.format("DD-MMMM") + '" data-date="' + moment(z).format("YYYY-MM-DD") + '">' +
                         '<p class="num">' + z.date() + ' </p>' +
                         '<p>' + monthNames[z.month()] + ' </p>' +
@@ -107,26 +114,27 @@
                 fillPage('#tab-1', moment().format("YYYY-MM-DD"));
 
                 /* llena la pagina a donde se le de click */
-                $$('#subnavtoolbar-inner .tab-link').click(function (e) {
+                $$('#header-toolbar-inner .tab-link').click(function (e) {
                     $$('.navbar').removeClass('navbar-hidden');
                     fillPage($$($$(this).attr('href')), $$(this).data("date"));
                 });
 
                 /* esconde la subnavbar y el icono de la toolbar cuando una carta se expande */
                 $$(document).on('card:open', function (e) {
-                    $$('.subnavbar').hide();
+                    $$('.header').hide();
                     $$('.add-circle').hide();
                     $$(e.srcElement).find('.card-header').addClass('header-turquoise');
 
                 });
                 /* regresa la subnavbar y el icono de la tool bar cuando la carta se comprime */
                 $$(document).on('card:close', function (e) {
-                    $$('.subnavbar').show();
+                    $$('.header').show();
                     $$('.add-circle').show();
                     $$(e.srcElement).find('.card-header').removeClass('header-turquoise');
                 });
 
-                $$('.panel-open').click(function (e) {
+                //usar para home
+                /* $$('.panel-open').click(function (e) {
                     app.data.store.getItem('doctor').then(function (value) {
                         app.data.doctor = value;
                         $$(".panel .name").text(app.data.doctor.name);
@@ -146,88 +154,7 @@
                         app.data.store.clear();
                         app.methods.redirectTo('root');
                     });
-                });
-
-                /* abre la lista de la toolbar */
-                $$('.dynamic-sheet').on('click', function () {
-                    var dynamicSheet = app.sheet.create({
-                        content: '<div class="sheet-modal">' +
-                            '<div class="close-sheet">' +
-                            '<img src="/static/images/cancel_24px.svg" alt="" class="close">' +
-                            '</div>' +
-                            '<div class="sheet-modal-inner">' +
-                            '<div class="list">' +
-                            '<ul>' +
-                            '<li>' +
-                            '<div class="row">' +
-                            '<div class="col">' +
-                            '<a href="#" data-view=".view-main" class="item-link list-button login-register-button consultorios">' +
-                            '<i class="material-icons">local_hospital</i>' +
-                            'Consultorios</a>' +
-                            '</div>' +
-                            '</div>' +
-                            '</li>' +
-                            '<li>' +
-                            '<div class="row">' +
-                            '<div class="col">' +
-                            '<a href="#" data-view=".view-main" class="item-link list-button login-register-button asistentes">' +
-                            '<i class="material-icons">headset_mic</i>' +
-                            'Asistentes</a>' +
-                            '</div>' +
-                            '</div>' +
-                            '</li>' +
-                            '<li>' +
-                            '<div class="row">' +
-                            '<div class="col">' +
-                            '<a href="#" data-view=".view-main" class="item-link list-button login-register-button cita">' +
-                            '<i class="material-icons">event</i>' +
-                            'Nueva cita</a>' +
-                            '</div>' +
-                            '</div>' +
-                            '</li>' +
-                            '<li>' +
-                            '<div class="row">' +
-                            '<div class="col">' +
-                            '<a href="#" data-view=".view-main" class="item-link list-button login-register-button paciente">' +
-                            '<i class="material-icons">person_add</i>' +
-                            'Nuevo Paciente</a>' +
-                            '</div>' +
-                            '</div>' +
-                            '</li>' +
-                            '</ul>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>',
-                        on: {
-                            open: function (sheet) {
-                                console.log('Sheet open');
-                            },
-                            opened: function (sheet) {
-                                /* cierra la lista antes de redireccionar */
-                                $$('.sheet-modal .close').on('click', function () {
-                                    dynamicSheet.close();
-                                });
-                                $$('.sheet-modal .consultorios').click(function () {
-                                    dynamicSheet.close();
-                                    app.methods.redirectTo('offices-show');
-                                });
-                                $$('.sheet-modal .asistentes').click(function () {
-                                    dynamicSheet.close();
-                                    app.methods.redirectTo('asistentes-invitar-01');
-                                });
-                                $$('.sheet-modal .cita').click(function () {
-                                    dynamicSheet.close();
-                                    app.methods.redirectTo('agendar-cita');
-                                });
-                                $$('.sheet-modal .paciente').click(function () {
-                                    dynamicSheet.close();
-                                    app.methods.redirectTo('nuevo-paciente');
-                                });
-                            },
-                        }
-                    });
-                    dynamicSheet.open();
-                });
+                }); */
 
                 /* funcion para llenar la pagina dinamicamente */
                 function fillPage(x, y) {

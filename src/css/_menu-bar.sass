@@ -27,7 +27,17 @@
         left: 50%
         transform: translateX(-50%)
         z-index: 1
-    &.toolbar-bottom::after
+        .back-white
+            height: 50px
+            width: 50px
+            background: white
+            position: absolute
+            z-index: -1
+            transform: translate(-50%, -50%)
+            top: 50%
+            left: 50%
+            border-radius: 50%
+    &.toolbar-bottom::after,&.toolbar-bottom::before
         display: none
 
 .sheet-modal

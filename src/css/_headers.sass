@@ -184,3 +184,44 @@
             margin-left: auto
             margin-right: auto
             color: $light-blue
+    &.schedule
+        background: transparent
+        padding-top: 10px
+        .toolbar
+            background: inherit
+            p
+                line-height: 17px
+                font-weight: 300
+                font-size: 12px
+                margin: 0px
+                color: $grey
+                &.num
+                    font-size: 16px
+                    line-height: 22px
+            .tab-link
+                width: 60px
+                height: 60px
+                &-highlight
+                    display: none
+                &-today
+                    width: 60px
+                    height: 60px
+                    border-radius: 50%
+                    border-color: $light-blue
+                    border-width: 2px
+                    border-style: solid
+                    p
+                        color: $light-blue
+                &-active
+                    width: 60px
+                    height: 60px
+                    border-radius: 50%
+                    background: radial-gradient(91.08px at 57.54% 104.51%, #00A1C5 0%, #2FCFBC 100%)
+                    p
+                        color: $white
+            .toolbar-inner
+                height: fit-content
+                padding-left: 15px
+                padding-right: 15px
+            &::after,&::before
+                content: none

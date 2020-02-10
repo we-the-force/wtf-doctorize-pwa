@@ -163,8 +163,15 @@
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
+
                 $$(".config #personal-settings").click(function (e) {
                     app.methods.redirectTo('settings');
+                });
+                $$(".config #offices-settings").click(function (e) {
+                    app.methods.redirectTo('offices-show');
+                });
+                $$(".config #assistants-settings").click(function (e) {
+                    app.methods.redirectTo('asistentes-invitar-01');
                 });
                 $$(".config #log-out").click(function (params) {
                     app.data.store.clear();

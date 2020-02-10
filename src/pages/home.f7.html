@@ -75,39 +75,8 @@
               </div>
               <div data-slides-per-view="1.5" data-space-between="0" class="swiper-container swiper-init demo-swiper">
                 <div class="swiper-wrapper">
-                  <div class="swiper-slide">
-                    <div class="card card-outline home">
-                      <div class="rectangle turquoise"></div>
-                      <div class="card-content card-content-padding">
-                        <p class="title dark-blue">Cita</p>
-                        <p class="text dark-blue">Xavier Lopez</p>
-                        <p class="text2 dark-blue">Centro Hospitalario la Concepción</p>
-                        <p class="footer light-blue">08:00 - 21:00</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div class="card card-outline home">
-                      <div class="rectangle turquoise"></div>
-                      <div class="card-content card-content-padding">
-                        <p class="title dark-blue">Cita</p>
-                        <p class="text dark-blue">Xavier Lopez</p>
-                        <p class="text2 dark-blue">Centro Hospitalario la Concepción</p>
-                        <p class="footer light-blue">08:00 - 21:00</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div class="card card-outline home">
-                      <div class="rectangle turquoise"></div>
-                      <div class="card-content card-content-padding">
-                        <p class="title dark-blue">Cita</p>
-                        <p class="text dark-blue">Xavier Lopez</p>
-                        <p class="text2 dark-blue">Centro Hospitalario la Concepción</p>
-                        <p class="footer light-blue">08:00 - 21:00</p>
-                      </div>
-                    </div>
-                  </div>
+
+
                 </div>
               </div>
             </li>
@@ -117,36 +86,8 @@
               </div>
               <div data-slides-per-view="1.5" data-space-between="0" class="swiper-container swiper-init demo-swiper">
                 <div class="swiper-wrapper">
-                  <div class="swiper-slide">
-                    <div class="card card-outline home">
-                      <div class="rectangle yellow"></div>
-                      <div class="card-content card-content-padding">
-                        <p class="title dark-blue">Consulta</p>
-                        <p class="text dark-blue">Xavier Lopez</p>
-                        <p class="footer dark-blue">$400</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div class="card card-outline home">
-                      <div class="rectangle yellow"></div>
-                      <div class="card-content card-content-padding">
-                        <p class="title dark-blue">Consulta</p>
-                        <p class="text dark-blue">Xavier Lopez</p>
-                        <p class="footer dark-blue">$1200</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div class="card card-outline home">
-                      <div class="rectangle yellow"></div>
-                      <div class="card-content card-content-padding">
-                        <p class="title dark-blue">Consulta</p>
-                        <p class="text dark-blue">Xavier Lopez</p>
-                        <p class="footer dark-blue">$550</p>
-                      </div>
-                    </div>
-                  </div>
+
+                  
                 </div>
             </li>
           </ul>
@@ -173,17 +114,56 @@
           $$('.tranparent .ajustes img').attr('src', app.data.url + '/' + app.data.doctor.photo + '100.png');
         }
 
+        //consultar nombre y llenar
+
         //consultar fotos de pacientes
         for (let i = 0; i < $$('#home li.patients .row').children().length; i++) {
           const element = $$('#home li.patients .row').children()[i];
           console.log(element);
-          
+
         }
 
         //consultar citas
-        
+        for (let i = 0; i < 3; i++) {
+          $$('#home li.appointments .swiper-wrapper').append(
+            '<div class="swiper-slide" id="">' +
+            '<div class="card card-outline home appointments">' +
+            '<div class="rectangle turquoise"></div>' +
+            '<div class="card-content card-content-padding">' +
+            '<p class="title dark-blue">Cita</p>' +
+            '<p class="text dark-blue">Javier Lopez</p>' +
+            '<p class="text2 dark-blue">Centro Hospitalario la Concepción</p>' +
+            '<div class="footer light-blue">' +
+            '<i class="icon material-icons">watch_later</i>' +
+            '<p>&nbsp;	08:00 - 21:00</p>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>'
+          );
+
+        }
 
         //consultar cobros
+        for (let i = 0; i < 3; i++) {
+          $$('#home li.payments .swiper-wrapper').append(
+            '<div class="swiper-slide" id="">' +
+            '<div class="card card-outline home payments">' +
+            '<div class="rectangle yellow"></div>' +
+            '<div class="card-content card-content-padding">' +
+            '<p class="title dark-blue">Consulta</p>' +
+            '<p class="text dark-blue">Xavier Lopez</p>' +
+            '<p class="cash dark-blue">$400</p>' +
+            '<div class="footer light-blue">' +
+            '<i class="icon material-icons">today</i>' +
+            '<p>&nbsp; 12 Ene 2020</p>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>'
+          );
+
+        }
 
       }
     }

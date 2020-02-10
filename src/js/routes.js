@@ -36,6 +36,8 @@ import DoctorHorarios from '../pages/doctor-horarios.f7.html';
 import DoctorHorariosSelect from '../pages/doctor-horarios-select.f7.html';
 import DoctorHorariosEdit from '../pages/doctor-horarios-edit.f7.html';
 import DoctorHorariosShow from '../pages/doctor-horarios-show.f7.html';
+import PagosHome from '../pages/pagos-home.f7.html';
+import Config from '../pages/ajustes.f7.html';
 
 var routes = [
 
@@ -43,6 +45,16 @@ var routes = [
         name: "root",
         path: '/',
         component: LoginPage,
+    },
+    {
+        name: "config",
+        path: '/doctor/configuration',
+        component: Config,
+    },
+    {
+        name: "pagos-home",
+        path: '/doctor/pagos',
+        component: PagosHome,
     },
     {
         name: "doctor-horarios",

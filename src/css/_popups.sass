@@ -126,7 +126,6 @@
             &:disabled
                 filter: saturate(0)
 
-
 .popover
     width: 170px
     border-radius: 15px
@@ -146,3 +145,54 @@
         text-align: left
         &:after
             content: none
+    &.popover-menu
+        width: auto
+        border-radius: 8px
+        padding: 17px 6px
+        left: 50% !important
+        transform: translate(-50%,-38%) !important
+        .popover-angle
+            width: 26px
+            height: 26px
+            position: absolute
+            left: 50% !important
+            transform: translateX(-50%)
+            top: 100%
+            z-index: 100
+            overflow: hidden
+            &::after
+                content: ''
+                background: var(--f7-popover-bg-color)
+                width: 26px
+                height: 26px
+                left: 0
+                top: -19px
+                position: absolute
+                border-radius: 3px
+                transform: rotate(45deg)
+        .popover-inner
+            display: flex
+            .add-block
+                width: 70px
+                height: 80px
+                border-radius: 8px
+                margin: 0px 6px
+                display: flex
+                align-items: center
+                justify-content: center
+                flex-direction: column
+                i,p
+                    color: #ffffff
+                i
+                    font-size: 34px
+                p
+                    font: $title-card
+                    font-weight: normal
+                    margin: 0px
+                    margin-top: 5px
+                &.patient
+                    background: $light-blue
+                &.appointment
+                    background: $turquoise-2
+                &.pay
+                    background: #FDBC5D

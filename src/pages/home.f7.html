@@ -159,7 +159,9 @@
           let today = moment();
           console.log(today.format('x'));
           let cards = 0;
-          Object.values(e).forEach(element => {
+          console.log(Object.values(e));
+          
+          e.forEach(element => {
             if (today.isBefore(moment(element.date)) && cards < 10) {
               $$('#home li.appointments .swiper-wrapper').append(
                 '<div class="swiper-slide" id="id_' + element.id + '">' +

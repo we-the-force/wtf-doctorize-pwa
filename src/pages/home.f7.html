@@ -123,41 +123,8 @@
 
         }
 
-        /*         var obj = [
-                  {
-                    "id": 53,
-                    "email": "about@wetheforce.com",
-                    "name": "Alejandro",
-                    "phone": "1212121212",
-                    "date": 1581364800000,
-                    "doctorId": 99,
-                    "officeId": 59,
-                    "patientId": null
-                  },
-                  {
-                    "id": 54,
-                    "email": "qwer@qwer.com",
-                    "name": "Alejandro",
-                    "phone": "2345234567",
-                    "date": 1581466600000,
-                    "doctorId": 99,
-                    "officeId": 59,
-                    "patientId": null
-                  },
-                  {
-                    "id": 55,
-                    "email": "aledeleon222@hotmail.com",
-                    "name": "Alejandro",
-                    "phone": "1111111111",
-                    "date": 1581484600000,
-                    "doctorId": 99,
-                    "officeId": 59,
-                    "patientId": null
-                  }
-                ] */
         app.request.get(app.data.url + '/doctors/' + doctor.id + '/appointments', function (e) {
           let today = moment();
-          console.log(today.format('x'));
           let cards = 0;
           var x = JSON.parse(e);
           
@@ -184,37 +151,8 @@
           });
         });
 
-        /*  app.request.get(app.data.url + '/doctors/' + doctor.id + '/appointments', function (e) {
-           let today = moment();
-           console.log(today.format());
-           let cards = 0;
-  
-           console.log(e);
-           for (const element of e) {
-             
-             if (today.isBefore(moment(element.date)) && cards < 10) {
-               $$('#home li.appointments .swiper-wrapper').append(
-                 '<div class="swiper-slide" id="id_' + element.id + '">' +
-                 '<div class="card card-outline home appointments">' +
-                 '<div class="rectangle turquoise"></div>' +
-                 '<div class="card-content card-content-padding">' +
-                 '<p class="title dark-blue">Cita</p>' +
-                 '<p class="text dark-blue">' + element.name + '</p>' +
-                 '<p class="text2 dark-blue">Centro Hospitalario la Concepción</p>' +
-                 '<div class="footer light-blue">' +
-                 '<i class="icon material-icons">watch_later</i>' +
-                 '<p>&nbsp;	08:00 - 21:00</p>' +
-                 '</div>' +
-                 '</div>' +
-                 '</div>' +
-                 '</div>'
-               );
-               cards ++;
-             }
-           }
-         }); */
         //consultar citas
-        /* for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 3; i++) {
           $$('#home li.appointments .swiper-wrapper').append(
             '<div class="swiper-slide" id="">' +
             '<div class="card card-outline home appointments">' +
@@ -232,7 +170,7 @@
             '</div>'
           );
 
-        } */
+        }
 
         //consultar cobros
         for (let i = 0; i < 3; i++) {

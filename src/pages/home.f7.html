@@ -35,7 +35,7 @@
     <div class="page-content login-screen-content">
       <div class="rectangle transparent">
         <a class="ajustes" href="/doctor/configuration">
-          <img src="//api.mydoctorize.com/files/user/userdetails/99/100.png" alt="not found">
+          <img src="" alt="not found">
           <i class="icon material-icons">settings</i>
         </a>
       </div>
@@ -108,14 +108,14 @@
         var moment = require('moment');
         moment.locale('es');
         moment().format();
-        app.data.doctor = sessionStorage.getItem('doctor');
+        app.data.doctor = JSON.parse(sessionStorage.getItem('doctor'));
 
         if (!(app.data.doctor == null || app.data.doctor == 'undefined' || app.data.doctor == '')) {
           $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
-          $$('.tranparent .ajustes img').attr('src', app.data.url + '/' + app.data.doctor.photo + '100.png');
+          $$('.transparent .ajustes img').attr('src', app.data.url + '/' + app.data.doctor.photo + '100.png');
+          $$('.background .name').text('Dr. '+ app.data.doctor.name);
         }
 
-        //consultar nombre y llenar
 
         //consultar fotos de pacientes
         for (let i = 0; i < $$('#home li.patients .row').children().length; i++) {

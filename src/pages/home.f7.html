@@ -127,10 +127,10 @@
           let today = moment();
           let cards = 0;
           var x = JSON.parse(e);
-          
+          var swiper = app.swiper.get('.appointments .swiper-container');
           x.forEach(element => {
             if (today.isBefore(moment(element.date)) && cards < 10) {
-              $$('#home li.appointments .swiper-wrapper').append(
+              swiper.appendSlide(
                 '<div class="swiper-slide" id="id_' + element.id + '">' +
                 '<div class="card card-outline home appointments">' +
                 '<div class="rectangle turquoise"></div>' +

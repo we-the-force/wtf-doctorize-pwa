@@ -82,8 +82,8 @@
 @import assistants
 @import panel
 @import home
-@import landing
 @import docHorarios
+@import landing
 @import popups
 @import dialogs
 @import pagos
@@ -95,6 +95,12 @@
     --f7-input-invalid-border-color: #ff0000
     .item-input-invalid
         color: #ff0000
+    .item-input-wrap::after,.item-inner::after 
+        content: none
+    #schedule
+        li.item-divider::before
+            content: none
+
 .md
     .popover-menu
         left: 50% !important

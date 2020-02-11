@@ -55,6 +55,20 @@
                     </li>
                     <li>
                         <div class="row">
+                            <div class="card card-outline elevation-3 settings" id="horarios-settings">
+                                <div class="rectangle light-blue"></div>
+                                <i class="material-icons icon light-blue">timelapse</i>
+                                <div class="card-content card-content-padding">
+                                    <p class="settings-name light-blue">Horarios</p>
+                                </div>
+                                <div class="link arrow">
+                                    <i class="material-icons light-blue">chevron_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row">
                             <div class="card card-outline elevation-3 settings" id="cash-settings">
                                 <div class="rectangle light-blue"></div>
                                 <i class="material-icons icon light-blue">account_balance</i>
@@ -172,6 +186,9 @@
                 });
                 $$(".config #assistants-settings").click(function (e) {
                     app.methods.redirectTo('asistentes-invitar-01');
+                });
+                $$(".config #horarios-settings").click(function (e) {
+                    app.methods.redirectTo('doctor-horarios');
                 });
                 $$(".config #log-out").click(function (params) {
                     app.data.store.clear();

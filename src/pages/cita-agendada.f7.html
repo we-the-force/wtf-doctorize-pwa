@@ -1,58 +1,45 @@
 <template>
-    <div class="page back-blue" data-name="asistentes-confirmar">
-        <div class="page-content login-screen-content center btns">
-            <div class="list" style="margin-bottom: 0px" >
-                <ul>
-                    <li>
-                        <div class="row">
-                            <div class="col-20"></div>
-                            <div class="col-60">
-                                <img src="/static/images/done.svg" alt="">
-                            </div>
-                            <div class="col-20"></div>
-                        </div>
-                    </li>
-                </ul>
+    <div class="page back-blue confirm" data-name="asistentes-confirmar">
+        <div class="page-content login-screen-content center">
+            <div class="icon">
+                <img src="/static/images/done.svg" alt="">
+                <div class="screen-title header-white">
+                    <div class="list" style="margin: 0px">
+                        <ul>
+                            <li>
+                                <div class="row">
+                                    <div class="col-15"></div>
+                                    <div class="col-70">
+                                        <h1>Se agendó la consulta en el calendario</h2>
+                                    </div>
+                                    <div class="col-15"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="row">
+                                    <div class="col-10"></div>
+                                    <div class="col-80">
+                                        <p>
+                                            El paciente recibió un correo con la fecha, hora y lugar de la consulta.
+                                        </p>
+                                    </div>
+                                    <div class="col-10"></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="screen-title header-white" >
-                <div class="list" style="margin: 0px">
-                    <ul>
-                        <li>
-                            <div class="row">
-                                <div class="col-15"></div>
-                                <div class="col-70">
-                                    <h1>Se agendó la consulta en el calendario</h2>
-                                </div>
-                                <div class="col-15"></div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row">
-                                <div class="col-10"></div>
-                                <div class="col-80">
-                                    <p>
-                                        El paciente recibió un correo con la fecha, hora y lugar de la consulta.
-                                    </p>
-                                </div>
-                                <div class="col-10"></div>
-                            </div>
-                        </li>
-                    </ul>
+            <div class="btn">
+                <div class="row">
+                    <a href="/home" class="item-link list-button btn-rounded center white">
+                        <p>Aceptar </p>
+                        <i class="material-icons">done</i>
+                    </a>
                 </div>
             </div>
         </div>
-        <div class="list buttons">
-            <ul>
-                <li>
-                    <div class="row">
-                        <a href="/home" class="item-link list-button btn-rounded center white">
-                            <p>Aceptar </p>
-                            <i class="material-icons">done</i>
-                        </a>
-                    </div>
-                </li>
-            </ul>
-        </div>
+
     </div>
 </template>
 <script>

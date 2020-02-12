@@ -19,6 +19,7 @@
                 </a>
             </div>
             <a class="add-circle popover-open" data-popover=".popover-menu">
+                <div class="back-white"></div>
                 <img src="/static/images/add_circle_24px_v2.svg" class="dynamic-sheet" alt="">
             </a>
         </div>
@@ -36,15 +37,24 @@
                 <div class="toolbar-inner">
                     <a href="#tab-1" class="tab-link tab-link-active">Recibidos</a>
                     <a href="#tab-2" class="tab-link">Pendientes</a>
-                    <a class="tab-link">
-                        <select>
-                            <option value="All" selected>Todo</option>
-                            <option value="Ten">Últimos diez</option>
-                            <option value="Month">Mes actual</option>
-                            <option value="LastMonth">Mes anterior</option>
-                        </select>
-                    </a>
+
                 </div>
+                <div class="styled-select">
+                    <select name="sel">
+                        <option value="All" selected>Todo</option>
+                        <option value="Ten">Últimos diez</option>
+                        <option value="Month">Mes actual</option>
+                        <option value="LastMonth">Mes anterior</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="TotalIncome">$100,899.00</div>
+            <p class="labelIncome">Total de ingresos</p>
+            <div class="labels">
+                <p>nombre</p>
+                <p>monto</p>
+                <p>concepto</p>
             </div>
         </div>
         <div class="page-content">
@@ -89,8 +99,11 @@
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
 
-
+                if (doctor != null && doctor != 'undefined' && doctor != '') {
+                    $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + doctor.photo + '50.png" alt="not found">');
+                }
             }
         }
     }

@@ -35,8 +35,8 @@
 
             <div class="toolbar tabbar toolbar-top">
                 <div class="toolbar-inner">
-                    <a href="#tab-1" class="tab-link tab-link-active">Recibidos</a>
-                    <a href="#tab-2" class="tab-link">Pendientes</a>
+                    <a href="#recibidos" id="recibidos_tab" class="tab-link tab-link-active">Recibidos</a>
+                    <a href="#pendientes" id="pendientes_tab" class="tab-link">Pendientes</a>
 
                 </div>
                 <div class="styled-select">
@@ -58,7 +58,7 @@
             </div>
         </div>
         <div class="tabs">
-            <div class="page-content tab tab-active" id="tab-1">
+            <div class="page-content tab tab-active" id="recibidos">
                 <div class="divider">
                     <div class="monthYear">
                         <p class="mon">ENE</p>
@@ -86,89 +86,265 @@
                         </div>
                     </div>
                 </div>
-                <p>Atque quis totam repellendus omnis alias magnam corrupti, possimus aspernatur perspiciatis quae
-                    provident
-                    consequatur minima doloremque blanditiis nihil maxime ducimus earum autem. Magni animi blanditiis
-                    similique iusto, repellat sed quisquam!</p>
-                <p>Atque quis totam repellendus omnis alias magnam corrupti, possimus aspernatur perspiciatis quae
-                    provident
-                    consequatur minima doloremque blanditiis nihil maxime ducimus earum autem. Magni animi blanditiis
-                    similique iusto, repellat sed quisquam!</p>
-                <p>Atque quis totam repellendus omnis alias magnam corrupti, possimus aspernatur perspiciatis quae
-                    provident
-                    consequatur minima doloremque blanditiis nihil maxime ducimus earum autem. Magni animi blanditiis
-                    similique iusto, repellat sed quisquam!</p>
-                <p>Atque quis totam repellendus omnis alias magnam corrupti, possimus aspernatur perspiciatis quae
-                    provident
-                    consequatur minima doloremque blanditiis nihil maxime ducimus earum autem. Magni animi blanditiis
-                    similique iusto, repellat sed quisquam!</p>
-                <p>Atque quis totam repellendus omnis alias magnam corrupti, possimus aspernatur perspiciatis quae
-                    provident
-                    consequatur minima doloremque blanditiis nihil maxime ducimus earum autem. Magni animi blanditiis
-                    similique iusto, repellat sed quisquam!</p>
-                <p>Atque quis totam repellendus omnis alias magnam corrupti, possimus aspernatur perspiciatis quae
-                    provident
-                    consequatur minima doloremque blanditiis nihil maxime ducimus earum autem. Magni animi blanditiis
-                    similique iusto, repellat sed quisquam!</p>
-                <p>Atque quis totam repellendus omnis alias magnam corrupti, possimus aspernatur perspiciatis quae
-                    provident
-                    consequatur minima doloremque blanditiis nihil maxime ducimus earum autem. Magni animi blanditiis
-                    similique iusto, repellat sed quisquam!</p>
-                <p>Atque quis totam repellendus omnis alias magnam corrupti, possimus aspernatur perspiciatis quae
-                    provident
-                    consequatur minima doloremque blanditiis nihil maxime ducimus earum autem. Magni animi blanditiis
-                    similique iusto, repellat sed quisquam!</p>
-                <p>Atque quis totam repellendus omnis alias magnam corrupti, possimus aspernatur perspiciatis quae
-                    provident
-                    consequatur minima doloremque blanditiis nihil maxime ducimus earum autem. Magni animi blanditiis
-                    similique iusto, repellat sed quisquam!</p>
-                <p>Atque quis totam repellendus omnis alias magnam corrupti, possimus aspernatur perspiciatis quae
-                    provident
-                    consequatur minima doloremque blanditiis nihil maxime ducimus earum autem. Magni animi blanditiis
-                    similique iusto, repellat sed quisquam!</p>
+                <div class="divider">
+                    <div class="monthYear">
+                        <p class="mon">ENE</p>
+                        <p class="year">2020</p>
+                    </div>
+                    <div class="line">
+                        <hr>
+                    </div>
+                    <div class="day">
+                        18
+                    </div>
+                </div>
+                <div class="card card-outline pagos">
+                    <div class="rectangle yellow-2"></div>
+                    <div class="card-content card-content-padding">
+                        <div class="name">William Alvarez</div>
+                        <hr>
+                        <div class="cash">
+                            <p class="money">$800.00</p>
+                            <p class="no">Pago 1 / 1</p>
+                        </div>
+                        <hr>
+                        <div class="concept">Otro
+                            <i class="icon material-icons">chevron_right</i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-outline pagos">
+                    <div class="rectangle yellow-2"></div>
+                    <div class="card-content card-content-padding">
+                        <div class="name">Leonardo Rodrigo Gonzalez</div>
+                        <hr>
+                        <div class="cash">
+                            <p class="money">$12,222.23</p>
+                            <p class="no">Pago 2 / 9</p>
+                        </div>
+                        <hr>
+                        <div class="concept">Cirugia
+                            <i class="icon material-icons">chevron_right</i>
+                        </div>
+                    </div>
+                </div>
+                <div class="divider">
+                    <div class="monthYear">
+                        <p class="mon">ENE</p>
+                        <p class="year">2020</p>
+                    </div>
+                    <div class="line">
+                        <hr>
+                    </div>
+                    <div class="day">
+                        15
+                    </div>
+                </div>
+
+                <div class="card card-outline pagos">
+                    <div class="rectangle yellow-2"></div>
+                    <div class="card-content card-content-padding">
+                        <div class="name">Isabella Del Campo De La Rosa</div>
+                        <hr>
+                        <div class="cash">
+                            <p class="money">$500.00</p>
+                            <p class="no">Pago 1 / 1</p>
+                        </div>
+                        <hr>
+                        <div class="concept">Consulta
+                            <i class="icon material-icons">chevron_right</i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-outline pagos">
+                    <div class="rectangle yellow-2"></div>
+                    <div class="card-content card-content-padding">
+                        <div class="name">Rosa Catalina</div>
+                        <hr>
+                        <div class="cash">
+                            <p class="money">$600.00</p>
+                            <p class="no">Pago 1 / 1</p>
+                        </div>
+                        <hr>
+                        <div class="concept">Consulta
+                            <i class="icon material-icons">chevron_right</i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider">
+                    <div class="monthYear">
+                        <p class="mon">ENE</p>
+                        <p class="year">2020</p>
+                    </div>
+                    <div class="line">
+                        <hr>
+                    </div>
+                    <div class="day">
+                        11
+                    </div>
+                </div>
+
+                <div class="card card-outline pagos">
+                    <div class="rectangle yellow-2"></div>
+                    <div class="card-content card-content-padding">
+                        <div class="name">David Mendoza</div>
+                        <hr>
+                        <div class="cash">
+                            <p class="money">$600.00</p>
+                            <p class="no">Pago 1 / 1</p>
+                        </div>
+                        <hr>
+                        <div class="concept">Consulta
+                            <i class="icon material-icons">chevron_right</i>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="page-content tab" id="tab-2">
-                2
-                <p>Atque quis totam repellendus omnis alias magnam corrupti, possimus aspernatur perspiciatis quae
-                    provident
-                    consequatur minima doloremque blanditiis nihil maxime ducimus earum autem. Magni animi blanditiis
-                    similique iusto, repellat sed quisquam!</p>
-                <p>Atque quis totam repellendus omnis alias magnam corrupti, possimus aspernatur perspiciatis quae
-                    provident
-                    consequatur minima doloremque blanditiis nihil maxime ducimus earum autem. Magni animi blanditiis
-                    similique iusto, repellat sed quisquam!</p>
-                <p>Atque quis totam repellendus omnis alias magnam corrupti, possimus aspernatur perspiciatis quae
-                    provident
-                    consequatur minima doloremque blanditiis nihil maxime ducimus earum autem. Magni animi blanditiis
-                    similique iusto, repellat sed quisquam!</p>
-                <p>Atque quis totam repellendus omnis alias magnam corrupti, possimus aspernatur perspiciatis quae
-                    provident
-                    consequatur minima doloremque blanditiis nihil maxime ducimus earum autem. Magni animi blanditiis
-                    similique iusto, repellat sed quisquam!</p>
-                <p>Atque quis totam repellendus omnis alias magnam corrupti, possimus aspernatur perspiciatis quae
-                    provident
-                    consequatur minima doloremque blanditiis nihil maxime ducimus earum autem. Magni animi blanditiis
-                    similique iusto, repellat sed quisquam!</p>
-                <p>Atque quis totam repellendus omnis alias magnam corrupti, possimus aspernatur perspiciatis quae
-                    provident
-                    consequatur minima doloremque blanditiis nihil maxime ducimus earum autem. Magni animi blanditiis
-                    similique iusto, repellat sed quisquam!</p>
-                <p>Atque quis totam repellendus omnis alias magnam corrupti, possimus aspernatur perspiciatis quae
-                    provident
-                    consequatur minima doloremque blanditiis nihil maxime ducimus earum autem. Magni animi blanditiis
-                    similique iusto, repellat sed quisquam!</p>
-                <p>Atque quis totam repellendus omnis alias magnam corrupti, possimus aspernatur perspiciatis quae
-                    provident
-                    consequatur minima doloremque blanditiis nihil maxime ducimus earum autem. Magni animi blanditiis
-                    similique iusto, repellat sed quisquam!</p>
-                <p>Atque quis totam repellendus omnis alias magnam corrupti, possimus aspernatur perspiciatis quae
-                    provident
-                    consequatur minima doloremque blanditiis nihil maxime ducimus earum autem. Magni animi blanditiis
-                    similique iusto, repellat sed quisquam!</p>
-                <p>Atque quis totam repellendus omnis alias magnam corrupti, possimus aspernatur perspiciatis quae
-                    provident
-                    consequatur minima doloremque blanditiis nihil maxime ducimus earum autem. Magni animi blanditiis
-                    similique iusto, repellat sed quisquam!</p>
+            <div class="page-content tab" id="pendientes">
+                <div class="divider">
+                    <div class="monthYear">
+                        <p class="mon">ENE</p>
+                        <p class="year">2020</p>
+                    </div>
+                    <div class="line">
+                        <hr>
+                    </div>
+                    <div class="day">
+                        21
+                    </div>
+                </div>
+                <div class="card card-outline pagos">
+                    <div class="rectangle red"></div>
+                    <div class="card-content card-content-padding">
+                        <div class="name">Alejandro De Leon Lopez</div>
+                        <hr>
+                        <div class="cash">
+                            <p class="money red">$300.00</p>
+                            <p class="no">Pago 1 / 1</p>
+                        </div>
+                        <hr>
+                        <div class="concept">Consulta
+                            <i class="icon material-icons">chevron_right</i>
+                        </div>
+                    </div>
+                </div>
+                <div class="divider">
+                    <div class="monthYear">
+                        <p class="mon">ENE</p>
+                        <p class="year">2020</p>
+                    </div>
+                    <div class="line">
+                        <hr>
+                    </div>
+                    <div class="day">
+                        18
+                    </div>
+                </div>
+                <div class="card card-outline pagos">
+                    <div class="rectangle red"></div>
+                    <div class="card-content card-content-padding">
+                        <div class="name">William Alvarez</div>
+                        <hr>
+                        <div class="cash">
+                            <p class="money red">$800.00</p>
+                            <p class="no">Pago 1 / 1</p>
+                        </div>
+                        <hr>
+                        <div class="concept">Otro
+                            <i class="icon material-icons">chevron_right</i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-outline pagos">
+                    <div class="rectangle red"></div>
+                    <div class="card-content card-content-padding">
+                        <div class="name">Leonardo Rodrigo Gonzalez</div>
+                        <hr>
+                        <div class="cash">
+                            <p class="money red">$120,500.00</p>
+                            <p class="no">Pago 3 / 9</p>
+                        </div>
+                        <hr>
+                        <div class="concept">Cirugia
+                            <i class="icon material-icons">chevron_right</i>
+                        </div>
+                    </div>
+                </div>
+                <div class="divider">
+                    <div class="monthYear">
+                        <p class="mon">ENE</p>
+                        <p class="year">2020</p>
+                    </div>
+                    <div class="line">
+                        <hr>
+                    </div>
+                    <div class="day">
+                        15
+                    </div>
+                </div>
+
+                <div class="card card-outline pagos">
+                    <div class="rectangle red"></div>
+                    <div class="card-content card-content-padding">
+                        <div class="name">Isabella Del Campo De La Rosa</div>
+                        <hr>
+                        <div class="cash">
+                            <p class="money red">$500.00</p>
+                            <p class="no">Pago 1 / 1</p>
+                        </div>
+                        <hr>
+                        <div class="concept">Consulta
+                            <i class="icon material-icons">chevron_right</i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-outline pagos">
+                    <div class="rectangle red"></div>
+                    <div class="card-content card-content-padding">
+                        <div class="name">Rosa Catalina</div>
+                        <hr>
+                        <div class="cash">
+                            <p class="money red">$600.00</p>
+                            <p class="no">Pago 1 / 1</p>
+                        </div>
+                        <hr>
+                        <div class="concept">Consulta
+                            <i class="icon material-icons">chevron_right</i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider">
+                    <div class="monthYear">
+                        <p class="mon">ENE</p>
+                        <p class="year">2020</p>
+                    </div>
+                    <div class="line">
+                        <hr>
+                    </div>
+                    <div class="day">
+                        11
+                    </div>
+                </div>
+
+                <div class="card card-outline pagos">
+                    <div class="rectangle red"></div>
+                    <div class="card-content card-content-padding">
+                        <div class="name">David Mendoza</div>
+                        <hr>
+                        <div class="cash">
+                            <p class="money red">$600.00</p>
+                            <p class="no">Pago 1 / 1</p>
+                        </div>
+                        <hr>
+                        <div class="concept">Consulta
+                            <i class="icon material-icons">chevron_right</i>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -185,6 +361,32 @@
                 if (doctor != null && doctor != 'undefined' && doctor != '') {
                     $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + doctor.photo + '50.png" alt="not found">');
                 }
+                //llenar pagina al entrar
+
+                $$('.header .toolbar .tab-link').click(function (x) {
+                    let tab = $$(this);
+                    if(tab.attr('id') == 'recibidos_tab'){
+                        //llenar pagina
+                        $$('.header .TotalIncome').text('$100,899.00');
+                        $$('.header .TotalIncome').toggleClass('light-blue');
+                        $$('.header .labelIncome').text('Total de ingresos');
+                    }else if(tab.attr('id') == 'pendientes_tab'){
+                        //llenar pagina
+                        $$('.header .TotalIncome').text('$30,899.00');
+                        $$('.header .TotalIncome').toggleClass('light-blue');
+                        $$('.header .labelIncome').text('Total pendientes');
+                    }
+                });
+
+                $$('#pagos-home .card.pagos').click(function (x) {
+                    let card = $$(this);
+                    console.log('card clicked redirect to details');
+                    if(card.parent().attr('id') == 'recibidos'){
+                        console.log('guardar varibale de recibidos');
+                    }else if(card.parent().attr('id') == 'pendientes'){
+                        console.log('guardar varibale de pendientes');
+                    }
+                });
             }
         }
     }

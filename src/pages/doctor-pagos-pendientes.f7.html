@@ -1,12 +1,12 @@
 <template>
-    <div class="page" id="doctor-agregar-pago">
+    <div class="page" id="doctor-pagos-pendientes">
         <div class="page-content">
             <div class="header">
                 <div class="addPay">
                     <a class="back">
                         <i class="material-icons">chevron_left</i>
                     </a>
-                    <p class="title1">Nuevo pago</p>
+                    <p class="title1">Pagos pendientes</p>
                 </div>
             </div>
             <div class="list">
@@ -66,34 +66,6 @@
                     </li>
                 </ul>
             </div>
-            <div class="container">
-                <div class="btn-2">
-                    <a href="">
-                        <p>Siguiente </p>
-                        <i class="material-icons white">chevron_right</i>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="popover popover-pay">
-            <div class="popover-inner">
-                <div class="list">
-                    <ul>
-                        <li><a class="list-button item-link transfer popover-close" href="#">Tranferencia
-                                electronica</a></li>
-                        <hr>
-                        <li><a class="list-button item-link cash popover-close" href="#">Efectivo</a></li>
-                        <hr>
-                        <li><a class="list-button item-link credit_debit popover-close" href="#">Tarjeta de Credito /
-                                Debito</a></li>
-                        <hr>
-                        <li><a class="list-button item-link bank popover-close" href="#">Ingreso Bancario</a></li>
-                        <hr>
-                        <li><a class="list-button item-link light-blue popover-close" href="#">Agregar Metodo</a></li>
-                    </ul>
-                </div>
-            </div>
         </div>
     </div>
 </template>
@@ -103,31 +75,7 @@
     export default {
         on: {
             pageInit: function (e, page) {
-                var self = this;
-                var app = self.$app;
-                //checar
 
-                $$('.popover-pay a').click(function (x) {
-                    let row = $$(this);
-                    row.parent().parent().find('.active').removeClass('active');
-                    row.addClass('active');
-                    $$('#doctor-agregar-pago #type .card-content .data .text').text(row.text());
-                    //checar 
-                });
-
-                $$('.card#pay').click(function (x) {
-                    console.log('redirect pay');
-                    app.methods.redirectTo('doctor-pagos-pendientes');
-                });
-
-                $$('.card#patient').click(function (x) {
-                    console.log('redirect patient');
-                });
-
-                $$('.container .btn-2').click(function (x) {
-                    console.log('next');
-
-                })
             }
         }
     }

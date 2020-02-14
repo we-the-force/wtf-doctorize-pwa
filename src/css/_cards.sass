@@ -482,6 +482,34 @@
                     color: $light-blue
                 a
                     display: flex
+        &.pend
+            align-items: flex-start
+            height: 115px
+            --f7-card-margin-vertical: 20px
+            .card-content
+                height: 100%
+                padding: 0px
+                margin: 0% 0% 0% 5%
+            .data
+                color: $dark-blue
+                flex-grow: 1
+                padding-right: 3%
+                .title
+                    font: $Body-4
+                    line-height: 20px
+                .text,.date
+                    font: $text-2-card
+                .date
+                    text-transform: uppercase
+                    position: absolute
+                    bottom: calc( 3% + 5px )
+            i
+                margin-left: 10px
+                margin-right: 15px
+                color: $turquoise-2
+            i,.data
+                padding-top: 3%
+                padding-bottom: 3%
 .card-backdrop
     z-index: 0
 .card-expandable.card-opened .card-opened-fade-out

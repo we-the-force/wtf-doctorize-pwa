@@ -3,7 +3,7 @@
         <div class="page-content">
             <div class="header">
                 <div class="addPay">
-                    <a class="back">
+                    <a href="/doctor/pagos">
                         <i class="material-icons">chevron_left</i>
                     </a>
                     <p class="title1">Nuevo pago</p>
@@ -106,6 +106,10 @@
                 var self = this;
                 var app = self.$app;
                 //checar
+                app.data.store.getItem('pago-pend').then(function (value) {
+                    $$('#doctor-agregar-pago #pay .card-content .data .text').text(value);
+                    //check
+                });
 
                 $$('.popover-pay a').click(function (x) {
                     let row = $$(this);
@@ -125,9 +129,12 @@
                 });
 
                 $$('.container .btn-2').click(function (x) {
-                    console.log('next');
-
+                    app.methods.redirectTo('doctor-agregar-pago-info');
                 })
+
+                $$('#doctor-agregar-pago .header a').click(function (val) {
+                    app.data.store.clear();
+                });
             }
         }
     }

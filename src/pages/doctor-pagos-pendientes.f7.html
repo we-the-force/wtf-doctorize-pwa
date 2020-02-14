@@ -12,55 +12,47 @@
             <div class="list">
                 <ul>
                     <li>
-                        <div class="card card-outline pagos add" id="patient">
-                            <div class="rectangle light-blue"></div>
+                        <div class="card card-outline pagos pend" id="">
+                            <div class="rectangle turquoise"></div>
                             <div class="card-content card-content-padding">
-                                <i class="material-icons light-blue">
-                                    person
+                                <i class="material-icons">
+                                    history
                                 </i>
                                 <div class="data">
-                                    <p class="light-blue">Paciente</p>
-                                    <p class="text"></p>
+                                    <p class="dark-blue title">Consulta</p>
+                                    <p class="text">Seguimiento de cirugía 02</p>
+                                    <p class="date"> 18/ene/2020</p>
                                 </div>
-                                <i class="material-icons light-blue">
-                                    chevron_right
-                                </i>
                             </div>
                         </div>
                     </li>
                     <li>
-                        <div class="card card-outline pagos add" id="pay">
+                        <div class="card card-outline pagos pend" id="">
+                            <div class="rectangle turquoise"></div>
+                            <div class="card-content card-content-padding">
+                                <i class="material-icons">
+                                    history
+                                </i>
+                                <div class="data">
+                                    <p class="dark-blue title">Consulta</p>
+                                    <p class="text">Seguimiento de cirugía 01</p>
+                                    <p class="date"> 20/dic/2019</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card card-outline pagos pend" id="">
                             <div class="rectangle turquoise"></div>
                             <div class="card-content card-content-padding">
                                 <i class="material-icons turquoise">
-                                    room
+                                    history
                                 </i>
                                 <div class="data">
-                                    <p class="turquoise">Seleccion de pago</p>
-                                    <p class="text"></p>
+                                    <p class="dark-blue title">Consulta</p>
+                                    <p class="text">Revision general</p>
+                                    <p class="date"> 14/nov/2019</p>
                                 </div>
-                                <i class="material-icons turquoise">
-                                    chevron_right
-                                </i>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="card card-outline pagos add popover-open" data-popover=".popover-pay" id="type">
-                            <div class="rectangle light-blue"></div>
-                            <div class="card-content card-content-padding">
-                                <i class="material-icons light-blue">
-                                    credit_card
-                                </i>
-                                <div class="data">
-                                    <p class="light-blue">Metodo de pago</p>
-                                    <p class="text"></p>
-                                </div>
-                                <a class="popover-open" data-popover=".popover-pay">
-                                    <i class="material-icons light-blue arrow">
-                                        keyboard_arrow_down
-                                    </i>
-                                </a>
                             </div>
                         </div>
                     </li>
@@ -75,7 +67,15 @@
     export default {
         on: {
             pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
 
+                $$('.card.pend').click(function (x) {
+                    let data = $$(this).find('.title').text();
+                    app.data.store.setItem('pago-pend',data).then(function (value) {
+                        app.methods.redirectTo('doctor-agregar-pago');
+                    });
+                });
             }
         }
     }

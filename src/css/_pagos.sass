@@ -96,8 +96,64 @@
         flex-direction: column
         .list
             margin: 0px
-        .container
-            flex-grow: 1
-            display: flex
-            align-items: center
-            justify-content: center
+#doctor-agregar-pago-info
+    .page-content
+        display: flex
+        flex-direction: column
+        padding-bottom: 84px
+        .quantity
+            margin-top: 0px
+            .item-inner
+                height: fit-content
+                padding-top: 0px
+                padding-bottom: 0px
+                label
+                    padding-left: 15%
+                .item-input-wrap
+                    display: flex
+                    align-items: center
+                    justify-content: space-evenly
+                    i
+                        top: unset
+                        left: unset
+                        position: relative
+                        color: $grey
+                    input
+                        width: 75%
+                        font: $title-2
+                        color: $turquoise-2
+                    .item-input-error-message
+                        display: none
+        .breakdown
+            .title
+                padding-left: 8%
+                color: $dark-blue
+                font: $Body-2
+                font-weight: normal
+                margin-bottom: 25px
+            .total,.total2pay,.method
+                margin-left: 20.5%
+                display: flex
+                align-items: center
+                justify-content: space-between
+                border-bottom: 0.5px solid #D3DCE6
+                margin-bottom: 18px
+                margin-right: 25px
+                p
+                    margin: 0px
+                .label
+                    font: $Body-2
+                    font-weight: normal
+                    color: $grey
+                .data
+                    font: $Body-4
+                    line-height: 25px
+                    &.dark-blue
+                        color: $dark-blue
+                    &.turquoise
+                        color: $turquoise-2
+#doctor-agregar-pago-summary
+    .container
+        a
+            padding-right: 25px
+        

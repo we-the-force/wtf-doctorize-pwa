@@ -80,15 +80,15 @@
             <div class="popover-inner">
                 <div class="list">
                     <ul>
-                        <li><a class="list-button item-link transfer popover-close" href="#">Tranferencia
+                        <li><a class="list-button item-link option transfer popover-close" href="#">Tranferencia
                                 electronica</a></li>
                         <hr>
-                        <li><a class="list-button item-link cash popover-close" href="#">Efectivo</a></li>
+                        <li><a class="list-button item-link option cash popover-close" href="#">Efectivo</a></li>
                         <hr>
-                        <li><a class="list-button item-link credit_debit popover-close" href="#">Tarjeta de Credito /
+                        <li><a class="list-button item-link option credit_debit popover-close" href="#">Tarjeta de Credito /
                                 Debito</a></li>
                         <hr>
-                        <li><a class="list-button item-link bank popover-close" href="#">Ingreso Bancario</a></li>
+                        <li><a class="list-button item-link option bank popover-close" href="#">Ingreso Bancario</a></li>
                         <hr>
                         <li><a class="list-button item-link light-blue popover-close" href="#">Agregar Metodo</a></li>
                     </ul>
@@ -111,7 +111,7 @@
                     //check
                 });
 
-                $$('.popover-pay a').click(function (x) {
+                $$('.popover-pay a.option').click(function (x) {
                     let row = $$(this);
                     row.parent().parent().find('.active').removeClass('active');
                     row.addClass('active');

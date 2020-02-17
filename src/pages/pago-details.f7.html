@@ -42,12 +42,12 @@
                 </div>
                 <div class="total">
                     <p class="label">Total</p>
-                    <p class="data dark-blue">$600.00</p>
+                    <p class="data red">$600.00</p>
                 </div>
                 <div class="paid">
                     <p class="label">Pagado</p>
                     <label class="item-checkbox item-content">
-                        <input type="checkbox" name="demo-checkbox" checked="checked" />
+                        <input type="checkbox" name="demo-checkbox"/>
                         <i class="icon icon-checkbox"></i>
                     </label>
                 </div>
@@ -63,9 +63,32 @@
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
+                var moment = require('moment');
+                moment.locale('es');
+                moment().format();
+
                 app.data.store.getItem('details').then(function (value) {
-                    console.log(value);
+                    if(value == 'recibidos'){
+                        $$('#pago-details .breakdown .date .data').text('12 ENE. 2019');
+                        $$('[name="demo-checkbox"]')[0].checked = true;
+                        $$('#pago-details .breakdown .total .data').removeClass('red');
+                        $$('#pago-details .breakdown .total .data').addClass('dark-blue');
+                    }
                 });
+
+                $$('[name="demo-checkbox"]').click(function (x) {
+                    if($$(this)[0].checked){
+                        $$(this).attr("disabled", true);
+                        app.preloader.show('blue');
+                        $$('#pago-details .breakdown .date .data').text(moment().format('DD MMM YYYY'));
+                        $$('#pago-details .breakdown .total .data').removeClass('red');
+                        $$('#pago-details .breakdown .total .data').addClass('dark-blue');
+                        app.preloader.hide();
+                    }else{
+                        $$(this)[0].checked = true;
+                    }
+                    
+                })
 
             }
         }

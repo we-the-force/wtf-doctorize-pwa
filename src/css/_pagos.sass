@@ -153,7 +153,108 @@
                     &.turquoise
                         color: $turquoise-2
 #doctor-agregar-pago-summary
+    .page-content
+        display: flex
+        flex-direction: column
+        padding-bottom: 84px
     .container
         a
             padding-right: 25px
-        
+    .breakdown
+        .title
+            padding-left: 8%
+            color: $dark-blue
+            font: $Body-2
+            font-weight: normal
+            margin-bottom: 25px
+        .total,.name,.method,.concept
+            margin-left: 20.5%
+            display: flex
+            align-items: center
+            justify-content: space-between
+            border-bottom: 0.5px solid #D3DCE6
+            margin-bottom: 18px
+            margin-right: 25px
+            p
+                margin: 0px
+            .label
+                font: $Body-2
+                font-weight: normal
+                color: $grey
+            .data
+                font: $Body-4
+                line-height: 25px
+                &.dark-blue
+                    color: $dark-blue
+                &.turquoise
+                    color: $turquoise-2
+#doctor-agregar-pago-success
+    .page-content
+        height: calc( 100% - 38vh )
+        display: flex
+        margin-top: 38vh
+        flex-direction: column
+        border-radius: 30px 30px 0px 0px
+        box-shadow: -1.23077px 1.23077px 9.23077px rgba(16, 43, 200, 0.2)
+        background: radial-gradient(123.86% 123.86% at 0.47% 0.7%, #FCFCFF 13.26%, #EBEFF2 100%)
+        .fab-center-bottom
+            bottom: 6%
+            a
+                box-shadow: -2px 2px 15px rgba(16, 43, 200, 0.2)
+                background: $turquoise-2
+                width: 65px
+                height: 65px
+                border-radius: 32.5px
+                i
+                    font-size: 45px
+        .title
+            margin-top: 20px
+            margin-bottom: 10px
+            text-align: center
+            font: $Body-4
+            font-weight: bold
+            line-height: 25px
+            color: $light-blue
+        .patient,.concept,.method,.pay
+            margin-left: 10%
+            margin-right: 10%
+            margin-bottom: 10px
+            border-bottom: 0.5px solid #C2CEDB
+            .label
+                font: $text-2-card
+                font-weight: normal
+                color: $grey
+                text-align: center
+            .data
+                font: $Body-4
+                line-height: 25px
+                color: $dark-blue
+                text-align: center
+            p
+                margin: 0px
+#pago-details
+    .page-content
+        .patient
+            display: flex
+            align-items: center
+            justify-content: space-evenly
+            .avatar
+                height: 40px
+                width: 40px
+                min-width: 40px
+                background: radial-gradient(123.92% 129.39% at 57.54% 104.51%, #00A1C5 0%, #2FCFBC 100%)
+                border-radius: 50%
+            .info
+                .name
+                    font: $Body-4
+                    color: $dark-blue
+                    margin: 0px
+                .addr
+                    font: $text-2-card
+                    color: $grey
+                    margin: 0px
+                    line-height: 20px
+                    font-weight: normal
+            a
+                i
+                    color: #C2CEDB

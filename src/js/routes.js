@@ -39,7 +39,9 @@ import DoctorHorariosShow from '../pages/doctor-horarios-show.f7.html';
 import DoctorAgregarPago from '../pages/doctor-agregar-pago.f7.html';
 import DoctorAgregarPagoInfo from '../pages/doctor-agregar-pago-info.f7.html';
 import DoctorAgregarPagoSummary from '../pages/doctor-agregar-pago-summary.f7.html';
+import DoctorAgregarPagoSuccess from '../pages/doctor-agregar-pago-success.f7.html';
 import DoctorPagosPendientes from '../pages/doctor-pagos-pendientes.f7.html';
+import PagoDetails from '../pages/pago-details.f7.html';
 import PagosHome from '../pages/pagos-home.f7.html';
 import Config from '../pages/ajustes.f7.html';
 
@@ -86,9 +88,19 @@ var routes = [
         component: DoctorHorariosShow,
     },
     {
+        name: "pago-details",
+        path: '/doctor/pagos/details',
+        component: PagoDetails,
+    },
+    {
         name: "doctor-agregar-pago",
         path: '/doctor/agregar/pago',
         component: DoctorAgregarPago,
+    },
+    {
+        name: "doctor-agregar-pago-success",
+        path: '/doctor/agregar/pago/success',
+        component: DoctorAgregarPagoSuccess,
     },
     {
         name: "doctor-pagos-pendientes",

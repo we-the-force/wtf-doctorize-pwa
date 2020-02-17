@@ -365,12 +365,12 @@
 
                 $$('.header .toolbar .tab-link').click(function (x) {
                     let tab = $$(this);
-                    if(tab.attr('id') == 'recibidos_tab'){
+                    if (tab.attr('id') == 'recibidos_tab') {
                         //llenar pagina
                         $$('.header .TotalIncome').text('$100,899.00');
                         $$('.header .TotalIncome').toggleClass('light-blue');
                         $$('.header .labelIncome').text('Total de ingresos');
-                    }else if(tab.attr('id') == 'pendientes_tab'){
+                    } else if (tab.attr('id') == 'pendientes_tab') {
                         //llenar pagina
                         $$('.header .TotalIncome').text('$30,899.00');
                         $$('.header .TotalIncome').toggleClass('light-blue');
@@ -381,10 +381,14 @@
                 $$('#pagos-home .card.pagos').click(function (x) {
                     let card = $$(this);
                     console.log('card clicked redirect to details');
-                    if(card.parent().attr('id') == 'recibidos'){
-                        console.log('guardar varibale de recibidos');
-                    }else if(card.parent().attr('id') == 'pendientes'){
-                        console.log('guardar varibale de pendientes');
+                    if (card.parent().attr('id') == 'recibidos') {
+                        app.data.store.setItem('details', 'recibidos').then(function (value) {
+                            app.methods.redirectTo('pago-details');
+                        });
+                    } else if (card.parent().attr('id') == 'pendientes') {
+                        app.data.store.setItem('details', 'pendientes').then(function (value) {
+                            app.methods.redirectTo('pago-details');
+                        });
                     }
                 });
             }

@@ -148,9 +148,9 @@
                     $$('#schedule '+x).children('.list').children('ul').empty();
 
                     /* trae las citas del doctor */ //cmabiar por el endpoint para traer solo las citas del dia
-                    /* app.request.get(app.data.url + '/doctors/' + doctor.id + '/appointments?filter=date&search=' + y,
-                        function (e) { */
-                            let z = [];
+                    app.request.get(app.data.url + '/doctors/' + doctor.id + '/appointments?filter=date&search=' + y,
+                        function (e) {
+                            let z = JSON.parse(e);
                             if (z && z.length > 0) {
                                 //quitar el finltro cuando sea por dia
                                 z = z.filter(element => moment(element.date).isValid());
@@ -368,8 +368,8 @@
                             });
 
                             app.preloader.hide();
-                        /* }
-                    ); */
+                        }
+                    );
 
                     function closeList(a) {
                         let minute;

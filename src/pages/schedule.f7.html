@@ -116,7 +116,6 @@
 
                 /* llena la pagina a donde se le de click */
                 $$('#header-toolbar-inner .tab-link').click(function (e) {
-                    $$('.navbar').removeClass('navbar-hidden');
                     fillPage($$($$(this).attr('href')), $$(this).data("date"));
                 });
 
@@ -137,9 +136,8 @@
                 /* funcion para llenar la pagina dinamicamente */
                 function fillPage(x, y) {
                     let flag = true;
-                    let x_1 = '#schedule ' + x;
                     /* limpia la pagina antes de poner algo */
-                    $$(x_1).children('.list').children('ul').empty();
+                    $$(x).children('.list').children('ul').empty();
 
                     /* trae las citas del doctor */ //cmabiar por el endpoint para traer solo las citas del dia
                     app.request.get(app.data.url + '/doctors/' + doctor.id + '/appointments?filter=date&search=' + y,
@@ -196,7 +194,7 @@
                                         minute2 = '30';
                                     }
                                     /* pone la carta de la cita */
-                                    $$(x_1).children('.list').children('ul').append(
+                                    $$(x).children('.list').children('ul').append(
 
                                         '<li>' +
                                         '<div class="row">' +
@@ -316,7 +314,7 @@
                                 } else {
                                     minute = '30'
                                 }
-                                $$(x_1).children('.list').children('ul').append(
+                                $$(x).children('.list').children('ul').append(
                                     '<li class="item-divider">' +
                                     '<i class="icon material-icons">watch_later</i>' +
                                     hour.hour() + ':' + minute +

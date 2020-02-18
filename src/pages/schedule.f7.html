@@ -202,7 +202,7 @@
                                         minute2 = '30';
                                     }
                                     /* pone la carta de la cita */
-                                    $$(x).children('.list').children('ul').append(
+                                    $$('#schedule '+x).children('.list').children('ul').append(
 
                                         '<li>' +
                                         '<div class="row">' +
@@ -379,7 +379,7 @@
                         } else {
                             minute = '00'
                         }
-                        $$(x).children('.list').children('ul').append(
+                        $$('#schedule '+x).children('.list').children('ul').append(
                             '<li class="item-divider">' +
                             '<i class="icon material-icons">watch_later</i>' +
                             a.hour() + ':' + minute +

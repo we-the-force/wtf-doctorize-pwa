@@ -88,7 +88,14 @@
                 var self = this;
                 var app = self.$app;
 
-                app.data.store.getItem('doctor').then(function (value) {
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
+                $$("#set-name input").val(doctor.name);
+                $$("#set-mail input").val(doctor.email);
+                $$("#set-cel input").val(doctor.cellphone);
+                $$("#set-special input").val(doctor.specialty.name);
+                $$(".photo .edit").html('<img src="' + app.data.url + '/' + doctor.photo + '200.png" alt="not found">');
+
+                /* app.data.store.getItem('doctor').then(function (value) {
                     app.data.doctor = value;
                     console.log(app.data.doctor);
 
@@ -97,7 +104,7 @@
                     $$("#set-cel input").val(app.data.doctor.cellphone);
                     $$("#set-special input").val(app.data.doctor.specialty.name);
                     $$(".photo .edit").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
-                });
+                }); */
 
                 $$(".btn-back").click(function (e) {
                     app.data.flow = 'default';

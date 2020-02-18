@@ -91,7 +91,7 @@
                     $$('#header-toolbar-inner').append(
                         '<a href="#tab-' + i + '" class="tab-link" id="D' + z.format("DD-MMMM") + '" data-date="' + moment(z).format("YYYY-MM-DD") + '">' +
                         '<p class="num">' + z.date() + ' </p>' +
-                        '<p>' + z.month().format('MMM') + ' </p>' +
+                        '<p>' + z.format('MMM') + ' </p>' +
                         '</a>');
                     $$('.tabs').append(
                         '<div id="tab-' + i + '" class="page-content login-screen-content tab hide-navbar-on-scroll tab">' +

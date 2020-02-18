@@ -104,7 +104,7 @@
                     if (z.isSame(today)) {
                         $$('#D' + z.format("DD-MMMM")).addClass('tab-link-active');
                         $$('#D' + z.format("DD-MMMM")).addClass('tab-link-today');
-                        $$('#tab-' + i).addClass('tab-active');
+                        $$('#schedule #tab-' + i).addClass('tab-active');
                     }
                     i++;
                     z.add(1, 'd')
@@ -116,7 +116,11 @@
 
                 /* llena la pagina a donde se le de click */
                 $$('#header-toolbar-inner .tab-link').click(function (e) {
-                    fillPage($$($$(this).attr('href')), $$(this).data("date"));
+                    $$(this).parent().children('.tab-link-active').removeClass('tab-link-active');
+                    $$(this).addClass('tab-link-active');
+                    $$('.tabs').children('.tab-active').removeClass('tab-active');
+                    $$('.tabs').children($$(this).attr('href')).addClass('tab-active');
+                    fillPage($$(this).attr('href'), $$(this).data("date"));
                 });
 
                 /* esconde la subnavbar y el icono de la toolbar cuando una carta se expande */
@@ -136,13 +140,17 @@
                 /* funcion para llenar la pagina dinamicamente */
                 function fillPage(x, y) {
                     let flag = true;
+                    console.log(x);
+                    console.log(y);
+                    
+                    
                     /* limpia la pagina antes de poner algo */
-                    $$(x).children('.list').children('ul').empty();
+                    $$('#schedule '+x).children('.list').children('ul').empty();
 
                     /* trae las citas del doctor */ //cmabiar por el endpoint para traer solo las citas del dia
-                    app.request.get(app.data.url + '/doctors/' + doctor.id + '/appointments?filter=date&search=' + y,
-                        function (e) {
-                            let z = JSON.parse(e);
+                    /* app.request.get(app.data.url + '/doctors/' + doctor.id + '/appointments?filter=date&search=' + y,
+                        function (e) { */
+                            let z = [];
                             if (z && z.length > 0) {
                                 //quitar el finltro cuando sea por dia
                                 z = z.filter(element => moment(element.date).isValid());
@@ -314,7 +322,7 @@
                                 } else {
                                     minute = '30'
                                 }
-                                $$(x).children('.list').children('ul').append(
+                                $$('#schedule '+x).children('.list').children('ul').append(
                                     '<li class="item-divider">' +
                                     '<i class="icon material-icons">watch_later</i>' +
                                     hour.hour() + ':' + minute +
@@ -353,15 +361,15 @@
                                     '<div class="col-30"></div>' +
                                     '</div>' +
                                     '</li>'
-                                );
+                                );                                
                             }
                             $$('.icon-fab').click(function (e) {
                                 app.methods.redirectTo('agendar-cita');
                             });
 
                             app.preloader.hide();
-                        }
-                    );
+                        /* }
+                    ); */
 
                     function closeList(a) {
                         let minute;

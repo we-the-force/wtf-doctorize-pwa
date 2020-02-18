@@ -70,7 +70,7 @@
                 var self = this;
                 var app = self.$app;/* 
                 const monthNames = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"]; */
-                var z, today, y, i, n;
+                var z, today, y, i, a;
                 var moment = require('moment');
                 moment.locale('es');
                 moment().format();
@@ -137,9 +137,9 @@
                 /* funcion para llenar la pagina dinamicamente */
                 function fillPage(x, y) {
                     let flag = true;
-
+                    let x_1 = '#schedule ' + x;
                     /* limpia la pagina antes de poner algo */
-                    $$(x).children('.list').children('ul').empty();
+                    $$(x_1).children('.list').children('ul').empty();
 
                     /* trae las citas del doctor */ //cmabiar por el endpoint para traer solo las citas del dia
                     app.request.get(app.data.url + '/doctors/' + doctor.id + '/appointments?filter=date&search=' + y,
@@ -186,9 +186,9 @@
                                             '</li>');
                                     }
 
-                                    let n = moment(j).add(30, 'm');
+                                    let a = moment(j).add(30, 'm');
 
-                                    if (n.minute() >= 30) {
+                                    if (a.minute() >= 30) {
                                         minute = '30';
                                         minute2 = '00';
                                     } else {
@@ -196,7 +196,7 @@
                                         minute2 = '30';
                                     }
                                     /* pone la carta de la cita */
-                                    $$(x).children('.list').children('ul').append(
+                                    $$(x_1).children('.list').children('ul').append(
 
                                         '<li>' +
                                         '<div class="row">' +
@@ -209,7 +209,7 @@
                                         '<p class="text-2 dark-blue card-opened-fade-out">Hospital General Zona 2</p>' +
                                         '<p class="footer light-blue card-opened-fade-out">' +
                                         '<i class="icon material-icons time">watch_later</i>' +
-                                        j.hour() + ':' + minute2 + ' - ' + n.hour() + ':' + minute +
+                                        j.hour() + ':' + minute2 + ' - ' + a.hour() + ':' + minute +
                                         '</p>' +
                                         '<div class="item-content card-opened-fade-in details-event">' +
                                         '<div class="fab fab-left-middle color-white photo">' +
@@ -271,7 +271,7 @@
                                         '<i class="icon material-icons time light-blue">watch_later</i>' +
                                         '</div>' +
                                         '<div class="col-95">' +
-                                        '<p class="time light-blue">' + j.hour() + ':' + minute2 + ' - ' + n.hour() + ':' + minute + '</p>' +
+                                        '<p class="time light-blue">' + j.hour() + ':' + minute2 + ' - ' + a.hour() + ':' + minute + '</p>' +
                                         '</div>' +
                                         '</div>' +
                                         '</li>' +
@@ -298,13 +298,13 @@
 
                                     /* checa cuando cerrar la lista y cuando no */
                                     if (k < z.length) {
-                                        if (!moment(z[k].date).isSame(n)) { /* si el elemento no precede a otro cierra la lista */
-                                            closeList(n)
+                                        if (!moment(z[k].date).isSame(a)) { /* si el elemento no precede a otro cierra la lista */
+                                            closeList(a)
                                         } else { /* si el elemento tiene un sucesor sigue con la lista */
                                             flag = false;
                                         }
                                     } else { /* si el elemento es el ultimo cierra la lista */
-                                        closeList(n)
+                                        closeList(a)
                                     }
                                 }
                             } else {
@@ -316,7 +316,7 @@
                                 } else {
                                     minute = '30'
                                 }
-                                $$(x).children('.list').children('ul').append(
+                                $$(x_1).children('.list').children('ul').append(
                                     '<li class="item-divider">' +
                                     '<i class="icon material-icons">watch_later</i>' +
                                     hour.hour() + ':' + minute +
@@ -365,10 +365,10 @@
                         }
                     );
 
-                    function closeList(n) {
+                    function closeList(a) {
                         let minute;
                         flag = true;
-                        if (n.minute() >= 30) {
+                        if (a.minute() >= 30) {
                             minute = '30';
                         } else {
                             minute = '00'
@@ -376,7 +376,7 @@
                         $$(x).children('.list').children('ul').append(
                             '<li class="item-divider">' +
                             '<i class="icon material-icons">watch_later</i>' +
-                            n.hour() + ':' + minute +
+                            a.hour() + ':' + minute +
                             '<hr>' +
                             '</li>' +
                             '<li>' +

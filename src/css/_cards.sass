@@ -21,6 +21,8 @@
             background: $light-blue
         &.yellow
             background: $yellow
+        &.yellow-2
+            background: $yellow-2
         &.red
             background: $red
     .dynamic-popover,.permissions-link
@@ -48,7 +50,7 @@
                 font: $text-2-card
             &.title
                 font: $title-card
-            
+
         .footer
             position: fixed
             bottom: 20px
@@ -403,7 +405,111 @@
             padding: 9px 0px 9px 0px
             p
                 font: $Body-4
-
+    &.pagos
+        width: auto
+        --f7-card-margin-horizontal: 15px
+        --f7-card-margin-vertical: 10px
+        border: none
+        .card-content
+            padding: 3% 0% 3% 5%
+            display: flex
+            .name
+                height: 40px
+                overflow: hidden
+                width: 33%
+                padding-left: 12px
+                padding-right: 12px
+                padding-top: 3px
+                font: $text-2-card
+                font-weight: 600
+                color: $dark-blue
+            .cash
+                margin: auto
+                padding-right: 10px
+                padding-left: 10px
+                width: 33%
+                p
+                    margin: 0
+                    text-align: center
+                    &.money
+                        font: $text-2-card
+                        color: $turquoise-2
+                        font-weight: 600
+                        &.red
+                            color: $red
+                    &.no
+                        font-family: Nunito
+                        font-style: normal
+                        font-weight: normal
+                        font-size: 10px
+                        line-height: 14px
+                        color: $grey
+            .concept
+                margin: auto
+                text-align: center
+                padding-left: 10px
+                padding-right: 30px
+                width: 33%
+                font: $text-2-card
+                color: $light-blue
+                font-weight: 600
+                display: flex
+                align-items: center
+                i
+                    font-size: 30px
+                    color: $dark-blue
+                    position: absolute
+                    right: 10px
+            hr
+                margin: 5px 0px
+        &.add
+            --f7-card-margin-vertical: 36px
+            .card-content
+                align-items: center
+                justify-content: space-between
+                padding-left: calc( 5% + 14px )
+                padding-right: 7px
+                .data
+                    flex-grow: 1
+                    padding-left: 15px
+                    padding-right: 7px
+                    .text
+                        line-height: 16px
+                        color: $grey
+                .turquoise
+                    color: $turquoise-2
+                .light-blue
+                    color: $light-blue
+                a
+                    display: flex
+        &.pend
+            align-items: flex-start
+            height: 115px
+            --f7-card-margin-vertical: 20px
+            .card-content
+                height: 100%
+                padding: 0px
+                margin: 0% 0% 0% 5%
+            .data
+                color: $dark-blue
+                flex-grow: 1
+                padding-right: 3%
+                .title
+                    font: $Body-4
+                    line-height: 20px
+                .text,.date
+                    font: $text-2-card
+                .date
+                    text-transform: uppercase
+                    position: absolute
+                    bottom: calc( 3% + 5px )
+            i
+                margin-left: 10px
+                margin-right: 15px
+                color: $turquoise-2
+            i,.data
+                padding-top: 3%
+                padding-bottom: 3%
 .card-backdrop
     z-index: 0
 .card-expandable.card-opened .card-opened-fade-out

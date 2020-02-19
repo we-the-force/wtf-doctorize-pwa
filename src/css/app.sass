@@ -95,13 +95,31 @@
     --f7-input-invalid-border-color: #ff0000
     .item-input-invalid
         color: #ff0000
-    .item-input-wrap::after,.item-inner::after 
+    .item-input-wrap::after,.item-inner::after
         content: none
     #schedule
         li.item-divider::before
             content: none
+    #pagos-home
+        .header
+            .toolbar-inner
+                .tab-link-active
+                    border-bottom: 2px solid var(--f7-tabbar-link-active-border-color, var(--f7-theme-color))
+            .styled-select
+                select
+                    font-size: 14px
+                    @media screen and (max-width: 360px)
+                        font-size: 11px
+    .popover-pay
+        .popover-angle
+            display: none
+    #doctor-agregar-pago-info
+        .item-input-wrap
+            margin: 0px
 
 .md
     .popover-menu
+        bottom: 105px
+        top: unset !important
         left: 50% !important
-        transform: translate(-50%,-112%) !important
+        transform: translate(-50%,0%) !important

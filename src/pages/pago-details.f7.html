@@ -1,0 +1,96 @@
+<template>
+    <div class="page" id="pago-details">
+        <div class="header">
+            <div class="addPay info">
+                <a class="back">
+                    <i class="material-icons">chevron_left</i>
+                </a>
+            </div>
+        </div>
+        <div class="page-content">
+            <div class="patient">
+                <div class="avatar"><img src="" alt=""></div>
+                <div class="info">
+                    <p class="name">Leonardo Rodrigo</p>
+                    <p class="addr">Calle Mariano Abasolo 1090</p>
+                </div>
+                <a href="#">
+                    <i class="material-icons">comment</i>
+                </a>
+                <a href="#">
+                    <i class="material-icons">phone</i>
+                </a>
+                <a href="#">
+                    <i class="material-icons">info</i>
+                </a>
+            </div>
+            <div class="breakdown">
+                <div class="title">
+                    Desglose de pago:
+                </div>
+                <div class="concept">
+                    <p class="label">Concepto</p>
+                    <p class="data dark-blue">Consulta</p>
+                </div>
+                <div class="method">
+                    <p class="label">Metodo de pago</p>
+                    <p class="data dark-blue">Efectivo</p>
+                </div>
+                <div class="date">
+                    <p class="label">Fecha de pago</p>
+                    <p class="data dark-blue">N/A</p>
+                </div>
+                <div class="total">
+                    <p class="label">Total</p>
+                    <p class="data red">$600.00</p>
+                </div>
+                <div class="paid">
+                    <p class="label">Pagado</p>
+                    <label class="item-checkbox item-content">
+                        <input type="checkbox" name="demo-checkbox"/>
+                        <i class="icon icon-checkbox"></i>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                var moment = require('moment');
+                moment.locale('es');
+                moment().format();
+
+                app.data.store.getItem('details').then(function (value) {
+                    if(value == 'recibidos'){
+                        $$('#pago-details .breakdown .date .data').text('12 ENE. 2019');
+                        $$('[name="demo-checkbox"]')[0].checked = true;
+                        $$('#pago-details .breakdown .total .data').removeClass('red');
+                        $$('#pago-details .breakdown .total .data').addClass('dark-blue');
+                    }
+                });
+
+                $$('[name="demo-checkbox"]').click(function (x) {
+                    if($$(this)[0].checked){
+                        $$(this).attr("disabled", true);
+                        app.preloader.show('blue');
+                        $$('#pago-details .breakdown .date .data').text(moment().format('DD MMM YYYY'));
+                        $$('#pago-details .breakdown .total .data').removeClass('red');
+                        $$('#pago-details .breakdown .total .data').addClass('dark-blue');
+                        app.preloader.hide();
+                    }else{
+                        $$(this)[0].checked = true;
+                    }
+                    
+                })
+
+            }
+        }
+    }
+</script>

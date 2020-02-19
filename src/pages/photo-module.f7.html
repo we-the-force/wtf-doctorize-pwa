@@ -366,6 +366,7 @@
                         '</div>',
                     buttons: [{}]
                 });
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
 
                 $$('.upload-photo').on('click', function () {
                     ac.open();
@@ -475,14 +476,14 @@
                 function modificarDoctor() {
                     $$('.photo-module h1').text('Foto de Perfil');
                     $$('.header-blue p').text('Agrega tu foto de perfil');
-                    app.data.store.getItem('doctor').then(function (value) {
-                        app.data.doctor = value;
+                    /* app.data.store.getItem('doctor').then(function (value) {
+                        app.data.doctor = value; */
                         $$('#photo-module .btn-rounded').off('click');
                         $$('#photo-module .btn-rounded').on('click', function (e) {
                             c.result('base64').then(function (blob) {
                                 app.preloader.show('blue');
                                 app.request({
-                                    url: app.data.url + '/doctors/' + app.data.doctor.id,
+                                    url: app.data.url + '/doctors/' + doctor.id,
                                     method: "PATCH",
                                     crossDomain: true,
                                     data: {
@@ -491,7 +492,7 @@
                                     success: function (e) {
                                         app.data.store.removeItem('flow').then(function (value) {
                                             app.preloader.hide();
-                                            app.request.get(app.data.url + '/doctors/' + app.data.doctor.id,
+                                            app.request.get(app.data.url + '/doctors/' + doctor.id,
                                                 function (i) {
                                                     var x = JSON.parse(i);
                                                     app.data.store.setItem("doctor", x);
@@ -507,7 +508,7 @@
                                 });
                             });
                         });
-                    });
+                    /* }); */
                 }
 
                 function registrarAsistente() {

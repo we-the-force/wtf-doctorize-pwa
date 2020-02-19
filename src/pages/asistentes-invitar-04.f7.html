@@ -117,8 +117,9 @@
                 var self = this;
                 var app = self.$app;
                 var items;
-                app.data.store.getItem('doctor').then(function (value) {
-                    app.data.doctor = value;
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
+                /* app.data.store.getItem('doctor').then(function (value) {
+                    app.data.doctor = value; */
                     app.data.store.getItem('assistant').then(function (assistantValue) {
                         app.data.assistant = assistantValue;
                         console.log(assistantValue);
@@ -168,13 +169,13 @@
                             if (app.data.assistant.edit || app.data.assistant.addOffice) {
                                 //agregar endpoint
                                 app.request({
-                                    url: app.data.url + '/doctors/' + app.data.doctor.id + '/assistants/' + app.data.assistant.id,
+                                    url: app.data.url + '/doctors/' + doctor.id + '/assistants/' + app.data.assistant.id,
                                     method: "PATCH",
                                     crossDomain: true,
                                     data: {
                                         "id": app.data.assistant.id,
                                         "offices": [{
-                                            "doctorId": app.data.doctor.id,
+                                            "doctorId": doctor.id,
                                             "officeName": app.data.assistant.consultorio.name,
                                             "officeId": app.data.assistant.consultorio.id,
                                             "permissions": app.data.assistant.permisos
@@ -189,9 +190,9 @@
                                     }
                                 });
                             } else {
-                                app.request.postJSON(app.data.url + '/doctors/' + app.data.doctor.id + '/assistants', {
+                                app.request.postJSON(app.data.url + '/doctors/' + doctor.id + '/assistants', {
                                     "email": app.data.assistant.email,
-                                    "doctorId": app.data.doctor.id,
+                                    "doctorId": doctor.id,
                                     "officeId": app.data.assistant.consultorio.id,
                                     "permissions": app.data.assistant.permisos
                                 }, function (e) {
@@ -204,7 +205,7 @@
                             }
                         });
                     });
-                });
+               /*  }); */
 
                 function redirectOffices() {
                     app.data.assistant.addOffice = false;

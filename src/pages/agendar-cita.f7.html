@@ -97,9 +97,10 @@
                 moment().format();
 
                 app.preloader.show('blue');
-                app.data.store.getItem('doctor').then(function (value) {
-                    app.data.doctor = value;
-                    app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/offices',//id=99 
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
+                /* app.data.store.getItem('doctor').then(function (value) {
+                    app.data.doctor = value; */
+                    app.request.get(app.data.url + '/doctors/' + doctor.id + '/offices',//id=99 
                         function (e) {
                             var x = JSON.parse(e);
                             for (var i = 0; i < x.length; i++) {
@@ -110,7 +111,7 @@
                         function (e) {
                             app.preloader.hide();
                         });
-                });
+                /* }); */
 
 
                 disableButton();

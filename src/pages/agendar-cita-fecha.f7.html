@@ -73,6 +73,7 @@
                 var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
                 var datetime = '', today = '';
                 var moment = require('moment');
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
                 moment().format();
 
                 disableButton();
@@ -88,9 +89,6 @@
                             app.data.consultorio.lunchStartTime = x.lunchStartTime;
                             app.data.consultorio.lunchCloseTime = x.lunchCloseTime;
                             app.data.consultorio.days = x.days;
-                            console.log(app.data.consultorio.days);
-                            console.log(app.data.consultorio.startTime);
-                            console.log(app.data.consultorio.closeTime);
                             app.preloader.hide();
                         });
 
@@ -98,9 +96,9 @@
                         var z = moment(new Date(calendarModal.getValue()));
                         today = moment();
 
-                        app.data.store.getItem('doctor').then(function (value2) {
-                            app.data.doctor = value2;
-                            app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/appointments?filter=office&filter=date&search=' + app.data.consultorio.id + '&search=' + z.format("YYYY-MM-DD"),
+                        /* app.data.store.getItem('doctor').then(function (value2) {
+                            app.data.doctor = value2; */
+                            app.request.get(app.data.url + '/doctors/' + doctor.id + '/appointments?filter=office&filter=date&search=' + app.data.consultorio.id + '&search=' + z.format("YYYY-MM-DD"),
                                 function (e) {
                                     let x = JSON.parse(e);
                                     x = x.map(e => moment(e.date));
@@ -148,7 +146,7 @@
 
                                 });
 
-                        });
+                        /* }); */
 
                     });
 
@@ -205,9 +203,9 @@
                             app.data.patient = patient;
                             datetime = moment(z.format("YYYY-MM-DD") + 'T' + y);
                             app.preloader.show('blue');
-                            app.request.postJSON(app.data.url + '/doctors/' + app.data.doctor.id + '/appointments', {
+                            app.request.postJSON(app.data.url + '/doctors/' + doctor.id + '/appointments', {
                                 "email": app.data.paciente.email,
-                                "doctorId": app.data.doctor.id,
+                                "doctorId": doctor.id,
                                 "officeId": app.data.consultorio.id,
                                 "name": app.data.paciente.nombre,
                                 "phone": app.data.paciente.phone,

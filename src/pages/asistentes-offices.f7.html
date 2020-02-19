@@ -51,59 +51,59 @@
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
-                console.log(app.data.assistant.id);
                 app.preloader.show('blue');
-                app.data.store.getItem('doctor').then(function (value) {
-                    app.data.doctor = value;
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
+                /* app.data.store.getItem('doctor').then(function (value) {
+                    app.data.doctor = value; */
 
-                    app.data.store.getItem('assistant').then(function (assistantValue) {
-                        app.data.assistant = assistantValue;
-                        console.log(assistantValue);
+                app.data.store.getItem('assistant').then(function (assistantValue) {
+                    app.data.assistant = assistantValue;
+                    console.log(assistantValue);
 
-                        app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/assistants/' + app.data.assistant.id, function (e) {
-                            var x = JSON.parse(e);
-                            app.data.assistant.name = x.name;
+                    app.request.get(app.data.url + '/doctors/' + doctor.id + '/assistants/' + app.data.assistant.id, function (e) {
+                        var x = JSON.parse(e);
+                        app.data.assistant.name = x.name;
+                        for (var i = 0; i < x.offices.length; i++) {
+                            //si doctor id es igual lo hace
+                            $$('#offices').append('<li>' +
+                                '<div class="row">' +
+                                '<div class="card card-outline elevation-3 assistant-offices" data-OfficeId="' + x.offices[i].officeId + '">' +
+                                '<div class="rectangle light-blue"></div>' +
+                                '<i class="material-icons icon light-blue">local_hospital</i>' +
+                                '<div class="card-content card-content-padding">' +
+                                '<p class="light-blue">' + x.offices[i].officeName + '</p>' +
+                                '</div>' +
+                                '<div class="link permissions-link">' +
+                                '<i class="material-icons next light-blue">chevron_right</i>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</li>');
+                        }
+                        app.preloader.hide();
+                        $$('.assistant-offices').on('click', function (e) {
+                            var officeId = $$(this).data('OfficeId');
                             for (var i = 0; i < x.offices.length; i++) {
-                                //si doctor id es igual lo hace
-                                $$('#offices').append('<li>' +
-                                    '<div class="row">' +
-                                    '<div class="card card-outline elevation-3 assistant-offices" data-OfficeId="' + x.offices[i].officeId + '">' +
-                                    '<div class="rectangle light-blue"></div>' +
-                                    '<i class="material-icons icon light-blue">local_hospital</i>' +
-                                    '<div class="card-content card-content-padding">' +
-                                    '<p class="light-blue">' + x.offices[i].officeName + '</p>' +
-                                    '</div>' +
-                                    '<div class="link permissions-link">' +
-                                    '<i class="material-icons next light-blue">chevron_right</i>' +
-                                    '</div>' +
-                                    '</div>' +
-                                    '</div>' +
-                                    '</li>');
-                            }
-                            app.preloader.hide();
-                            $$('.assistant-offices').on('click', function (e) {
-                                var officeId = $$(this).data('OfficeId');
-                                for (var i = 0; i < x.offices.length; i++) {
-                                    if (x.offices[i].officeId == officeId) {
-                                        app.data.assistant.consultorio.id = x.offices[i].officeId;
-                                        app.data.assistant.consultorio.name = x.offices[i].officeName;
-                                        app.data.assistant.permisos = x.offices[i].permissions;
-                                        app.data.assistant.edit = true;
-                                        break;
-                                    }
+                                if (x.offices[i].officeId == officeId) {
+                                    app.data.assistant.consultorio.id = x.offices[i].officeId;
+                                    app.data.assistant.consultorio.name = x.offices[i].officeName;
+                                    app.data.assistant.permisos = x.offices[i].permissions;
+                                    app.data.assistant.edit = true;
+                                    break;
                                 }
-                                app.data.store.setItem("assistant", app.data.assistant)
-                                    .then(function (value) {
-                                        app.methods.redirectTo('asistentes-invitar-04');
-                                    });
-                            });
-                        },
-                            function (e) {
-                                app.preloader.hide();
-                            });
-                    }).catch(function (err) { });
-
+                            }
+                            app.data.store.setItem("assistant", app.data.assistant)
+                                .then(function (value) {
+                                    app.methods.redirectTo('asistentes-invitar-04');
+                                });
+                        });
+                    },
+                        function (e) {
+                            app.preloader.hide();
+                        });
                 }).catch(function (err) { });
+
+                /* }).catch(function (err) { }); */
 
 
 

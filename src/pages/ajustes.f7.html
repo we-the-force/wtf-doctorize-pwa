@@ -3,7 +3,7 @@
         <div class="page-content login-screen-content config">
             <div class="header">
                 <div class="config">
-                    <a class="back" href="/home">
+                    <a href="/home">
                         <i class="material-icons">chevron_left</i>
                     </a>
                     <p class="title1">Ajustes</p>
@@ -46,6 +46,20 @@
                                 <i class="material-icons icon light-blue">headset_mic</i>
                                 <div class="card-content card-content-padding">
                                     <p class="settings-name light-blue">Asistentes</p>
+                                </div>
+                                <div class="link arrow">
+                                    <i class="material-icons light-blue">chevron_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="card card-outline elevation-3 settings" id="horarios-settings">
+                                <div class="rectangle light-blue"></div>
+                                <i class="material-icons icon light-blue">timelapse</i>
+                                <div class="card-content card-content-padding">
+                                    <p class="settings-name light-blue">Horarios</p>
                                 </div>
                                 <div class="link arrow">
                                     <i class="material-icons light-blue">chevron_right</i>
@@ -163,8 +177,18 @@
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
+
                 $$(".config #personal-settings").click(function (e) {
                     app.methods.redirectTo('settings');
+                });
+                $$(".config #offices-settings").click(function (e) {
+                    app.methods.redirectTo('offices-show');
+                });
+                $$(".config #assistants-settings").click(function (e) {
+                    app.methods.redirectTo('asistentes-invitar-01');
+                });
+                $$(".config #horarios-settings").click(function (e) {
+                    app.methods.redirectTo('doctor-horarios');
                 });
                 $$(".config #log-out").click(function (params) {
                     app.data.store.clear();

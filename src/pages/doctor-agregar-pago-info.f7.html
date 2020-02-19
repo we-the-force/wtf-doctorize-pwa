@@ -1,0 +1,69 @@
+<template>
+    <div class="page" id="doctor-agregar-pago-info">
+        <div class="header">
+            <div class="addPay info">
+                <a class="back">
+                    <i class="material-icons">chevron_left</i>
+                </a>
+                <p class="title1">Información de pago</p>
+            </div>
+        </div>
+        <div class="page-content">
+            <div class="quantity list">
+                <ul>
+                    <li class="item-content item-input">
+                        <div class="item-inner">
+                            <label for="">Cantidad total:</label>
+                            <div class="item-input-wrap rounded">
+                                <i class="material-icons grey">
+                                    monetization_on
+                                </i>
+                                <input type="text" name="quantity" id="quantity" placeholder="Cantidad" required
+                                    validate value="$600.00">
+                                <span class="input-clear-button"></span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="breakdown">
+                <div class="title">
+                    Desglose de pago:
+                </div>
+                <div class="total">
+                    <p class="label">Total</p>
+                    <p class="data dark-blue">$600.00</p>
+                </div>
+                <div class="total2pay">
+                    <p class="label">Total a pagar</p>
+                    <p class="data turquoise">$600.00</p>
+                </div>
+                <div class="method">
+                    <p class="label">Metodo de pago</p>
+                    <p class="data dark-blue">Efectivo</p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="btn-2">
+                    <a href="/doctor/agregar/pago/summary">
+                        <p>Siguiente </p>
+                        <i class="material-icons white">chevron_right</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+
+            }
+        }
+    }
+</script>

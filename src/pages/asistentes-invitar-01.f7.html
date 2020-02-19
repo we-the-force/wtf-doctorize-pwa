@@ -6,7 +6,7 @@
                     <ul>
                         <li>
                             <div class="row">
-                                <a href='/home' class="item-link btn-back" id="back">
+                                <a href='/doctor/configuration' class="item-link btn-back" id="back">
                                     <i class="material-icons">chevron_left</i>
                                 </a>
                             </div>
@@ -51,12 +51,12 @@
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
-                console.log(app.data.doctor.id);
                 app.preloader.show('blue');
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
+                /* 
                 app.data.store.getItem('doctor').then(function (value) {
-                    app.data.doctor = value;
-                    console.log(app.data.doctor.id);
-                    app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/assistants', function (e) {
+                    app.data.doctor = value; */
+                    app.request.get(app.data.url + '/doctors/' + doctor.id + '/assistants', function (e) {
                         var x = JSON.parse(e);
                         console.log(x);
                         // AGREGAR IM�GEN DEFAULT CUANDO NO TENGA EL ASISTENTE
@@ -132,7 +132,7 @@
                                                 ///assistant/21/delete
                                                 app.preloader.show('blue');
                                                 app.request({
-                                                    url: app.data.url + '/doctors/' + app.data.doctor.id + '/assistants/' + AssisstantId,
+                                                    url: app.data.url + '/doctors/' + doctor.id + '/assistants/' + AssisstantId,
                                                     method: "DELETE",
                                                     crossDomain: true,
                                                     success: function (e) {
@@ -166,7 +166,7 @@
                         function (e) {
                             app.preloader.hide();
                         });
-                });
+                /* }); */
             }
         }
     }

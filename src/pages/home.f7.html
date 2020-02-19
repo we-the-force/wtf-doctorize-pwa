@@ -20,6 +20,7 @@
         </a>
       </div>
       <a class="add-circle popover-open" data-popover=".popover-menu">
+        <div class="back-white"></div>
         <img src="/static/images/add_circle_24px_v2.svg" class="dynamic-sheet" alt="">
       </a>
     </div>
@@ -34,7 +35,7 @@
     <div class="page-content login-screen-content">
       <div class="rectangle transparent">
         <a class="ajustes" href="/doctor/configuration">
-          <img src="//api.mydoctorize.com/files/user/userdetails/299/100.png" alt="not found">
+          <img src="" alt="not found">
           <i class="icon material-icons">settings</i>
         </a>
       </div>
@@ -52,19 +53,19 @@
               <div class="block">
                 <div class="row">
                   <a class="col">
-                    <img src="//api.mydoctorize.com/files/user/userdetails/99/50.png" alt="not found">
+                    <img src="../static/images/logo.png" alt="not found">
                   </a>
                   <a class="col">
-                    <img src="//api.mydoctorize.com/files/user/userdetails/99/50.png" alt="not found">
+                    <img src="../static/images/logo.png" alt="not found">
                   </a>
                   <a class="col">
-                    <img src="//api.mydoctorize.com/files/user/userdetails/99/50.png" alt="not found">
+                    <img src="../static/images/logo.png" alt="not found">
                   </a>
                   <a class="col">
-                    <img src="//api.mydoctorize.com/files/user/userdetails/99/50.png" alt="not found">
+                    <img src="../static/images/logo.png" alt="not found">
                   </a>
                   <a class="col">
-                    <img src="//api.mydoctorize.com/files/user/userdetails/99/50.png" alt="not found">
+                    <img src="../static/images/logo.png" alt="not found">
                   </a>
                 </div>
               </div>
@@ -87,7 +88,7 @@
               <div data-slides-per-view="1.5" data-space-between="0" class="swiper-container swiper-init demo-swiper">
                 <div class="swiper-wrapper">
 
-                  
+
                 </div>
             </li>
           </ul>
@@ -107,42 +108,49 @@
         var moment = require('moment');
         moment.locale('es');
         moment().format();
-        app.data.doctor = sessionStorage.getItem('doctor');
+        var doctor = JSON.parse(sessionStorage.getItem('user'));
 
-        if (!(app.data.doctor == null || app.data.doctor == 'undefined' || app.data.doctor == '')) {
-          $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
-          $$('.tranparent .ajustes img').attr('src', app.data.url + '/' + app.data.doctor.photo + '100.png');
+        if (doctor != null && doctor != 'undefined' && doctor != '') {
+          $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + doctor.photo + '50.png" alt="not found">');
+          $$('.transparent .ajustes img').attr('src', app.data.url + '/' + doctor.photo + '100.png');
+          $$('.background .name').text('Dr. ' + doctor.name);
         }
 
-        //consultar nombre y llenar
 
         //consultar fotos de pacientes
         for (let i = 0; i < $$('#home li.patients .row').children().length; i++) {
           const element = $$('#home li.patients .row').children()[i];
-          console.log(element);
 
         }
 
-        //consultar citas
-        for (let i = 0; i < 3; i++) {
-          $$('#home li.appointments .swiper-wrapper').append(
-            '<div class="swiper-slide" id="">' +
-            '<div class="card card-outline home appointments">' +
-            '<div class="rectangle turquoise"></div>' +
-            '<div class="card-content card-content-padding">' +
-            '<p class="title dark-blue">Cita</p>' +
-            '<p class="text dark-blue">Javier Lopez</p>' +
-            '<p class="text2 dark-blue">Centro Hospitalario la Concepción</p>' +
-            '<div class="footer light-blue">' +
-            '<i class="icon material-icons">watch_later</i>' +
-            '<p>&nbsp;	08:00 - 21:00</p>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '</div>'
-          );
-
-        }
+        app.request.get(app.data.url + '/doctors/' + doctor.id + '/appointments', function (e) {
+          let today = moment();
+          let cards = 0;
+          var x = JSON.parse(e);
+          var swiper = app.swiper.get('.appointments .swiper-container');
+          x.forEach(element => {
+            let date = moment(element.date);
+            if (today.isBefore(date) && cards < 10) {
+              swiper.appendSlide(
+                '<div class="swiper-slide" id="id_' + element.id + '">' +
+                '<div class="card card-outline home appointments">' +
+                '<div class="rectangle turquoise"></div>' +
+                '<div class="card-content card-content-padding">' +
+                '<p class="title dark-blue">Cita</p>' +
+                '<p class="text dark-blue">' + element.name + '</p>' +
+                '<p class="text2 dark-blue">Centro Hospitalario la Concepción</p>' +
+                '<div class="footer light-blue">' +
+                '<i class="icon material-icons">watch_later</i>' +
+                '<p>&nbsp;	08:00 - 21:00</p>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>'
+              );
+              cards++;
+            }
+          });
+        });
 
         //consultar cobros
         for (let i = 0; i < 3; i++) {

@@ -36,6 +36,12 @@ import DoctorHorarios from '../pages/doctor-horarios.f7.html';
 import DoctorHorariosSelect from '../pages/doctor-horarios-select.f7.html';
 import DoctorHorariosEdit from '../pages/doctor-horarios-edit.f7.html';
 import DoctorHorariosShow from '../pages/doctor-horarios-show.f7.html';
+import DoctorAgregarPago from '../pages/doctor-agregar-pago.f7.html';
+import DoctorAgregarPagoInfo from '../pages/doctor-agregar-pago-info.f7.html';
+import DoctorAgregarPagoSummary from '../pages/doctor-agregar-pago-summary.f7.html';
+import DoctorAgregarPagoSuccess from '../pages/doctor-agregar-pago-success.f7.html';
+import DoctorPagosPendientes from '../pages/doctor-pagos-pendientes.f7.html';
+import PagoDetails from '../pages/pago-details.f7.html';
 import PagosHome from '../pages/pagos-home.f7.html';
 import Config from '../pages/ajustes.f7.html';
 
@@ -80,6 +86,36 @@ var routes = [
         name: "doctor-horarios-show",
         path: '/doctor/timetable/show',
         component: DoctorHorariosShow,
+    },
+    {
+        name: "pago-details",
+        path: '/doctor/pagos/details',
+        component: PagoDetails,
+    },
+    {
+        name: "doctor-agregar-pago",
+        path: '/doctor/agregar/pago',
+        component: DoctorAgregarPago,
+    },
+    {
+        name: "doctor-agregar-pago-success",
+        path: '/doctor/agregar/pago/success',
+        component: DoctorAgregarPagoSuccess,
+    },
+    {
+        name: "doctor-pagos-pendientes",
+        path: '/doctor/agregar/pago/pendientes',
+        component: DoctorPagosPendientes,
+    },
+    {
+        name: "doctor-agregar-pago-info",
+        path: '/doctor/agregar/pago/info',
+        component: DoctorAgregarPagoInfo,
+    },
+    {
+        name: "doctor-agregar-pago-summary",
+        path: '/doctor/agregar/pago/summary',
+        component: DoctorAgregarPagoSummary,
     },
     {
         name: "landing",

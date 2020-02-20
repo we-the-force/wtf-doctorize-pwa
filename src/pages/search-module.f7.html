@@ -1,31 +1,30 @@
 <template>
     <div class="page" id="search-module">
         <div class="header">
-            <div class="search info">
+            <div class="search info searchbar-hide-on-search">
                 <a class="back">
                     <i class="material-icons">chevron_left</i>
                 </a>
                 <p class="title1"></p>
             </div>
-            <div class="search-bar list">
+            <form class="search-bar searchbar list">
                 <ul>
                     <li class="item-content item-input">
-                        <div class="item-inner">
-                            <div class="item-input-wrap rounded">
-                                <i class="material-icons grey">
-                                    search
-                                </i>
-                                <input type="text" name="quantity" id="quantity" placeholder="Cantidad">
+                        <div class="item-inner searchbar-inner">
+                            <div class="item-input-wrap searchbar-input-wrap rounded">
+                                <i class="searchbar-icon"></i>
+                                <input type="search" id="search" placeholder="Search">
                                 <span class="input-clear-button"></span>
                             </div>
                         </div>
                     </li>
                 </ul>
-            </div>
+            </form>
             <hr>
         </div>
         <div class="page-content">
-            <div class="list">
+            <div class="searchbar-backdrop"></div>
+            <div class="list searchbar-found">
                 <ul>
                     <li>
                         <div class="card card-outline search patients">
@@ -113,6 +112,9 @@
                     </li>
                 </ul>
             </div>
+            <div class="block searchbar-not-found">
+                <div class="block-inner">Nothing found</div>
+            </div>
         </div>
 
     </div>
@@ -127,6 +129,29 @@
                 var app = self.$app;
 
                 $$('#search-module .header .title1').text('Pacientes');
+
+                var searchbar = app.searchbar.create({
+                    el: '.searchbar',
+                    searchContainer: '.searchbar-found',
+                    searchIn: '.data',
+                    on: {
+                        search(sb, query, previousQuery) {
+                            console.log(query, previousQuery);
+                        }
+                    }
+                });
+
+                app.data.store.getItem('search').then(function (value) {
+                    if (value == 'pagos') {
+                        $$('.card.search').click(function (x) {
+                            let data = $$(this).find('.data').text();//cambiar a ir
+                            app.data.store.setItem('pago-patient', data).then(function (value) {
+                                app.data.store.removeItem('search');
+                                app.methods.redirectTo('doctor-agregar-pago');
+                            });
+                        });
+                    }
+                });
 
             }
         }

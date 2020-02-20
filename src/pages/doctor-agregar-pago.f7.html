@@ -85,10 +85,12 @@
                         <hr>
                         <li><a class="list-button item-link option cash popover-close" href="#">Efectivo</a></li>
                         <hr>
-                        <li><a class="list-button item-link option credit_debit popover-close" href="#">Tarjeta de Credito /
+                        <li><a class="list-button item-link option credit_debit popover-close" href="#">Tarjeta de
+                                Credito /
                                 Debito</a></li>
                         <hr>
-                        <li><a class="list-button item-link option bank popover-close" href="#">Ingreso Bancario</a></li>
+                        <li><a class="list-button item-link option bank popover-close" href="#">Ingreso Bancario</a>
+                        </li>
                         <hr>
                         <li><a class="list-button item-link light-blue popover-close" href="#">Agregar Metodo</a></li>
                     </ul>
@@ -111,6 +113,11 @@
                     //check
                 });
 
+                app.data.store.getItem('pago-patient').then(function (value) {
+                    $$('#doctor-agregar-pago #patient .card-content .data .text').text(value);
+                    //check
+                });
+
                 $$('.popover-pay a.option').click(function (x) {
                     let row = $$(this);
                     row.parent().parent().find('.active').removeClass('active');
@@ -120,12 +127,13 @@
                 });
 
                 $$('.card#pay').click(function (x) {
-                    console.log('redirect pay');
                     app.methods.redirectTo('doctor-pagos-pendientes');
                 });
 
                 $$('.card#patient').click(function (x) {
-                    console.log('redirect patient');
+                    app.data.store.setItem('search', 'patients_pagos').then(function (value) {
+                        app.methods.redirectTo('search-module');
+                    });
                 });
 
                 $$('.container .btn-2').click(function (x) {

@@ -29,6 +29,7 @@ import NuevoPaciente from '../pages/nuevo-paciente.f7.html';
 import schedule from '../pages/schedule.f7.html';
 import DynamicRoutePage from '../pages/dynamic-route.f7.html';
 import PhotoModule from '../pages/photo-module.f7.html';
+import SearchModule from '../pages/search-module.f7.html';
 import Settings from '../pages/settings.f7.html';
 import SettingsEdit from '../pages/settings-edit.f7.html';
 import DoctorHorariosAdd from '../pages/doctor-horarios-add.f7.html';
@@ -150,6 +151,11 @@ var routes = [
         name: 'photo-module',
         path: '/photo-module',
         component: PhotoModule,
+    },
+    {
+        name: 'search-module',
+        path: '/search-module',
+        component: SearchModule,
     },
     {
         name: 'register-s4',

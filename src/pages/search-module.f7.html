@@ -1,0 +1,159 @@
+<template>
+    <div class="page" id="search-module">
+        <div class="header">
+            <div class="search info searchbar-hide-on-search">
+                <a class="back">
+                    <i class="material-icons">chevron_left</i>
+                </a>
+                <p class="title1"></p>
+            </div>
+            <form class="search-bar searchbar list">
+                <ul>
+                    <li class="item-content item-input">
+                        <div class="item-inner searchbar-inner">
+                            <div class="item-input-wrap searchbar-input-wrap rounded">
+                                <i class="icons material-icons">search</i>
+                                <input type="search" id="search" placeholder="Search">
+                                <span class="input-clear-button"></span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </form>
+            <hr>
+        </div>
+        <div class="page-content">
+            <div class="searchbar-backdrop"></div>
+            <div class="list searchbar-found">
+                <ul>
+                    <li>
+                        <div class="card card-outline search patients">
+                            <div class="rectangle turquoise"></div>
+                            <div class="avatar">
+                                <img>
+                            </div>
+                            <div class="card-content card-content-padding">
+                                <p class="dark-blue data" data-id="' + i + '">Silvia Navarro</p>
+                                <p class="addr">Avda. Arroyos, 185. Col. Lomas Bajas</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card card-outline search patients">
+                            <div class="rectangle turquoise"></div>
+                            <div class="avatar">
+                                <img>
+                            </div>
+                            <div class="card-content card-content-padding">
+                                <p class="dark-blue data" data-id="' + i + '">Segio Alcantara</p>
+                                <p class="addr">Calle Mariano Abasolo 1090</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card card-outline search patients">
+                            <div class="rectangle turquoise"></div>
+                            <div class="avatar">
+                                <img>
+                            </div>
+                            <div class="card-content card-content-padding">
+                                <p class="dark-blue data" data-id="' + i + '">Laura Rodríguez</p>
+                                <p class="addr">Rayon 1030</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card card-outline search patients">
+                            <div class="rectangle turquoise"></div>
+                            <div class="avatar">
+                                <img>
+                            </div>
+                            <div class="card-content card-content-padding">
+                                <p class="dark-blue data" data-id="' + i + '">Andrea Escareño</p>
+                                <p class="addr">Blvd. Fundadores 2820</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card card-outline search patients">
+                            <div class="rectangle turquoise"></div>
+                            <div class="avatar">
+                                <img>
+                            </div>
+                            <div class="card-content card-content-padding">
+                                <p class="dark-blue data" data-id="' + i + '">Pablo Alberto</p>
+                                <p class="addr">Calle Mariano Abasolo 1090</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card card-outline search patients">
+                            <div class="rectangle turquoise"></div>
+                            <div class="avatar">
+                                <img>
+                            </div>
+                            <div class="card-content card-content-padding">
+                                <p class="dark-blue data" data-id="' + i + '">Alejandro Reyes</p>
+                                <p class="addr">Rayon 1030</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card card-outline search patients">
+                            <div class="rectangle turquoise"></div>
+                            <div class="avatar">
+                                <img>
+                            </div>
+                            <div class="card-content card-content-padding">
+                                <p class="dark-blue data" data-id="' + i + '">Saraí Delgado</p>
+                                <p class="addr">Blvd. Fundadores 2820</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="block searchbar-not-found">
+                <div class="block-inner">Nothing found</div>
+            </div>
+        </div>
+
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+
+
+                var searchbar = app.searchbar.create({
+                    el: '.searchbar',
+                    searchContainer: '.searchbar-found',
+                    searchIn: '.data',
+                    on: {
+                        search(sb, query, previousQuery) {
+                            console.log(query, previousQuery);
+                        }
+                    }
+                });
+
+                app.data.store.getItem('search').then(function (value) {
+                    if (value == 'patients_pagos') {
+                        $$('#search-module .header .title1').text('Pacientes');
+                        $$('.card.search').click(function (x) {
+                            let data = $$(this).find('.data').text();//cambiar a ir
+                            app.data.store.setItem('pago-patient', data).then(function (value) {
+                                app.data.store.removeItem('search');
+                                app.methods.redirectTo('doctor-agregar-pago');
+                            });
+                        });
+                    }
+                });
+
+            }
+        }
+    }
+</script>

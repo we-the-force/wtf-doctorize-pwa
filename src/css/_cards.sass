@@ -385,7 +385,7 @@
                 right: 0px
             &.inactive
                 filter: saturate(0) opacity(0.6)
-    &.select-horarios
+    &.select-horarios,&.search
         display: flex
         width: auto
         align-items: center
@@ -405,6 +405,11 @@
             padding: 9px 0px 9px 0px
             p
                 font: $Body-4
+        &.patients
+            .card-content-padding
+                padding: 9px 9px 9px 0px
+            .addr
+                font: $text-2-card
     &.pagos
         width: auto
         --f7-card-margin-horizontal: 15px

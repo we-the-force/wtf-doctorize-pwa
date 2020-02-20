@@ -131,7 +131,7 @@
                 });
 
                 $$('.card#patient').click(function (x) {
-                    app.data.store.setItem('search', 'pagos').then(function (value) {
+                    app.data.store.setItem('search', 'patients_pagos').then(function (value) {
                         app.methods.redirectTo('search-module');
                     });
                 });

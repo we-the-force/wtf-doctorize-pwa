@@ -128,7 +128,6 @@
                 var self = this;
                 var app = self.$app;
 
-                $$('#search-module .header .title1').text('Pacientes');
 
                 var searchbar = app.searchbar.create({
                     el: '.searchbar',
@@ -142,7 +141,8 @@
                 });
 
                 app.data.store.getItem('search').then(function (value) {
-                    if (value == 'pagos') {
+                    if (value == 'patients_pagos') {
+                        $$('#search-module .header .title1').text('Pacientes');
                         $$('.card.search').click(function (x) {
                             let data = $$(this).find('.data').text();//cambiar a ir
                             app.data.store.setItem('pago-patient', data).then(function (value) {

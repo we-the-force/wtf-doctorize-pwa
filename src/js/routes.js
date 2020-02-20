@@ -45,6 +45,7 @@ import DoctorPagosPendientes from '../pages/doctor-pagos-pendientes.f7.html';
 import PagoDetails from '../pages/pago-details.f7.html';
 import PagosHome from '../pages/pagos-home.f7.html';
 import Config from '../pages/ajustes.f7.html';
+import PacientePerfil from '../pages/paciente-perfil.f7.html';
 
 var routes = [
 
@@ -52,6 +53,11 @@ var routes = [
         name: "root",
         path: '/',
         component: LoginPage,
+    },
+    {
+        name: "paciente-perfil",
+        path: "/paciente/perfil",
+        component: PacientePerfil,
     },
     {
         name: "config",

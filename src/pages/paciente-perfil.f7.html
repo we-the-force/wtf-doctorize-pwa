@@ -1,0 +1,67 @@
+<template>
+    <div class="page" id="paciente-perfil">
+        <div class="page-content">
+            <div class="header paciente">
+                <div class="circle"></div>
+                <div class="photo">
+                    <img src="../static/images/gwen.jpeg" alt="">
+                </div>
+                <p class="name">Gewndolyne Stacy</p>
+                <div class="binfo">
+                    <p class="gender">Mujer</p>
+                    <p>&nbsp;/&nbsp;</p>
+                    <p class="age">23 años</p>
+                </div>
+                <div class="dots">
+                    <div class="dot call">
+                        <i class="icons material-icons" style="transform: scaleX(-1);">phone</i>
+                    </div>
+                    <div class="dot mssg">
+                        <i class="icons material-icons">comment</i>
+                    </div>
+                    <div class="dot info">
+                        <i class="icons material-icons">info</i>
+                    </div>
+                </div>
+                <div class="options">
+                    <div class="appointment">
+                        <img src="../static/icons/Vector.svg" alt="">
+                        <p>Consultar</p>
+                    </div>
+                    <hr>
+                    <div class="payment">
+                        <img src="../static/icons/Frame.svg" alt="">
+                        <p>Cobrar</p>
+                    </div>
+                    <hr>
+                    <div class="schedule">
+                        <img src="../static/icons/agenda.svg" alt="">
+                        <p>Agendar</p>
+                    </div>
+                </div>
+                <div class="title">
+                    <a class="arrow">
+                        <i class="material-icons">chevron_left</i>
+                    </a>
+                    <p class="text">Perfil del paciente</p>
+                    <a class="add">
+                        <i class="material-icons">add_circle</i>
+                    </a>
+                </div>
+                <hr class="end">
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+            }
+        }
+    }
+</script>

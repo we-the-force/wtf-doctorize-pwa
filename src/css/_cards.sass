@@ -520,6 +520,66 @@
 .card-expandable.card-opened .card-opened-fade-out
     opacity: 0 !important
 
+.v2
+    width: auto
+    &.sqr
+        width: 28vw
+        height: 28vw
+        margin: 5px
+        display: flex
+        flex-direction: column
+        justify-content: space-between
+        border-radius: 15px
+        @media screen and (max-width: 400px)
+            width: 42vw
+            height: 42vw
+        .card-header
+            padding: 8px 12px 0px 8px
+            display: flex
+            align-items: center
+            a
+                display: flex
+                i
+                    color: $turquoise-2
+                    font-size: 25px
+            p
+                flex-grow: 1
+                text-align: right
+                font: $text-2-card
+                font-size: 19px
+                font-weight: normal
+                color: $dark-blue
+            &::after
+                content: none
+        .card-content
+            padding: 0px 12px 0px 8px
+            display: flex
+            align-items: center
+            img
+                height: 25px
+                width: 25px
+            p
+                flex-grow: 1
+                text-align: right
+                font: $text-1-card
+                font-weight: 300
+                color: $grey
+        .card-footer
+            display: flex
+            align-items: center
+            padding: 0px 12px 10px 8px
+            p
+                font-family: Nunito
+                font-style: normal
+                font-weight: 600
+                font-size: 24px
+                line-height: 33px
+                text-align: right
+                flex-grow: 1
+                color: $light-blue
+            &::before
+                content: none
+
 .popover
     background: $white
     width: 242px

@@ -11,7 +11,7 @@
         margin-block-end: 3px
     .rectangle
         position: absolute
-        width: 5%
+        width: 4%
         height: 100%
         border-top-left-radius: 10px
         border-bottom-left-radius: 10px
@@ -25,6 +25,8 @@
             background: $yellow-2
         &.red
             background: $red
+        &.pink
+            background: $pink
     .dynamic-popover,.permissions-link
         position: absolute
         top: 10px
@@ -522,12 +524,52 @@
 
 .v2
     width: auto
-    margin: 7px 5px
+    margin: 15px 5px
+    .card-content
+        padding: 10px 12px 10px 5%
+        display: flex
+        align-items: flex-start
+        .data
+            overflow-x: hidden
+            margin-top: -3px
+            margin-bottom: -3px
+            flex-grow: 1
+            .text
+                font: $Body-4
+                color: $dark-blue
+                line-height: 25px
+            .title
+                font: $text-1-card
+                font-weight: 300
+                color: $light-blue
+                &.bold
+                    font-weight: 600
+                &.grey
+                    color: $grey
+        .date
+            font: $text-1-card
+            font-weight: 600
+            color: $grey
+        .icon,img
+            margin-left: 6px
+            margin-right: 10px
+            width: 24px
+            &.yellow
+                color: $yellow
+        a
+            margin-left: 5px
+            display: flex
+            i
+                font-size: 25px
+                color: $dark-blue
     &.card-expandable
         margin-bottom: 0px
+        .card-content
+            display: block
         &:not(:last-child)
             margin-bottom: -80px
     &.sqr
+        margin: 7px 5px
         width: 28vw
         height: 28vw
         margin: 5px

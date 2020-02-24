@@ -1,0 +1,134 @@
+<template>
+    <div class="page" id="paciente-perfil-add">
+        <div class="page-content">
+            <div class="header basic">
+                <a class="back">
+                    <i class="material-icons">chevron_left</i>
+                </a>
+                <p class="title1">Agregar</p>
+            </div>
+            <div class="content">
+                <div class="title">¿Qué deseas agregar al expediente?</div>
+                <div class="card v2" id="condicionMedica">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <img src="../static/icons/heart_lblue.svg">
+                        <div class="data">
+                            <p class="text">Condición médica</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card v2" id="medicamentos">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <img src="../static/icons/Medicinas.svg">
+                        <div class="data">
+                            <p class="text">Medicamentos</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card v2" id="alergias">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <img src="../static/icons/Alergias_b.svg">
+                        <div class="data">
+                            <p class="text">Alergías</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card v2" id="hSocial">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <img src="../static/icons/HistoriaSocial.svg">
+                        <div class="data">
+                            <p class="text">Historia social</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card v2" id="hMedicaFam">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <img src="../static/icons/HistorialFamilia_b.svg">
+                        <div class="data">
+                            <p class="text">Historia médica familiar</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card v2" id="Contra">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <img src="../static/icons/Contradicciones.svg">
+                        <div class="data">
+                            <p class="text">Contraindicaciones</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card v2" id="Hospitalizacion">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <img src="../static/icons/case_b.svg">
+                        <div class="data">
+                            <p class="text">Hospitalizaciones</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card v2" id="cirugia">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <img src="../static/icons/Bisturi_b.svg">
+                        <div class="data">
+                            <p class="text">Cirugías / Implantes</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card v2" id="vacunas">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <img src="../static/icons/Inyeccion.svg">
+                        <div class="data">
+                            <p class="text">Vacunas</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+            }
+        }
+    }
+</script>

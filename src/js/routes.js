@@ -46,6 +46,7 @@ import PagoDetails from '../pages/pago-details.f7.html';
 import PagosHome from '../pages/pagos-home.f7.html';
 import Config from '../pages/ajustes.f7.html';
 import PacientePerfil from '../pages/paciente-perfil.f7.html';
+import PacientePerfilAdd from '../pages/paciente-perfil-add.f7.html';
 
 var routes = [
 
@@ -58,6 +59,11 @@ var routes = [
         name: "paciente-perfil",
         path: "/paciente/perfil",
         component: PacientePerfil,
+    },
+    {
+        name: "paciente-perfil-add",
+        path: "/paciente/perfil/add",
+        component: PacientePerfilAdd,
     },
     {
         name: "config",

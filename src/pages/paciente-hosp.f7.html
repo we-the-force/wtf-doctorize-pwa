@@ -1,14 +1,49 @@
 <template>
-    <div class="page" id="paciente-cond-med">
+    <div class="page paciente-show-item" id="paciente-hosp">
         <div class="page-content">
-            <div class="header">
+            <div class="header basic center">
                 <a class="back">
                     <i class="material-icons">chevron_left</i>
                 </a>
-                <p class="title1">Horarios name</p>
-                <a class="edit" href="#">
+                <p class="title1">Hospitalizaciones</p>
+                <a class="edit popover-open" data-popover=".popover-edit">
                     <i class="material-icons">more_horiz</i>
                 </a>
+            </div>
+            <div class="slot when">
+                <p class="title">Cuando</p>
+                <p class="data">24/01/2020 - 02/02/2020</p>
+            </div>
+            <div class="slot razon">
+                <p class="title">Razón</p>
+                <p class="data">Dolor severo en el pecho</p>
+            </div>
+            <div class="slot where">
+                <p class="title">Donde</p>
+                <p class="data">Hospital Princeton-Plainsboro</p>
+            </div>
+            <div class="slot atencion">
+                <p class="title">Atención medica</p>
+                <p class="data">Dr. Gregorio Casas</p>
+            </div>
+            <div class="slot informe">
+                <p class="title">Informe de alta</p>
+                <p class="data dwnld link">
+                    <i class="material-icons">assignment</i>
+                    Descargar
+                </p>
+            </div>
+
+        </div>
+        <div class="popover popover-edit">
+            <div class="popover-inner">
+                <div class="list">
+                    <ul>
+                        <li><a class="list-button item-link edit" href="#">Editar</a></li>
+                        <hr>
+                        <li><a class="list-button item-link delete" href="#">Eliminar</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -21,6 +56,43 @@
                 var self = this;
                 var app = self.$app;
 
+                $$('.popover-edit .item-link.delete').click(function (x) {
+                    //cierra pop over
+                    app.popover.close();
+                    //crea cuadro de dialogo
+                    var dialog = app.dialog.create({
+                        cssClass: 'delete',
+                        title: '<i class="material-icons">error</i>',
+                        text: 'Esta seguro que desea eliminar?',
+                        content: 'Esta operación es irreversible',
+                        buttons: [
+                            {
+                                text: '<p>Cancelar</p> <i class="material-icons">chevron_right</i>',
+                                cssClass: 'cancel',
+                                onClick:
+                                    //cancela la accion, cierra ventana
+                                    function (x, y) {
+                                        dialog.close();
+                                        console.log('do not delete ');
+
+                                    }
+                            },
+                            {
+                                text: '<p>Eliminar</p> <i class="material-icons">chevron_right</i>',
+                                cssClass: 'delete',
+                                onClick:
+                                    function (x, y) {
+                                        //mandar eliminar el horario**********+
+                                        //cierra ventana, elimina tarjeta
+                                        dialog.close();
+                                        console.log('delete');
+                                    }
+                            }
+                        ]
+                    });
+                    //abre cuadro de dialogo
+                    dialog.open();
+                });
             }
         }
     }

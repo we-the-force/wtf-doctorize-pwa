@@ -1,14 +1,58 @@
 <template>
-    <div class="page" id="paciente-cond-med">
+    <div class="page paciente-show-item" id="paciente-alergias">
         <div class="page-content">
-            <div class="header">
+            <div class="header basic center">
                 <a class="back">
                     <i class="material-icons">chevron_left</i>
                 </a>
-                <p class="title1">Horarios name</p>
-                <a class="edit" href="#">
+                <p class="title1">Alergías</p>
+                <a class="edit popover-open" data-popover=".popover-edit">
                     <i class="material-icons">more_horiz</i>
                 </a>
+            </div>
+            <div class="slot alergia">
+                <p class="title">Alergía</p>
+                <p class="data">Dermatitis de contacto</p>
+            </div>
+            <div class="slot cause">
+                <p class="title">Causado por</p>
+                <p class="data">Polen</p>
+            </div>
+            <div class="slot med">
+                <p class="title">Medicamento</p>
+                <p class="data link">Linagliptina/Metformina</p>
+            </div>
+            <div class="slot react">
+                <p class="title">Reacción</p>
+                <p class="data">Sarpullido de la piel ocasionado por el contacto con polen</p>
+            </div>
+            <div class="slot last">
+                <p class="title">Último caso</p>
+                <p class="data link">20/ 02 /2020</p>
+            </div>
+            <div class="slot since">
+                <p class="title">Desde</p>
+                <p class="data link">2018</p>
+            </div>
+            <div class="slot notes">
+                <p class="title">Notas</p>
+                <p class="data">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p class="added">Agregada por: Dr. Bryan Thomas Gosling </p>
+                <p class="date">19/02/2020 11:15 PM</p>
+            </div>
+
+        </div>
+        <div class="popover popover-edit">
+            <div class="popover-inner">
+                <div class="list">
+                    <ul>
+                        <li><a class="list-button item-link edit" href="#">Editar</a></li>
+                        <hr>
+                        <li><a class="list-button item-link delete" href="#">Eliminar</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -21,6 +65,43 @@
                 var self = this;
                 var app = self.$app;
 
+                $$('.popover-edit .item-link.delete').click(function (x) {
+                    //cierra pop over
+                    app.popover.close();
+                    //crea cuadro de dialogo
+                    var dialog = app.dialog.create({
+                        cssClass: 'delete',
+                        title: '<i class="material-icons">error</i>',
+                        text: 'Esta seguro que desea eliminar?',
+                        content: 'Esta operación es irreversible',
+                        buttons: [
+                            {
+                                text: '<p>Cancelar</p> <i class="material-icons">chevron_right</i>',
+                                cssClass: 'cancel',
+                                onClick:
+                                    //cancela la accion, cierra ventana
+                                    function (x, y) {
+                                        dialog.close();
+                                        console.log('do not delete ');
+
+                                    }
+                            },
+                            {
+                                text: '<p>Eliminar</p> <i class="material-icons">chevron_right</i>',
+                                cssClass: 'delete',
+                                onClick:
+                                    function (x, y) {
+                                        //mandar eliminar el horario**********+
+                                        //cierra ventana, elimina tarjeta
+                                        dialog.close();
+                                        console.log('delete');
+                                    }
+                            }
+                        ]
+                    });
+                    //abre cuadro de dialogo
+                    dialog.open();
+                });
             }
         }
     }

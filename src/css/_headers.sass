@@ -296,9 +296,13 @@
             text-align: center
             line-height: 120%
             color: $dark-blue
+            &.light-blue
+                color: $light-blue !important
         &.center
             justify-content: space-between
             .edit
                 display: flex
                 i
                     margin-right: 15px
+                &.none
+                    visibility: hidden

@@ -128,6 +128,54 @@
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
+                
+                $$('#paciente-perfil-add .card.v2').click(function (e) {
+                    let x = $$(this).attr('id');
+                    switch (x) {
+                        case 'condicionMedica':
+                            console.log('condicionMedica');
+                            /* app.data.store.setItem("id_patient_cond", $$(this).attr('id')).then(function (value) {
+                                    app.methods.redirectTo('home');
+                            }); */
+                            app.methods.redirectTo('paciente-cond-med-form');
+                            break;
+                        case 'medicamentos':
+                            console.log('medicamentos');
+                            app.methods.redirectTo('paciente-medicamento-form');
+                            break;
+                        case 'alergias':
+                            console.log('alergias');
+                            app.methods.redirectTo('paciente-alergias-form');
+                            break;
+                        case 'hSocial':
+                            console.log('hSocial');
+                            app.methods.redirectTo('paciente-hist-social-form');
+                            break;
+                        case 'hMedicaFam':
+                            console.log('hMedicaFam');
+                            app.methods.redirectTo('paciente-hist-medica-fam-form');
+                            break;
+                        case 'Contra':
+                            console.log('Contra');
+                            app.methods.redirectTo('paciente-contra-form');
+                            break;
+                        case 'Hospitalizacion':
+                            console.log('Hospitalizacion');
+                            app.methods.redirectTo('paciente-hosp-form');
+                            break;
+                        case 'cirugia':
+                            console.log('cirugia');
+                            app.methods.redirectTo('paciente-cirugia-implantes-form');
+                            break;
+                        case 'vacunas':
+                            console.log('vacunas');
+                            app.methods.redirectTo('paciente-vacunas-form');
+                            break;
+                    }
+
+                    
+                });
+
             }
         }
     }

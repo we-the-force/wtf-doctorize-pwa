@@ -449,7 +449,7 @@
                 </div>
                 <div class="content">
                     <div class="card v2">
-                        <div class="rectangle turquoise"></div>
+                        <div class="rectangle green"></div>
                         <div class="card-content">
                             <img src="../static/icons/Alergias.svg">
                             <div class="data">
@@ -617,6 +617,52 @@
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
+
+                $$('.card.v2').click(function (e) {
+                    let x = $$(this).parent().parent().attr('class').split(' ')[1];
+                    switch (x) {
+                        case 'condiciones':
+                            console.log('condiciones');
+                            /* app.data.store.setItem("id_patient_cond", $$(this).attr('id')).then(function (value) {
+                                    app.methods.redirectTo('home');
+                            }); */
+                            app.methods.redirectTo('paciente-cond-med');
+                            break;
+                        case 'medicamentos':
+                            console.log('medicamentos');
+                            app.methods.redirectTo('paciente-medicamento');
+                            break;
+                        case 'alergias':
+                            console.log('alergias');
+                            app.methods.redirectTo('paciente-alergias');
+                            break;
+                        case 'hSocial':
+                            console.log('hSocial');
+                            app.methods.redirectTo('paciente-hist-social');
+                            break;
+                        case 'hMedicaFam':
+                            console.log('hMedicaFam');
+                            app.methods.redirectTo('paciente-hist-medica-fam');
+                            break;
+                        case 'contraindicaciones':
+                            console.log('contraindicaciones');
+                            app.methods.redirectTo('paciente-contra');
+                            break;
+                        case 'hospitalizaciones':
+                            console.log('hospitalizaciones');
+                            app.methods.redirectTo('paciente-hosp');
+                            break;
+                        case 'cirugias/implantes':
+                            console.log('cirugias/implantes');
+                            app.methods.redirectTo('paciente-cirugia-implantes');
+                            break;
+                        case 'Vacunas':
+                            console.log('Vacunas');
+                            app.methods.redirectTo('paciente-vacunas');
+                            break;
+                    }
+
+                });
             }
         }
     }

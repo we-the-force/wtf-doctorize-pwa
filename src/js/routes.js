@@ -47,6 +47,15 @@ import PagosHome from '../pages/pagos-home.f7.html';
 import Config from '../pages/ajustes.f7.html';
 import PacientePerfil from '../pages/paciente-perfil.f7.html';
 import PacientePerfilAdd from '../pages/paciente-perfil-add.f7.html';
+import PacienteCondMed from '../pages/paciente-cond-med.f7.html';
+import PacienteMed from '../pages/paciente-med.f7.html';
+import PacienteAlergias from '../pages/paciente-alergias.f7.html';
+import PacienteHSocial from '../pages/paciente-hist-social.f7.html';
+import PacienteHMedFam from '../pages/paciente-hist-med-fam.f7.html';
+import PacienteContra from '../pages/paciente-contra.f7.html';
+import PacienteHosp from '../pages/paciente-hosp.f7.html';
+import PacienteCirug from '../pages/paciente-cirug.f7.html';
+import PacienteVacunas from '../pages/paciente-vacunas.f7.html';
 
 var routes = [
 
@@ -64,6 +73,51 @@ var routes = [
         name: "paciente-perfil-add",
         path: "/paciente/perfil/add",
         component: PacientePerfilAdd,
+    },
+    {
+        name: "paciente-cond-med",
+        path: "/paciente/condiciones_medicas",
+        component: PacienteCondMed,
+    },
+    {
+        name: "paciente-medicamento",
+        path: "/paciente/medicamento",
+        component: PacienteMed,
+    },
+    {
+        name: "paciente-alergias",
+        path: "/paciente/alergias",
+        component: PacienteAlergias,
+    },
+    {
+        name: "paciente-hist-social",
+        path: "/paciente/historia/social",
+        component: PacienteHSocial,
+    },
+    {
+        name: "paciente-hist-medica-fam",
+        path: "/paciente/historia/medica_fam",
+        component: PacienteHMedFam,
+    },
+    {
+        name: "paciente-contra",
+        path: "/paciente/contraindicaciones",
+        component: PacienteContra,
+    },
+    {
+        name: "paciente-hosp",
+        path: "/paciente/hospitalizaciones",
+        component: PacienteHosp,
+    },
+    {
+        name: "paciente-cirugia-implantes",
+        path: "/paciente/cirugia_implantes",
+        component: PacienteCirug,
+    },
+    {
+        name: "paciente-vacunas",
+        path: "/paciente/vacunas",
+        component: PacienteVacunas,
     },
     {
         name: "config",

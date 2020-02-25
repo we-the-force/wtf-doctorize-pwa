@@ -1,0 +1,100 @@
+<template>
+    <div class="page paciente-show-item" id="paciente-cond-med">
+        <div class="page-content">
+            <div class="header basic center">
+                <a class="back">
+                    <i class="material-icons">chevron_left</i>
+                </a>
+                <p class="title1">Condiciones médicas</p>
+                <a class="edit popover-open" data-popover=".popover-edit">
+                    <i class="material-icons">more_horiz</i>
+                </a>
+            </div>
+            <div class="slot cond">
+                <p class="title">Condición</p>
+                <p class="data">Diabetes Tipo II</p>
+            </div>
+            <div class="slot date">
+                <p class="title">Diagnosticado</p>
+                <p class="data">02/ FEB/ 2020</p>
+            </div>
+            <div class="slot med">
+                <p class="title">Medicamento</p>
+                <p class="data link">Linagliptina/Metformina</p>
+            </div>
+            <div class="slot doc">
+                <p class="title">Tratado por</p>
+                <p class="data link">Alejandro De Leon</p>
+            </div>
+            <div class="slot notes">
+                <p class="title">Notas</p>
+                <p class="data">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p class="added">Agregada por: Dr. Bryan Thomas Gosling </p>
+                <p class="date">19/02/2020 11:15 PM</p>
+            </div>
+
+        </div>
+        <div class="popover popover-edit">
+            <div class="popover-inner">
+                <div class="list">
+                    <ul>
+                        <li><a class="list-button item-link edit" href="#">Editar</a></li>
+                        <hr>
+                        <li><a class="list-button item-link delete" href="#">Eliminar</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+
+                $$('.popover-edit .item-link.delete').click(function (x) {
+                    //cierra pop over
+                    app.popover.close();
+                    //crea cuadro de dialogo
+                    var dialog = app.dialog.create({
+                        cssClass: 'delete',
+                        title: '<i class="material-icons">error</i>',
+                        text: 'Esta seguro que desea eliminar?',
+                        content: 'Esta operación es irreversible',
+                        buttons: [
+                            {
+                                text: '<p>Cancelar</p> <i class="material-icons">chevron_right</i>',
+                                cssClass: 'cancel',
+                                onClick:
+                                    //cancela la accion, cierra ventana
+                                    function (x, y) {
+                                        dialog.close();
+                                        console.log('do not delete ');
+
+                                    }
+                            },
+                            {
+                                text: '<p>Eliminar</p> <i class="material-icons">chevron_right</i>',
+                                cssClass: 'delete',
+                                onClick:
+                                    function (x, y) {
+                                        //mandar eliminar el horario**********+
+                                        //cierra ventana, elimina tarjeta
+                                        dialog.close();
+                                        console.log('delete');
+                                    }
+                            }
+                        ]
+                    });
+                    //abre cuadro de dialogo
+                    dialog.open();
+                });
+            }
+        }
+    }
+</script>

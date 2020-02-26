@@ -10,7 +10,73 @@
                     <i class="material-icons">more_horiz</i>
                 </a>
             </div>
+            <div class="item-input v2">
+                <label for="name">Nombre</label>
+                <div class="item-input-inner">
+                    <input type="text" name="name" id="name" placeholder="Ej. Diabetes tipo II, Glaucoma, etc." required
+                        validate>
+                    <span class="input-clear-button"></span>
+                </div>
+            </div>
+            <div class="two-input">
+                <div class="item-input v2 half">
+                    <label for="state">Estado</label>
+                    <div class="item-input-inner dropdown-blue">
+                        <select name="state" class="light-blue">
+                            <option value="active">Activa</option>
+                            <option value="inactive">Inactiva</option>
+                        </select>
+                    </div>
+                </div>
 
+                <div class="item-input v2 half">
+                    <label for="date">Fecha del diagnostico</label>
+                    <div class="item-input-inner">
+                        <input class="pdr-10" type="date" name="date" id="name" placeholder="DD/MM/AAAA" required
+                            validate>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item-input v2">
+                <label for="tp">Tratado por</label>
+                <div class="item-input-inner">
+                    <input type="text" name="tp" id="tp" placeholder="Texto" required validate>
+                    <span class="input-clear-button"></span>
+                </div>
+            </div>
+
+            <div class="item-input v2">
+                <label for="med">Medicamento</label>
+                <div class="item-input-inner dropdown-blue">
+                    <select name="med" placeholder="Seleccionar medicamento">
+                        <option value="med_1">Medicamento 1</option>
+                        <option value="med_2">Medicamento 2</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="add_med">
+                <a>
+                    <i class="material-icons">add_circle</i>
+                    <p>Agregar Medicamento</p>
+                </a>
+            </div>
+
+            <div class="item-input v2">
+                <label for="notes">Notas</label>
+                <div class="item-input-inner textarea">
+                    <textarea class="resizable" placeholder="Agrege algo mas..."></textarea>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="btn-2 woi">
+                    <a href="">
+                        <p>Confirmar </p>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </template>

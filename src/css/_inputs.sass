@@ -83,7 +83,18 @@
             margin-right: 15px
             position: unset
             top: unset
-        &.half
+        &.half,.radio-input
             width: 50%
         .pdr-10
             padding-right: 10px
+        .radio-input
+            display: flex
+            align-items: center
+            justify-content: space-between
+            label
+                display: flex
+                i
+                    border-color: $turquoise-2
+                    margin-right: 5px
+                input[type="radio"]:checked ~ .icon-radio
+                    border-color: $turquoise-2

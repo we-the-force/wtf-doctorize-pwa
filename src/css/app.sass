@@ -131,6 +131,9 @@
             background: transparent
             &::after
                 content: none
+    input[type="radio"]:checked ~ .icon-radio
+        &::after    
+            color: $turquoise-2 
 
 .md
     .popover-menu
@@ -153,3 +156,6 @@
             left: unset
             margin-top: unset
             width: auto
+        input[type="radio"]:checked ~ .icon-radio
+            &::after
+                background-color: $turquoise-2 

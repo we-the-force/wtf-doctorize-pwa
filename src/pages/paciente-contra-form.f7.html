@@ -5,12 +5,25 @@
                 <a class="back">
                     <i class="material-icons">chevron_left</i>
                 </a>
-                <p class="title1 light-blue">contra</p>
+                <p class="title1 light-blue">Contraindicaciones</p>
                 <a class="edit none">
                     <i class="material-icons">more_horiz</i>
                 </a>
             </div>
-
+            <div class="item-input v2">
+                <label for="desc">Contraindicaciones</label>
+                <div class="item-input-inner textarea">
+                    <textarea class="resizable"
+                        placeholder="No se deben administrar hierro y no se debe consumir jugo de uva, etc."></textarea>
+                </div>
+            </div>
+            <div class="container">
+                <div class="btn-2 woi">
+                    <a href="">
+                        <p>Confirmar </p>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -21,6 +34,11 @@
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
+
+
+                $$('.btn-2 a').click(function (e) {
+                    app.methods.redirectTo('paciente-perfil');
+                });
 
             }
         }

@@ -168,7 +168,7 @@
 
 .paciente-show-item
     .slot
-        margin: 25px 
+        margin: 25px
         .title
             font: $Body-2
             font-weight: normal
@@ -209,13 +209,15 @@
             line-height: 20px
         .light-blue
             color: $light-blue
-    .add_med
+    .add_module
         display: flex
         justify-content: center
         width: auto
         border-bottom: 0.5px solid #C2CEDB
         margin-right: 10px
         margin-left: 10px
+        padding-bottom: 15px
+        padding-top: 15px
         a
             display: flex
             align-items: center
@@ -224,5 +226,42 @@
             i
                 font-size: 24px
                 margin-right: 7px
+        p
+            margin-top: 7px
+            margin-bottom: 7px
     .container
         margin: 10px 0px
+    .trash
+        display: flex
+        align-items: center
+        justify-content: flex-end
+        .icon
+            display: flex
+            padding-right: 20px
+            i
+                color: $grey
+    .bor_top
+        border-top: 0.5px solid #C2CEDB
+    .details
+        margin-top: 10px
+        .title
+            margin-left: 15px
+            display: flex
+            align-items: center
+            .text
+                margin: 0px
+                font: $text-1-card
+                font-weight: 600
+                color: $dark-blue
+            a
+                display: flex
+                i
+                    font-size: 24px
+                    color: $dark-blue
+        .content
+            max-height: 300px
+            overflow: hidden
+            transition: 0.5s ease   
+            &.hide
+                max-height: 0
+                transition: 0.5s ease

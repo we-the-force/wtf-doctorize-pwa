@@ -10,7 +10,153 @@
                     <i class="material-icons">more_horiz</i>
                 </a>
             </div>
+            <div class="item-input v2">
+                <label for="med_name">Nombre del medicamento</label>
+                <div class="item-input-inner">
+                    <input type="text" name="med_name" id="med_name" placeholder="Ej. Paracetamol, Ibuprofeno, etc."
+                        required validate>
+                    <span class="input-clear-button"></span>
+                </div>
+            </div>
+            <div class="two-input">
+                <div class="item-input v2 half">
+                    <label for="type">Tipo de medicina</label>
+                    <div class="item-input-inner dropdown-blue">
+                        <select name="type" class="light-blue">
+                            <option value="tablet">Tableta</option>
+                            <option value="capsule">Capsula</option>
+                            <option value="syrup">Jarabe</option>
+                        </select>
+                    </div>
+                </div>
 
+                <div class="item-input v2 half">
+                    <label for="type_ing">Tipo de ingesta</label>
+                    <div class="item-input-inner dropdown-blue">
+                        <select name="type_ing" class="light-blue">
+                            <option value="oral">oral</option>
+                            <option value="iny">inyeccion</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="two-input">
+                <div class="item-input v2 half">
+                    <label for="quantity">Cantidad</label>
+                    <div class="item-input-inner">
+                        <input type="text" name="quantity" id="quantity" placeholder="Ej. 100" required validate>
+                    </div>
+                </div>
+
+                <div class="item-input v2 half">
+                    <div class="item-input-inner dropdown-blue">
+                        <select name="unity" class="light-blue">
+                            <option value="mg">mg</option>
+                            <option value="ml">mL</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dosis_container">
+                <div class="bor_top" id="id_1">
+                    <div class="two-input ">
+                        <div class="item-input v2 half">
+                            <label for="dosis">Dosis</label>
+                            <div class="item-input-inner">
+                                <input type="text" name="dosis" id="dosis" placeholder="#" required validate>
+                            </div>
+                        </div>
+
+                        <div class="item-input v2 half">
+                            <div class="item-input-inner">
+                                <input type="text" name="dosis_2" id="dosis_2" placeholder="Ej. Diario" required
+                                    validate>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item-input v2">
+                        <label for="when">Cuando</label>
+                        <div class="item-input-inner">
+                            <input type="text" name="when" id="when" placeholder="Ej. Después de cada comida" required
+                                validate>
+                            <span class="input-clear-button"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trash">
+                <a class="icon">
+
+                </a>
+            </div>
+
+            <div class="add_dosis add_module">
+                <a>
+                    <i class="material-icons">add_circle</i>
+                    <p>Agregar otra dosis</p>
+                </a>
+            </div>
+
+            <div class="item-input v2">
+                <label for="period">Periodo</label>
+                <div class="item-input-inner">
+                    <input type="text" name="period" id="period" placeholder="Ej. 7 días" required validate>
+                    <span class="input-clear-button"></span>
+                </div>
+            </div>
+
+            <div class="item-input v2">
+                <label for="notes">Notas</label>
+                <div class="item-input-inner textarea">
+                    <textarea class="resizable" placeholder="Agrege algo mas..."></textarea>
+                </div>
+            </div>
+
+            <div class="details">
+                <div class="title">
+                    <p class="text">Detalles adicionales</p>
+                    <a class="arrow">
+                        <i class="material-icons">expand_less</i>
+                    </a>
+                </div>
+                <div class="content">
+                    <div class="item-input v2">
+                        <label for="medicine">Medicina tomada para</label>
+                        <div class="item-input-inner">
+                            <input type="text" name="medicine" id="medicine" placeholder="Ej. Diabetes" required
+                                validate>
+                            <span class="input-clear-button"></span>
+                        </div>
+                    </div>
+                    <div class="item-input v2">
+                        <label for="prescript">Prescrita por</label>
+                        <div class="item-input-inner">
+                            <input type="text" name="prescript" id="prescript" placeholder="Ej. Diabetes" required
+                                validate>
+                            <span class="input-clear-button"></span>
+                        </div>
+                    </div>
+                    <div class="item-input v2">
+                        <label for="secound">Efectos secundarios</label>
+                        <div class="item-input-inner">
+                            <input type="text" name="secound" id="secound" placeholder="Ej. Hinchazón, Sarpullido, etc."
+                                required validate>
+                            <span class="input-clear-button"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="btn-2 woi">
+                    <a href="">
+                        <p>Confirmar </p>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -21,6 +167,60 @@
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
+
+                $$('.add_module a').on('click', function (e) {
+                    let x = $$('.dosis_container').children().length;
+                    if (x == 1) {
+                        $$('.trash .icon').append('<i class="material-icons">delete</i>');
+                    }
+                    $$('.dosis_container').append(' <div class="bor_top" id="id_'+ (x+1) +'">' +
+                        '<div class="two-input ">' +
+                        '<div class="item-input v2 half">' +
+                        '<label for="dosis">Dosis</label>' +
+                        '<div class="item-input-inner">' +
+                        '<input type="text" name="dosis" id="dosis" placeholder="#" required validate>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="item-input v2 half">' +
+                        '<div class="item-input-inner">' +
+                        '<input type="text" name="dosis_2" id="dosis_2" placeholder="Ej. Diario" required validate>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="item-input v2">' +
+                        '<label for="when">Cuando</label>' +
+                        '<div class="item-input-inner">' +
+                        '<input type="text" name="when" id="when" placeholder="Ej. Después de cada comida" required validate>' +
+                        '<span class="input-clear-button"></span>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>');
+                });
+
+                $$('.trash a').click(function (e) {
+                    let x = $$('.dosis_container').children().length;
+                    if (x > 2) {
+                        $$('.dosis_container').children(":last-child").remove();
+                    } else if (x == 2) {
+                        $$('.dosis_container').children(":last-child").remove();
+                        $$(this).children().remove();
+                    }
+
+                });
+
+                $$('.details .title').click(function (e) {
+                    let x = $$('.details .title a i').text();
+                    if (x == 'expand_more') {
+                        $$('.details .title a i').text('expand_less');
+                    } else {
+                        $$('.details .title a i').text('expand_more');
+                    }
+                    $$('.details .content').toggleClass("hide");
+                });
+
+                $$('.btn-2 a').click(function (e) {
+                    app.methods.redirectTo('paciente-perfil');
+                });
 
             }
         }

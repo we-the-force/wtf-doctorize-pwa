@@ -151,6 +151,11 @@
                 var self = this;
                 var app = self.$app;
 
+
+                $$('.btn-2 a').click(function (e) {
+                    app.methods.redirectTo('paciente-perfil');
+                });
+
             }
         }
     }

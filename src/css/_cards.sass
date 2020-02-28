@@ -566,10 +566,35 @@
                 color: $dark-blue
     &.card-expandable
         margin-bottom: 0px
+        background-color: $white
+        height: 175px
         .card-content
             display: block
+        .card-content-padding
+            padding-left: 20px
+            padding-right: 20px
+            height: auto
+            padding-top: 0px
+            padding-bottom: 0px
         &:not(:last-child)
-            margin-bottom: -80px
+            margin-bottom: -145px
+        .card-header
+            min-height: 0px
+            color: $dark-blue
+            padding-left: 0px
+            padding-right: 0px
+            padding-top: 3px
+            align-items: flex-start
+        &.dark-blue
+            background-color: $dark-blue
+        &.light-blue
+            background-color: $light-blue
+        &.turquoise
+            background-color: $turquoise-2
+        &.dark-blue,&.light-blue,&.turquoise
+            color: $white
+            .card-header
+                color: $white
     &.sqr
         margin: 7px 5px
         width: 28vw

@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="title">
-                    <a class="arrow back">
+                    <a class="arrow">
                         <i class="material-icons">chevron_left</i>
                     </a>
                     <p class="text">Perfil del paciente</p>
@@ -618,6 +618,10 @@
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
+
+                $$('.header a').click(function (val) {
+                    app.methods.redirectTo('home');
+                });
 
                 $$('.card.v2').click(function (e) {
                     let x = $$(this).parent().parent().attr('class').split(' ')[1];

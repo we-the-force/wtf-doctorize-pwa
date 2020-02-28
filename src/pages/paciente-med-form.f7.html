@@ -219,7 +219,13 @@
                 });
 
                 $$('.btn-2 a').click(function (e) {
-                    app.methods.redirectTo('paciente-perfil');
+                    app.data.store.removeItem('edit_patient_data').then(function (value) {
+                        app.methods.redirectTo('paciente-perfil');
+                    });
+                });
+
+                $$('.header a').click(function (val) {
+                    app.data.store.removeItem('edit_patient_data');
                 });
 
             }

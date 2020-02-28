@@ -1,5 +1,16 @@
 <template>
     <div class="page" id="paciente-perfil">
+        <!-- <div class="header fixed navbar hide">
+            <div class="title">
+                <a class="arrow">
+                    <i class="material-icons">chevron_left</i>
+                </a>
+                <p class="text">Perfil del paciente</p>
+                <a class="add" href="/paciente/perfil/add">
+                    <i class="material-icons">add_circle</i>
+                </a>
+            </div>
+        </div> -->
         <div class="page-content">
             <div class="header paciente">
                 <div class="circle"></div>
@@ -39,15 +50,16 @@
                         <p>Agendar</p>
                     </div>
                 </div>
-                <div class="title">
-                    <a class="arrow">
-                        <i class="material-icons">chevron_left</i>
-                    </a>
-                    <p class="text">Perfil del paciente</p>
-                    <a class="add" href="/paciente/perfil/add">
-                        <i class="material-icons">add_circle</i>
-                    </a>
-                </div>
+            </div>
+
+            <div class="nav title">
+                <a class="arrow">
+                    <i class="material-icons">chevron_left</i>
+                </a>
+                <p class="text">Perfil del paciente</p>
+                <a class="add" href="/paciente/perfil/add">
+                    <i class="material-icons">add_circle</i>
+                </a>
             </div>
 
             <div class="slot generales">
@@ -618,9 +630,21 @@
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
+                var header = $$('.header.fixed');
+
+                /* $$('.page-content').on('scroll', function () {
+                    let t = $$('.page-content .header .title ').offset().top;
+                    t += 35;
+                    if(t <= 0){
+                        $$('.header.fixed').removeClass('hide');
+                    }else{
+                        $$('.header.fixed').addClass('hide');
+                    }
+                }); */
 
                 $$('.header a').click(function (val) {
                     app.methods.redirectTo('home');
+                    /* $$('.header.fixed').toggleClass('hide'); */
                 });
 
                 $$('.card.v2').click(function (e) {

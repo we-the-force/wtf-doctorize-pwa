@@ -150,6 +150,11 @@
                                 app.methods.redirectTo('doctor-agregar-pago');
                             });
                         });
+                    } else if (value == 'home_search_patients') {
+                        $$('.card.search').click(function (x) {
+                            app.data.store.removeItem('search');
+                            app.methods.redirectTo('paciente-perfil');
+                        });
                     }
                 });
 

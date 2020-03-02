@@ -3,6 +3,8 @@
         padding-bottom: 30px
         overflow-x: hidden
         .nav.title
+            z-index: 3
+            background: radial-gradient(70.86% 255.86% at 0.47% 0.7%, #FCFCFF 13.26%, #EBEFF2 150%)
             position: sticky
             top: 0
             width: 100%
@@ -38,17 +40,17 @@
             display: flex
             flex-direction: column
             align-items: center
-
             .circle
+                z-index: 4
                 position: absolute
                 width: 2250px
                 height: 2250px
                 left: 50%
                 transform: translate(-50%, -85%)
                 background: #EEF1F6
-                z-index: -1
                 border-radius: 50%
             .photo
+                z-index: 5
                 display: flex
                 img
                     width: 110px
@@ -57,6 +59,7 @@
                     box-shadow: 0px 2.59567px 19.4675px rgba(16, 43, 200, 0.2)
                     border-radius: 50%
             .name
+                z-index: 5
                 width: 80%
                 margin-top: 10px
                 margin-bottom: 0px
@@ -68,6 +71,7 @@
                 text-align: center
                 color: $dark-blue
             .binfo
+                z-index: 5
                 width: 75%
                 color: $grey
                 font: $text-1-card
@@ -78,6 +82,7 @@
                     margin-top: 0px
                     margin-bottom: 0px
             .dots
+                z-index: 5
                 width: 70%
                 display: flex
                 justify-content: space-evenly
@@ -95,6 +100,7 @@
                         color: $white
                         font-size: 18px
             .options
+                z-index: 5
                 width: 100%
                 display: flex
                 .appointment,.payment,.schedule
@@ -156,6 +162,8 @@
                         @media screen and (max-width: 350px)
                             font-size: 13px
 #paciente-perfil-add
+    .page-content
+        padding-bottom: 76px
     .content
         margin-top: 15px
         .title
@@ -172,6 +180,8 @@
                 width: 25px
 
 .paciente-show-item
+    .page-content
+        padding-bottom: 86px
     .slot
         margin: 25px
         .title
@@ -197,7 +207,8 @@
 
 .paciente-input-item
     padding-bottom: 10px
-    .page-content
+    .page-content   
+        padding-bottom: 86px
         display: flex
         flex-direction: column
     .two-input

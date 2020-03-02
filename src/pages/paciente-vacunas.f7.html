@@ -1,15 +1,15 @@
 <template>
     <div class="page paciente-show-item" id="paciente-vacunas">
+        <div class="header basic center fixed">
+            <a class="back">
+                <i class="material-icons">chevron_left</i>
+            </a>
+            <p class="title1">Vacunas</p>
+            <a class="edit popover-open" data-popover=".popover-edit">
+                <i class="material-icons">more_horiz</i>
+            </a>
+        </div>
         <div class="page-content">
-            <div class="header basic center">
-                <a class="back">
-                    <i class="material-icons">chevron_left</i>
-                </a>
-                <p class="title1">Vacunas</p>
-                <a class="edit popover-open" data-popover=".popover-edit">
-                    <i class="material-icons">more_horiz</i>
-                </a>
-            </div>
             <div class="slot vacunacion">
                 <p class="title">Vacunación</p>
                 <p class="data">Hep B</p>
@@ -59,7 +59,7 @@
                 $$('.popover-edit .item-link.edit').click(function (x) {
                     app.popover.close();
                     app.data.store.setItem('edit_patient_data', true).then(function (value) {
-                        app.methods.redirectTo('paciente-alergias-form');
+                        app.methods.redirectTo('paciente-vacunas-form');
                     });
                 });
 

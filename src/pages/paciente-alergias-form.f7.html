@@ -51,14 +51,11 @@
                 <label for="med">Medicamento</label>
                 <div class="item-input v2" id="id_1">
                     <div class="item-input-inner dropdown-blue">
-                        <select name="med" placeholder="Seleccionar medicamento">
-                            <option value="med_1">Medicamento 1</option>
-                            <option value="med_2">Medicamento 2</option>
-                        </select>
+                        <input list="medicamento" type="text" placeholder="Medicamento">
                     </div>
                     <div class="trash">
                         <a class="icon">
-        
+
                         </a>
                     </div>
                 </div>
@@ -85,7 +82,13 @@
                 </div>
             </div>
         </div>
-    </div>
+
+        <datalist id="medicamento">
+            <option value="Ibuprofeno">
+            <option value="Paracetamol">
+            <option value="Ambroxol">
+            <option value="Aspirina">
+        </datalist>
     </div>
 </template>
 <script>
@@ -103,10 +106,7 @@
                     }
                     $$('.medicamentos').append('<div class="item-input v2" id=id_' + (y + 1) + '>' +
                         '<div class="item-input-inner dropdown-blue">' +
-                        '<select name="med" placeholder="Seleccionar medicamento">' +
-                        '<option value="med_1">Medicamento 1</option>' +
-                        '<option value="med_2">Medicamento 2</option>' +
-                        '</select>' +
+                        '<input list="medicamento" type="text" placeholder="Medicamento">' +
                         '</div>' +
                         '<div class="trash">' +
                         '<a class="icon">' +

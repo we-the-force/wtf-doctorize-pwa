@@ -134,6 +134,14 @@
     input[type="radio"]:checked ~ .icon-radio
         &::after    
             color: $turquoise-2 
+    .paciente-input-item
+        .item-input-error-message
+            position: absolute
+            transform: translate(15px, 33px)
+            top: unset
+            left: unset
+            margin-top: unset
+            width: auto
 
 .md
     .popover-menu
@@ -156,6 +164,8 @@
             left: unset
             margin-top: unset
             width: auto
+        .item-input-with-error-message
+            padding-bottom: 0px
         input[type="radio"]:checked ~ .icon-radio
             &::after
                 background-color: $turquoise-2 

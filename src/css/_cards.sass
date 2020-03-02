@@ -570,6 +570,9 @@
         height: 175px
         .card-content
             display: block
+            a
+                position: absolute
+                right: 25px
         .card-content-padding
             padding-left: 20px
             padding-right: 20px
@@ -587,14 +590,22 @@
             align-items: flex-start
         &.dark-blue
             background-color: $dark-blue
+            a
+                color: $turquoise-2
         &.light-blue
             background-color: $light-blue
+            a
+                color: $dark-blue
         &.turquoise
             background-color: $turquoise-2
+            a
+                color: $dark-blue
         &.dark-blue,&.light-blue,&.turquoise
             color: $white
-            .card-header
+            .card-header,p
                 color: $white
+        .card-footer::before
+            content: none
     &.sqr
         margin: 7px 5px
         width: 28vw

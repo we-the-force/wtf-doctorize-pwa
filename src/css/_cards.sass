@@ -11,7 +11,7 @@
         margin-block-end: 3px
     .rectangle
         position: absolute
-        width: 5%
+        width: 4%
         height: 100%
         border-top-left-radius: 10px
         border-bottom-left-radius: 10px
@@ -25,6 +25,10 @@
             background: $yellow-2
         &.red
             background: $red
+        &.pink
+            background: $pink
+        &.green
+            background: $green
     .dynamic-popover,.permissions-link
         position: absolute
         top: 10px
@@ -519,6 +523,149 @@
     z-index: 0
 .card-expandable.card-opened .card-opened-fade-out
     opacity: 0 !important
+
+.card.v2
+    width: auto
+    margin: 15px 5px
+    .card-content
+        padding: 10px 12px 10px 5%
+        display: flex
+        align-items: flex-start
+        .data
+            overflow-x: hidden
+            margin-top: -3px
+            margin-bottom: -3px
+            flex-grow: 1
+            .text
+                font: $Body-4
+                color: $dark-blue
+                line-height: 25px
+            .title
+                font: $text-1-card
+                font-weight: 300
+                color: $light-blue
+                &.bold
+                    font-weight: 600
+                &.grey
+                    color: $grey
+        .date
+            font: $text-1-card
+            font-weight: 600
+            color: $grey
+        .icon,img
+            margin-left: 6px
+            margin-right: 10px
+            width: 24px
+            &.yellow
+                color: $yellow
+        a
+            margin-left: 5px
+            display: flex
+            i
+                font-size: 25px
+                color: $dark-blue
+    &.card-expandable
+        margin-bottom: 0px
+        background-color: $white
+        height: 175px
+        .card-content
+            display: block
+            a
+                position: absolute
+                right: 25px
+        .card-content-padding
+            padding-left: 20px
+            padding-right: 20px
+            height: auto
+            padding-top: 0px
+            padding-bottom: 0px
+        &:not(:last-child)
+            margin-bottom: -145px
+        .card-header
+            min-height: 0px
+            color: $dark-blue
+            padding-left: 0px
+            padding-right: 0px
+            padding-top: 3px
+            align-items: flex-start
+        &.dark-blue
+            background-color: $dark-blue
+            a
+                color: $turquoise-2
+        &.light-blue
+            background-color: $light-blue
+            a
+                color: $dark-blue
+        &.turquoise
+            background-color: $turquoise-2
+            a
+                color: $dark-blue
+        &.dark-blue,&.light-blue,&.turquoise
+            color: $white
+            .card-header,p
+                color: $white
+        .card-footer::before
+            content: none
+    &.sqr
+        margin: 7px 5px
+        width: 28vw
+        height: 28vw
+        margin: 5px
+        display: flex
+        flex-direction: column
+        justify-content: space-between
+        border-radius: 15px
+        @media screen and (max-width: 400px)
+            width: 42vw
+            height: 42vw
+        .card-header
+            padding: 8px 12px 0px 8px
+            display: flex
+            align-items: center
+            a
+                display: flex
+                i
+                    color: $turquoise-2
+                    font-size: 25px
+            p
+                flex-grow: 1
+                text-align: right
+                font: $text-2-card
+                font-size: 19px
+                font-weight: normal
+                color: $dark-blue
+            &::after
+                content: none
+        .card-content
+            padding: 0px 12px 0px 8px
+            display: flex
+            align-items: center
+            img
+                height: 25px
+                width: 25px
+            p
+                flex-grow: 1
+                text-align: right
+                font: $text-1-card
+                font-weight: 300
+                color: $grey
+                margin-top: 5px
+                margin-bottom: -5px
+        .card-footer
+            display: flex
+            align-items: center
+            padding: 0px 12px 10px 8px
+            p
+                font-family: Nunito
+                font-style: normal
+                font-weight: 600
+                font-size: 24px
+                line-height: 33px
+                text-align: right
+                flex-grow: 1
+                color: $light-blue
+            &::before
+                content: none
 
 .popover
     background: $white

@@ -45,6 +45,26 @@ import DoctorPagosPendientes from '../pages/doctor-pagos-pendientes.f7.html';
 import PagoDetails from '../pages/pago-details.f7.html';
 import PagosHome from '../pages/pagos-home.f7.html';
 import Config from '../pages/ajustes.f7.html';
+import PacientePerfil from '../pages/paciente-perfil.f7.html';
+import PacientePerfilAdd from '../pages/paciente-perfil-add.f7.html';
+import PacienteCondMed from '../pages/paciente-cond-med.f7.html';
+import PacienteMed from '../pages/paciente-med.f7.html';
+import PacienteAlergias from '../pages/paciente-alergias.f7.html';
+import PacienteHSocial from '../pages/paciente-hist-social.f7.html';
+import PacienteHMedFam from '../pages/paciente-hist-med-fam.f7.html';
+import PacienteContra from '../pages/paciente-contra.f7.html';
+import PacienteHosp from '../pages/paciente-hosp.f7.html';
+import PacienteCirug from '../pages/paciente-cirug.f7.html';
+import PacienteVacunas from '../pages/paciente-vacunas.f7.html';
+import PacienteCondMedForm from '../pages/paciente-cond-med-form.f7.html';
+import PacienteMedForm from '../pages/paciente-med-form.f7.html';
+import PacienteAlergiasForm from '../pages/paciente-alergias-form.f7.html';
+import PacienteHSocialForm from '../pages/paciente-hist-social-form.f7.html';
+import PacienteHMedFamForm from '../pages/paciente-hist-med-fam-form.f7.html';
+import PacienteContraForm from '../pages/paciente-contra-form.f7.html';
+import PacienteHospForm from '../pages/paciente-hosp-form.f7.html';
+import PacienteCirugForm from '../pages/paciente-cirug-form.f7.html';
+import PacienteVacunasForm from '../pages/paciente-vacunas-form.f7.html';
 
 var routes = [
 
@@ -52,6 +72,106 @@ var routes = [
         name: "root",
         path: '/',
         component: LoginPage,
+    },
+    {
+        name: "paciente-perfil",
+        path: "/paciente/perfil",
+        component: PacientePerfil,
+    },
+    {
+        name: "paciente-perfil-add",
+        path: "/paciente/perfil/add",
+        component: PacientePerfilAdd,
+    },
+    {
+        name: "paciente-cond-med",
+        path: "/paciente/condiciones_medicas",
+        component: PacienteCondMed,
+    },
+    {
+        name: "paciente-medicamento",
+        path: "/paciente/medicamento",
+        component: PacienteMed,
+    },
+    {
+        name: "paciente-alergias",
+        path: "/paciente/alergias",
+        component: PacienteAlergias,
+    },
+    {
+        name: "paciente-hist-social",
+        path: "/paciente/historia/social",
+        component: PacienteHSocial,
+    },
+    {
+        name: "paciente-hist-medica-fam",
+        path: "/paciente/historia/medica_fam",
+        component: PacienteHMedFam,
+    },
+    {
+        name: "paciente-contra",
+        path: "/paciente/contraindicaciones",
+        component: PacienteContra,
+    },
+    {
+        name: "paciente-hosp",
+        path: "/paciente/hospitalizaciones",
+        component: PacienteHosp,
+    },
+    {
+        name: "paciente-cirugia-implantes",
+        path: "/paciente/cirugia_implantes",
+        component: PacienteCirug,
+    },
+    {
+        name: "paciente-vacunas",
+        path: "/paciente/vacunas",
+        component: PacienteVacunas,
+    },
+    {
+        name: "paciente-cond-med-form",
+        path: "/paciente/condiciones_medicas/form",
+        component: PacienteCondMedForm,
+    },
+    {
+        name: "paciente-medicamento-form",
+        path: "/paciente/medicamento/form",
+        component: PacienteMedForm,
+    },
+    {
+        name: "paciente-alergias-form",
+        path: "/paciente/alergias/form",
+        component: PacienteAlergiasForm,
+    },
+    {
+        name: "paciente-hist-social-form",
+        path: "/paciente/historia/social/form",
+        component: PacienteHSocialForm,
+    },
+    {
+        name: "paciente-hist-medica-fam-form",
+        path: "/paciente/historia/medica_fam/form",
+        component: PacienteHMedFamForm,
+    },
+    {
+        name: "paciente-contra-form",
+        path: "/paciente/contraindicaciones/form",
+        component: PacienteContraForm,
+    },
+    {
+        name: "paciente-hosp-form",
+        path: "/paciente/hospitalizaciones/form",
+        component: PacienteHospForm,
+    },
+    {
+        name: "paciente-cirugia-implantes-form",
+        path: "/paciente/cirugia_implantes/form",
+        component: PacienteCirugForm,
+    },
+    {
+        name: "paciente-vacunas-form",
+        path: "/paciente/vacunas/form",
+        component: PacienteVacunasForm,
     },
     {
         name: "config",

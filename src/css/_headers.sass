@@ -280,3 +280,33 @@
             font: $title-2
             font-weight: 600
             color: $white
+    &.basic
+        display: flex
+        align-items: center
+        a
+            display: flex
+            i
+                font-size: 35px
+                line-height: 70px
+                color: $dark-blue
+                margin-left: 15px
+        .title1
+            margin-top: 15px
+            margin-bottom: 15px
+            font: $H1
+            font-size: 24px
+            text-align: center
+            line-height: 120%
+            color: $dark-blue
+            &.light-blue
+                color: $light-blue !important
+        &.center
+            justify-content: space-between
+            .edit
+                display: flex
+                i
+                    margin-right: 15px
+                &.none
+                    visibility: hidden
+        &.fixed
+            width: 100%

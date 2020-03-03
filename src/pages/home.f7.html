@@ -12,7 +12,7 @@
         </a>
         <a href="#" class="tab-link">
         </a>
-        <a href="#" class="tab-link">
+        <a href="/doctor/pagos" class="tab-link">
           <i class="icon material-icons">monetization_on</i>
         </a>
         <a href="#" class="tab-link">
@@ -47,13 +47,13 @@
         <div class="list">
           <ul>
             <li class="patients">
-              <div class="block-title">Pacientes
+              <a class="block-title">Pacientes
                 <i class="icon material-icons">chevron_right</i>
-              </div>
+              </a>
               <div class="block">
                 <div class="row">
-                  <a class="col">
-                    <img src="../static/images/logo.png" alt="not found">
+                  <a class="col" href="/paciente/perfil">
+                    <img src="../static/images/gwen.jpeg" alt="not found">
                   </a>
                   <a class="col">
                     <img src="../static/images/logo.png" alt="not found">
@@ -109,6 +109,12 @@
         moment.locale('es');
         moment().format();
         var doctor = JSON.parse(sessionStorage.getItem('user'));
+
+        $$('.patients .block-title').click(function (e) {
+          app.data.store.setItem('search', 'home_search_patients').then(function (value) {
+            app.methods.redirectTo('search-module');
+          });          
+        });
 
         if (doctor != null && doctor != 'undefined' && doctor != '') {
           $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + doctor.photo + '50.png" alt="not found">');

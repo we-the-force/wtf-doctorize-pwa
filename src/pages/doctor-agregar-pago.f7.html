@@ -1,0 +1,149 @@
+<template>
+    <div class="page" id="doctor-agregar-pago">
+        <div class="page-content">
+            <div class="header">
+                <div class="addPay">
+                    <a href="/doctor/pagos">
+                        <i class="material-icons">chevron_left</i>
+                    </a>
+                    <p class="title1">Nuevo pago</p>
+                </div>
+            </div>
+            <div class="list">
+                <ul>
+                    <li>
+                        <div class="card card-outline pagos add" id="patient">
+                            <div class="rectangle light-blue"></div>
+                            <div class="card-content card-content-padding">
+                                <i class="material-icons light-blue">
+                                    person
+                                </i>
+                                <div class="data">
+                                    <p class="light-blue">Paciente</p>
+                                    <p class="text"></p>
+                                </div>
+                                <i class="material-icons light-blue">
+                                    chevron_right
+                                </i>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card card-outline pagos add" id="pay">
+                            <div class="rectangle turquoise"></div>
+                            <div class="card-content card-content-padding">
+                                <i class="material-icons turquoise">
+                                    room
+                                </i>
+                                <div class="data">
+                                    <p class="turquoise">Seleccion de pago</p>
+                                    <p class="text"></p>
+                                </div>
+                                <i class="material-icons turquoise">
+                                    chevron_right
+                                </i>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card card-outline pagos add popover-open" data-popover=".popover-pay" id="type">
+                            <div class="rectangle light-blue"></div>
+                            <div class="card-content card-content-padding">
+                                <i class="material-icons light-blue">
+                                    credit_card
+                                </i>
+                                <div class="data">
+                                    <p class="light-blue">Metodo de pago</p>
+                                    <p class="text"></p>
+                                </div>
+                                <a class="popover-open" data-popover=".popover-pay">
+                                    <i class="material-icons light-blue arrow">
+                                        keyboard_arrow_down
+                                    </i>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="container">
+                <div class="btn-2">
+                    <a href="">
+                        <p>Siguiente </p>
+                        <i class="material-icons white">chevron_right</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="popover popover-pay">
+            <div class="popover-inner">
+                <div class="list">
+                    <ul>
+                        <li><a class="list-button item-link option transfer popover-close" href="#">Tranferencia
+                                electronica</a></li>
+                        <hr>
+                        <li><a class="list-button item-link option cash popover-close" href="#">Efectivo</a></li>
+                        <hr>
+                        <li><a class="list-button item-link option credit_debit popover-close" href="#">Tarjeta de
+                                Credito /
+                                Debito</a></li>
+                        <hr>
+                        <li><a class="list-button item-link option bank popover-close" href="#">Ingreso Bancario</a>
+                        </li>
+                        <hr>
+                        <li><a class="list-button item-link light-blue popover-close" href="#">Agregar Metodo</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                //checar
+                app.data.store.getItem('pago-pend').then(function (value) {
+                    $$('#doctor-agregar-pago #pay .card-content .data .text').text(value);
+                    //check
+                });
+
+                app.data.store.getItem('pago-patient').then(function (value) {
+                    $$('#doctor-agregar-pago #patient .card-content .data .text').text(value);
+                    //check
+                });
+
+                $$('.popover-pay a.option').click(function (x) {
+                    let row = $$(this);
+                    row.parent().parent().find('.active').removeClass('active');
+                    row.addClass('active');
+                    $$('#doctor-agregar-pago #type .card-content .data .text').text(row.text());
+                    //checar 
+                });
+
+                $$('.card#pay').click(function (x) {
+                    app.methods.redirectTo('doctor-pagos-pendientes');
+                });
+
+                $$('.card#patient').click(function (x) {
+                    app.data.store.setItem('search', 'patients_pagos').then(function (value) {
+                        app.methods.redirectTo('search-module');
+                    });
+                });
+
+                $$('.container .btn-2').click(function (x) {
+                    app.methods.redirectTo('doctor-agregar-pago-info');
+                })
+
+                $$('#doctor-agregar-pago .header a').click(function (val) {
+                    app.data.store.clear();
+                });
+            }
+        }
+    }
+</script>

@@ -32,17 +32,17 @@
             </div>
         </div>
         <div class="list buttons">
-                <ul>
-                    <li>
-                        <div class="row">
-                            <a href="#" class="item-link list-button btn-rounded">
-                                <p>Guardar </p>
-                                <i class="material-icons">chevron_right</i>
-                            </a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+            <ul>
+                <li>
+                    <div class="row">
+                        <a href="#" class="item-link list-button btn-rounded">
+                            <p>Guardar </p>
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 <script>
@@ -53,31 +53,29 @@
                 var self = this;
                 var app = self.$app;
                 var specialties, specialityID;
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
 
                 disableButton();
 
-                app.data.store.getItem('doctor').then(function (value) {
-                    app.data.doctor = value;
-                    app.data.store.getItem('flow').then(function (e) {
-                        app.data.flow = e;
-                        switch (app.data.flow) {
-                            case 'SN':
-                                setName();
-                                break;
-                            case 'SM':
-                                setMail();
-                                break;
-                            case 'SC':
-                                setPhone();
-                                break;
-                            case 'SS':
-                                setSpeciality();
-                                break;
-                            default:
-                                app.methods.redirectTo('settings');
-                                break;
-                        }
-                    });
+                app.data.store.getItem('flow').then(function (e) {
+                    app.data.flow = e;
+                    switch (app.data.flow) {
+                        case 'SN':
+                            setName();
+                            break;
+                        case 'SM':
+                            setMail();
+                            break;
+                        case 'SC':
+                            setPhone();
+                            break;
+                        case 'SS':
+                            setSpeciality();
+                            break;
+                        default:
+                            app.methods.redirectTo('settings');
+                            break;
+                    }
                 });
 
 
@@ -93,7 +91,7 @@
                     $$(".settings-edit .item-label").text("Especialidad");
                     $$(".settings-edit input").attr("type", "text");
                     $$(".settings-edit input").attr("id", "picker");
-                    $$(".settings-edit input").val(app.data.doctor.specialty.name);
+                    $$(".settings-edit input").val(doctor.specialty.name);
                     specialties = app.data.specialties;
                     var picker = app.picker.create({
                         inputEl: '#picker',
@@ -109,7 +107,7 @@
                     $$(".settings-edit .title").text("Edita tu celular");
                     $$(".settings-edit .item-label").text("Celular");
                     $$(".settings-edit input").attr("type", "tel");
-                    $$(".settings-edit input").val(app.data.doctor.cellphone);
+                    $$(".settings-edit input").val(doctor.cellphone);
                     inputCheck();
                 }
 
@@ -117,14 +115,14 @@
                     $$(".settings-edit .title").text("Edita tu correo");
                     $$(".settings-edit .item-label").text("Correo");
                     $$(".settings-edit input").attr("type", "email");
-                    $$(".settings-edit input").val(app.data.doctor.email);
+                    $$(".settings-edit input").val(doctor.email);
                     inputCheck();
                 }
 
                 function setName() {
                     $$(".settings-edit .title").text("Edita tu nombre");
                     $$(".settings-edit .item-label").text("Nombre");
-                    $$(".settings-edit input").val(app.data.doctor.name);
+                    $$(".settings-edit input").val(doctor.name);
                     inputCheck();
                 }
 
@@ -170,16 +168,17 @@
                             break;
                     }
                     app.request({
-                        url: app.data.url + '/doctors/' + app.data.doctor.id,
+                        url: app.data.url + '/doctors/' + doctor.id,
                         method: "PATCH",
                         crossDomain: true,
                         data: j,
                         success: function (e) {
                             app.data.store.removeItem('flow').then(function (e) {
-                                app.request.get(app.data.url + '/doctors/' + app.data.doctor.id,
+                                app.request.get(app.data.url + '/doctors/' + doctor.id,
                                     function (i) {
                                         var x = JSON.parse(i);
                                         app.preloader.hide();
+                                        sessionStorage.setItem('user', JSON.stringify(x));
                                         app.data.store.setItem("doctor", x);
                                         app.methods.redirectTo('settings');
                                         location.reload();

@@ -1,0 +1,296 @@
+#paciente-perfil
+    .page-content
+        padding-bottom: 30px
+        overflow-x: hidden
+        .nav.title
+            z-index: 3
+            background: radial-gradient(70.86% 255.86% at 0.47% 0.7%, #FCFCFF 13.26%, #EBEFF2 150%)
+            position: sticky
+            top: 0
+            width: 100%
+            display: flex
+            align-items: center
+            margin-bottom: -20px
+            a
+                display: flex
+            .text
+                margin: 0px
+                flex-grow: 1
+                color: $dark-blue
+                font-family: Nunito
+                font-style: normal
+                font-weight: 300
+                font-size: 24px
+                line-height: 33px
+                padding-top: 15px
+                padding-bottom: 15px
+            .arrow
+                margin-left: 10px
+                margin-right: 7px
+                i
+                    font-size: 35px
+                    color: $dark-blue
+            .add
+                margin-right: 20px
+                i
+                    font-size: 25px
+                    color: $grey
+        .header
+            padding-top: 90px
+            display: flex
+            flex-direction: column
+            align-items: center
+            .circle
+                z-index: 4
+                position: absolute
+                width: 2250px
+                height: 2250px
+                left: 50%
+                transform: translate(-50%, -85%)
+                background: #EEF1F6
+                border-radius: 50%
+            .photo
+                z-index: 5
+                display: flex
+                img
+                    width: 110px
+                    height: 110px
+                    border: 4px solid white
+                    box-shadow: 0px 2.59567px 19.4675px rgba(16, 43, 200, 0.2)
+                    border-radius: 50%
+            .name
+                z-index: 5
+                width: 80%
+                margin-top: 10px
+                margin-bottom: 0px
+                font-family: Nunito
+                font-style: normal
+                font-weight: normal
+                font-size: 24px
+                line-height: 33px
+                text-align: center
+                color: $dark-blue
+            .binfo
+                z-index: 5
+                width: 75%
+                color: $grey
+                font: $text-1-card
+                font-weight: 300
+                display: flex
+                justify-content: center
+                p
+                    margin-top: 0px
+                    margin-bottom: 0px
+            .dots
+                z-index: 5
+                width: 70%
+                display: flex
+                justify-content: space-evenly
+                margin-top: 25px
+                margin-bottom: 28px
+                .dot
+                    display: flex
+                    justify-content: center
+                    align-items: center
+                    width: 30px
+                    height: 30px
+                    border-radius: 50%
+                    background: $turquoise-2
+                    i
+                        color: $white
+                        font-size: 18px
+            .options
+                z-index: 5
+                width: 100%
+                display: flex
+                .appointment,.payment,.schedule
+                    width: 33%
+                    display: flex
+                    flex-direction: column
+                    justify-content: center
+                    align-items: center
+                    p
+                        text-align: center
+                        margin-top: 9px
+                        margin-bottom: 0px
+                        font: $text-2-card
+                        font-weight: normal
+                        color: $light-blue
+                    img
+                        width: 30px
+                        height: 30px
+                .payment
+                    img
+                        width: 33px
+                        height: 33px
+                hr
+                    margin: 0px
+                    border: 0.4px solid #C2CEDB
+        .slot
+            border-top: 0.4px solid #D3DCE6
+            margin-left: 5px
+            margin-right: 5px
+            margin-top: 20px
+            .title
+                display: flex
+                align-items: center
+                justify-content: baseline
+                margin-top: 5px
+                .text
+                    margin: 0px
+                    font: $H1
+                    font-size: 24px
+                    line-height: 33px
+                    color: $dark-blue
+                a
+                    display: flex
+                    i
+                        font-size: 24px
+                        color: $dark-blue
+        .generales,.vitales
+            .content
+                display: flex
+                flex-wrap: wrap
+                align-items: center
+        .vitales
+            #temperatura,#respiracion
+                .card-header
+                    p
+                        font-size: 13px
+                        @media screen and (max-width: 400px)
+                            font-size: 19px
+                        @media screen and (max-width: 350px)
+                            font-size: 13px
+#paciente-perfil-add
+    .page-content
+        padding-bottom: 76px
+    .content
+        margin-top: 15px
+        .title
+            width: 90%
+            margin: auto
+            font: $Body-4
+            line-height: 25px
+            text-align: center
+            color: $light-blue
+        .card
+            img
+                margin-left: 5px
+                margin-right: 7px
+                width: 25px
+
+.paciente-show-item
+    .page-content
+        padding-bottom: 86px
+    .slot
+        margin: 25px
+        .title
+            font: $Body-2
+            font-weight: normal
+            color: $grey
+        .data
+            font: $text-1-card
+            font-weight: 600
+            color: $dark-blue
+            &.link
+                color: $light-blue
+        .added,.date
+            font: $title-card
+            font-weight: normal
+            color: $grey
+        .dwnld
+            display: flex
+            align-items: center
+            justify-content: flex-start
+        p
+            margin: 0px
+
+.paciente-input-item
+    padding-bottom: 10px
+    .dosis_container
+        margin-top: 5px
+    .page-content   
+        padding-bottom: 86px
+        display: flex
+        flex-direction: column
+    .two-input
+        margin: 15px
+        display: flex
+        align-items: flex-end
+        justify-content: space-between
+        .half
+            width: calc(50% - 11px) !important
+            margin: 0px
+    .medicamentos
+        label
+            font: $Body-2
+            color: $dark-blue
+            margin-left: 30px
+        .item-input.v2
+            margin-top: 0px
+    .item-input.v2
+        label
+            font: $Body-2
+            color: $dark-blue
+        input,select
+            font: $Body-2
+            line-height: 20px
+        .light-blue
+            color: $light-blue
+    .add_module
+        display: flex
+        justify-content: center
+        width: auto
+        border-bottom: 0.5px solid #C2CEDB
+        margin-right: 10px
+        margin-left: 10px
+        padding-bottom: 15px
+        padding-top: 15px
+        a
+            display: flex
+            align-items: center
+            justify-content: center
+            width: 70%
+            i
+                font-size: 24px
+                margin-right: 7px
+        p
+            margin-top: 7px
+            margin-bottom: 7px
+    .container
+        margin: 10px 0px
+    .trash
+        margin-top: 10px
+        display: flex
+        align-items: center
+        justify-content: flex-end
+        .icon
+            display: flex
+            padding-right: 20px
+            i
+                color: $grey
+    .bor_top
+        border-top: 0.5px solid #C2CEDB
+    .details
+        margin-top: 10px
+        .title
+            margin-left: 15px
+            display: flex
+            align-items: center
+            .text
+                margin: 0px
+                font: $text-1-card
+                font-weight: 600
+                color: $dark-blue
+            a
+                display: flex
+                i
+                    font-size: 24px
+                    color: $dark-blue
+        .content
+            max-height: 300px
+            overflow: hidden
+            transition: 0.5s ease
+            &.hide
+                max-height: 0
+                transition: 0.5s ease

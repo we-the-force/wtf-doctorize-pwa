@@ -53,17 +53,17 @@
                 var self = this;
                 var app = self.$app;
                 var items;
-
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
                 $$('#asistentes-invitar-03 .btn-rounded').addClass('grey');
                 $$('#asistentes-invitar-03 .btn-rounded').off('click');
 
-                app.preloader.show('blue');
+                app.preloader.show('blue');/* 
                 app.data.store.getItem('doctor').then(function (value) {
-                    app.data.doctor = value;
+                    app.data.doctor = value; */
                     app.data.store.getItem('assistant').then(function (assistantValue) {
                         app.data.assistant = assistantValue;
 
-                        app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/offices',
+                        app.request.get(app.data.url + '/doctors/' + doctor.id + '/offices',
                             function (e) {
                                 var x = JSON.parse(e);
                                 for (var i = 0; i < x.length; i++) {
@@ -118,7 +118,7 @@
                             enableButton();
                         });
                     });
-                });
+                /* }); */
 
                 function enableButton() {
                     $$('#asistentes-invitar-03 .btn-rounded').removeClass('grey');

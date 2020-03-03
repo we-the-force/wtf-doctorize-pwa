@@ -88,6 +88,8 @@
 @import dialogs
 @import pagos
 @import confirm
+@import search
+@import patient
 
 .ios
     --f7-toggle-height: 24px
@@ -95,13 +97,77 @@
     --f7-input-invalid-border-color: #ff0000
     .item-input-invalid
         color: #ff0000
-    .item-input-wrap::after,.item-inner::after 
+    .item-input-wrap::after,.item-inner::after
         content: none
     #schedule
         li.item-divider::before
             content: none
+    #pagos-home
+        .header
+            .toolbar-inner
+                .tab-link-active
+                    border-bottom: 2px solid var(--f7-tabbar-link-active-border-color, var(--f7-theme-color))
+            .styled-select
+                select
+                    font-size: 14px
+                    @media screen and (max-width: 360px)
+                        font-size: 11px
+    .popover-pay
+        .popover-angle
+            display: none
+    #doctor-agregar-pago-info
+        .item-input-wrap
+            margin: 0px
+    #search-module
+        .header
+            input
+                background: transparent
+    .dialog
+        border-radius: var(--f7-dialog-border-radius)
+        background: var(--f7-dialog-bg-color)
+        .dialog-buttons
+            padding: 0px 20px
+        .dialog-inner
+            background: transparent
+            &::after
+                content: none
+    input[type="radio"]:checked ~ .icon-radio
+        &::after    
+            color: $turquoise-2 
+    .paciente-input-item
+        .item-input-error-message
+            position: absolute
+            transform: translate(15px, 33px)
+            top: unset
+            left: unset
+            margin-top: unset
+            width: auto
 
 .md
     .popover-menu
+        bottom: 105px
+        top: unset !important
         left: 50% !important
-        transform: translate(-50%,-112%) !important
+        transform: translate(-50%,0%) !important
+    .paciente-input-item
+        .input-clear-button
+            &::before
+                width: 48px
+                height: 48px
+                margin-left: -15px
+                margin-top: -15px
+                top: unset
+                left: unset
+        .item-input-error-message
+            transform: translate(15px, 33px)
+            top: unset
+            left: unset
+            margin-top: unset
+            width: auto
+        .item-input-with-error-message
+            padding-bottom: 0px
+            p.notes
+                padding-top: 15px
+        input[type="radio"]:checked ~ .icon-radio
+            &::after
+                background-color: $turquoise-2 

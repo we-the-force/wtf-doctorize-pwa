@@ -131,8 +131,9 @@
                 var app = self.$app;
                 var days = $$('[name="chbx"]');
                 var startTime = '', closeTime = '', lunchStartTime = '', lunchCloseTime = '';
-                app.data.store.getItem('doctor').then(function (value) {
-                    app.data.doctor = value;
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
+                /* app.data.store.getItem('doctor').then(function (value) {
+                    app.data.doctor = value; */
                     app.data.store.getItem('office').then(function (value) {
                         app.data.consultorio = value;
                         
@@ -205,8 +206,7 @@
                         });
 
                     });
-                });
-
+                /* }); */
                 function enableButton() {
                     $$('#offices-add-form-schedule .btn-rounded').removeClass('grey');
                     $$('#offices-add-form-schedule .btn-rounded').off('click');
@@ -259,7 +259,7 @@
                                     "hospital": app.data.consultorio.hospital,
                                     "number": app.data.consultorio.number,
                                     "address": app.data.consultorio.address,
-                                    "userId": app.data.doctor.id,//mandar pedir el numero app.data.doctor.id,
+                                    "userId": doctor.id,//mandar pedir el numero app.data.doctor.id,
                                     "lat": 12.12,
                                     "lng": 213.234,
                                     "startTime": app.data.consultorio.startTime,
@@ -283,14 +283,14 @@
                                 }
                             });
                         } else {
-                            app.request.postJSON(app.data.url + '/doctors/' + app.data.doctor.id + '/offices', {
+                            app.request.postJSON(app.data.url + '/doctors/' + doctor.id + '/offices', {
                                 "email": app.data.consultorio.email,
                                 "name": app.data.consultorio.nombre,
                                 "phone": app.data.consultorio.phone,
                                 "hospital": app.data.consultorio.hospital,
                                 "number": app.data.consultorio.number,
                                 "address": app.data.consultorio.address,
-                                "userId": app.data.doctor.id,//mandar pedir el numero app.data.doctor.id,
+                                "userId": doctor.id,//mandar pedir el numero app.data.doctor.id,
                                 "lat": 12.12,
                                 "lng": 213.234,
                                 "startTime": app.data.consultorio.startTime,

@@ -1,0 +1,702 @@
+<template>
+    <div class="page" id="paciente-perfil">
+        <!-- <div class="header fixed navbar hide">
+            <div class="title">
+                <a class="arrow">
+                    <i class="material-icons">chevron_left</i>
+                </a>
+                <p class="text">Perfil del paciente</p>
+                <a class="add" href="/paciente/perfil/add">
+                    <i class="material-icons">add_circle</i>
+                </a>
+            </div>
+        </div> -->
+        <div class="page-content">
+            <div class="header paciente">
+                <div class="circle"></div>
+                <div class="photo">
+                    <img src="../static/images/gwen.jpeg" alt="">
+                </div>
+                <p class="name">Gewndolyne Stacy</p>
+                <div class="binfo">
+                    <p class="gender">Mujer</p>
+                    <p>&nbsp;/&nbsp;</p>
+                    <p class="age">23 años</p>
+                </div>
+                <div class="dots">
+                    <div class="dot call">
+                        <i class="icons material-icons" style="transform: scaleX(-1);">phone</i>
+                    </div>
+                    <div class="dot mssg">
+                        <i class="icons material-icons">comment</i>
+                    </div>
+                    <div class="dot info">
+                        <i class="icons material-icons">info</i>
+                    </div>
+                </div>
+                <div class="options">
+                    <div class="appointment">
+                        <img src="../static/icons/Vector.svg" alt="">
+                        <p>Consultar</p>
+                    </div>
+                    <hr>
+                    <div class="payment">
+                        <img src="../static/icons/Frame.svg" alt="">
+                        <p>Cobrar</p>
+                    </div>
+                    <hr>
+                    <div class="schedule">
+                        <img src="../static/icons/agenda.svg" alt="">
+                        <p>Agendar</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav title">
+                <a class="arrow">
+                    <i class="material-icons">chevron_left</i>
+                </a>
+                <p class="text">Perfil del paciente</p>
+                <a class="add" href="/paciente/perfil/add">
+                    <i class="material-icons">add_circle</i>
+                </a>
+            </div>
+
+            <div class="slot generales">
+                <div class="title">
+                    <p class="text">Generales</p>
+                </div>
+                <div class="content">
+                    <div class="card v2 sqr" id="blood">
+                        <div class="card-header">
+                            <a class="add">
+                                <i class="material-icons">add_circle</i>
+                            </a>
+                            <p>Sangre</p>
+                        </div>
+                        <div class="card-content">
+                            <img src="../static/icons/blood.svg" alt="">
+                        </div>
+                        <div class="card-footer">
+                            <p>120/80</p>
+                        </div>
+                    </div>
+                    <div class="card v2 sqr" id="peso">
+                        <div class="card-header">
+                            <a class="add">
+                                <i class="material-icons">add_circle</i>
+                            </a>
+                            <p>Peso</p>
+                        </div>
+                        <div class="card-content">
+                            <img src="../static/icons/Peso.svg" alt="">
+                            <p>kg</p>
+                        </div>
+                        <div class="card-footer">
+                            <p>70.3</p>
+                        </div>
+                    </div>
+                    <div class="card v2 sqr" id="altura">
+                        <div class="card-header">
+                            <a class="add">
+                                <i class="material-icons">add_circle</i>
+                            </a>
+                            <p>Altura</p>
+                        </div>
+                        <div class="card-content">
+                            <img src="../static/icons/Altura.svg" alt="">
+                            <p>cm</p>
+                        </div>
+                        <div class="card-footer">
+                            <p>170</p>
+                        </div>
+                    </div>
+                    <div class="card v2 sqr" id="IMC">
+                        <div class="card-header">
+                            <a class="add">
+                                <i class="material-icons">add_circle</i>
+                            </a>
+                            <p>IMC</p>
+                        </div>
+                        <div class="card-content">
+                            <img src="../static/icons/IMC.svg" alt="">
+                            <p>kg/m</p>
+                        </div>
+                        <div class="card-footer">
+                            <p>20</p>
+                        </div>
+                    </div>
+                    <div class="card v2 sqr" id="PGC">
+                        <div class="card-header">
+                            <a class="add">
+                                <i class="material-icons">add_circle</i>
+                            </a>
+                            <p>PGC</p>
+                        </div>
+                        <div class="card-content">
+                            <img src="../static/icons/IMC.svg" alt="">
+                            <p>%</p>
+                        </div>
+                        <div class="card-footer">
+                            <p>20</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slot vitales">
+                <div class="title">
+                    <p class="text">Vitales</p>
+                </div>
+                <div class="content">
+                    <div class="card v2 sqr" id="temperatura">
+                        <div class="card-header">
+                            <a class="add">
+                                <i class="material-icons">add_circle</i>
+                            </a>
+                            <p>Temperatura</p>
+                        </div>
+                        <div class="card-content">
+                            <img src="../static/icons/Temperatura.svg" alt="">
+                            <p>c</p>
+                        </div>
+                        <div class="card-footer">
+                            <p>37°</p>
+                        </div>
+                    </div>
+                    <div class="card v2 sqr" id="presion">
+                        <div class="card-header">
+                            <a class="add">
+                                <i class="material-icons">add_circle</i>
+                            </a>
+                            <p>Presión</p>
+                        </div>
+                        <div class="card-content">
+                            <img src="../static/icons/Presión.svg" alt="">
+                            <p>mm/Hg</p>
+                        </div>
+                        <div class="card-footer">
+                            <p>120/80</p>
+                        </div>
+                    </div>
+                    <div class="card v2 sqr" id="respiracion">
+                        <div class="card-header">
+                            <a class="add">
+                                <i class="material-icons">add_circle</i>
+                            </a>
+                            <p>Respiración</p>
+                        </div>
+                        <div class="card-content">
+                            <img src="../static/icons/Respiración.svg" alt="">
+                            <p>resp/min</p>
+                        </div>
+                        <div class="card-footer">
+                            <p>15</p>
+                        </div>
+                    </div>
+                    <div class="card v2 sqr" id="pulso">
+                        <div class="card-header">
+                            <a class="add">
+                                <i class="material-icons">add_circle</i>
+                            </a>
+                            <p>Pulso</p>
+                        </div>
+                        <div class="card-content">
+                            <img src="../static/icons/Pulso.svg" alt="">
+                            <p>ppm</p>
+                        </div>
+                        <div class="card-footer">
+                            <p>85</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slot consultas">
+                <div class="title">
+                    <p class="text">Consultas</p>
+                </div>
+                <div class="content">
+                    <div class="card v2 dark-blue card-expandable">
+
+                        <div class="card-content">
+                            <div class="card-header">
+                                <p>Consulta</p>
+                                <p>21/05/2019</p>
+                            </div>
+                            <div class="card-content-padding">
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua.
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <p>Dr. Simi</p>
+                                <a href="#" class="card-opened-fade-out"><u>ver más...</u></a>
+                                <a href="#" class="card-close card-opened-fade-in"><u>cerrar</u></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card v2 light-blue card-expandable">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <p>Tendinitis</p>
+                                <p>21/05/2019</p>
+                            </div>
+                            <div class="card-content-padding">
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua.
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <p>Dr. Simi</p>
+                                <a href="#" class="card-opened-fade-out"><u>ver más...</u></a>
+                                <a href="#" class="card-close card-opened-fade-in"><u>cerrar</u></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card v2 turquoise card-expandable">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <p>Gripe</p>
+                                <p>21/05/2019</p>
+                            </div>
+                            <div class="card-content-padding">
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua.
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <p>Dr. Simi</p>
+                                <a href="#" class="card-opened-fade-out"><u>ver más...</u></a>
+                                <a href="#" class="card-close card-opened-fade-in"><u>cerrar</u></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card v2 card-expandable">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <p>Asma</p>
+                                <p>21/05/2019</p>
+                            </div>
+                            <div class="card-content-padding">
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua.
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <p>Dr. Simi</p>
+                                <a href="#" class="card-opened-fade-out"><u>ver más...</u></a>
+                                <a href="#" class="card-close card-opened-fade-in"><u>cerrar</u></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slot pagos">
+                <div class="title">
+                    <p class="text">Pagos</p>
+                    <a class="arrow">
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </div>
+                <div class="content">
+                    <div class="card v2 yellow">
+                        <div class="rectangle yellow"></div>
+                        <div class="card-content">
+                            <i class="material-icons icon yellow">monetization_on</i>
+                            <div class="data">
+                                <p class="text">$600.00</p>
+                                <p class="title bold">Consulta</p>
+                            </div>
+                            <div class="date">17/02/2020</div>
+                            <a class="arrow">
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="card v2 yellow">
+                        <div class="rectangle yellow"></div>
+                        <div class="card-content">
+                            <i class="material-icons icon yellow">monetization_on</i>
+                            <div class="data">
+                                <p class="text">$600.00</p>
+                                <p class="title bold">Consulta</p>
+                            </div>
+                            <div class="date">08/02/2020</div>
+                            <a class="arrow">
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="card v2 yellow">
+                        <div class="rectangle yellow"></div>
+                        <div class="card-content">
+                            <i class="material-icons icon yellow">monetization_on</i>
+                            <div class="data">
+                                <p class="text">$600.00</p>
+                                <p class="title bold">Consulta</p>
+                            </div>
+                            <div class="date">11/09/2019</div>
+                            <a class="arrow">
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slot condiciones">
+                <div class="title">
+                    <p class="text">Condiciones médicas</p>
+                    <a class="arrow">
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </div>
+                <div class="content">
+                    <div class="card v2 pink">
+                        <div class="rectangle pink"></div>
+                        <div class="card-content">
+                            <img src="../static/icons/heart.svg">
+                            <div class="data">
+                                <p class="text">Diabetes Tipo II</p>
+                                <p class="title">Linagliptina/Metformina</p>
+                            </div>
+                            <div class="date">08/02/2020</div>
+                            <a class="arrow">
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card v2 pink">
+                        <div class="rectangle pink"></div>
+                        <div class="card-content">
+                            <img src="../static/icons/heart.svg">
+                            <div class="data">
+                                <p class="text">Meningococemia</p>
+                                <p class="title">Linagliptina/Metformina</p>
+                            </div>
+                            <div class="date">24/12/2019</div>
+                            <a class="arrow">
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card v2 pink">
+                        <div class="rectangle pink"></div>
+                        <div class="card-content">
+                            <img src="../static/icons/heart.svg">
+                            <div class="data">
+                                <p class="text">Malaria</p>
+                                <p class="title">Linagliptina/Metformina</p>
+                            </div>
+                            <div class="date">31/10/2019</div>
+                            <a class="arrow">
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slot medicamentos">
+                <div class="title">
+                    <p class="text">Medicamentos</p>
+                    <a class="arrow">
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </div>
+                <div class="content">
+                    <div class="card v2 light-blue">
+                        <div class="rectangle light-blue"></div>
+                        <div class="card-content">
+                            <img src="../static/icons/Medicinas.svg">
+                            <div class="data">
+                                <p class="text">Linagliptina/Metformina</p>
+                                <p class="title grey">Tableta - Oral</p>
+                            </div>
+                            <a class="arrow">
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="card v2 light-blue">
+                        <div class="rectangle light-blue"></div>
+                        <div class="card-content">
+                            <img src="../static/icons/Medicinas.svg">
+                            <div class="data">
+                                <p class="text">Paracetamol</p>
+                                <p class="title grey">Tableta - Oral</p>
+                            </div>
+                            <a class="arrow">
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card v2 light-blue">
+                        <div class="rectangle light-blue"></div>
+                        <div class="card-content">
+                            <img src="../static/icons/Medicinas.svg">
+                            <div class="data">
+                                <p class="text">Ibuprofeno</p>
+                                <p class="title grey">Liquido - Oral</p>
+                            </div>
+                            <a class="arrow">
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="slot alergias">
+                <div class="title">
+                    <p class="text">Alergías</p>
+                    <a class="arrow">
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </div>
+                <div class="content">
+                    <div class="card v2">
+                        <div class="rectangle green"></div>
+                        <div class="card-content">
+                            <img src="../static/icons/Alergias.svg">
+                            <div class="data">
+                                <p class="text">Dermatitis</p>
+                                <p class="title">Linagliptina/Metformina</p>
+                            </div>
+                            <a class="arrow">
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slot hSocial">
+                <div class="title">
+                    <p class="text">Historia Social</p>
+                    <a class="arrow">
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </div>
+                <div class="content">
+                    <div class="card v2">
+                        <div class="rectangle light-blue"></div>
+                        <div class="card-content">
+                            <img src="../static/icons/HistoriaSocial.svg">
+                            <div class="data">
+                                <p class="text">Ingeniero</p>
+                                <p class="title grey">Saltillo Coah.</p>
+                            </div>
+                            <a class="arrow">
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slot hMedicaFam">
+                <div class="title">
+                    <p class="text">Historia Médica Familiar</p>
+                    <a class="arrow">
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </div>
+                <div class="content">
+                    <div class="card v2">
+                        <div class="rectangle pink"></div>
+                        <div class="card-content">
+                            <img src="../static/icons/HistorialFamilia.svg">
+                            <div class="data">
+                                <p class="text">Madre</p>
+                                <p class="title grey">Lorem ipsum dolor sit amet.</p>
+                            </div>
+                            <a class="arrow">
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slot contraindicaciones">
+                <div class="title">
+                    <p class="text">Contraindicaciones</p>
+                    <a class="arrow">
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </div>
+                <div class="content">
+                    <div class="card v2">
+                        <div class="rectangle light-blue"></div>
+                        <div class="card-content">
+                            <img src="../static/icons/Contradicciones.svg">
+                            <div class="data">
+                                <p class="text">Lorem ipsum dolor sit...</p>
+                            </div>
+                            <a class="arrow">
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slot hospitalizaciones">
+                <div class="title">
+                    <p class="text">Hospitalizaciones</p>
+                    <a class="arrow">
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </div>
+                <div class="content">
+                    <div class="card v2">
+                        <div class="rectangle red"></div>
+                        <div class="card-content">
+                            <img src="../static/icons/case.svg">
+                            <div class="data">
+                                <p class="text">Dolor severo en el pecho</p>
+                                <p class="title grey">24/01/2020 - 02/02/2020</p>
+                            </div>
+                            <a class="arrow">
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slot cirugias/implantes">
+                <div class="title">
+                    <p class="text">Cirugias / Implantes</p>
+                    <a class="arrow">
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </div>
+                <div class="content">
+                    <div class="card v2">
+                        <div class="rectangle turquoise"></div>
+                        <div class="card-content">
+                            <img src="../static/icons/Bisturi.svg">
+                            <div class="data">
+                                <p class="text">Cirugía de implante dental</p>
+                                <p class="title grey">Implante dental</p>
+                            </div>
+                            <a class="arrow">
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slot Vacunas">
+                <div class="title">
+                    <p class="text">Vacunas</p>
+                    <a class="arrow">
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </div>
+                <div class="content">
+                    <div class="card v2">
+                        <div class="rectangle light-blue"></div>
+                        <div class="card-content">
+                            <img src="../static/icons/Inyeccion.svg">
+                            <div class="data">
+                                <p class="text">Hepatitis B</p>
+                                <p class="title">Hep B</p>
+                            </div>
+                            <a class="arrow">
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                var header = $$('.header.fixed');
+
+                /* $$('.page-content').on('scroll', function () {
+                    let t = $$('.page-content .header .title ').offset().top;
+                    t += 35;
+                    if(t <= 0){
+                        $$('.header.fixed').removeClass('hide');
+                    }else{
+                        $$('.header.fixed').addClass('hide');
+                    }
+                }); */
+
+                $$('.nav.title a').click(function (val) {
+                    app.methods.redirectTo('home');
+                    /* $$('.header.fixed').toggleClass('hide'); */
+                });
+
+                $$('.card.v2').click(function (e) {
+                    let x = $$(this).parent().parent().attr('class').split(' ')[1];
+                    switch (x) {
+                        case 'condiciones':
+                            console.log('condiciones');
+                            /* app.data.store.setItem("id_patient_cond", $$(this).attr('id')).then(function (value) {
+                                    app.methods.redirectTo('home');
+                            }); */
+                            app.methods.redirectTo('paciente-cond-med');
+                            break;
+                        case 'medicamentos':
+                            console.log('medicamentos');
+                            app.methods.redirectTo('paciente-medicamento');
+                            break;
+                        case 'alergias':
+                            console.log('alergias');
+                            app.methods.redirectTo('paciente-alergias');
+                            break;
+                        case 'hSocial':
+                            console.log('hSocial');
+                            app.methods.redirectTo('paciente-hist-social');
+                            break;
+                        case 'hMedicaFam':
+                            console.log('hMedicaFam');
+                            app.methods.redirectTo('paciente-hist-medica-fam');
+                            break;
+                        case 'contraindicaciones':
+                            console.log('contraindicaciones');
+                            app.methods.redirectTo('paciente-contra');
+                            break;
+                        case 'hospitalizaciones':
+                            console.log('hospitalizaciones');
+                            app.methods.redirectTo('paciente-hosp');
+                            break;
+                        case 'cirugias/implantes':
+                            console.log('cirugias/implantes');
+                            app.methods.redirectTo('paciente-cirugia-implantes');
+                            break;
+                        case 'Vacunas':
+                            console.log('Vacunas');
+                            app.methods.redirectTo('paciente-vacunas');
+                            break;
+                    }
+
+                });
+            }
+        }
+    }
+</script>

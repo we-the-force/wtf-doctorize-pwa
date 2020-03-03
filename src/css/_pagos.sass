@@ -1,10 +1,303 @@
 #pagos-home
     .header
         .tabbar
-            margin-top: 30px
-            margin-left: 20px
-            margin-right: 20px
+            margin-top: 15px
+            margin-left: 13px
+            margin-right: 13px
             width: auto
             background: none
-            &::before
+            display: flex
+            .toolbar-inner
+                position: relative
+                width: 66%
+                padding: 0px
+            .styled-select
+                width: 33%
+                background: #ffffff
+                border-radius: 20px
+                box-shadow: -2px 2px 15px rgba(16, 43, 200, 0.2)
+                select
+                    padding-left: 10px
+                    padding-right: 20px
+                    width: 100%
+                    height: 100%
+                &::before
+                    font-family: 'Material Icons'
+                    content: 'expand_more'
+                    pointer-events: none
+                    position: absolute
+                    font-size: 30px
+                    width: 0
+                    height: 0
+                    right: 32px
+                    top: 3px
+            &::before,&::after
                 content: none
+        .TotalIncome
+            text-align: center
+            margin-top: 30px
+            font: $Body-3
+            font-weight: bold
+            color: $turquoise-2
+            line-height: 30px
+            &.light-blue
+                color: $light-blue
+        .labelIncome
+            text-align: center
+            font: $title-card
+            font-weight: 300
+            color: $dark-blue
+            margin-top: 0px
+        .labels
+            display: flex
+            background: #EFF2F7
+            p
+                width: 33%
+                text-align: center
+                font: $title-card
+                font-weight: 300
+                color: #C2CEDB
+                text-transform: uppercase
+                margin: 2px 0px
+    .page-content
+        padding-bottom: 340px
+        .divider
+            display: flex
+            justify-content: space-between
+            align-items: center
+            margin-left: 20px
+            margin-right: 20px
+            margin-top: 20px
+            margin-bottom: 10px
+            .monthYear
+                display: flex
+                p
+                    font: $Body-2
+                    color: $grey
+                    font-weight: normal
+                    margin-right: 10px
+                    margin-top: 0px
+                    margin-bottom: 0px
+            .line
+                flex-grow: 1
+                padding-right: 10px
+                hr
+                    border: 1px solid #C2CEDB
+            .day
+                text-align: center
+                font-family: 'Nunito'
+                font-size: 24px
+                font-weight: normal
+                line-height: 33px
+                color: $light-blue
+#doctor-agregar-pago
+    .page-content
+        display: flex
+        flex-direction: column
+        .list
+            margin: 0px
+#doctor-agregar-pago-info
+    .page-content
+        display: flex
+        flex-direction: column
+        padding-bottom: 84px
+        .quantity
+            margin-top: 0px
+            .item-inner
+                height: fit-content
+                padding-top: 0px
+                padding-bottom: 0px
+                label
+                    padding-left: 15%
+                .item-input-wrap
+                    display: flex
+                    align-items: center
+                    justify-content: space-evenly
+                    i
+                        top: unset
+                        left: unset
+                        position: relative
+                        color: $grey
+                    input
+                        width: 75%
+                        font: $title-2
+                        color: $turquoise-2
+                    .item-input-error-message
+                        display: none
+        .breakdown
+            .title
+                padding-left: 8%
+                color: $dark-blue
+                font: $Body-2
+                font-weight: normal
+                margin-bottom: 25px
+            .total,.total2pay,.method
+                margin-left: 20.5%
+                display: flex
+                align-items: center
+                justify-content: space-between
+                border-bottom: 0.5px solid #D3DCE6
+                margin-bottom: 18px
+                margin-right: 25px
+                p
+                    margin: 0px
+                .label
+                    font: $Body-2
+                    font-weight: normal
+                    color: $grey
+                .data
+                    font: $Body-4
+                    line-height: 25px
+                    &.dark-blue
+                        color: $dark-blue
+                    &.turquoise
+                        color: $turquoise-2
+#doctor-agregar-pago-summary
+    .page-content
+        display: flex
+        flex-direction: column
+        padding-bottom: 84px
+    .container
+        a
+            padding-right: 25px
+    .breakdown
+        .title
+            padding-left: 8%
+            color: $dark-blue
+            font: $Body-2
+            font-weight: normal
+            margin-bottom: 25px
+        .total,.name,.method,.concept
+            margin-left: 20.5%
+            display: flex
+            align-items: center
+            justify-content: space-between
+            border-bottom: 0.5px solid #D3DCE6
+            margin-bottom: 18px
+            margin-right: 25px
+            p
+                margin: 0px
+            .label
+                font: $Body-2
+                font-weight: normal
+                color: $grey
+            .data
+                font: $Body-4
+                line-height: 25px
+                &.dark-blue
+                    color: $dark-blue
+                &.turquoise
+                    color: $turquoise-2
+#doctor-agregar-pago-success
+    .page-content
+        height: calc( 100% - 38vh )
+        display: flex
+        margin-top: 38vh
+        flex-direction: column
+        border-radius: 30px 30px 0px 0px
+        box-shadow: -1.23077px 1.23077px 9.23077px rgba(16, 43, 200, 0.2)
+        background: radial-gradient(123.86% 123.86% at 0.47% 0.7%, #FCFCFF 13.26%, #EBEFF2 100%)
+        .fab-center-bottom
+            position: relative
+            display: flex
+            justify-content: center
+            flex-grow: 1
+            align-items: center
+            bottom: unset
+            a
+                box-shadow: -2px 2px 15px rgba(16, 43, 200, 0.2)
+                background: $turquoise-2
+                width: 65px
+                height: 65px
+                border-radius: 32.5px
+                i
+                    font-size: 45px
+        .title
+            margin-top: 20px
+            margin-bottom: 10px
+            text-align: center
+            font: $Body-4
+            font-weight: bold
+            line-height: 25px
+            color: $light-blue
+        .patient,.concept,.method,.pay
+            margin-left: 10%
+            margin-right: 10%
+            margin-bottom: 10px
+            border-bottom: 0.5px solid #C2CEDB
+            .label
+                font: $text-2-card
+                font-weight: normal
+                color: $grey
+                text-align: center
+            .data
+                font: $Body-4
+                line-height: 25px
+                color: $dark-blue
+                text-align: center
+            p
+                margin: 0px
+#pago-details
+    .page-content
+        .patient
+            display: flex
+            align-items: center
+            justify-content: space-evenly
+            .avatar
+                height: 40px
+                width: 40px
+                min-width: 40px
+                background: radial-gradient(123.92% 129.39% at 57.54% 104.51%, #00A1C5 0%, #2FCFBC 100%)
+                border-radius: 50%
+            .info
+                .name
+                    font: $Body-4
+                    color: $dark-blue
+                    margin: 0px
+                .addr
+                    font: $text-2-card
+                    color: $grey
+                    margin: 0px
+                    line-height: 20px
+                    font-weight: normal
+            a
+                i
+                    color: #C2CEDB
+        .breakdown
+            margin-top: 45px
+            .title
+                padding-left: 8%
+                color: $dark-blue
+                font: $Body-2
+                font-weight: normal
+                margin-bottom: 25px
+            .total,.date,.method,.concept,.paid
+                margin-left: 20.5%
+                display: flex
+                align-items: center
+                justify-content: space-between
+                border-bottom: 0.5px solid #D3DCE6
+                margin-bottom: 18px
+                margin-right: 25px
+                p
+                    margin: 0px
+                .label
+                    font: $Body-2
+                    font-weight: normal
+                    color: $grey
+                .data
+                    font: $Body-4
+                    line-height: 25px
+                    &.dark-blue
+                        color: $dark-blue
+                    &.turquoise
+                        color: $turquoise-2
+                    &.red
+                        color: $red
+            .date
+                margin-bottom: 50px
+                .data
+                    text-align: right
+                    text-transform: uppercase
+            .paid
+                border-bottom: none

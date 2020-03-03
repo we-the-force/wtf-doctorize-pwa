@@ -1,0 +1,57 @@
+<template>
+    <div class="page" id="doctor-agregar-pago-success">
+
+        <div class="header success turquoise">
+            <div class="fab fab-right-top color-white share">
+                <a href="#">
+                    <i class="icon material-icons">share</i>
+                </a>
+            </div>
+            <i class="icon material-icons">check_circle</i>
+            <p class="title">¡Felicidades!</p>
+            <p class="body">Tarjeta agregada correctamente</p>
+        </div>
+
+        <div class="page-content">
+            <p class="title">Nuevo pago</p>
+            <div class="patient">
+                <p class="label">Paciente</p>
+                <p class="data">Laura Rodríguez</p>
+            </div>
+            <div class="concept">
+                <p class="label">Concepto</p>
+                <p class="data">Consulta</p>
+            </div>
+            <div class="method">
+                <p class="label">Metodo de pago</p>
+                <p class="data">Efectivo</p>
+            </div>
+            <div class="pay">
+                <p class="label">Pago</p>
+                <p class="data">$600.00</p>
+            </div>
+            <div class="fab fab-center-bottom">
+                <a href="/doctor/pagos">
+                    <i class="icon material-icons">check</i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</template>
+<script>
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+
+                $$('#doctor-agregar-pago-success .fab-center-bottom a').click(function (x) {
+                    app.data.store.clear();
+                });
+
+            }
+        }
+    }
+</script>

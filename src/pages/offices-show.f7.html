@@ -53,8 +53,10 @@
                 var app = self.$app;
 
                 app.preloader.show('blue');
-                app.data.store.getItem('doctor').then(function (value) {
-                    app.data.doctor = value;
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
+
+                /* app.data.store.getItem('doctor').then(function (value) {
+                    app.data.doctor = value; */
 
                     $$('.fab').click(function () {
                         app.data.consultorio.edit = false;
@@ -63,7 +65,7 @@
                         });
                     });
 
-                    app.request.get(app.data.url + '/doctors/' + app.data.doctor.id + '/offices',
+                    app.request.get(app.data.url + '/doctors/' + doctor.id + '/offices',
                         function (e) {
                             var x = JSON.parse(e);
                             for (var i = 0; i < x.length; i++) {
@@ -172,7 +174,7 @@
                         function (e) {
                             app.preloader.hide();
                         });
-                });
+                /* }); */
 
             }
         }

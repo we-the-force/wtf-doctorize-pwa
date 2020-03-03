@@ -10,67 +10,71 @@
             </a>
         </div>
         <div class="page-content">
+            <div>
 
-            <div class="two-input">
-
-                <div class="item-input v2 half">
-                    <label for="date_in">Admisión</label>
-                    <div class="item-input-inner">
-                        <input class="pdr-10" type="date" name="date_in" id="date_in" placeholder="DD/MM/AAAA" required
-                            validate>
+                <div class="two-input">
+    
+                    <div class="item-input v2 half">
+                        <label for="date_in">Admisión</label>
+                        <div class="item-input-inner">
+                            <input class="pdr-10" type="date" name="date_in" id="date_in" placeholder="DD/MM/AAAA" required
+                                validate>
+                        </div>
+                    </div>
+    
+                    <div class="item-input v2 half">
+                        <label for="date_out">Alta</label>
+                        <div class="item-input-inner">
+                            <input class="pdr-10" type="date" name="date_out" id="date_out" placeholder="DD/MM/AAAA"
+                                required validate>
+                        </div>
                     </div>
                 </div>
-
-                <div class="item-input v2 half">
-                    <label for="date_out">Alta</label>
+    
+                <div class="item-input v2">
+                    <label for="prov">Proveedor de atención médica</label>
                     <div class="item-input-inner">
-                        <input class="pdr-10" type="date" name="date_out" id="date_out" placeholder="DD/MM/AAAA"
+                        <input type="text" name="prov" id="prov" placeholder="Nombre" required validate>
+                        <span class="input-clear-button"></span>
+                    </div>
+                </div>
+                <div class="item-input v2">
+                    <label for="hosp">Hospital</label>
+                    <div class="item-input-inner">
+                        <input type="text" name="hosp" id="hosp" placeholder="Nombre" required validate>
+                        <span class="input-clear-button"></span>
+                    </div>
+                </div>
+                <div class="item-input v2">
+                    <label for="razon">Razón</label>
+                    <div class="item-input-inner">
+                        <input type="text" name="razon" id="razon" placeholder="Ej. Hospitalizacipon por  dolor, etc."
                             required validate>
+                        <span class="input-clear-button"></span>
                     </div>
                 </div>
-            </div>
-
-            <div class="item-input v2">
-                <label for="prov">Proveedor de atención médica</label>
-                <div class="item-input-inner">
-                    <input type="text" name="prov" id="prov" placeholder="Nombre" required validate>
-                    <span class="input-clear-button"></span>
+                <div class="item-input v2 upload">
+                    <label for="file">Resumen de alta</label>
+                    <div class="item-input-inner">
+                        <label for="file">
+                            <input type="file" accept=".txt,.doc,.docx,.pdf,.jpeg,.png,.jpg,.ppt,.pptx,.xls,.xlsx" name="file" id="file" placeholder="Añadir archivo adjunto" required validate>
+                            <i class="material-icons">attach_file</i>
+                            <p>Añadir archivo adjunto</p>
+                        </label>
+                    </div>
+                    <p class="notes">
+                        Tamaño máximo de archivo 5 MB. (25 MB para archivos de imagen DICOM).
+                        Formatos admitidos: txt, doc, pdf, jpeg, ppt, xls, archivos de imagen DICOM.
+                    </p>
                 </div>
             </div>
-            <div class="item-input v2">
-                <label for="hosp">Hospital</label>
-                <div class="item-input-inner">
-                    <input type="text" name="hosp" id="hosp" placeholder="Nombre" required validate>
-                    <span class="input-clear-button"></span>
-                </div>
-            </div>
-            <div class="item-input v2">
-                <label for="razon">Razón</label>
-                <div class="item-input-inner">
-                    <input type="text" name="razon" id="razon" placeholder="Ej. Hospitalizacipon por  dolor, etc."
-                        required validate>
-                    <span class="input-clear-button"></span>
-                </div>
-            </div>
-            <div class="item-input v2 upload">
-                <label for="file">Resumen de alta</label>
-                <div class="item-input-inner">
-                    <label for="file">
-                        <input type="file" accept=".txt,.doc,.docx,.pdf,.jpeg,.png,.jpg,.ppt,.pptx,.xls,.xlsx" name="file" id="file" placeholder="Añadir archivo adjunto" required validate>
-                        <i class="material-icons">attach_file</i>
-                        <p>Añadir archivo adjunto</p>
-                    </label>
-                </div>
-                <p class="notes">
-                    Tamaño máximo de archivo 5 MB. (25 MB para archivos de imagen DICOM).
-                    Formatos admitidos: txt, doc, pdf, jpeg, ppt, xls, archivos de imagen DICOM.
-                </p>
-            </div>
-            <div class="container">
-                <div class="btn-2 woi">
-                    <a href="">
-                        <p>Confirmar </p>
-                    </a>
+            <div>
+                <div class="container">
+                    <div class="btn-2 woi">
+                        <a href="">
+                            <p>Confirmar </p>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

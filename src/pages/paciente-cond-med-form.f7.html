@@ -1,0 +1,153 @@
+<template>
+    <div class="page paciente-input-item" id="paciente-cond-med-form">
+        <div class="header basic center fixed">
+            <a class="back">
+                <i class="material-icons">chevron_left</i>
+            </a>
+            <p class="title1 light-blue">Agregar nueva Condición Médica</p>
+            <a class="edit none">
+                <i class="material-icons">more_horiz</i>
+            </a>
+        </div>
+        <div class="page-content">
+            <div class="item-input v2">
+                <label for="name">Nombre</label>
+                <div class="item-input-inner">
+                    <input type="text" name="name" id="name" placeholder="Ej. Diabetes tipo II, Glaucoma, etc." required
+                        validate>
+                    <span class="input-clear-button"></span>
+                </div>
+            </div>
+            <div class="two-input">
+                <div class="item-input v2 half">
+                    <label for="state">Estado</label>
+                    <div class="item-input-inner dropdown-blue">
+                        <select name="state" class="light-blue">
+                            <option value="active">Activa</option>
+                            <option value="inactive">Inactiva</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="item-input v2 half">
+                    <label for="date">Fecha del diagnostico</label>
+                    <div class="item-input-inner">
+                        <input class="pdr-10" type="date" name="date" id="name" placeholder="DD/MM/AAAA" required
+                            validate>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item-input v2">
+                <label for="tp">Tratado por</label>
+                <div class="item-input-inner">
+                    <input type="text" name="tp" id="tp" placeholder="Texto" required validate>
+                    <span class="input-clear-button"></span>
+                </div>
+            </div>
+
+            <div class="medicamentos">
+                <label>Medicamento</label>
+                <div class="item-input v2" id="id_1">
+                    <div class="item-input-inner dropdown-blue">
+
+                        <input list="medicamento" type="text" placeholder="Medicamento">
+
+                        <!-- <select name="med" placeholder="Seleccionar medicamento">
+                            <option value="med_1">Medicamento 1</option>
+                            <option value="med_2">Medicamento 2</option>
+                        </select> -->
+                    </div>
+                    <div class="trash">
+                        <a class="icon">
+
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="add_med add_module">
+                <a>
+                    <i class="material-icons">add_circle</i>
+                    <p>Agregar Medicamento</p>
+                </a>
+            </div>
+
+            <div class="item-input v2">
+                <label for="notes">Notas</label>
+                <div class="item-input-inner textarea">
+                    <textarea class="resizable" placeholder="Agrege algo mas..."></textarea>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="btn-2 woi">
+                    <a href="">
+                        <p>Confirmar </p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <datalist id="medicamento">
+            <option value="Ibuprofeno">
+            <option value="Paracetamol">
+            <option value="Ambroxol">
+            <option value="Aspirina">
+        </datalist>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+
+                $$('.add_module a').on('click', function (e) {
+                    let x = $$('.medicamentos').children().length;
+                    let y = parseInt($$('.medicamentos').children(":last-child").attr('id').split('_')[1]);
+                    if (x == 2) {
+                        $$('.trash .icon').append('<i class="material-icons">delete</i>');
+                    }
+                    $$('.medicamentos').append('<div class="item-input v2" id=id_' + (y + 1) + '>' +
+                        '<div class="item-input-inner dropdown-blue">' +
+                        '<input list="medicamento" type="text" placeholder="Medicamento">' +
+                        '</div>' +
+                        '<div class="trash">' +
+                        '<a class="icon">' +
+                        '<i class="material-icons">delete</i>' +
+                        '</a>' +
+                        '</div>' +
+                        '</div>');
+
+                    $$('.trash a').off('click');
+                    $$('.trash a').click(function (e) {
+                        let x = $$('.medicamentos').children().length;
+
+                        if (x >= 4) {
+                            $$(this).parent().parent().remove();
+                        } else if (x == 3) {
+
+                            $$('.medicamentos').find("i").remove();
+                            $$(this).parent().parent().remove();
+                        }
+                        console.log(x);
+                    });
+                });
+
+
+                $$('.btn-2 a').click(function (e) {
+                    app.data.store.removeItem('edit_patient_data').then(function (value) {
+                        app.methods.redirectTo('paciente-perfil');
+                    });
+                });
+
+                $$('.header a').click(function (val) {
+                    app.data.store.removeItem('edit_patient_data');
+                });
+
+            }
+        }
+    }
+</script>

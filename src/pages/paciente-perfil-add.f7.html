@@ -1,0 +1,183 @@
+<template>
+    <div class="page" id="paciente-perfil-add">
+        <div class="header basic fixed">
+            <a class="back">
+                <i class="material-icons">chevron_left</i>
+            </a>
+            <p class="title1">Agregar</p>
+        </div>
+        <div class="page-content">
+            
+            <div class="content">
+                <div class="title">¿Qué deseas agregar al expediente?</div>
+                <div class="card v2" id="condicionMedica">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <img src="../static/icons/heart_lblue.svg">
+                        <div class="data">
+                            <p class="text">Condición médica</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card v2" id="medicamentos">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <img src="../static/icons/Medicinas.svg">
+                        <div class="data">
+                            <p class="text">Medicamentos</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card v2" id="alergias">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <img src="../static/icons/Alergias_b.svg">
+                        <div class="data">
+                            <p class="text">Alergías</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card v2" id="hSocial">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <img src="../static/icons/HistoriaSocial.svg">
+                        <div class="data">
+                            <p class="text">Historia social</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card v2" id="hMedicaFam">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <img src="../static/icons/HistorialFamilia_b.svg">
+                        <div class="data">
+                            <p class="text">Historia médica familiar</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card v2" id="Contra">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <img src="../static/icons/Contradicciones.svg">
+                        <div class="data">
+                            <p class="text">Contraindicaciones</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card v2" id="Hospitalizacion">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <img src="../static/icons/case_b.svg">
+                        <div class="data">
+                            <p class="text">Hospitalizaciones</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card v2" id="cirugia">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <img src="../static/icons/Bisturi_b.svg">
+                        <div class="data">
+                            <p class="text">Cirugías / Implantes</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card v2" id="vacunas">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <img src="../static/icons/Inyeccion.svg">
+                        <div class="data">
+                            <p class="text">Vacunas</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                
+                $$('#paciente-perfil-add .card.v2').click(function (e) {
+                    let x = $$(this).attr('id');
+                    switch (x) {
+                        case 'condicionMedica':
+                            console.log('condicionMedica');
+                            /* app.data.store.setItem("id_patient_cond", $$(this).attr('id')).then(function (value) {
+                                    app.methods.redirectTo('home');
+                            }); */
+                            app.methods.redirectTo('paciente-cond-med-form');
+                            break;
+                        case 'medicamentos':
+                            console.log('medicamentos');
+                            app.methods.redirectTo('paciente-medicamento-form');
+                            break;
+                        case 'alergias':
+                            console.log('alergias');
+                            app.methods.redirectTo('paciente-alergias-form');
+                            break;
+                        case 'hSocial':
+                            console.log('hSocial');
+                            app.methods.redirectTo('paciente-hist-social-form');
+                            break;
+                        case 'hMedicaFam':
+                            console.log('hMedicaFam');
+                            app.methods.redirectTo('paciente-hist-medica-fam-form');
+                            break;
+                        case 'Contra':
+                            console.log('Contra');
+                            app.methods.redirectTo('paciente-contra-form');
+                            break;
+                        case 'Hospitalizacion':
+                            console.log('Hospitalizacion');
+                            app.methods.redirectTo('paciente-hosp-form');
+                            break;
+                        case 'cirugia':
+                            console.log('cirugia');
+                            app.methods.redirectTo('paciente-cirugia-implantes-form');
+                            break;
+                        case 'vacunas':
+                            console.log('vacunas');
+                            app.methods.redirectTo('paciente-vacunas-form');
+                            break;
+                    }
+
+                    
+                });
+
+            }
+        }
+    }
+</script>

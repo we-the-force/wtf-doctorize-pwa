@@ -31,7 +31,7 @@
     &.linear
         padding-left: 20px
         .item-inner
-            height: 65px            
+            height: 65px
         .item-label
             font: 16px/20px 'Nunito'
     &-focused
@@ -41,3 +41,86 @@
         &.linear
             .item-label
                 color: $dark-blue
+    &.v2
+        margin: 15px
+        display: flex
+        flex-direction: column
+        label
+            margin-left: 15px
+        .item-input-inner
+            position: relative
+            display: flex
+            align-items: center
+            height: 45px
+            background: #FFFFFF
+            border-radius: 15px
+            box-shadow: -2px 2px 15px rgba(17, 21, 42, 0.2)
+            input,select,textarea
+                width: 100%
+                padding-left: 15px
+            textarea
+                display: block
+                box-sizing: padding-box
+                overflow: hidden
+                padding: 15px
+                font-size: 14px
+            &.textarea
+                height: auto
+            &.dropdown-blue::before
+                font-family: 'Material Icons'
+                content: 'keyboard_arrow_down'
+                pointer-events: none
+                position: absolute
+                font-size: 25px
+                width: 0
+                height: 0
+                right: 32px
+                top: 5px
+                color: $light-blue
+        .input-clear-button
+            margin-top: auto
+            margin-bottom: auto
+            margin-right: 15px
+            position: unset
+            top: unset
+        &.half,.radio-input
+            width: 50%
+        .pdr-10
+            padding-right: 10px
+        .radio-input
+            display: flex
+            align-items: center
+            justify-content: space-between
+            label
+                display: flex
+                i
+                    border-color: $turquoise-2
+                    margin-right: 5px
+                input[type="radio"]:checked ~ .icon-radio
+                    border-color: $turquoise-2
+        &.upload
+            p   
+                margin: 5px 15px
+                color: $grey
+                font-family: Nunito
+                font-style: normal
+                font-weight: normal
+                font-size: 10px
+                line-height: 13px
+            .item-input-inner
+                label
+                    display: flex
+                    align-items: center
+                    i
+                        transform: rotate(-135deg)
+                        color: $light-blue
+                    p
+                        color: $light-blue
+                        font: $Body-2
+                        line-height: 20px
+                        font-weight: normal
+                        margin-left: 5px
+                    input
+                        display: none
+input::-webkit-calendar-picker-indicator
+    display: none

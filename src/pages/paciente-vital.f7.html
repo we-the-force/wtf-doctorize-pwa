@@ -11,6 +11,18 @@
                 </a>
             </div>
             <div class="chart">
+                <div class="title">
+                    <img src="../static/icons/heart_red.svg">
+                    <p>Tensión arterial</p>
+                </div>
+                <div class="cstm_tooltip">
+                    <div class="data">
+                        <p>123/82</p>
+                    </div>
+                    <div class="label">
+                        <p>mm/Hg</p>
+                    </div>
+                </div>
                 <canvas id="chart"></canvas>
             </div>
             <div class="item-input v2 third">
@@ -193,12 +205,9 @@
                 var self = this;
                 var app = self.$app;
                 var Chart = require('chart.js');
-                
-                $$('.header a').click(function (val) {
-                });
 
                 var ctx = $$('#chart');
-                var chart = new Chart(ctx, {
+                var newchart = new Chart(ctx, {
                     // The type of chart we want to create
                     type: 'line',
 
@@ -206,20 +215,30 @@
                     data: {
                         labels: ['01', '05', '10', '15', '20', '25', '30'],
                         datasets: [{
-                            radius: 4,
+                            pointRadius: Array(7).fill(4),
                             backgroundColor: 'transparent',
                             pointBackgroundColor: Array(7).fill("#004F88"),
                             borderColor: '#004F88',
-                            data: [3, 5, 7, 5, 4, 7, 3]
-                        }]
+                            borderWidth: 2,
+                            tension: 0.0,
+                            data: [108, 122, 110, 135, 123, 120, 100]
+                        }, {
+                            tension: 0.0,
+                            pointRadius: Array(7).fill(4),
+                            backgroundColor: 'transparent',
+                            pointBackgroundColor: Array(7).fill("#029AF0"),
+                            borderColor: '#029AF0',
+                            borderWidth: 2,
+                            data: [75, 81, 75, 86, 82, 79, 70]
+                        }],
                     },
 
                     // Configuration options go here
                     options: {
                         onClick: function (evt, activeElements) {
-                            var elementIndex = activeElements[0]._index;
-                            this.data.datasets[0].pointBackgroundColor[elementIndex] = 'green';
-                            this.update();
+                        },
+                        legend: {
+                            display: false
                         },
                         tooltips: {
                             // Disable the on-canvas tooltip
@@ -227,10 +246,11 @@
                         },
                         scales: {
                             yAxes: [{
+                                display: false,
                                 gridLines: {
                                     display: false,
-                                    drawBorder: false,
                                 },
+                                stacked: true
                             }],
                             xAxes: [{
                                 gridLines: {
@@ -240,6 +260,47 @@
                         },
                     }
                 });
+
+                for (let i = 0; i < newchart.data.datasets.length; i++) {
+                    let pt = newchart.data.datasets[i]._meta[0].dataset._children[4];
+                    pt.custom = pt.custom || {};
+                    pt.custom.backgroundColor = 'white';
+                    pt.custom.radius = 8;
+                }
+                //cambiar cuando no sea presion
+                let value = newchart.data.datasets[0].data[4] + '/' + newchart.data.datasets[1].data[4];
+
+                $$('.chart .cstm_tooltip .data p').text(value);
+                newchart.update();
+
+                $$('#chart').click(function (e) {
+                    var elements = newchart.getElementsAtEventForMode(e, 'nearest', { intersect: false })[0];
+                    var index = elements._index;
+                    for (let i = 0; i < newchart.data.datasets.length; i++) {
+                        let el = newchart.data.datasets[i]._meta[0].dataset._children;
+                        el.forEach(element => {
+                            element.custom = {};
+
+                        });
+                    }
+                    for (let i = 0; i < newchart.data.datasets.length; i++) {
+                        let el = newchart.data.datasets[i]._meta[0].dataset._children[index];
+                        el.custom = el.custom || {};
+                        el.custom.backgroundColor = 'white';
+                        el.custom.radius = 8;
+                    }
+
+                    //cambiar cuando no sea presion
+                    let value = newchart.data.datasets[0].data[index] + '/' + newchart.data.datasets[1].data[index];
+                    $$('.chart .cstm_tooltip .data p').text(value);
+                    newchart.update();
+
+                });
+
+
+                $$('.header a').click(function (val) {
+                });
+
 
             }
         }

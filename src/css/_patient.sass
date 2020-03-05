@@ -333,7 +333,45 @@
                     font-weight: 600
                     color: $grey
     .page-content
-        padding-bottom: 410px
+        padding-bottom: 130px
+        .item-input.v2.third
+            margin-left: auto
+        .chart
+            margin-left: 10px
+            margin-right: 10px
+            width: auto
+            display: flex
+            flex-direction: column
+            .title
+                margin-left: 10px
+                display: flex
+                align-items: center
+                p
+                    font: $Body-4
+                    color: $grey
+                    margin: 0px
+                img
+                    filter: saturate(0) contrast(0)
+            .cstm_tooltip
+                display: flex
+                flex-direction: column
+                align-items: center
+                margin-top: 5px
+                .data,.label
+                    p   
+                        padding: 3px 10px
+                        border: 1px solid #E5E9F2
+                        border-radius: 10px
+                        margin: 2px 0px
+                .data p
+                    font: $Body-4
+                    font-size: 24px
+                    line-height: 24px
+                    color: $light-blue
+                .label p
+                    font: $text-2-card
+                    font-weight: 600
+                    color: $grey
         .month
             .head
                 display: flex
@@ -374,3 +412,5 @@
                                 color: $grey
                     .cards
                         flex-grow: 1
+    &#paciente-vital .page-content
+        padding-bottom: 70px

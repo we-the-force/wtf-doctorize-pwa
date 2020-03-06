@@ -634,21 +634,42 @@
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
-                var header = $$('.header.fixed');
 
-                /* $$('.page-content').on('scroll', function () {
-                    let t = $$('.page-content .header .title ').offset().top;
-                    t += 35;
-                    if(t <= 0){
-                        $$('.header.fixed').removeClass('hide');
-                    }else{
-                        $$('.header.fixed').addClass('hide');
-                    }
-                }); */
+                app.preloader.show('blue');
+
+                app.data.store.getItem('patient_id').then(function (value) {
+                    var ptnt_id = value;
+                    app.request.get(app.data.url + '/patients/' + ptnt_id,
+                        function (e) { 
+                            var x = JSON.parse(e);
+                            $$('.header p.name').text(x.name);
+                        },
+                        function (e) {
+                            app.preloader.hide();
+
+                            /* //header
+                            $$('.header p.name').text('Gewndolyne Stacy');
+                            $$('.header .binfo .gender').text('Mujer');
+                            $$('.header .binfo .age').text('23 años');
+                            //$$('.header .photo img').attr("src",app.data.url + '/' + x.photo + '200.png');
+
+                            //generales
+                            $$('.generales .content #blood .card-footer p').text('122/70');
+                            $$('.generales .content #peso .card-footer p').text('70.4');
+                            $$('.generales .content #altura .card-footer p').text('175');
+                            $$('.generales .content #IMC .card-footer p').text('21');
+                            $$('.generales .content #PGC .card-footer p').text('21');
+
+                            //vitales
+                            $$('.vitales .content #temperatura .card-footer p').text('38°');
+                            $$('.vitales .content #presion .card-footer p').text('122/70');
+                            $$('.vitales .content #respiracion .card-footer p').text('14');
+                            $$('.vitales .content #pulso .card-footer p').text('86'); */
+                        });
+                });
 
                 $$('.nav.title a').click(function (val) {
                     app.methods.redirectTo('home');
-                    /* $$('.header.fixed').toggleClass('hide'); */
                 });
 
                 $$('.card.v2').click(function (e) {

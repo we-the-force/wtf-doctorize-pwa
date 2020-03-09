@@ -112,14 +112,6 @@
         var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         var email_login = '',
           password_login = '';
-        var errorPopup = app.popup.create({
-          content: '<div class="popup popup-swipe-to-close">' +
-            '<div class="block text-align-center">' +
-            '<p>Tus datos de acceso son incorrectos. <br/><br/>Intenta nuevamente.</p>' +
-            '<div class="list"> <ul> <li><a class="item-link list-button popup-close" href="#">Cerrar</a></li> </ul> </div>' +
-            '</div>' +
-            '</div>'
-        });
         /* 
                 var notification = app.notification.create({
                   icon: '<i class="icon demo-icon">7</i>',
@@ -182,14 +174,11 @@
                     .then(function (value) {
                       console.log(value);
                       app.methods.redirectTo('home');
-                    })
-                    .catch(function (err) {
-                      console.log(err);
                     });
                 },
                 function (e) {
                   app.preloader.hide();
-                  errorPopup.open();
+                  app.dialog.alert('Tus datos de acceso son incorrectos. <br>Intenta nuevamente.</p>');
                 });
             });
           } else {

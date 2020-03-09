@@ -1,6 +1,6 @@
 <template>
-  <div class="page" data-name="register-step1" id="register-step1">
-    <div class="page-content login-screen-content register-step1 btns">
+  <div class="page register-flow" data-name="register-step1" id="register-step1">
+    <div class="page-content login-screen-content register-step1">
       <div class="screen-title header-blue">
         <div class="list">
           <ul>
@@ -17,55 +17,43 @@
           </ul>
         </div>
       </div>
-      <div class="list">
-        <ul>
-          <li class="item-content item-input">
-            <div class="item-inner">
-              <div class="item-input-wrap rounded">
-                <div class="row">
-                  <div class="col-10">
-                    <i class="material-icons">person</i>
-                  </div>
-                  <div class="col-90">
-                    <input type="text" id="fullname" placeholder="Nombre completo" required validate>
-                    <span class="input-clear-button"></span>
-                  </div>
+      <div>
+        <div class="list inputs">
+          <ul>
+            <li class="item-content item-input">
+              <div class="item-inner searchbar-inner">
+                <div class="item-input-wrap rounded">
+                  <i class="icons material-icons">person</i>
+                  <input type="text" id="fullname" placeholder="Nombre completo" required validate>
+                  <span class="input-clear-button"></span>
                 </div>
               </div>
-            </div>
-          </li>
-          <li class="item-content item-input">
-            <div class="item-inner">
-              <div class="item-input-wrap rounded">
-                <div class="row">
-                  <div class="col-10">
-                    <i class="material-icons">vpn_key</i>
-                  </div> 
-                  <div class="col-90">
-                    <input type="text" id="pass" class="pass" placeholder="Contraseña" required validate>
-                    <span class="input-clear-button"></span>
-                  </div>
+            </li>
+            
+            <li class="item-content item-input">
+              <div class="item-inner searchbar-inner">
+                <div class="item-input-wrap rounded">
+                  <i class="icons material-icons">vpn_key</i>
+                  <input type="text" id="pass" class="pass" placeholder="Contraseña" required validate>
+                  <span class="input-clear-button"></span>
                 </div>
               </div>
-            </div>
-          </li>
-        </ul>
+            </li>
+          </ul>
+        </div>
       </div>
-      
+      <div class="container two">
+        <a href="/" data-view=".view-main" class="item-link btn-simple">Cancelar</a>
+        <div class="btn-2">
+          <a href="#">
+            <p>Siguiente </p>
+            <i class="material-icons">chevron_right</i>
+          </a>
+        </div>
+      </div>
     </div>
-    <div class="list buttons">
-        <ul>
-          <li>
-            <div class="row">
-              <a href="/" class="item-link btn-simple">Cancelar</a>
-              <a href="#" class="item-link list-button btn-rounded">
-                <p>Siguiente </p>
-                <i class="material-icons">chevron_right</i>
-              </a>
-            </div>
-          </li>
-        </ul>
-      </div>
+
+      
   </div>
 </template>
 <script>
@@ -87,19 +75,19 @@
           app.data.flow = 'RD';
         }
 
-        $$('#register-step1 #cancel').on('click', function (e) {
+        $$('#register-step1 .btn-simple').on('click', function (e) {
           app.data.flow = 'default';
           app.data.store.removeItem('flow');
           app.methods.redirectTo('root');
         });
 
-        $$('#register-step1 .btn-rounded').addClass('grey');
-        $$('#register-step1 .btn-rounded').off('click');
+        $$('#register-step1 .btn-2 a').addClass('grey');
+        $$('#register-step1 .btn-2 a').off('click');
         $$(document).on('input:notempty', '#fullname', function (e) {
           $$(document).on('input:notempty', '#pass', function (e) {
-            $$('#register-step1 .btn-rounded').removeClass('grey');
-            $$('#register-step1 .btn-rounded').off('click');
-            $$('#register-step1 .btn-rounded').on('click', function (e) {
+            $$('#register-step1 .btn-2 a').removeClass('grey');
+            $$('#register-step1 .btn-2 a').off('click');
+            $$('#register-step1 .btn-2 a').on('click', function (e) {
               if (app.data.flow == 'RD') {
                 app.data.register.username = $$('#fullname').val();
                 app.data.register.password = $$('#pass').val();

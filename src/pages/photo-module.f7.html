@@ -1,6 +1,6 @@
 <template>
     <div class="page" data-name="photo-module" id="photo-module">
-        <div class="page-content login-screen-content photo-module btns">
+        <div class="page-content login-screen-content photo-module">
 
             <div class="screen-title header-blue">
                 <div class="list">
@@ -19,13 +19,38 @@
                 </div>
 
             </div>
-            <div class="border">
-                <div class="upload-photo" id="upload-photo">
-                    <img src="../static/images/add_a_photo_24px.svg" class="camera" alt="">
+            <div class="cont_photo">
+                <div class="border">
+                    <div class="upload-photo" id="upload-photo">
+                        <img src="../static/images/add_a_photo_24px.svg" class="camera" alt="">
+                    </div>
                 </div>
             </div>
+
+            <div class="footer_photo">
+
+                <div class="especialidad">
+                    <div class="item-input v2" id="picker" style="visibility:hidden">
+                        <div class="item-input-inner dropdown-blue">
+                            <i class="material-icons">local_hospital</i>
+                            <input type="text" name="specialty" placeholder="Especialidad"
+                                                readonly="readonly" id="specialty-picker">
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="container two">
+                    <a href="#" data-view=".view-main" class="item-link btn-simple">Regresar</a>
+                    <div class="btn-2">
+                      <a href="#">
+                        <p>Guardar </p>
+                        <i class="material-icons">chevron_right</i>
+                      </a>
+                    </div>
+                  </div>
+            </div>
         </div>
-        <div class="list buttons">
+        <!-- <div class="list buttons">
             <ul>
                 <li style="margin-bottom: 4%;">
                     <div class="item-content item-input" id="picker" style="visibility:hidden">
@@ -56,7 +81,7 @@
                     </div>
                 </li>
             </ul>
-        </div>
+        </div> -->
     </div>
 </template>
 <style>
@@ -443,8 +468,8 @@
                     $$('#picker').css("visibility", "visible");
                     app.data.store.getItem('register').then(function (value) {
                         app.data.register = value;
-                        $$('#photo-module .btn-rounded').off('click');
-                        $$('#photo-module .btn-rounded').on('click', function (e) {
+                        $$('#photo-module .btn-2 a').off('click');
+                        $$('#photo-module .btn-2 a').on('click', function (e) {
                             specialityID = specialties.values.indexOf(picker.value[0]);
                             specialityID++;
                             c.result('base64').then(function (blob) {
@@ -478,8 +503,8 @@
                     $$('.header-blue p').text('Agrega tu foto de perfil');
                     /* app.data.store.getItem('doctor').then(function (value) {
                         app.data.doctor = value; */
-                        $$('#photo-module .btn-rounded').off('click');
-                        $$('#photo-module .btn-rounded').on('click', function (e) {
+                        $$('#photo-module .btn-2 a').off('click');
+                        $$('#photo-module .btn-2 a').on('click', function (e) {
                             c.result('base64').then(function (blob) {
                                 app.preloader.show('blue');
                                 app.request({
@@ -517,8 +542,8 @@
                         $$('.photo-module h1').text('Foto de Perfil');
                         $$('.photo-module h4').text('Agrega tu foto de perfil');
 
-                        $$('#photo-module .btn-rounded').off('click');
-                        $$('#photo-module .btn-rounded').on('click', function (e) {
+                        $$('#photo-module .btn-2 a').off('click');
+                        $$('#photo-module .btn-2 a').on('click', function (e) {
                             c.result('base64').then(function (blob) {
                                 app.preloader.show('blue');
                                 app.request.postJSON(app.data.url + '/account/confirmation/assistant', {
@@ -534,7 +559,7 @@
                                     });
                                 }, function (e) {
                                     app.preloader.hide();
-                                    app.dialog.alert("Error");
+                                    app.dialog.alert("Error al registrarse <br> Verifique que esta cuenta no este registrada y que no falte ningun dato");
                                 });
                             });
                         });

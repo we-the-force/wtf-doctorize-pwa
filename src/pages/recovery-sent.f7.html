@@ -1,6 +1,6 @@
 <template>
-  <div class="page recovery-sent-page" data-name="recovery-sent">
-    <div class="page-content login-screen-content recovery-sent center btns">
+  <div class="page recovery-flow recovery-sent-page" data-name="recovery-sent">
+    <div class="page-content login-screen-content recovery-sent center">
       <div class="screen-title header-blue">
         <div class="list">
           <ul>
@@ -16,19 +16,8 @@
           </ul>
         </div>
       </div>
-      <div class="list">
-        <ul>
-          <li>
-            <div class="row">
-              <div class="col-30"></div>
-              <div class="col-40">
-                <img src="../static/images/email_24px.svg" class="recovery-sent-img" alt="">
-              </div>
-              <div class="col-30"></div>
-            </div>
-          </li>
-
-        </ul>
+      <div class="icon">
+        <img src="../static/images/email_24px.svg" class="recovery-sent-img" alt="">
       </div>
       <div class="list">
         <ul>
@@ -45,9 +34,16 @@
           </li>
         </ul>
       </div>
-
+      <div class="container">
+        <div class="btn-2">
+          <a href="">
+            <p>Aceptar </p>
+            <i class="material-icons">chevron_right</i>
+          </a>
+        </div>
+      </div>
     </div>
-    <div class="list buttons">
+    <!-- <div class="list buttons">
       <ul>
         <li>
           <div class="row">
@@ -58,7 +54,7 @@
           </div>
         </li>
       </ul>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>

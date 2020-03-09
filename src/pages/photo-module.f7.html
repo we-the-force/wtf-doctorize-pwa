@@ -489,7 +489,7 @@
                                         app.methods.redirectTo('register-s4');
                                     });
                                 }, function (e) {
-                                    app.dialog.alert("error");
+                                    app.dialog.alert("Error al registrarse <br> Verifique que esta cuenta no este registrada o que todos lo datos sean correctos");
                                     app.preloader.hide();
                                 });
 
@@ -559,7 +559,7 @@
                                     });
                                 }, function (e) {
                                     app.preloader.hide();
-                                    app.dialog.alert("Error al registrarse <br> Verifique que esta cuenta no este registrada y que no falte ningun dato");
+                                    app.dialog.alert("Error");
                                 });
                             });
                         });

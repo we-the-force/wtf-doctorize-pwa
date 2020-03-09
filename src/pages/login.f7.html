@@ -1,61 +1,90 @@
 <template>
-  <div class="page" data-name="login" id="login">
+  <div class="page login" data-name="login" id="login">
 
-    <div class="page-content login-screen-content btns">
+    <div class="page-content login-screen-content">
       <div class="login-screen-title">
         <img src="/static/images/logo_v2.png"
           srcset="/static/images/logo@2x_v2.png 2x, /static/images/logo@3x_v2.png 3x, /static/images/logo@4x_v2.png 4x">
       </div>
-      <div class="list">
-        <ul>
-          <li class="item-content item-input">
-            <div class="item-inner">
-              <div class="item-input-wrap rounded">
-                <div class="row">
-                  <div class="col-10">
-                    <i class="material-icons">person</i>
+      <div>
 
-                  </div>
-                  <div class="col-90">
-                    <input type="email" name="username" id="username" placeholder="Correo electrónico" required
-                      validate>
-                    <span class="input-clear-button"></span>
+        <div class="list inputs">
+          <ul>
+            <li class="item-content item-input">
+              <div class="item-inner searchbar-inner">
+                <div class="item-input-wrap login-input-wrap rounded">
+                  <i class="icons material-icons">person</i>
+                  <input type="email" id="username" placeholder="Correo electrónico" required validate>
+                  <span class="input-clear-button"></span>
+                </div>
+              </div>
+            </li>
+            <!-- <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-input-wrap rounded">
+                  <div class="row">
+                    <div class="col-10">
+                      <i class="material-icons">person</i>
+                    </div>
+                    <div class="col-90">
+                      <input type="email" name="username" id="username" placeholder="Correo electrónico" required
+                        validate>
+                      <span class="input-clear-button"></span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </li>
-          <li class="item-content item-input">
-            <div class="item-inner">
-              <div class="item-input-wrap rounded">
-                <div class="row">
-                  <div class="col-10">
-                    <i class="material-icons">vpn_key</i>
-
-                  </div>
-                  <div class="col-90">
-                    <input type="password" name="password" id="password" placeholder="*******" required validate>
-                    <span class="input-clear-button"></span>
+            </li> -->
+            <li class="item-content item-input">
+              <div class="item-inner searchbar-inner">
+                <div class="item-input-wrap login-input-wrap rounded">
+                  <i class="icons material-icons">vpn_key</i>
+                  <input type="password" id="password" placeholder="*******" required validate>
+                  <span class="input-clear-button"></span>
+                </div>
+              </div>
+            </li>
+            <!-- <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-input-wrap rounded">
+                  <div class="row">
+                    <div class="col-10">
+                      <i class="material-icons">vpn_key</i>
+  
+                    </div>
+                    <div class="col-90">
+                      <input type="password" name="password" id="password" placeholder="*******" required validate>
+                      <span class="input-clear-button"></span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </li>
-          <li>
-            <div class="row">
-              <div class="col-80">
-                <a href="/account/password/reset" style="text-align: left;" class="item-link list-button btn-simple"
-                  id="recovery">Reestablecer contraseña</a>
+            </li> -->
+            <li>
+              <div class="row">
+                <div class="col-80">
+                  <a href="/account/password/reset" style="text-align: left;" class="item-link list-button btn-simple"
+                    id="recovery">Reestablecer contraseña</a>
+                </div>
               </div>
-            </div>
-          </li>
-        </ul>
+            </li>
+          </ul>
+        </div>
+
+      </div>  
+
+
+      <div class="container two">
+        <a href="/register-s1/" data-view=".view-main" class="item-link btn-simple">Regístrate</a>
+        <div class="btn-2">
+          <a href="">
+            <p>Ingresar </p>
+            <i class="material-icons">chevron_right</i>
+          </a>
+        </div>
       </div>
-
-
-
     </div>
-    <div class="list buttons">
+    <!-- <div class="list buttons">
       <ul>
         <li>
           <div class="row">
@@ -69,7 +98,7 @@
         </li>
 
       </ul>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -91,17 +120,17 @@
             '</div>' +
             '</div>'
         });
-/* 
-        var notification = app.notification.create({
-          icon: '<i class="icon demo-icon">7</i>',
-          title: 'Framework7',
-          titleRightText: 'now',
-          subtitle: 'This is a subtitle',
-          text: 'This is a simple notification message',
-          closeTimeout: 3000,
-        })
-
-        notification.open(); */
+        /* 
+                var notification = app.notification.create({
+                  icon: '<i class="icon demo-icon">7</i>',
+                  title: 'Framework7',
+                  titleRightText: 'now',
+                  subtitle: 'This is a subtitle',
+                  text: 'This is a simple notification message',
+                  closeTimeout: 3000,
+                })
+        
+                notification.open(); */
 
         /* Notification.requestPermission();
         navigator.serviceWorker.getRegistration().then(function (reg) {
@@ -136,9 +165,9 @@
 
         function enableButton() {
           if (regex.test(email_login)) {
-            $$('#login .btn-rounded').removeClass('grey');
-            $$('#login .btn-rounded').off('click');
-            $$('#login .btn-rounded').on('click', function (e) {
+            $$('#login .btn-2 a').removeClass('grey');
+            $$('#login .btn-2 a').off('click');
+            $$('#login .btn-2 a').on('click', function (e) {
               e.preventDefault();
               app.preloader.show('blue');
               app.request.postJSON(app.data.url + '/account/login', {
@@ -147,7 +176,7 @@
               },
                 function (e) {
                   app.preloader.hide();
-                  sessionStorage.setItem('user',JSON.stringify(e));
+                  sessionStorage.setItem('user', JSON.stringify(e));
                   app.data.store
                     .setItem("doctor", e)
                     .then(function (value) {
@@ -169,8 +198,8 @@
         }
 
         function disableButton() {
-          $$('#login .btn-rounded').addClass('grey');
-          $$('#login .btn-rounded').off('click');
+          $$('#login .btn-2 a').addClass('grey');
+          $$('#login .btn-2 a').off('click');
         }
       }
     }

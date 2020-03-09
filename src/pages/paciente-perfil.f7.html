@@ -576,7 +576,7 @@
                 </div>
             </div>
 
-            <div class="slot cirugias/implantes">
+            <div class="slot cirugias">
                 <div class="title">
                     <p class="text">Cirugias / Implantes</p>
                     <a class="arrow">
@@ -600,7 +600,7 @@
                 </div>
             </div>
 
-            <div class="slot Vacunas">
+            <div class="slot vacunas">
                 <div class="title">
                     <p class="text">Vacunas</p>
                     <a class="arrow">
@@ -640,9 +640,11 @@
                 app.data.store.getItem('patient_id').then(function (value) {
                     var ptnt_id = value;
                     app.request.get(app.data.url + '/patients/' + ptnt_id,
-                        function (e) { 
+                        function (e) {
                             var x = JSON.parse(e);
                             $$('.header p.name').text(x.name);
+
+                            app.preloader.hide();
                         },
                         function (e) {
                             app.preloader.hide();
@@ -665,6 +667,212 @@
                             $$('.vitales .content #presion .card-footer p').text('122/70');
                             $$('.vitales .content #respiracion .card-footer p').text('14');
                             $$('.vitales .content #pulso .card-footer p').text('86'); */
+                            /* var color = 'dark-blue';
+                            for (let i = 0; i < 4; i++) {
+                                $$('.consultas .content ').append(
+                                    '<div class="card v2 card-expandable '+color+'">' +
+                                    '<div class="card-content">' +
+                                    '<div class="card-header">' +
+                                    '<p>Asma</p>' +
+                                    '<p>21/05/2019</p>' +
+                                    '</div>' +
+                                    '<div class="card-content-padding">' +
+                                    '<p>' +
+                                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor' +
+                                    'incididunt ut labore et dolore magna aliqua.' +
+                                    '</p>' +
+                                    '</div>' +
+                                    '<div class="card-footer">' +
+                                    '<p>Dr. Simi</p>' +
+                                    '<a href="#" class="card-opened-fade-out"><u>ver más...</u></a>' +
+                                    '<a href="#" class="card-close card-opened-fade-in"><u>cerrar</u></a>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>'
+                                );
+                                switch (i) {
+                                    case 0:
+                                        color = 'light-blue';
+                                        break;
+                                    case 1:
+                                        color = 'turquoise';
+                                        break;
+                                    case 2:
+                                        color = '';
+                                        break;
+                                    case 3:
+                                        color = 'dark-blue';
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            } */
+
+                            /* for (let i = 0; i < 3; i++) {
+                                $$('.pagos .content ').append(
+                                    '<div class="card v2 yellow">' +
+                                    '<div class="rectangle yellow"></div>' +
+                                    '<div class="card-content">' +
+                                    '<i class="material-icons icon yellow">monetization_on</i>' +
+                                    '<div class="data">' +
+                                    '<p class="text">$600.00</p>' +
+                                    '<p class="title bold">Consulta</p>' +
+                                    '</div>' +
+                                    '<div class="date">17/02/2020</div>' +
+                                    '<a class="arrow">' +
+                                    '<i class="material-icons">chevron_right</i>' +
+                                    '</a>' +
+                                    '</div>' +
+                                    '</div>'
+                                );
+                            } */
+
+                            /* for (let i = 0; i < 3; i++) {
+                                $$('.condiciones .content ').append(
+                                    '<div class="card v2 pink">' +
+                                    '<div class="rectangle pink"></div>' +
+                                    '<div class="card-content">' +
+                                    '<img src="../static/icons/heart.svg">' +
+                                    '<div class="data">' +
+                                    '<p class="text">Diabetes Tipo II</p>' +
+                                    '<p class="title">Linagliptina/Metformina</p>' +
+                                    '</div>' +
+                                    '<div class="date">08/02/2020</div>' +
+                                    '<a class="arrow">' +
+                                    '<i class="material-icons">chevron_right</i>' +
+                                    '</a>' +
+                                    '</div>' +
+                                    '</div>' 
+                                );
+                            } */
+/* 
+                            for (let i = 0; i < 3; i++) {
+                                $$('.medicamentos .content ').append(
+                                    '<div class="card v2 light-blue">' +
+                                    '<div class="rectangle light-blue"></div>' +
+                                    '<div class="card-content">' +
+                                    '<img src="../static/icons/Medicinas.svg">' +
+                                    '<div class="data">' +
+                                    '<p class="text">Linagliptina/Metformina</p>' +
+                                    '<p class="title grey">Tableta - Oral</p>' +
+                                    '</div>' +
+                                    '<a class="arrow">' +
+                                    '<i class="material-icons">chevron_right</i>' +
+                                    '</a>' +
+                                    '</div>' +
+                                    '</div>'
+                                );
+                            }
+
+                            $$('.alergias .content ').append(
+                                '<div class="card v2">' +
+                                '<div class="rectangle green"></div>' +
+                                '<div class="card-content">' +
+                                '<img src="../static/icons/Alergias.svg">' +
+                                '<div class="data">' +
+                                '<p class="text">Dermatitis</p>' +
+                                '<p class="title">Linagliptina/Metformina</p>' +
+                                '</div>' +
+                                '<a class="arrow">' +
+                                '<i class="material-icons">chevron_right</i>' +
+                                '</a>' +
+                                '</div>' +
+                                '</div>'
+                            );
+
+                            $$('.hSocial .content ').append(
+                                '<div class="card v2">' +
+                                '<div class="rectangle light-blue"></div>' +
+                                '<div class="card-content">' +
+                                '<img src="../static/icons/HistoriaSocial.svg">' +
+                                '<div class="data">' +
+                                '<p class="text">Ingeniero</p>' +
+                                '<p class="title grey">Saltillo Coah.</p>' +
+                                '</div>' +
+                                '<a class="arrow">' +
+                                '<i class="material-icons">chevron_right</i>' +
+                                '</a>' +
+                                '</div>' +
+                                '</div>'
+                            );
+
+                            $$('.hMedicaFam .content ').append(
+                                '<div class="card v2">' +
+                                '<div class="rectangle pink"></div>' +
+                                '<div class="card-content">' +
+                                '<img src="../static/icons/HistorialFamilia.svg">' +
+                                '<div class="data">' +
+                                '<p class="text">Madre</p>' +
+                                '<p class="title grey">Lorem ipsum dolor sit amet.</p>' +
+                                '</div>' +
+                                '<a class="arrow">' +
+                                '<i class="material-icons">chevron_right</i>' +
+                                '</a>' +
+                                '</div>' +
+                                '</div>'
+                            );
+
+                            $$('.contraindicaciones .content ').append(
+                                '<div class="card v2">' +
+                                '<div class="rectangle light-blue"></div>' +
+                                '<div class="card-content">' +
+                                '<img src="../static/icons/Contradicciones.svg">' +
+                                '<div class="data">' +
+                                '<p class="text">Lorem ipsum dolor sit...</p>' +
+                                '</div>' +
+                                '<a class="arrow">' +
+                                '<i class="material-icons">chevron_right</i>' +
+                                '</a>' +
+                                '</div>' +
+                                '</div>'
+                            );
+
+                            $$('.hospitalizaciones .content').append(
+                                '<div class="card v2">' +
+                                '<div class="rectangle red"></div>' +
+                                '<div class="card-content">' +
+                                '<img src="../static/icons/case.svg">' +
+                                '<div class="data">' +
+                                '<p class="text">Dolor severo en el pecho</p>' +
+                                '<p class="title grey">24/01/2020 - 02/02/2020</p>' +
+                                '</div>' +
+                                '<a class="arrow">' +
+                                '<i class="material-icons">chevron_right</i>' +
+                                '</a>' +
+                                '</div>' +
+                                '</div>'
+                            );
+
+                            $$('.cirugias .content').append(
+                                '<div class="card v2">' +
+                                '<div class="rectangle turquoise"></div>' +
+                                '<div class="card-content">' +
+                                '<img src="../static/icons/Bisturi.svg">' +
+                                '<div class="data">' +
+                                '<p class="text">Cirugía de implante dental</p>' +
+                                '<p class="title grey">Implante dental</p>' +
+                                '</div>' +
+                                '<a class="arrow">' +
+                                '<i class="material-icons">chevron_right</i>' +
+                                '</a>' +
+                                '</div>' +
+                                '</div>'
+                            );
+                            $$('.vacunas .content').append(
+                                '<div class="card v2">' +
+                                '<div class="rectangle light-blue"></div>' +
+                                '<div class="card-content">' +
+                                '<img src="../static/icons/Inyeccion.svg">' +
+                                '<div class="data">' +
+                                '<p class="text">Hepatitis B</p>' +
+                                '<p class="title">Hep B</p>' +
+                                '</div>' +
+                                '<a class="arrow">' +
+                                '<i class="material-icons">chevron_right</i>' +
+                                '</a>' +
+                                '</div>' +
+                                '</div>'
+                            ); */
                         });
                 });
 
@@ -678,7 +886,7 @@
                         case 'condiciones':
                             console.log('condiciones');
                             /* app.data.store.setItem("id_patient_cond", $$(this).attr('id')).then(function (value) {
-                                    app.methods.redirectTo('home');
+                                app.methods.redirectTo('home');
                             }); */
                             app.methods.redirectTo('paciente-cond-med');
                             break;

@@ -1,15 +1,78 @@
 <template>
     <div class="page" id="config">
+        <div class="header basic center fixed">
+            <a class="" href="/home">
+                <i class="material-icons">chevron_left</i>
+            </a>
+            <p class="title1 light-blue">Ajustes</p>
+            <a class="edit none">
+                <i class="material-icons">more_horiz</i>
+            </a>
+        </div>
         <div class="page-content login-screen-content config">
-            <div class="header">
-                <div class="config">
-                    <a href="/home">
-                        <i class="material-icons">chevron_left</i>
-                    </a>
-                    <p class="title1">Ajustes</p>
+            <div class="content">
+                <div class="card v2" id="personal_settings">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <i class="material-icons icon light-blue">person</i>
+                        <div class="data">
+                            <p class="text light-blue">Información Personal</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons light-blue">chevron_right</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card v2" id="offices_settings">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <i class="material-icons icon light-blue">room</i>
+                        <div class="data">
+                            <p class="text light-blue">Consultorios</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons light-blue">chevron_right</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card v2" id="assistants_settings">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <i class="material-icons icon light-blue">headset_mic</i>
+                        <div class="data">
+                            <p class="text light-blue">Asistentes</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons light-blue">chevron_right</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card v2" id="horarios_settings">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <i class="material-icons icon light-blue">timelapse</i>
+                        <div class="data">
+                            <p class="text light-blue">Horarios</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons light-blue">chevron_right</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card v2" id="log_out">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <i class="material-icons icon light-blue">exit_to_app</i>
+                        <div class="data">
+                            <p class="text light-blue">Cerrar Sesion</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons light-blue">chevron_right</i>
+                        </a>
+                    </div>
                 </div>
             </div>
-            <div class="list">
+            <!-- <div class="list">
                 <ul>
                     <li>
                         <div class="row">
@@ -166,7 +229,7 @@
                         </div>
                     </li>
                 </ul>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -178,19 +241,19 @@
                 var self = this;
                 var app = self.$app;
 
-                $$(".config #personal-settings").click(function (e) {
+                $$(".config #personal_settings").click(function (e) {
                     app.methods.redirectTo('settings');
                 });
-                $$(".config #offices-settings").click(function (e) {
+                $$(".config #offices_settings").click(function (e) {
                     app.methods.redirectTo('offices-show');
                 });
-                $$(".config #assistants-settings").click(function (e) {
+                $$(".config #assistants_settings").click(function (e) {
                     app.methods.redirectTo('asistentes-invitar-01');
                 });
-                $$(".config #horarios-settings").click(function (e) {
+                $$(".config #horarios_settings").click(function (e) {
                     app.methods.redirectTo('doctor-horarios');
                 });
-                $$(".config #log-out").click(function (params) {
+                $$(".config #log_out").click(function (params) {
                     app.data.store.clear();
                     app.methods.redirectTo('root');
                 });

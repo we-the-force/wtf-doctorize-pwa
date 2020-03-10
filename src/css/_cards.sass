@@ -261,6 +261,30 @@
                 bottom: 15px
                 p
                     opacity: 1
+    &.info_basic
+        display: flex
+        width: auto
+        &.inactive
+            filter: saturate(0) opacity(0.6)
+        .material-icons
+            padding-left: calc( 5% + 5px )
+            padding-right: 10px
+            padding-top: 10px
+            font-size: 30px
+            &.dark-blue
+                color: $dark-blue
+            &.turquoise
+                color: $turquoise-2
+        .card-content
+            flex-grow: 1
+            padding: 9px 0px 9px 0px
+            p
+                &.text
+                    font: $text-1-card
+                &.title
+                    font: $title-card
+                &.footer
+                    font: $footer-card
     &.doc-horarios
         display: flex
         width: auto

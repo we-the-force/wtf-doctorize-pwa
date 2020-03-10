@@ -142,9 +142,9 @@
                             id_office = $$(this).data('id');
                             //cambia el texto del menu dependiendo si el horario esta desactivado o no
                             if ($$(this).closest('li').children('div').hasClass('active')) {
-                                $$('#offices-show .popover-inner li').children('a.state').text('Desactivar');
+                                $$('.popover-inner li').children('a.state').text('Desactivar');
                             } else if ($$(this).closest('li').children('div').hasClass('inactive')) {
-                                $$('#offices-show .popover-inner li').children('a.state').text('Activar');
+                                $$('.popover-inner li').children('a.state').text('Activar');
                             }
                         });
 

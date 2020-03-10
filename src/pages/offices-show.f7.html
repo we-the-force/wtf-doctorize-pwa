@@ -182,7 +182,7 @@
                                                     success: function (e) {
                                                         app.preloader.hide();
                                                         app.dialog.alert('Se eliminó el consultorio.', function () {
-                                                            app.methods.cuteHide($$('#offices-show ul li#card' + timetable));
+                                                            app.methods.cuteHide($$('#offices-show ul li#card' + id_office));
                                                         });
                                                     },
                                                     error: function (e) {
@@ -210,8 +210,8 @@
 
                         $$('.item-link.state').click(function (x) {
                             //activa desactiva el horario
-                            $$('#offices-show #consultorios').find('li#card' + id_office).children().toggleClass('active');
-                            $$('#offices-show #consultorios').find('li#card' + id_office).children().toggleClass('inactive');
+                            $$('#offices-show .consultorios').find('li#card' + id_office).children().toggleClass('active');
+                            $$('#offices-show .consultorios').find('li#card' + id_office).children().toggleClass('inactive');
                             //mandar desactivar*******************
                             app.popover.close();
                         });

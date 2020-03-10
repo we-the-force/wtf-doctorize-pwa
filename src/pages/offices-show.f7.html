@@ -80,7 +80,7 @@
                 var app = self.$app;
                 var id_office
 
-                /* app.preloader.show('blue'); */
+                app.preloader.show('blue');
                 var doctor = JSON.parse(sessionStorage.getItem('user'));
 
                 /* app.data.store.getItem('doctor').then(function (value) {
@@ -96,24 +96,7 @@
                 app.request.get(app.data.url + '/doctors/' + doctor.id + '/offices',
                     function (e) {
                         var x = JSON.parse(e);
-                        for (var i = 0; i < x.length; i++) {/* 
-                            $$('.consultorios').append('<li>' +
-                                '<div class="row">' +
-                                '<div class="card card-outline offices">' +
-                                '<div class="rectangle turquoise"></div>' +
-                                '<i class="material-icons icon turquoise-2">local_hospital</i>' +
-                                '<div class="card-content card-content-padding">' +
-                                '<p class="title dark-blue">' + x[i].hospital + '</p>' +
-                                '<p class="text dark-blue">' + x[i].name + '</p>' +
-                                '<p class="footer light-blue">' + x[i].startTime + ' - ' + x[i].closeTime + '</p>' +
-                                '</div>' +
-                                '<div class="link dynamic-popover" data-officeId="' + x[i].id + '">' +
-                                '<i class="material-icons more light-blue">more_vert' +
-                                '</i>' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>' +
-                                '</li>'); */
+                        for (var i = 0; i < x.length; i++) {
                             $$('.consultorios').append(
                                 '<li id="card' + x[i].id + '">' +
                                 '<div class="card card-outline info_basic active">' +

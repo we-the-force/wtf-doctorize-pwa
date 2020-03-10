@@ -67,7 +67,7 @@
                     top: 50%
                     right: 10px
                     transform: translate(50%, -50%)
-        &#login,&.register-flow,&.recovery-flow,&.settings-edit
+        &#login,&.register-flow,&.recovery-flow,&.settings-edit,&.office-flow
             .page-content
                 display: flex
                 flex-direction: column
@@ -77,6 +77,11 @@
                     justify-content: center
                     flex-grow: 1
                     align-items: flex-end
+        &.office-flow
+            .list.form
+                margin: 25px 0
+            .offices-add-form-schedule
+                padding-bottom: 15px
     .back-blue
         background: radial-gradient(1128.21px at 57.54% 104.51%, #00A1C5 0%, #2FCFBC 100%)
 @import variables

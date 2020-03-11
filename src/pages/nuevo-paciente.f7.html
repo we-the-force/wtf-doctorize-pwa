@@ -1,17 +1,26 @@
 <template>
     <div class="page" data-name="nuevo-paciente" id="nuevo-paciente">
-        <div class="page-content login-screen-content btns">
-            <div class="login-screen-content header-turquoise photo nuevo-paciente">
-                <div class="list" style="margin-top: 10px;">
+        <div class="page-content">
+            <div class="header-turquoise photo nuevo-paciente v2">
+                <div class="header basic center fixed">
+                    <a class="btn-back" id="back" href="/home">
+                        <i class="material-icons white">chevron_left</i>
+                    </a>
+                    <p class="title1 white">Nuevo paciente</p>
+                    <a class="edit none">
+                        <i class="material-icons">more_horiz</i>
+                    </a>
+                </div>
+                <div class="list">
                     <ul>
-                        <li>
+                        <!-- <li>
                             <div class="row">
                                 <a href='/home' class=" item-link btn-back" id="back">
                                     <i class="material-icons">close </i>
                                 </a>
                                 <p>Nuevo paciente</p>
                             </div>
-                        </li>
+                        </li> -->
                         <li>
                             <div class="row" style="margin-top: 5px">
                                 <div class="border">
@@ -109,18 +118,14 @@
                     </ul>
                 </div>
             </div>
-        </div>
-        <div class="list buttons">
-            <ul>
-                <li>
-                    <div class="row">
-                        <a href="#" class="item-link list-button btn-rounded">
-                            <p>Siguiente </p>
-                            <i class="material-icons">chevron_right</i>
-                        </a>
-                    </div>
-                </li>
-            </ul>
+            <div class="container right bottom">
+                <div class="btn-2">
+                    <a href="">
+                        <p>Siguiente </p>
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -228,9 +233,9 @@
                     app.data.paciente.height = height;
                     app.data.paciente.blood = blood;
                     app.data.paciente.pressure = pressure;
-                    $$('#nuevo-paciente .btn-rounded').removeClass('grey');
-                    $$('#nuevo-paciente .btn-rounded').off('click');
-                    $$('#nuevo-paciente .btn-rounded').on('click', function (e) {
+                    $$('#nuevo-paciente .btn-2 a').removeClass('grey');
+                    $$('#nuevo-paciente .btn-2 a').off('click');
+                    $$('#nuevo-paciente .btn-2 a').on('click', function (e) {
                         console.log(app.data.paciente);
                         app.methods.redirectTo('home');
 
@@ -238,8 +243,8 @@
                 }
 
                 function disableButton() {
-                    $$('#nuevo-paciente .btn-rounded').addClass('grey');
-                    $$('#nuevo-paciente .btn-rounded').off('click');
+                    $$('#nuevo-paciente .btn-2 a').addClass('grey');
+                    $$('#nuevo-paciente .btn-2 a').off('click');
                 }
 
                 $$('.nuevo-paciente .upload-photo').on('click', function () {

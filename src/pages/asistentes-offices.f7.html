@@ -96,11 +96,25 @@
                         app.data.assistant.name = x.name;
                         for (var i = 0; i < x.offices.length; i++) {
                             //si doctor id es igual lo hace
+                            /* $$('#offices').append('<li>' +
+                                '<div class="row">' +
+                                '<div class="card card-outline elevation-3 assistant-offices" data-OfficeId="' + x.offices[i].officeId + '">' +
+                                '<div class="rectangle light-blue"></div>' +
+                                '<i class="material-icons icon light-blue">local_hospital</i>' +
+                                '<div class="card-content card-content-padding">' +
+                                '<p class="light-blue">' + x.offices[i].officeName + '</p>' +
+                                '</div>' +
+                                '<div class="link permissions-link">' +
+                                '<i class="material-icons next light-blue">chevron_right</i>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</li>'); */
                             $$('#offices').append(
-                                '<div class="card v2 assistant-offices" data-OfficeId="' + x.offices[i].officeId + '">'+
+                                '<div class="card v2" data-OfficeId="' + x.offices[i].officeId + '">'+
                                     '<div class="rectangle light-blue"></div>'+
                                     '<div class="card-content">'+
-                                        '<i class="material-icons icon light-blue">room</i>'+
+                                        '<i class="material-icons icon light-blue">local_hospital</i>'+
                                         '<div class="data">'+
                                             '<p class="text light-blue">' + x.offices[i].officeName + '</p>'+
                                         '</div>'+
@@ -112,7 +126,7 @@
                             );
                         }
                         app.preloader.hide();
-                        $$('.assistant-offices').on('click', function (e) {
+                        $$('.card').on('click', function (e) {
                             var officeId = $$(this).data('OfficeId');
                             for (var i = 0; i < x.offices.length; i++) {
                                 if (x.offices[i].officeId == officeId) {

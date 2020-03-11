@@ -1,8 +1,27 @@
 <template>
     <div class="page" data-name="asistentes-offices" id='asistentes-offices'>
-        <div class="page-content login-screen-content">
-            <div class="login-screen-content header-turquoise">
-                <div class="list">
+        <div class="page-content">
+            <div class="header-turquoise v2 flex">
+                <div class="header basic center fixed">
+                    <a class="btn-back" href="/assistants-show" id="back">
+                        <i class="material-icons white">chevron_left</i>
+                    </a>
+                    <p class="title1 white"></p>
+                    <a class="edit none">
+                        <i class="material-icons">more_horiz</i>
+                    </a>
+                </div>
+                <div class="title">
+                    <h3>Consultorios del asistente</h3>
+                </div>
+                <div class="item-inner">
+                    <div class="fab btn-fab color-lime">
+                        <a href="#">
+                            <i class="material-icons">add</i>
+                        </a>
+                    </div>
+                </div>
+                <!-- <div class="list">
                     <ul>
                         <li>
                             <div class="row">
@@ -33,13 +52,25 @@
                             </div>
                         </li>
                     </ul>
-                </div>
+                </div> -->
             </div>
-            <div>
-                <div class="list">
+            <div id="offices">
+                <!-- <div class="list">
                     <ul id="offices">
                     </ul>
-                </div>
+                </div> -->
+                <!-- <div class="card v2" id="offices_settings">
+                    <div class="rectangle light-blue"></div>
+                    <div class="card-content">
+                        <i class="material-icons icon light-blue">room</i>
+                        <div class="data">
+                            <p class="text light-blue">Consultorios</p>
+                        </div>
+                        <a class="arrow">
+                            <i class="material-icons light-blue">chevron_right</i>
+                        </a>
+                    </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -65,20 +96,20 @@
                         app.data.assistant.name = x.name;
                         for (var i = 0; i < x.offices.length; i++) {
                             //si doctor id es igual lo hace
-                            $$('#offices').append('<li>' +
-                                '<div class="row">' +
-                                '<div class="card card-outline elevation-3 assistant-offices" data-OfficeId="' + x.offices[i].officeId + '">' +
-                                '<div class="rectangle light-blue"></div>' +
-                                '<i class="material-icons icon light-blue">local_hospital</i>' +
-                                '<div class="card-content card-content-padding">' +
-                                '<p class="light-blue">' + x.offices[i].officeName + '</p>' +
-                                '</div>' +
-                                '<div class="link permissions-link">' +
-                                '<i class="material-icons next light-blue">chevron_right</i>' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>' +
-                                '</li>');
+                            $$('#offices').append(
+                                '<div class="card v2 assistant-offices" data-OfficeId="' + x.offices[i].officeId + '">'+
+                                    '<div class="rectangle light-blue"></div>'+
+                                    '<div class="card-content">'+
+                                        '<i class="material-icons icon light-blue">room</i>'+
+                                        '<div class="data">'+
+                                            '<p class="text light-blue">' + x.offices[i].officeName + '</p>'+
+                                        '</div>'+
+                                        '<a class="arrow">'+
+                                            '<i class="material-icons light-blue">chevron_right</i>'+
+                                        '</a>'+
+                                    '</div>'+
+                                '</div>'
+                            );
                         }
                         app.preloader.hide();
                         $$('.assistant-offices').on('click', function (e) {

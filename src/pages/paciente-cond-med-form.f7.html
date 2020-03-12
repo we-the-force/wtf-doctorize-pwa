@@ -14,8 +14,8 @@
                 <div class="item-input v2">
                     <label for="name">Nombre</label>
                     <div class="item-input-inner">
-                        <input type="text" name="name" id="name" placeholder="Ej. Diabetes tipo II, Glaucoma, etc." required
-                            validate>
+                        <input type="text" name="name" id="name" placeholder="Ej. Diabetes tipo II, Glaucoma, etc."
+                            required validate>
                         <span class="input-clear-button"></span>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                             </select>
                         </div>
                     </div>
-    
+
                     <div class="item-input v2 half">
                         <label for="date">Fecha del diagnostico</label>
                         <div class="item-input-inner">
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                 </div>
-    
+
                 <div class="item-input v2">
                     <label for="tp">Tratado por</label>
                     <div class="item-input-inner">
@@ -46,34 +46,30 @@
                         <span class="input-clear-button"></span>
                     </div>
                 </div>
-    
+
                 <div class="medicamentos">
                     <label>Medicamento</label>
                     <div class="item-input v2" id="id_1">
                         <div class="item-input-inner dropdown-blue">
-    
+
                             <input list="medicamento" type="text" placeholder="Medicamento">
-    
-                            <!-- <select name="med" placeholder="Seleccionar medicamento">
-                                <option value="med_1">Medicamento 1</option>
-                                <option value="med_2">Medicamento 2</option>
-                            </select> -->
+
                         </div>
                         <div class="trash">
                             <a class="icon">
-    
+
                             </a>
                         </div>
                     </div>
                 </div>
-    
+
                 <div class="add_med add_module">
                     <a>
                         <i class="material-icons">add_circle</i>
                         <p>Agregar Medicamento</p>
                     </a>
                 </div>
-    
+
                 <div class="item-input v2">
                     <label for="notes">Notas</label>
                     <div class="item-input-inner textarea">
@@ -103,52 +99,78 @@
     import $$ from 'dom7';
     export default {
         on: {
+            pageBeforeOut: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                if (e.detail.direction == 'backward') {
+                    app.data.store.removeItem('edit_patient_data');
+                }
+            },
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
 
-                $$('.add_module a').on('click', function (e) {
-                    let x = $$('.medicamentos').children().length;
-                    let y = parseInt($$('.medicamentos').children(":last-child").attr('id').split('_')[1]);
-                    if (x == 2) {
-                        $$('.trash .icon').append('<i class="material-icons">delete</i>');
+                app.data.store.getItem('edit_patient_data').then(function (value) {
+                    var edit = value;
+
+                    disableButton();
+
+                    if (edit) {
+                        //llena inputs
                     }
-                    $$('.medicamentos').append('<div class="item-input v2" id=id_' + (y + 1) + '>' +
-                        '<div class="item-input-inner dropdown-blue">' +
-                        '<input list="medicamento" type="text" placeholder="Medicamento">' +
-                        '</div>' +
-                        '<div class="trash">' +
-                        '<a class="icon">' +
-                        '<i class="material-icons">delete</i>' +
-                        '</a>' +
-                        '</div>' +
-                        '</div>');
 
-                    $$('.trash a').off('click');
-                    $$('.trash a').click(function (e) {
+                    //verifica si esta o no vacio
+
+                    $$('.add_module a').on('click', function (e) {
                         let x = $$('.medicamentos').children().length;
-
-                        if (x >= 4) {
-                            $$(this).parent().parent().remove();
-                        } else if (x == 3) {
-
-                            $$('.medicamentos').find("i").remove();
-                            $$(this).parent().parent().remove();
+                        let y = parseInt($$('.medicamentos').children(":last-child").attr('id').split('_')[1]);
+                        if (x == 2) {
+                            $$('.trash .icon').append('<i class="material-icons">delete</i>');
                         }
-                        console.log(x);
+                        $$('.medicamentos').append('<div class="item-input v2" id=id_' + (y + 1) + '>' +
+                            '<div class="item-input-inner dropdown-blue">' +
+                            '<input list="medicamento" type="text" placeholder="Medicamento">' +
+                            '</div>' +
+                            '<div class="trash">' +
+                            '<a class="icon">' +
+                            '<i class="material-icons">delete</i>' +
+                            '</a>' +
+                            '</div>' +
+                            '</div>');
+
+                        $$('.trash a').off('click');
+                        $$('.trash a').click(function (e) {
+                            let x = $$('.medicamentos').children().length;
+
+                            if (x >= 4) {
+                                $$(this).parent().parent().remove();
+                            } else if (x == 3) {
+
+                                $$('.medicamentos').find("i").remove();
+                                $$(this).parent().parent().remove();
+                            }
+                            console.log(x);
+                        });
                     });
-                });
 
 
-                $$('.btn-2 a').click(function (e) {
-                    app.data.store.removeItem('edit_patient_data').then(function (value) {
-                        app.methods.redirectTo('paciente-perfil');
+                    $$('.btn-2 a').click(function (e) {
+                        if (edit) {
+                            console.log('api edit');
+                        } else {
+                            console.log('api create');
+                        }
+                        app.data.store.removeItem('edit_patient_data').then(function (value) {
+                            app.methods.redirectTo('paciente-perfil');
+                        });
                     });
+
                 });
 
-                $$('.header a').click(function (val) {
-                    app.data.store.removeItem('edit_patient_data');
-                });
+                function disableButton() {
+                    $$('#offices-add-form-schedule .btn-2 a').addClass('grey');
+                    $$('#offices-add-form-schedule .btn-2 a').off('click');
+                }
 
             }
         }

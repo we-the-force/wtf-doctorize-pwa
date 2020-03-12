@@ -360,7 +360,7 @@
                     </a>
                 </div>
                 <div class="content">
-                    <div class="card v2 pink">
+                    <div class="card v2 pink" data-id="01">
                         <div class="rectangle pink"></div>
                         <div class="card-content">
                             <img src="../static/icons/heart.svg">
@@ -374,7 +374,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="card v2 pink">
+                    <div class="card v2 pink" data-id="02">
                         <div class="rectangle pink"></div>
                         <div class="card-content">
                             <img src="../static/icons/heart.svg">
@@ -388,7 +388,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="card v2 pink">
+                    <div class="card v2 pink" data-id="03">
                         <div class="rectangle pink"></div>
                         <div class="card-content">
                             <img src="../static/icons/heart.svg">
@@ -670,7 +670,7 @@
                             /* var color = 'dark-blue';
                             for (let i = 0; i < 4; i++) {
                                 $$('.consultas .content ').append(
-                                    '<div class="card v2 card-expandable '+color+'">' +
+                                    '<div class="card v2 card-expandable '+color+'" data-id="">' +
                                     '<div class="card-content">' +
                                     '<div class="card-header">' +
                                     '<p>Asma</p>' +
@@ -745,138 +745,138 @@
                                     '</div>' 
                                 );
                             } */
-/* 
-                            for (let i = 0; i < 3; i++) {
-                                $$('.medicamentos .content ').append(
-                                    '<div class="card v2 light-blue">' +
-                                    '<div class="rectangle light-blue"></div>' +
-                                    '<div class="card-content">' +
-                                    '<img src="../static/icons/Medicinas.svg">' +
-                                    '<div class="data">' +
-                                    '<p class="text">Linagliptina/Metformina</p>' +
-                                    '<p class="title grey">Tableta - Oral</p>' +
-                                    '</div>' +
-                                    '<a class="arrow">' +
-                                    '<i class="material-icons">chevron_right</i>' +
-                                    '</a>' +
-                                    '</div>' +
-                                    '</div>'
-                                );
-                            }
-
-                            $$('.alergias .content ').append(
-                                '<div class="card v2">' +
-                                '<div class="rectangle green"></div>' +
-                                '<div class="card-content">' +
-                                '<img src="../static/icons/Alergias.svg">' +
-                                '<div class="data">' +
-                                '<p class="text">Dermatitis</p>' +
-                                '<p class="title">Linagliptina/Metformina</p>' +
-                                '</div>' +
-                                '<a class="arrow">' +
-                                '<i class="material-icons">chevron_right</i>' +
-                                '</a>' +
-                                '</div>' +
-                                '</div>'
-                            );
-
-                            $$('.hSocial .content ').append(
-                                '<div class="card v2">' +
-                                '<div class="rectangle light-blue"></div>' +
-                                '<div class="card-content">' +
-                                '<img src="../static/icons/HistoriaSocial.svg">' +
-                                '<div class="data">' +
-                                '<p class="text">Ingeniero</p>' +
-                                '<p class="title grey">Saltillo Coah.</p>' +
-                                '</div>' +
-                                '<a class="arrow">' +
-                                '<i class="material-icons">chevron_right</i>' +
-                                '</a>' +
-                                '</div>' +
-                                '</div>'
-                            );
-
-                            $$('.hMedicaFam .content ').append(
-                                '<div class="card v2">' +
-                                '<div class="rectangle pink"></div>' +
-                                '<div class="card-content">' +
-                                '<img src="../static/icons/HistorialFamilia.svg">' +
-                                '<div class="data">' +
-                                '<p class="text">Madre</p>' +
-                                '<p class="title grey">Lorem ipsum dolor sit amet.</p>' +
-                                '</div>' +
-                                '<a class="arrow">' +
-                                '<i class="material-icons">chevron_right</i>' +
-                                '</a>' +
-                                '</div>' +
-                                '</div>'
-                            );
-
-                            $$('.contraindicaciones .content ').append(
-                                '<div class="card v2">' +
-                                '<div class="rectangle light-blue"></div>' +
-                                '<div class="card-content">' +
-                                '<img src="../static/icons/Contradicciones.svg">' +
-                                '<div class="data">' +
-                                '<p class="text">Lorem ipsum dolor sit...</p>' +
-                                '</div>' +
-                                '<a class="arrow">' +
-                                '<i class="material-icons">chevron_right</i>' +
-                                '</a>' +
-                                '</div>' +
-                                '</div>'
-                            );
-
-                            $$('.hospitalizaciones .content').append(
-                                '<div class="card v2">' +
-                                '<div class="rectangle red"></div>' +
-                                '<div class="card-content">' +
-                                '<img src="../static/icons/case.svg">' +
-                                '<div class="data">' +
-                                '<p class="text">Dolor severo en el pecho</p>' +
-                                '<p class="title grey">24/01/2020 - 02/02/2020</p>' +
-                                '</div>' +
-                                '<a class="arrow">' +
-                                '<i class="material-icons">chevron_right</i>' +
-                                '</a>' +
-                                '</div>' +
-                                '</div>'
-                            );
-
-                            $$('.cirugias .content').append(
-                                '<div class="card v2">' +
-                                '<div class="rectangle turquoise"></div>' +
-                                '<div class="card-content">' +
-                                '<img src="../static/icons/Bisturi.svg">' +
-                                '<div class="data">' +
-                                '<p class="text">Cirugía de implante dental</p>' +
-                                '<p class="title grey">Implante dental</p>' +
-                                '</div>' +
-                                '<a class="arrow">' +
-                                '<i class="material-icons">chevron_right</i>' +
-                                '</a>' +
-                                '</div>' +
-                                '</div>'
-                            );
-                            $$('.vacunas .content').append(
-                                '<div class="card v2">' +
-                                '<div class="rectangle light-blue"></div>' +
-                                '<div class="card-content">' +
-                                '<img src="../static/icons/Inyeccion.svg">' +
-                                '<div class="data">' +
-                                '<p class="text">Hepatitis B</p>' +
-                                '<p class="title">Hep B</p>' +
-                                '</div>' +
-                                '<a class="arrow">' +
-                                '<i class="material-icons">chevron_right</i>' +
-                                '</a>' +
-                                '</div>' +
-                                '</div>'
-                            ); */
+                            /* 
+                                                        for (let i = 0; i < 3; i++) {
+                                                            $$('.medicamentos .content ').append(
+                                                                '<div class="card v2 light-blue">' +
+                                                                '<div class="rectangle light-blue"></div>' +
+                                                                '<div class="card-content">' +
+                                                                '<img src="../static/icons/Medicinas.svg">' +
+                                                                '<div class="data">' +
+                                                                '<p class="text">Linagliptina/Metformina</p>' +
+                                                                '<p class="title grey">Tableta - Oral</p>' +
+                                                                '</div>' +
+                                                                '<a class="arrow">' +
+                                                                '<i class="material-icons">chevron_right</i>' +
+                                                                '</a>' +
+                                                                '</div>' +
+                                                                '</div>'
+                                                            );
+                                                        }
+                            
+                                                        $$('.alergias .content ').append(
+                                                            '<div class="card v2">' +
+                                                            '<div class="rectangle green"></div>' +
+                                                            '<div class="card-content">' +
+                                                            '<img src="../static/icons/Alergias.svg">' +
+                                                            '<div class="data">' +
+                                                            '<p class="text">Dermatitis</p>' +
+                                                            '<p class="title">Linagliptina/Metformina</p>' +
+                                                            '</div>' +
+                                                            '<a class="arrow">' +
+                                                            '<i class="material-icons">chevron_right</i>' +
+                                                            '</a>' +
+                                                            '</div>' +
+                                                            '</div>'
+                                                        );
+                            
+                                                        $$('.hSocial .content ').append(
+                                                            '<div class="card v2">' +
+                                                            '<div class="rectangle light-blue"></div>' +
+                                                            '<div class="card-content">' +
+                                                            '<img src="../static/icons/HistoriaSocial.svg">' +
+                                                            '<div class="data">' +
+                                                            '<p class="text">Ingeniero</p>' +
+                                                            '<p class="title grey">Saltillo Coah.</p>' +
+                                                            '</div>' +
+                                                            '<a class="arrow">' +
+                                                            '<i class="material-icons">chevron_right</i>' +
+                                                            '</a>' +
+                                                            '</div>' +
+                                                            '</div>'
+                                                        );
+                            
+                                                        $$('.hMedicaFam .content ').append(
+                                                            '<div class="card v2">' +
+                                                            '<div class="rectangle pink"></div>' +
+                                                            '<div class="card-content">' +
+                                                            '<img src="../static/icons/HistorialFamilia.svg">' +
+                                                            '<div class="data">' +
+                                                            '<p class="text">Madre</p>' +
+                                                            '<p class="title grey">Lorem ipsum dolor sit amet.</p>' +
+                                                            '</div>' +
+                                                            '<a class="arrow">' +
+                                                            '<i class="material-icons">chevron_right</i>' +
+                                                            '</a>' +
+                                                            '</div>' +
+                                                            '</div>'
+                                                        );
+                            
+                                                        $$('.contraindicaciones .content ').append(
+                                                            '<div class="card v2">' +
+                                                            '<div class="rectangle light-blue"></div>' +
+                                                            '<div class="card-content">' +
+                                                            '<img src="../static/icons/Contradicciones.svg">' +
+                                                            '<div class="data">' +
+                                                            '<p class="text">Lorem ipsum dolor sit...</p>' +
+                                                            '</div>' +
+                                                            '<a class="arrow">' +
+                                                            '<i class="material-icons">chevron_right</i>' +
+                                                            '</a>' +
+                                                            '</div>' +
+                                                            '</div>'
+                                                        );
+                            
+                                                        $$('.hospitalizaciones .content').append(
+                                                            '<div class="card v2">' +
+                                                            '<div class="rectangle red"></div>' +
+                                                            '<div class="card-content">' +
+                                                            '<img src="../static/icons/case.svg">' +
+                                                            '<div class="data">' +
+                                                            '<p class="text">Dolor severo en el pecho</p>' +
+                                                            '<p class="title grey">24/01/2020 - 02/02/2020</p>' +
+                                                            '</div>' +
+                                                            '<a class="arrow">' +
+                                                            '<i class="material-icons">chevron_right</i>' +
+                                                            '</a>' +
+                                                            '</div>' +
+                                                            '</div>'
+                                                        );
+                            
+                                                        $$('.cirugias .content').append(
+                                                            '<div class="card v2">' +
+                                                            '<div class="rectangle turquoise"></div>' +
+                                                            '<div class="card-content">' +
+                                                            '<img src="../static/icons/Bisturi.svg">' +
+                                                            '<div class="data">' +
+                                                            '<p class="text">Cirugía de implante dental</p>' +
+                                                            '<p class="title grey">Implante dental</p>' +
+                                                            '</div>' +
+                                                            '<a class="arrow">' +
+                                                            '<i class="material-icons">chevron_right</i>' +
+                                                            '</a>' +
+                                                            '</div>' +
+                                                            '</div>'
+                                                        );
+                                                        $$('.vacunas .content').append(
+                                                            '<div class="card v2">' +
+                                                            '<div class="rectangle light-blue"></div>' +
+                                                            '<div class="card-content">' +
+                                                            '<img src="../static/icons/Inyeccion.svg">' +
+                                                            '<div class="data">' +
+                                                            '<p class="text">Hepatitis B</p>' +
+                                                            '<p class="title">Hep B</p>' +
+                                                            '</div>' +
+                                                            '<a class="arrow">' +
+                                                            '<i class="material-icons">chevron_right</i>' +
+                                                            '</a>' +
+                                                            '</div>' +
+                                                            '</div>'
+                                                        ); */
                         });
                 });
 
-                $$('.nav.title a').click(function (val) {
+                $$('.nav.title .arrow').click(function (val) {
                     app.methods.redirectTo('home');
                 });
 
@@ -885,10 +885,9 @@
                     switch (x) {
                         case 'condiciones':
                             console.log('condiciones');
-                            /* app.data.store.setItem("id_patient_cond", $$(this).attr('id')).then(function (value) {
-                                app.methods.redirectTo('home');
-                            }); */
-                            app.methods.redirectTo('paciente-cond-med');
+                            app.data.store.setItem("cond_med_id", $$(this).data('id')).then(function (value) {
+                                app.methods.redirectTo('paciente-cond-med');
+                            });
                             break;
                         case 'medicamentos':
                             console.log('medicamentos');

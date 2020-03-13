@@ -128,7 +128,7 @@
           const element = $$('#home li.patients .row').children()[i];
 
         }
-
+        //consulta citas
         app.request.get(app.data.url + '/doctors/' + doctor.id + '/appointments', function (e) {
           let today = moment();
           let cards = 0;

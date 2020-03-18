@@ -31,8 +31,8 @@
                 <p class="data">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                     incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
                     ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                    <p class="added">Agregada por: Dr. Bryan Thomas Gosling </p>
-                    <p class="date">19/02/2020 11:15 PM</p>
+                <p class="added">Agregada por: Dr. Bryan Thomas Gosling </p>
+                <p class="date">19/02/2020 11:15 PM</p>
             </div>
         </div>
         <div class="popover popover-edit">
@@ -52,9 +52,37 @@
     import $$ from 'dom7';
     export default {
         on: {
+            pageBeforeOut: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                if (e.detail.direction == 'backward') {
+                    app.data.store.removeItem('vac_id');
+                }
+            },
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
+
+                app.preloader.show('blue');
+                app.data.store.getItem('patient_id').then(function (value) {
+                    var ptnt_id = value;
+                    app.data.store.getItem('hsocial_id').then(function (value) {
+                        var cnd_mdc_id = value;
+                        app.request.get(app.data.url + '/patients/' + ptnt_id,
+                            function (e) {
+                                var x = JSON.parse(e);
+                                $$(".slot.vacunacion .data").text("Algo");
+                                $$(".slot.para .data").text("Algo");
+                                $$(".slot.date .data").text("Algo");
+                                $$(".slot.lote .data").text("Algo");
+                                $$(".slot.detalles .data").text("Algo");
+                                app.preloader.hide();
+                            },
+                            function (e) {
+                                app.preloader.hide();
+                            });
+                    });
+                });
 
                 $$('.popover-edit .item-link.edit').click(function (x) {
                     app.popover.close();

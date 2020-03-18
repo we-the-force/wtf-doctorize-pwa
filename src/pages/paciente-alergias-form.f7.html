@@ -130,8 +130,8 @@
                                     function (e) {
                                         var x = JSON.parse(e);
                                         $$('#paciente-alergias-form input#aler_name').val('coronavirus');
-                                        $$('#paciente-alergias-form select#cause').val('no c');
-                                        $$('#paciente-alergias-form select#reaction').val('alergia');
+                                        $$('#paciente-alergias-form input#cause').val('no c');
+                                        $$('#paciente-alergias-form input#reaction').val('alergia');
                                         $$('#paciente-alergias-form input#frecuency').val('12');
                                         document.querySelector("#paciente-alergias-form input#date").valueAsDate = new Date();
                                         $$('#paciente-alergias-form .medicamentos #id_1 input').val('paracetamol');
@@ -196,10 +196,10 @@
                         $$('#paciente-alergias-form .btn-2 a').click(function (val) {
                             let name, cause, reaction, frecuency, date, med, nota;
 
-                            name = $$('#paciente-alergias-form input#aler_name').val('coronavirus');
-                            cause = $$('#paciente-alergias-form select#cause').val('no c');
-                            reaction = $$('#paciente-alergias-form select#reaction').val('alergia');
-                            frecuency = $$('#paciente-alergias-form input#frecuency').val('12');
+                            name = $$('#paciente-alergias-form input#aler_name').val();
+                            cause = $$('#paciente-alergias-form input#cause').val();
+                            reaction = $$('#paciente-alergias-form input#reaction').val();
+                            frecuency = $$('#paciente-alergias-form input#frecuency').val();
                             date = $$("#paciente-alergias-form input#date").val();
                             med = $$('#paciente-alergias-form .medicamentos #id_1 input').val();
                             nota = $$('#paciente-alergias-form textarea').val();

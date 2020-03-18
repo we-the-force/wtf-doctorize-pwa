@@ -23,18 +23,19 @@
                 <div class="item-input v2">
                     <label for="imp">Implantes / Dispositivos de soporte</label>
                     <div class="item-input-inner">
-                        <input type="text" name="imp" id="imp" placeholder="Ej. Marcapasos, Implante coclear, etc." required
-                            validate>
+                        <input type="text" name="imp" id="imp" placeholder="Ej. Marcapasos, Implante coclear, etc."
+                            required validate>
                         <span class="input-clear-button"></span>
                     </div>
                 </div>
                 <div class="item-input v2 half">
                     <label for="date">Fecha</label>
                     <div class="item-input-inner">
-                        <input class="pdr-10" type="date" name="date" id="date" placeholder="DD/MM/AAAA" required validate>
+                        <input class="pdr-10" type="date" name="date" id="date" placeholder="DD/MM/AAAA" required
+                            validate>
                     </div>
                 </div>
-    
+
                 <div class="item-input v2">
                     <label for="who">Por</label>
                     <div class="item-input-inner">
@@ -42,8 +43,8 @@
                         <span class="input-clear-button"></span>
                     </div>
                 </div>
-    
-    
+
+
                 <div class="item-input v2">
                     <label for="notes">Notas</label>
                     <div class="item-input-inner textarea">
@@ -68,19 +69,88 @@
     import $$ from 'dom7';
     export default {
         on: {
+            pageBeforeOut: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                if (e.detail.direction == 'backward') {
+                    app.data.store.removeItem('edit_patient_data');
+                } else if (e.detail.direction == 'forward') {
+                    app.data.store.removeItem('cir_id');
+                    app.data.store.removeItem('edit_patient_data');
+                }
+            },
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
 
-                $$('.btn-2 a').click(function (e) {
-                    app.data.store.removeItem('edit_patient_data').then(function (value) {
-                        app.methods.redirectTo('paciente-perfil');
-                    });
+                var edit
+
+                app.data.store.getItem('edit_patient_data').then(function (value) {
+                    edit = value;
+
+                    disableButton();
+
+                    if (edit) {
+                        //llena inputs
+                        app.preloader.show('blue');
+                        app.data.store.getItem('patient_id').then(function (value) {
+                            var ptnt_id = value;
+                            app.data.store.getItem('_id').then(function (value) {
+                                var cnd_mdc_id = value;
+                                app.request.get(app.data.url + '/patients/' + ptnt_id,
+                                    function (e) {
+                                        var x = JSON.parse(e);
+                                        document.querySelector("#paciente-cirugia-form input#date").valueAsDate = new Date();
+                                        $$('#paciente-cirugia-form input#name').val('a');
+                                        $$('#paciente-cirugia-form input#imp').val('s');
+                                        $$('#paciente-cirugia-form input#who').val('d');
+                                        checkval();
+                                        app.preloader.hide();
+                                    },
+                                    function (e) {
+                                        app.preloader.hide();
+                                    });
+                            });
+                        });
+                    }
+
+                    $$('#paciente-cirugia-form input').on('change', checkval);
+
                 });
 
-                $$('.header a').click(function (val) {
-                    app.data.store.removeItem('edit_patient_data');
-                });
+                function checkval() {
+                    var nonempty = $$('#paciente-cirugia-form input').filter(function () {
+                        return this.value != ''
+                    });
+
+                    console.log(nonempty);
+
+                    if (nonempty.length == 4) {
+                        $$('#paciente-cirugia-form .btn-2 a').removeClass('grey');
+                        $$('#paciente-cirugia-form .btn-2 a').click(function (val) {
+                            let date, name, imp, who;
+                            date = $$('#paciente-cirugia-form input#date').val();
+                            name = $$('#paciente-cirugia-form input#name').val();
+                            imp = $$('#paciente-cirugia-form input#imp').val();
+                            who = $$('#paciente-cirugia-form input#who').val();
+                            if (edit) {
+                                console.log('api edit');
+                                app.methods.redirectTo('paciente-perfil');
+                            } else {
+                                console.log('api create');
+                                app.methods.redirectTo('paciente-perfil');
+                            }
+                        });
+                    } else if (nonempty.length < 4) {
+                        disableButton();
+                    }
+                }
+
+                function disableButton() {
+                    $$('#paciente-cirugia-form .btn-2 a').addClass('grey');
+                    $$('#paciente-cirugia-form .btn-2 a').off('click');
+                }
+
 
             }
         }

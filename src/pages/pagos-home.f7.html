@@ -353,28 +353,43 @@
     import $$ from 'dom7';
     export default {
         on: {
+            pageBeforeIn: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                app.request.get(app.data.url + '/patients/' + ptnt_id,
+                    function (e) {
+                        var x = JSON.parse(e);
+                        localStorage.setItem('pagos_item', 'x');
+                    }
+                );
+            },
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
                 var doctor = JSON.parse(sessionStorage.getItem('user'));
+                var pagos = localStorage.getItem('pagos_item');
 
                 if (doctor != null && doctor != 'undefined' && doctor != '') {
                     $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + doctor.photo + '50.png" alt="not found">');
                 }
-                //llenar pagina al entrar
 
+                fillPage('recibidos');
+                //llenar pagina al entrar
                 $$('.header .toolbar .tab-link').click(function (x) {
                     let tab = $$(this);
                     if (tab.attr('id') == 'recibidos_tab') {
-                        //llenar pagina
-                        $$('.header .TotalIncome').text('$100,899.00');
+                        $$('.header .TotalIncome').text('$100,899.00');//agregar valor
                         $$('.header .TotalIncome').toggleClass('light-blue');
                         $$('.header .labelIncome').text('Total de ingresos');
+
+                        fillPage('recibidos');
                     } else if (tab.attr('id') == 'pendientes_tab') {
                         //llenar pagina
-                        $$('.header .TotalIncome').text('$30,899.00');
+                        $$('.header .TotalIncome').text('$30,899.00');//agregar valor
                         $$('.header .TotalIncome').toggleClass('light-blue');
                         $$('.header .labelIncome').text('Total pendientes');
+
+                        fillPage('pendientes');
                     }
                 });
 
@@ -391,6 +406,16 @@
                         });
                     }
                 });
+
+                function fillPage(x) {
+                    if (x == 'recibidos') {
+                        console.log('recibidos');
+
+                    } else if (x == 'pendientes') {
+                        console.log('pendientes');
+
+                    }
+                }
             }
         }
     }

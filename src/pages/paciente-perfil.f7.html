@@ -925,6 +925,67 @@
                             });
 
                             app.preloader.hide();
+
+                            $$('.card.v2').click(function (e) {
+                                let x = $$(this).parent().parent().attr('class').split(' ')[1];
+                                switch (x) {
+                                    case 'condiciones':
+                                        console.log('condiciones');
+                                        app.data.store.setItem("cond_med_id", $$(this).data('id')).then(function (value) {
+                                            app.methods.redirectTo('paciente-cond-med');
+                                        });
+                                        break;
+                                    case 'medicamentos':
+                                        console.log('medicamentos');
+                                        app.data.store.setItem("med_id", $$(this).data('id')).then(function (value) {
+                                            app.methods.redirectTo('paciente-medicamento');
+                                        });
+                                        break;
+                                    case 'alergias':
+                                        console.log('alergias');
+                                        app.data.store.setItem("aler_id", $$(this).data('id')).then(function (value) {
+                                            app.methods.redirectTo('paciente-alergias');
+                                        });
+                                        break;
+                                    case 'hSocial':
+                                        console.log('hSocial');
+                                        app.data.store.setItem("hsocial_id", $$(this).data('id')).then(function (value) {
+                                            app.methods.redirectTo('paciente-hist-social');
+                                        });
+                                        break;
+                                    case 'hMedicaFam':
+                                        console.log('hMedicaFam');
+                                        app.data.store.setItem("hmedfam_id", $$(this).data('id')).then(function (value) {
+                                            app.methods.redirectTo('paciente-hist-medica-fam');
+                                        });
+                                        break;
+                                    case 'contraindicaciones':
+                                        console.log('contraindicaciones');
+                                        app.data.store.setItem("contra_id", $$(this).data('id')).then(function (value) {
+                                            app.methods.redirectTo('paciente-contra');
+                                        });
+                                        break;
+                                    case 'hospitalizaciones':
+                                        console.log('hospitalizaciones');
+                                        app.data.store.setItem("hosp_id", $$(this).data('id')).then(function (value) {
+                                            app.methods.redirectTo('paciente-hosp');
+                                        });
+                                        break;
+                                    case 'cirugias':
+                                        console.log('cirugias/implantes');
+                                        app.data.store.setItem("cir_id", $$(this).data('id')).then(function (value) {
+                                            app.methods.redirectTo('paciente-cirugia-implantes');
+                                        });
+                                        break;
+                                    case 'vacunas':
+                                        console.log('Vacunas');
+                                        app.data.store.setItem("vac_id", $$(this).data('id')).then(function (value) {
+                                            app.methods.redirectTo('paciente-vacunas');
+                                        });
+                                        break;
+                                }
+
+                            });
                         },
                         function (e) {
                             app.preloader.hide();
@@ -947,35 +1008,51 @@
                             break;
                         case 'medicamentos':
                             console.log('medicamentos');
-                            app.methods.redirectTo('paciente-medicamento');
+                            app.data.store.setItem("med_id", $$(this).data('id')).then(function (value) {
+                                app.methods.redirectTo('paciente-medicamento');
+                            });
                             break;
                         case 'alergias':
                             console.log('alergias');
-                            app.methods.redirectTo('paciente-alergias');
+                            app.data.store.setItem("aler_id", $$(this).data('id')).then(function (value) {
+                                app.methods.redirectTo('paciente-alergias');
+                            });
                             break;
                         case 'hSocial':
                             console.log('hSocial');
-                            app.methods.redirectTo('paciente-hist-social');
+                            app.data.store.setItem("hsocial_id", $$(this).data('id')).then(function (value) {
+                                app.methods.redirectTo('paciente-hist-social');
+                            });
                             break;
                         case 'hMedicaFam':
                             console.log('hMedicaFam');
-                            app.methods.redirectTo('paciente-hist-medica-fam');
+                            app.data.store.setItem("hmedfam_id", $$(this).data('id')).then(function (value) {
+                                app.methods.redirectTo('paciente-hist-medica-fam');
+                            });
                             break;
                         case 'contraindicaciones':
                             console.log('contraindicaciones');
-                            app.methods.redirectTo('paciente-contra');
+                            app.data.store.setItem("contra_id", $$(this).data('id')).then(function (value) {
+                                app.methods.redirectTo('paciente-contra');
+                            });
                             break;
                         case 'hospitalizaciones':
                             console.log('hospitalizaciones');
-                            app.methods.redirectTo('paciente-hosp');
+                            app.data.store.setItem("hosp_id", $$(this).data('id')).then(function (value) {
+                                app.methods.redirectTo('paciente-hosp');
+                            });
                             break;
                         case 'cirugias':
                             console.log('cirugias/implantes');
-                            app.methods.redirectTo('paciente-cirugia-implantes');
+                            app.data.store.setItem("cir_id", $$(this).data('id')).then(function (value) {
+                                app.methods.redirectTo('paciente-cirugia-implantes');
+                            });
                             break;
                         case 'vacunas':
                             console.log('Vacunas');
-                            app.methods.redirectTo('paciente-vacunas');
+                            app.data.store.setItem("vac_id", $$(this).data('id')).then(function (value) {
+                                app.methods.redirectTo('paciente-vacunas');
+                            });
                             break;
                     }
 

@@ -14,8 +14,8 @@
                 <div class="item-input v2">
                     <label for="aler_name">Nombre</label>
                     <div class="item-input-inner">
-                        <input type="text" name="aler_name" id="aler_name" placeholder="Ej. Alergia al polen, etc." required
-                            validate>
+                        <input type="text" name="aler_name" id="aler_name" placeholder="Ej. Alergia al polen, etc."
+                            required validate>
                         <span class="input-clear-button"></span>
                     </div>
                 </div>
@@ -45,7 +45,8 @@
                 <div class="item-input v2 half">
                     <label for="date">Primer diagnostico</label>
                     <div class="item-input-inner">
-                        <input class="pdr-10" type="date" name="date" id="date" placeholder="DD/MM/AAAA" required validate>
+                        <input class="pdr-10" type="date" name="date" id="date" placeholder="DD/MM/AAAA" required
+                            validate>
                     </div>
                 </div>
                 <div class="medicamentos">
@@ -56,12 +57,12 @@
                         </div>
                         <div class="trash">
                             <a class="icon">
-    
+
                             </a>
                         </div>
                     </div>
                 </div>
-    
+
                 <div class="add_med add_module">
                     <a>
                         <i class="material-icons">add_circle</i>
@@ -98,49 +99,128 @@
     import $$ from 'dom7';
     export default {
         on: {
+            pageBeforeOut: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                if (e.detail.direction == 'backward') {
+                    app.data.store.removeItem('edit_patient_data');
+                } else if (e.detail.direction == 'forward') {
+                    app.data.store.removeItem('aler_id');
+                    app.data.store.removeItem('edit_patient_data');
+                }
+            },
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
-                $$('.add_module a').on('click', function (e) {
-                    let x = $$('.medicamentos').children().length;
-                    let y = parseInt($$('.medicamentos').children(":last-child").attr('id').split('_')[1]);
-                    if (x == 2) {
-                        $$('.trash .icon').append('<i class="material-icons">delete</i>');
+                var edit
+
+                app.data.store.getItem('edit_patient_data').then(function (value) {
+                    edit = value;
+
+                    disableButton();
+
+                    if (edit) {
+                        //llena inputs
+                        app.preloader.show('blue');
+                        app.data.store.getItem('patient_id').then(function (value) {
+                            var ptnt_id = value;
+                            app.data.store.getItem('aler_id').then(function (value) {
+                                var cnd_mdc_id = value;
+                                app.request.get(app.data.url + '/patients/' + ptnt_id,
+                                    function (e) {
+                                        var x = JSON.parse(e);
+                                        $$('#paciente-alergias-form input#aler_name').val('coronavirus');
+                                        $$('#paciente-alergias-form select#cause').val('no c');
+                                        $$('#paciente-alergias-form select#reaction').val('alergia');
+                                        $$('#paciente-alergias-form input#frecuency').val('12');
+                                        document.querySelector("#paciente-alergias-form input#date").valueAsDate = new Date();
+                                        $$('#paciente-alergias-form .medicamentos #id_1 input').val('paracetamol');
+                                        checkval();
+                                        app.preloader.hide();
+                                    },
+                                    function (e) {
+                                        app.preloader.hide();
+                                    });
+                            });
+                        });
                     }
-                    $$('.medicamentos').append('<div class="item-input v2" id=id_' + (y + 1) + '>' +
-                        '<div class="item-input-inner dropdown-blue">' +
-                        '<input list="medicamento" type="text" placeholder="Medicamento">' +
-                        '</div>' +
-                        '<div class="trash">' +
-                        '<a class="icon">' +
-                        '<i class="material-icons">delete</i>' +
-                        '</a>' +
-                        '</div>' +
-                        '</div>');
 
-                    $$('.trash a').off('click');
-                    $$('.trash a').click(function (e) {
+                    $$('.add_module a').on('click', function (e) {
                         let x = $$('.medicamentos').children().length;
-
-                        if (x >= 4) {
-                            $$(this).parent().parent().remove();
-                        } else if (x == 3) {
-
-                            $$('.medicamentos').find("i").remove();
-                            $$(this).parent().parent().remove();
+                        let y = parseInt($$('.medicamentos').children(":last-child").attr('id').split('_')[1]);
+                        if (x == 2) {
+                            $$('.trash .icon').append('<i class="material-icons">delete</i>');
                         }
-                        console.log(x);
+                        $$('.medicamentos').append('<div class="item-input v2" id=id_' + (y + 1) + '>' +
+                            '<div class="item-input-inner dropdown-blue">' +
+                            '<input list="medicamento" type="text" placeholder="Medicamento">' +
+                            '</div>' +
+                            '<div class="trash">' +
+                            '<a class="icon">' +
+                            '<i class="material-icons">delete</i>' +
+                            '</a>' +
+                            '</div>' +
+                            '</div>');
+
+
+                        $$('#paciente-alergias-form input').on('change', checkval);
+
+                        $$('.trash a').off('click');
+                        $$('.trash a').click(function (e) {
+                            let x = $$('.medicamentos').children().length;
+
+                            if (x >= 4) {
+                                $$(this).parent().parent().remove();
+                            } else if (x == 3) {
+
+                                $$('.medicamentos').find("i").remove();
+                                $$(this).parent().parent().remove();
+                            }
+                            console.log(x);
+
+                            checkval();
+                        });
                     });
-                });
-                $$('.btn-2 a').click(function (e) {
-                    app.data.store.removeItem('edit_patient_data').then(function (value) {
-                        app.methods.redirectTo('paciente-perfil');
-                    });
+
+                    $$('#paciente-alergias-form input').on('change', checkval);
+
                 });
 
-                $$('.header a').click(function (val) {
-                    app.data.store.removeItem('edit_patient_data');
-                });
+                function checkval() {
+                    var nonempty = $$('#paciente-alergias-form input').filter(function () {
+                        return this.value != ''
+                    });
+
+                    if (nonempty.length == 6) {
+                        $$('#paciente-alergias-form .btn-2 a').removeClass('grey');
+                        $$('#paciente-alergias-form .btn-2 a').click(function (val) {
+                            let name, cause, reaction, frecuency, date, med, nota;
+
+                            name = $$('#paciente-alergias-form input#aler_name').val('coronavirus');
+                            cause = $$('#paciente-alergias-form select#cause').val('no c');
+                            reaction = $$('#paciente-alergias-form select#reaction').val('alergia');
+                            frecuency = $$('#paciente-alergias-form input#frecuency').val('12');
+                            date = $$("#paciente-alergias-form input#date").val();
+                            med = $$('#paciente-alergias-form .medicamentos #id_1 input').val();
+                            nota = $$('#paciente-alergias-form textarea').val();
+                            if (edit) {
+                                console.log('api edit');
+                                app.methods.redirectTo('paciente-perfil');
+                            } else {
+                                console.log('api create');
+                                app.methods.redirectTo('paciente-perfil');
+                            }
+                        });
+                    } else if (nonempty.length < 6) {
+                        disableButton();
+                    }
+                }
+
+                function disableButton() {
+                    $$('#paciente-alergias-form .btn-2 a').addClass('grey');
+                    $$('#paciente-alergias-form .btn-2 a').off('click');
+                }
+
             }
         }
     }

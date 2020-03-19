@@ -47,7 +47,7 @@
                 <div class="paid">
                     <p class="label">Pagado</p>
                     <label class="item-checkbox item-content">
-                        <input type="checkbox" name="demo-checkbox"/>
+                        <input type="checkbox" name="demo-checkbox" />
                         <i class="icon icon-checkbox"></i>
                     </label>
                 </div>
@@ -60,6 +60,11 @@
 
     export default {
         on: {
+            pageBeforeOut: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                app.data.store.removeItem('details');
+            },
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
@@ -68,7 +73,7 @@
                 moment().format();
 
                 app.data.store.getItem('details').then(function (value) {
-                    if(value == 'recibidos'){
+                    if (value == 'recibidos') {
                         $$('#pago-details .breakdown .date .data').text('12 ENE. 2019');
                         $$('[name="demo-checkbox"]')[0].checked = true;
                         $$('#pago-details .breakdown .total .data').removeClass('red');
@@ -77,17 +82,17 @@
                 });
 
                 $$('[name="demo-checkbox"]').click(function (x) {
-                    if($$(this)[0].checked){
+                    if ($$(this)[0].checked) {
                         $$(this).attr("disabled", true);
                         app.preloader.show('blue');
                         $$('#pago-details .breakdown .date .data').text(moment().format('DD MMM YYYY'));
                         $$('#pago-details .breakdown .total .data').removeClass('red');
                         $$('#pago-details .breakdown .total .data').addClass('dark-blue');
                         app.preloader.hide();
-                    }else{
+                    } else {
                         $$(this)[0].checked = true;
                     }
-                    
+
                 })
 
             }

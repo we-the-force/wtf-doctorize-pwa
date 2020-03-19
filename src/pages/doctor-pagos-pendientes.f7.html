@@ -11,7 +11,7 @@
             </div>
             <div class="list">
                 <ul>
-                    <li>
+                    <!-- <li>
                         <div class="card card-outline pagos pend" id="">
                             <div class="rectangle turquoise"></div>
                             <div class="card-content card-content-padding">
@@ -55,7 +55,7 @@
                                 </div>
                             </div>
                         </div>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </div>
@@ -70,12 +70,72 @@
                 var self = this;
                 var app = self.$app;
 
-                $$('.card.pend').click(function (x) {
-                    let data = $$(this).find('.title').text();
-                    app.data.store.setItem('pago-pend',data).then(function (value) {
-                        app.methods.redirectTo('doctor-agregar-pago');
-                    });
-                });
+                app.request.get(app.data.url,
+                    function (e) {
+
+                        var x = JSON.parse(e);
+                        /* y.forEach(el => {
+                        fillDay(x, el);
+                    }); *//* $$('#'+x) */
+
+                        for (let i = 0; i < 3; i++) {
+                            $$('.list ul').append(
+                                '<li>' +
+                                '<div class="card card-outline pagos pend" id="">' +
+                                '<div class="rectangle turquoise"></div>' +
+                                '<div class="card-content card-content-padding">' +
+                                '<i class="material-icons turquoise">' +
+                                'history' +
+                                '</i>' +
+                                '<div class="data">' +
+                                '<p class="dark-blue title">Consulta</p>' +
+                                '<p class="text">Revision general</p>' +
+                                '<p class="date"> 14/nov/2019</p>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</li>'
+                            );
+                        }
+
+                        $$('.card.pend').click(function (x) {
+                            let data = $$(this).find('.text').text();
+                            app.data.store.setItem('pago-pend', data).then(function (value) {
+                                app.methods.redirectTo('doctor-agregar-pago');
+                            });
+                        });
+                    },
+                    function (e) {
+
+                        for (let i = 0; i < 3; i++) {
+                            $$('.list ul').append(
+                                '<li>' +
+                                '<div class="card card-outline pagos pend" id="">' +
+                                '<div class="rectangle turquoise"></div>' +
+                                '<div class="card-content card-content-padding">' +
+                                '<i class="material-icons turquoise">' +
+                                'history' +
+                                '</i>' +
+                                '<div class="data">' +
+                                '<p class="dark-blue title">Consulta</p>' +
+                                '<p class="text">Revision general</p>' +
+                                '<p class="date"> 14/nov/2019</p>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</li>'
+                            );
+                        }
+
+                        $$('.card.pend').click(function (x) {
+                            let data = $$(this).find('.text').text();
+                            app.data.store.setItem('pago-pend', data).then(function (value) {
+                                app.methods.redirectTo('doctor-agregar-pago');
+                            });
+                        });
+                    }
+                );
+
             }
         }
     }

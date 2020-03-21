@@ -68,6 +68,7 @@ import PacienteVacunasForm from '../pages/paciente-vacunas-form.f7.html';
 import PacienteDiagnosticos from '../pages/paciente-diagnosticos.f7.html';
 import PacienteVitales from '../pages/paciente-vitales.f7.html';
 import PacienteVital from '../pages/paciente-vital.f7.html';
+import NuevaConsulta from '../pages/nueva-consulta.f7.html';
 
 var routes = [
 
@@ -75,6 +76,11 @@ var routes = [
         name: "root",
         path: '/',
         component: LoginPage,
+    },
+    {
+        name: "nueva-consulta",
+        path: "/consulta/new",
+        component: NuevaConsulta,
     },
     {
         name: "paciente-perfil",

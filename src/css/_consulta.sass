@@ -1,0 +1,177 @@
+#nueva_consulta
+    .page-content
+        display: flex
+        flex-direction: column
+        padding-bottom: 86px
+        img
+            margin-left: auto
+            margin-right: auto
+        .slot
+            margin-left: 5px
+            margin-right: 5px
+            margin-top: 20px
+            .title
+                display: flex
+                align-items: center
+                justify-content: baseline
+                margin-top: 5px
+                .text
+                    margin: 0px
+                    font: $H1
+                    font-size: 24px
+                    line-height: 33px
+                    color: $dark-blue
+            &.datos_generales
+                .item-input.v2
+                    margin: 15px 0px
+                    label
+                        font-family: Nunito
+                        font-style: normal
+                        font-weight: normal
+                        font-size: 18px
+                        line-height: 127.9%
+                        color: $dark-blue
+                .dropdown-blue::before
+                    color: $dark-blue !important
+            &.archivos
+                .item-input.v2
+                    flex-direction: column
+                    justify-content: center
+                    label
+                        box-shadow: -2px 2px 15px rgba(16, 43, 200, 0.2)
+                        border-radius: 8px
+                        background: $turquoise-2
+                        margin-left: 0px
+                        display: flex
+                        justify-content: center
+                        align-items: center
+                        padding: 2px
+                        height: 36px
+                        p,i
+                            color: $white
+                            font-size: 20px
+                        p
+                            margin-left: 2px
+                            font: $Body-2
+                        input,.item-input-error-message
+                            display: none
+                    .notes
+                        margin: 5px auto
+                .cards
+                    .card.v2
+                        margin: 15px 0px
+                        .clip
+                            transform: rotate(-135deg)
+                            color: $turquoise-2
+                            margin-left: 7px
+                            margin-right: 7px
+                        .data
+                            p.title
+                                font: $text-2-card
+                                font-weight: normal
+            &.vitales
+                .content
+                    display: flex
+                    flex-wrap: wrap
+                    align-items: center
+            &.medicamentos
+                .cards
+                    .card.v2
+                        margin: 15px 0px
+                        img
+                            margin-left: 6px
+                            margin-right: 10px
+            &.dates_pays
+                .card
+                    margin: 15px 0px
+                    &.cita
+                        .card-content
+                            margin-left: 8px
+                            flex-direction: column
+                            align-items: unset
+                            .head,.date_row
+                                margin-top: 5px
+                                margin-bottom: 5px
+                                display: flex
+                                justify-content: space-between
+                                i.turquoise
+                                    color: $turquoise-2
+                                p
+                                    font: $Body-4
+                                    color: $dark-blue
+                                .date
+                                    font: $Body-4
+                                    font-weight: normal
+                                    color: $grey
+                            .name
+                                margin-top: 5px
+                                margin-bottom: 5px
+                                font: $Body-4
+                                color: $dark-blue
+                            .phone
+                                margin-top: 5px
+                                margin-bottom: 5px
+                                font: $Body-4
+                                color: $light-blue
+                            .data
+                                margin-top: 5px
+                                margin-bottom: 5px
+                                color: $grey
+                                font-family: Nunito
+                                font-style: normal
+                                font-weight: normal
+                                font-size: 16px
+                                line-height: 20px
+                    &.pago
+                        .card-content
+                            margin-left: 8px
+                            flex-direction: column
+                            align-items: unset
+                            .head,.date_row
+                                margin-top: 5px
+                                margin-bottom: 5px
+                                display: flex
+                                justify-content: space-between
+                                p
+                                    font: $Body-4
+                                    color: $dark-blue
+                                .date
+                                    font: $Body-4
+                                    font-weight: normal
+                                    color: $grey
+                            .money
+                                margin-top: 5px
+                                margin-bottom: 5px
+                                font: $Body-4
+                                color: $dark-blue
+                            .status
+                                margin-top: 5px
+                                margin-bottom: 5px
+                                font: $Body-4
+                                color: $red
+                                &.paid
+                                    color: $light-blue
+            .item-input.v2
+                margin: 15px 0px 25px 0px
+                display: flex
+                a
+                    height: 38px
+                    box-shadow: -2px 2px 15px rgba(16, 43, 200, 0.2)
+                    border-radius: 8px
+                    color: $white
+                    display: flex
+                    justify-content: center
+                    align-items: center
+                    i
+                        font-size: 20px
+                    p
+                        margin: 5px 15px 5px 2px
+                        font: $Body-2
+                    &.med
+                        background: $light-blue
+                    &.cita
+                        background: $turquoise-2
+                    &.pago
+                        background: $yellow-2
+        .none
+            display: none

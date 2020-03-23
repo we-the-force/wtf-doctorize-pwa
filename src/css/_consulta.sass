@@ -74,6 +74,14 @@
                     display: flex
                     flex-wrap: wrap
                     align-items: center
+                    #temperatura,#respiracion
+                        .card-header
+                            p
+                                font-size: 13px
+                                @media screen and (max-width: 400px)
+                                    font-size: 19px
+                                @media screen and (max-width: 350px)
+                                    font-size: 13px
             &.medicamentos
                 .cards
                     .card.v2
@@ -173,5 +181,20 @@
                         background: $turquoise-2
                     &.pago
                         background: $yellow-2
+        .container
+            flex-direction: column
+            .fab
+                position: relative
+                left: unset
+                transform: unset
+                bottom: unset
+                margin-top: 40px
+                margin-bottom: 15px
+                a
+                    --f7-fab-size: 48px
+                    background-color: $red
+                    .icon
+                        font-size: 33px
+                        transform: translate3d(-50%, -50%, 0) rotate(45deg) scale(1)
         .none
             display: none

@@ -1,6 +1,9 @@
 .days-container
     padding-left: 5px
     padding-right: 5px
+    flex-wrap: nowrap
+    align-items: center
+    justify-content: space-evenly
     .item-checkbox
         --f7-checkbox-icon-color: #fff
         --f7-checkbox-active-color: #2FCFBC
@@ -14,13 +17,18 @@
         &.active-state
             color: $white
         .icon-checkbox
+            display: flex
+            justify-content: center
+            align-items: center
             &.days
             font-size: 18px
-            margin-right: 8px
-            margin-left: 8px
+            margin-right: 0px
+            margin-left: 0px
             color: #2FCFBC
             &.checked
                 color: $white
+            &::after
+                content: none
 .paid
     .item-checkbox
         --f7-checkbox-icon-color: #fff

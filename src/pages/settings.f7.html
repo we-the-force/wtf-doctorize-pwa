@@ -1,17 +1,18 @@
 <template>
     <div class="page" id="personal-settings">
         <div class="page-content login-screen-content personal-settings">
-            <div class="login-screen-content header-turquoise photo personal-settings">
+            <div class="header-turquoise v2 photo personal-settings">
+                <div class="header basic center fixed">
+                    <a class="btn-back" href="/doctor/configuration">
+                        <i class="material-icons white">chevron_left</i>
+                    </a>
+                    <p class="title1 white">Información Personal</p>
+                    <a class="edit none">
+                        <i class="material-icons">more_horiz</i>
+                    </a>
+                </div>
                 <div class="list photo">
                     <ul>
-                        <li>
-                            <div class="row">
-                                <a href='#' class=" item-link btn-back" id="back">
-                                    <i class="material-icons">chevron_left</i>
-                                </a>
-                                <p>Información Personal</p>
-                            </div>
-                        </li>
                         <li style="margin-top: 3%">
                             <div class="row">
                                 <div class="col-15"></div>
@@ -93,7 +94,7 @@
                 $$("#set-mail input").val(doctor.email);
                 $$("#set-cel input").val(doctor.cellphone);
                 $$("#set-special input").val(doctor.specialty.name);
-                $$(".photo .edit").html('<img src="' + app.data.url + '/' + doctor.photo + '200.png" alt="not found">');
+                $$(".list.photo .edit").html('<img src="' + app.data.url + '/' + doctor.photo + '200.png" alt="not found">');
 
                 /* app.data.store.getItem('doctor').then(function (value) {
                     app.data.doctor = value;

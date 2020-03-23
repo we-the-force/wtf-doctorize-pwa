@@ -1,7 +1,7 @@
 <template>
-    <div class="page" data-name="offices-add-form-basic" id="offices-add-form-basic">
-        <div class="page-content login-screen-content offices-add-form-basic btns">
-            <div class="login-screen-content header-turquoise">
+    <div class="page office-flow" data-name="offices-add-form-basic" id="offices-add-form-basic">
+        <div class="page-content offices-add-form-basic">
+            <div class="header-turquoise">
                 <div class="list">
                     <ul>
                         <li>
@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div>
-                <div class="list">
+                <div class="list form">
                     <ul>
                         <li class="item-content item-input linear">
                             <div class="item-inner">
@@ -60,19 +60,15 @@
                 </div>
 
             </div>
-        </div>
-        <div class="list buttons">
-            <ul>
-                <li>
-                    <div class="row">
-                        <a href="/offices-show" class="item-link btn-simple">Cancelar</a>
-                        <a href="#" class="item-link list-button btn-rounded">
-                            <p>Siguiente </p>
-                            <i class="material-icons">chevron_right</i>
-                        </a>
-                    </div>
-                </li>
-            </ul>
+            <div class="container two">
+                <a href="/offices-show" data-view=".view-main" id="cancel" class="item-link btn-simple">Cancelar</a>
+                <div class="btn-2">
+                    <a href="">
+                        <p>Siguiente </p>
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -171,9 +167,9 @@
                         app.data.consultorio.nombre = nombre;
                         app.data.consultorio.email = email;
                         app.data.consultorio.phone = phone;
-                        $$('#offices-add-form-basic .btn-rounded').removeClass('grey');
-                        $$('#offices-add-form-basic .btn-rounded').off('click');
-                        $$('#offices-add-form-basic .btn-rounded').on('click', function (e) {
+                        $$('#offices-add-form-basic .btn-2 a').removeClass('grey');
+                        $$('#offices-add-form-basic .btn-2 a').off('click');
+                        $$('#offices-add-form-basic .btn-2 a').on('click', function (e) {
                             app.data.store.setItem("office", app.data.consultorio)
                                 .then(function (value) {
                                     app.methods.redirectTo('offices-add-form-map');
@@ -188,8 +184,8 @@
                 }
 
                 function disableButton() {
-                    $$('#offices-add-form-basic .btn-rounded').addClass('grey');
-                    $$('#offices-add-form-basic .btn-rounded').off('click');
+                    $$('#offices-add-form-basic .btn-2 a').addClass('grey');
+                    $$('#offices-add-form-basic .btn-2 a').off('click');
                 }
             }
         }

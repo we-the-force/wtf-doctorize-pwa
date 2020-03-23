@@ -67,6 +67,21 @@
                     top: 50%
                     right: 10px
                     transform: translate(50%, -50%)
+        &#login,&.register-flow,&.recovery-flow,&.settings-edit,&.office-flow,&.asist-flow,&.date-flow
+            .page-content
+                display: flex
+                flex-direction: column
+                .login-screen-title
+                    margin: 0px auto
+                    display: flex
+                    justify-content: center
+                    flex-grow: 1
+                    align-items: flex-end
+        &.office-flow
+            .list.form
+                margin: 25px 0
+            .offices-add-form-schedule
+                padding-bottom: 15px
     .back-blue
         background: radial-gradient(1128.21px at 57.54% 104.51%, #00A1C5 0%, #2FCFBC 100%)
 @import variables
@@ -100,6 +115,20 @@
         color: #ff0000
     .item-input-wrap::after,.item-inner::after
         content: none
+    .item-input:not(.item-input-outline) .item-input-wrap:after
+        content: '';
+        position: absolute;
+        background-color: var(--f7-list-item-border-color);
+        display: block;
+        z-index: 15;
+        top: auto;
+        right: auto;
+        bottom: 0;
+        left: 0;
+        height: 1px;
+        width: 100%;
+        transform-origin: 50% 100%;
+        transform: scaleY(calc(1 / var(--f7-device-pixel-ratio)));
     #schedule
         li.item-divider::before
             content: none

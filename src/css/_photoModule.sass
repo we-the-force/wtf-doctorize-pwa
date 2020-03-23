@@ -1,31 +1,35 @@
-.border 
-    position: absolute
-    width: 200px
-    height: 200px
-    border-radius: 50%
-    background: radial-gradient(287.25px at -13.48% -70%, #102BC8 0%, #3FC1ED 100%)
-    top: 60%
-    left: 50%
-    transform: translate(-50%, -40%)
-    padding: 7px
-    .upload-photo
-        background: $back-color
+.cont_photo
+    display: flex
+    justify-content: center
+    flex-grow: 1
+    align-items: center
+    .border
+        position: relative
         width: 200px
         height: 200px
         border-radius: 50%
-        -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%)
-        position: absolute
-        top: 50%
-        left: 50%
-        transform: translate(-50%, -50%)
-        .camera
+        background: radial-gradient(287.25px at -13.48% -70%, #102BC8 0%, #3FC1ED 100%)
+        padding: 7px
+        .upload-photo
+            background: $back-color
             width: 200px
             height: 200px
+            border-radius: 50%
+            -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%)
             position: absolute
             top: 50%
             left: 50%
-            transform: translate(-56%, -55%)
+            transform: translate(-50%, -50%)
+            .camera
+                width: 200px
+                height: 200px
+                position: absolute
+                top: 50%
+                left: 50%
+                transform: translate(-56%, -55%)
 .photo-module
+    display: flex
+    flex-direction: column
     .mar-bot
         margin-bottom: 5%
     &.btns
@@ -34,5 +38,30 @@
         margin-block-end: 0em
     .mar
         margin-block-start: 0.5em
+    .header-blue .list
+        margin-bottom: 5px
+        margin-top: 5px
+.footer_photo
+    display: flex
+    flex-direction: column
+    flex-grow: 0.8
+    .item-input
+        margin: 10px auto !important
+        max-width: 480px
+        .item-input-inner
+            display: flex
+            align-items: center
+            justify-content: space-evenly
+            i
+                position: relative
+                top: unset
+                left: unset
+                margin-left: 0px
+                margin-top: 0px
+                color: $light-blue
+            input
+                width: 75% !important
+                padding: 0px !important
+                font-size: 16px
 .actions-button:not(.color-red)
     color: $light-blue

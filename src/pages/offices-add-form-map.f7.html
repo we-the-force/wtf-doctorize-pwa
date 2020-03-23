@@ -1,6 +1,6 @@
 <template>
-    <div class="page" id="offices-add-form-map">
-        <div class="page-content login-screen-content offices-add-form-map btns">
+    <div class="page office-flow" id="offices-add-form-map">
+        <div class="page-content login-screen-content offices-add-form-map">
             <div class="login-screen-content header-turquoise">
                 <div class="list">
                     <ul>
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div>
-                <div class="list">
+                <div class="list form">
                     <ul>
                         <li class="item-content item-input linear">
                             <div class="item-inner">
@@ -62,19 +62,15 @@
                 </div>
 
             </div>
-        </div>
-        <div class="list buttons">
-            <ul>
-                <li>
-                    <div class="row">
-                        <a href="#" class="item-link btn-simple" id="cancel">Cancelar</a>
-                        <a href="#" class="item-link list-button btn-rounded">
-                            <p>Siguiente </p>
-                            <i class="material-icons">chevron_right</i>
-                        </a>
-                    </div>
-                </li>
-            </ul>
+            <div class="container two">
+                <a href="#" data-view=".view-main" id="cancel" class="item-link btn-simple">Cancelar</a>
+                <div class="btn-2">
+                    <a href="">
+                        <p>Siguiente </p>
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -146,9 +142,9 @@
                         app.data.consultorio.hospital = $$('[name="hospital"]').val();
                         app.data.consultorio.address = $$('[name="direction"]').val();
                         app.data.consultorio.number = $$('[name="consultorio"]').val();
-                        $$('#offices-add-form-map .btn-rounded').removeClass('grey');
-                        $$('#offices-add-form-map .btn-rounded').off('click');
-                        $$('#offices-add-form-map .btn-rounded').on('click', function (e) {
+                        $$('#offices-add-form-map .btn-2 a').removeClass('grey');
+                        $$('#offices-add-form-map .btn-2 a').off('click');
+                        $$('#offices-add-form-map .btn-2 a').on('click', function (e) {
                             app.data.store.setItem("office", app.data.consultorio)
                                 .then(function (value) {
                                     app.methods.redirectTo('offices-add-form-schedule');
@@ -161,8 +157,8 @@
                 }
 
                 function disableButton() {
-                    $$('#offices-add-form-map .btn-rounded').addClass('grey');
-                    $$('#offices-add-form-map .btn-rounded').off('click');
+                    $$('#offices-add-form-map .btn-2 a').addClass('grey');
+                    $$('#offices-add-form-map .btn-2 a').off('click');
                 }
             }
         }

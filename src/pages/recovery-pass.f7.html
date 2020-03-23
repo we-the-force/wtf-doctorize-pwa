@@ -1,5 +1,5 @@
 <template>
-    <div class="page" data-name="recovery-pass" id='recovery-pass'>
+    <div class="page recovery-flow" data-name="recovery-pass" id='recovery-pass'>
         <div class="page-content login-screen-content recovery-pass center btns">
             <div class="screen-title header-blue">
                 <div class="list">
@@ -16,45 +16,73 @@
                     </ul>
                 </div>
             </div>
-            <div class="list inputs">
-                <ul>
-                    <li class="item-content item-input">
-                        <div class="item-inner">
-                            <div class="item-input-wrap rounded">
-                                <div class="row">
-                                    <div class="col-10">
-                                        <i class="material-icons">vpn_key</i>
-                                    </div>
-                                    <div class="col-90">
-                                        <input type="password" id="password1" placeholder="Nueva Contraseña" required
-                                            validate>
-                                        <span class="input-clear-button"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="item-content item-input">
-                        <div class="item-inner">
-                            <div class="item-input-wrap rounded">
-                                <div class="row">
-                                    <div class="col-10">
-                                        <i class="material-icons">vpn_key</i>
-                                    </div>
-                                    <div class="col-90">
-                                        <input type="password" id="password2" placeholder="Confirmar contraseña"
-                                            required validate>
-                                        <span class="input-clear-button"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+            <div>
 
+                <div class="list inputs">
+                    <ul>
+                        <li class="item-content item-input">
+                            <div class="item-inner searchbar-inner">
+                              <div class="item-input-wrap rounded">
+                                <i class="icons material-icons">vpn_key</i>
+                                <input type="password" id="password1" class="password1" placeholder="Nueva Contraseña" required validate>
+                                <span class="input-clear-button"></span>
+                              </div>
+                            </div>
+                          </li>
+                          <li class="item-content item-input">
+                            <div class="item-inner searchbar-inner">
+                              <div class="item-input-wrap rounded">
+                                <i class="icons material-icons">vpn_key</i>
+                                <input type="password" id="password2" class="password2" placeholder="Confirmar contraseña" required validate>
+                                <span class="input-clear-button"></span>
+                              </div>
+                            </div>
+                          </li>
+                        <!-- <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-input-wrap rounded">
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <i class="material-icons">vpn_key</i>
+                                        </div>
+                                        <div class="col-90">
+                                            <input type="password" id="password1" placeholder="Nueva Contraseña" required
+                                                validate>
+                                            <span class="input-clear-button"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-input-wrap rounded">
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <i class="material-icons">vpn_key</i>
+                                        </div>
+                                        <div class="col-90">
+                                            <input type="password" id="password2" placeholder="Confirmar contraseña"
+                                                required validate>
+                                            <span class="input-clear-button"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li> -->
+                    </ul>
+                </div>
+            </div>
+            <div class="container">
+                <div class="btn-2">
+                  <a href="">
+                    <p>Guardar </p>
+                    <i class="material-icons">chevron_right</i>
+                  </a>
+                </div>
+              </div>
         </div>
-        <div class="list buttons">
+        <!-- <div class="list buttons">
             <ul>
                 <li>
                     <div class="row">
@@ -65,7 +93,7 @@
                     </div>
                 </li>
             </ul>
-        </div>
+        </div> -->
     </div>
 </template>
 <script>
@@ -82,8 +110,8 @@
                 let code = query.code;
                 var pass1, pass2;
 
-                $$('#recovery-pass .btn-rounded').addClass('grey');
-                $$('#recovery-pass .btn-rounded').off('click');
+                $$('#recovery-pass .btn-2 a').addClass('grey');
+                $$('#recovery-pass .btn-2 a').off('click');
 
                 $$(document).on('input:notempty', '#password2', function (e) {
 
@@ -93,9 +121,9 @@
                     $$('#password2').attr('pattern', pass1);
 
                     if (pass1 === pass2) {
-                        $$('#recovery-pass .btn-rounded').removeClass('grey');
-                        $$('#recovery-pass .btn-rounded').off('click');
-                        $$('#recovery-pass .btn-rounded').on('click', function () {
+                        $$('#recovery-pass .btn-2 a').removeClass('grey');
+                        $$('#recovery-pass .btn-2 a').off('click');
+                        $$('#recovery-pass .btn-2 a').on('click', function () {
                             app.preloader.show('blue');
                             app.request.postJSON(app.data.url + '/account/password/confirmation', {
                                 "email": mail,

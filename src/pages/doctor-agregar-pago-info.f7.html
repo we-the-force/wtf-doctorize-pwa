@@ -62,7 +62,13 @@
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
-
+                app.request.get(app.data.url,
+                    function (e) {
+                        var x = JSON.parse(e);
+                        $$('#doctor-agregar-pago-info .total .data').val('$500.00');
+                        $$('#doctor-agregar-pago-info .total2pay .data').val('$500.00');
+                    },
+                );
             }
         }
     }

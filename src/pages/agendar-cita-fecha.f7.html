@@ -191,21 +191,35 @@
                             app.data.patient = patient;
                             datetime = moment(z.format("YYYY-MM-DD") + 'T' + y);
                             app.preloader.show('blue');
-                            app.request.postJSON(app.data.url + '/doctors/' + doctor.id + '/appointments', {
-                                "email": app.data.paciente.email,
-                                "doctorId": doctor.id,
-                                "officeId": app.data.consultorio.id,
-                                "name": app.data.paciente.nombre,
-                                "phone": app.data.paciente.phone,
-                                "date": datetime.toDate(),
-                            },
-                                function (e) {
-                                    app.preloader.hide();
-                                    app.methods.redirectTo('cita-agendada');
+                            let consulta = localStorage.getItem('consulta');
+                            if (consulta) {
+                                let newCita = { 
+                                    "email": app.data.paciente.email,
+                                    "doctorId": doctor.id,
+                                    "officeId": app.data.consultorio.id,
+                                    "name": app.data.paciente.nombre,
+                                    "phone": app.data.paciente.phone,
+                                    "date": datetime.toDate()
+                                };
+                                localStorage.setItem('cita', JSON.stringify(newCita));
+                                app.methods.redirectTo('nueva-consulta');
+                            } else {
+                                app.request.postJSON(app.data.url + '/doctors/' + doctor.id + '/appointments', {
+                                    "email": app.data.paciente.email,
+                                    "doctorId": doctor.id,
+                                    "officeId": app.data.consultorio.id,
+                                    "name": app.data.paciente.nombre,
+                                    "phone": app.data.paciente.phone,
+                                    "date": datetime.toDate(),
                                 },
-                                function (e) {
-                                    app.preloader.hide();
-                                });
+                                    function (e) {
+                                        app.preloader.hide();
+                                        app.methods.redirectTo('cita-agendada');
+                                    },
+                                    function (e) {
+                                        app.preloader.hide();
+                                    });
+                            }
                         });
                     });
                 };

@@ -292,20 +292,35 @@
                     if (nonempty.length == 9) {
                         $$('#paciente-med-form .btn-2 a').removeClass('grey');
                         $$('#paciente-med-form .btn-2 a').click(function (val) {
-                            let name, quantity, dosis, dosis_2, when, period, medicine, prescript, secound;
-                            name = $$('#paciente-med-form input#med_name').val('Alejandro');
-                            quantity = $$('#paciente-med-form input#quantity').val('12');
-                            dosis = $$('#paciente-med-form input#dosis').val('2');
-                            dosis_2 = $$('#paciente-med-form input#dosis_2').val('diario');
-                            when = $$('#paciente-med-form input#when').val('en la mañana');
-                            period = $$('#paciente-med-form input#period').val('7 dias');
-                            medicine = $$('#paciente-med-form input#medicine').val('diabetes');
-                            prescript = $$('#paciente-med-form input#prescript').val('diabetes');
-                            secound = $$('#paciente-med-form input#secound').val('picazon');
+                            let dosis_arr = [];
+                            $$('.dosis_container .bor_top').each(function (e) {
+                                let dosis,dosis_1, dosis_2, when;
+                                dosis_1 = $$(this).find('input#dosis').val();
+                                dosis_2 = $$(this).find('input#dosis_2').val();
+                                when = $$(this).find('input#when').val();
+                                dosis = {dosis_1,dosis_2,when};
+                                dosis_arr.push(dosis);
+                            });
+                            let name, quantity, period, medicine, prescript, secound,tipo_med,tipo_ing,medida;
+                            name = $$('#paciente-med-form input#med_name').val();
+                            quantity = $$('#paciente-med-form input#quantity').val();
+                            period = $$('#paciente-med-form input#period').val();
+                            medicine = $$('#paciente-med-form input#medicine').val();
+                            prescript = $$('#paciente-med-form input#prescript').val();
+                            secound = $$('#paciente-med-form input#secound').val();
 
+                            tipo_med = $$('#paciente-med-form select#type').val();
+                            tipo_ing = $$('#paciente-med-form select#type_ing').val();
+                            medida = $$('#paciente-med-form select#unity').val();
+
+                            let consulta = localStorage.getItem('consulta');
                             if (edit) {
                                 console.log('api edit');
                                 app.methods.redirectTo('paciente-perfil');
+                            } else if (consulta) {
+                                let newMed = { name, quantity, dosis_arr,period,medicine,prescript,secound,tipo_med,tipo_ing,medida};
+                                localStorage.setItem('medicina',JSON.stringify(newMed));
+                                app.methods.redirectTo('nueva-consulta');
                             } else {
                                 console.log('api create');
                                 app.methods.redirectTo('paciente-perfil');

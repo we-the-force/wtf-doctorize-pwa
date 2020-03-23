@@ -19,13 +19,14 @@
                     <div class="item-input v2">
                         <label for="nombre">Nombre del paciente</label>
                         <div class="item-input-inner dropdown-blue">
-                            <input list="pacientes" type="text" id="nombre" placeholder="Nombre del paciente">
+                            <input class="notnull" list="pacientes" type="text" id="nombre"
+                                placeholder="Nombre del paciente">
                         </div>
                     </div>
                     <div class="item-input v2">
                         <label for="motivo">Motivo de consulta</label>
                         <div class="item-input-inner textarea">
-                            <textarea class="resizable" id="motivo" placeholder="Agrege algo mas..."></textarea>
+                            <textarea class="resizable notnull" id="motivo" placeholder="Agrege algo mas..."></textarea>
                         </div>
                     </div>
                     <div class="item-input v2">
@@ -74,7 +75,7 @@
                             <p>c</p>
                         </div>
                         <div class="card-footer">
-                            <p>-°</p>
+                            <p class="notnull">-°</p>
                         </div>
                     </div>
                     <div class="card v2 sqr" id="presion">
@@ -89,7 +90,7 @@
                             <p>mm/Hg</p>
                         </div>
                         <div class="card-footer">
-                            <p>-/-</p>
+                            <p class="notnull">-/-</p>
                         </div>
                     </div>
                     <div class="card v2 sqr" id="respiracion">
@@ -104,7 +105,7 @@
                             <p>resp/min</p>
                         </div>
                         <div class="card-footer">
-                            <p>-</p>
+                            <p class="notnull">-</p>
                         </div>
                     </div>
                     <div class="card v2 sqr" id="pulso">
@@ -119,7 +120,7 @@
                             <p>ppm</p>
                         </div>
                         <div class="card-footer">
-                            <p>-</p>
+                            <p class="notnull">-</p>
                         </div>
                     </div>
                 </div>
@@ -130,19 +131,7 @@
                 </div>
                 <div class="content">
                     <div class="cards">
-                        <div class="card v2 light-blue none">
-                            <div class="rectangle light-blue"></div>
-                            <div class="card-content">
-                                <img src="../static/icons/Medicinas.svg">
-                                <div class="data">
-                                    <p class="text">Linagliptina/Metformina</p>
-                                    <p class="title grey">Tableta - Oral</p>
-                                </div>
-                                <a class="arrow">
-                                    <i class="material-icons">chevron_right</i>
-                                </a>
-                            </div>
-                        </div>
+
                     </div>
                     <div class="item-input v2">
                         <a class="med">
@@ -176,7 +165,7 @@
                                 tempor incididunt. </p>
                         </div>
                     </div>
-                    <div class="item-input v2">
+                    <div class="item-input v2 cita">
                         <a class="cita">
                             <i class="material-icons">today</i>
                             <p>Próxima cita</p>
@@ -199,7 +188,7 @@
                             <p class="status paid">Pagado</p>
                         </div>
                     </div>
-                    <div class="item-input v2">
+                    <div class="item-input v2 pago">
                         <a class="pago">
                             <i class="material-icons">monetization_on</i>
                             <p>Pago</p>
@@ -246,6 +235,7 @@
             pageBeforeIn: function (e, page) {
                 var self = this;
                 var app = self.$app;
+
                 app.request.get(app.data.url,
                     function (e) {
                         var x = JSON.parse(e);
@@ -256,11 +246,13 @@
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
-                var files = [];
+                var files = [], medics = [], pago, cita;
                 var moment = require('moment');
+
                 moment.locale('es');
                 moment().format();
 
+                localStorage.setItem('consulta', true);
                 app.data.store.getItem('paciente').then(function (value) {
                     /* value.forEach(element => {
                         $$('datalist').append(
@@ -281,17 +273,42 @@
                     );
                 });
 
+                getData();
+
                 $$('#file').change(function (e) {
                     let file = this.files[0];
                     if (file.size <= 5000000) {
                         files.push(file);
                         addFilesCards();
+                        localStorage.setItem('files', files);
                     } else {
                         app.dialog.alert('El archivo excede el tamaño maximo');
                     }
                 });
 
+                $$('input#nombre').change(function (e) {
+                    localStorage.setItem('consultaName', $$(this).val());
+                });
 
+                $$('textarea#motivo').change(function (e) {
+                    localStorage.setItem('consultaMotivo', $$(this).val());
+                });
+
+                $$('textarea#notes').change(function (e) {
+                    localStorage.setItem('consultaNotes', $$(this).val());
+                });
+
+                $$('.item-input .med').click(function (e) {
+                    app.methods.redirectTo('paciente-medicamento-form');
+                });
+
+                $$('.item-input .cita').click(function (e) {
+                    app.methods.redirectTo('agendar-cita');
+                });
+
+                $$('.item-input .pago').click(function (e) {
+                    app.methods.redirectTo('doctor-agregar-pago');
+                });
 
                 disableButton();
                 $$('#nueva_consulta .btn-2 a').removeClass('grey');
@@ -299,6 +316,58 @@
                     console.log('guardar');
 
                 });
+
+                function checkData(e) {
+                    var nonempty = $$('#nueva_consulta .notnull').filter(function () {
+                        return this.value != ''
+                    });
+
+                    if (nonemptyinput.length == 6) { 
+
+                    }
+                }
+
+                function getData(e) {
+                    let prevPageMedics = page.pageFrom != undefined && page.pageFrom.el.id == 'paciente-med-form';
+                    if (localStorage.getItem('files')) {
+                        files = localStorage.getItem('files');
+                        addFilesCards();
+                    }
+                    if (localStorage.getItem('medics')) {
+                        medics = JSON.parse(localStorage.getItem('medics'));
+                        if (prevPageMedics) {
+                            refillMedics();
+                        }
+                        addMedsCards();
+                    } else if (prevPageMedics) {
+                        refillMedics();
+                        addMedsCards();
+                    }
+                    if (localStorage.getItem('cita')) {
+                        //llenar tarjeta
+                        $$('.card.cita').toggleClass("none");
+                        $$('.item-input.cita').toggleClass("none");
+                    }
+                    if (localStorage.getItem('pago')) {
+                        //llenar tarjeta
+                        $$('.card.pago').toggleClass("none");
+                        $$('.item-input.pago').toggleClass("none");
+                    }
+                    if (localStorage.getItem('consultaName')) {
+                        $$('input#nombre').val(localStorage.getItem('consultaName'));
+                    }
+                    if (localStorage.getItem('consultaMotivo')) {
+                        $$('textarea#motivo').val(localStorage.getItem('consultaMotivo'));
+                    }
+                    if (localStorage.getItem('consultaNotes')) {
+                        $$('textarea#notes').val(localStorage.getItem('consultaNotes'));
+                    }
+                }
+
+                function refillMedics(e) {
+                    medics.push(JSON.parse(localStorage.getItem('medicina')));
+                    localStorage.setItem('medics', JSON.stringify(medics));
+                }
 
                 function addFilesCards() {
                     $$('.archivos .cards').empty();
@@ -324,6 +393,31 @@
 
                     });
                 }
+
+                function addMedsCards() {
+                    $$('.medicamentos .cards').empty();
+                    medics.forEach(el => {
+                        console.log(el);
+                        $$('.medicamentos .cards').append(
+                            '<div class="card v2 light-blue">' +
+                            '<div class="rectangle light-blue"></div>' +
+                            '<div class="card-content">' +
+                            '<img src="../static/icons/Medicinas.svg">' +
+                            '<div class="data">' +
+                            '<p class="text">' + el.name + '</p>' +
+                            '<p class="title grey">' + el.tipo_med + ' - ' + el.tipo_ing + '</p>' +
+                            '</div>' +
+                            '<a class="arrow">' +
+                            '<i class="material-icons">chevron_right</i>' +
+                            '</a>' +
+                            '</div>' +
+                            '</div>'
+                        );
+
+
+                    });
+                }
+
 
                 function disableButton() {
                     $$('#nueva_consulta .btn-2 a').addClass('grey');

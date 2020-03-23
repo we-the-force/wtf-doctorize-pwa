@@ -3,7 +3,7 @@
         <div class="page-content">
             <div class="header-turquoise v2 flex">
                 <div class="header basic center fixed">
-                    <a class="btn-back" id="back" href="/home">
+                    <a class="btn-back back" id="back" href="3">
                         <i class="material-icons white">chevron_left</i>
                     </a>
                     <p class="title1 white"></p>
@@ -144,7 +144,7 @@
                             app.data.paciente.email = email;
                             app.data.paciente.phone = phone;
                             app.data.consultorio.id = $$('#consultorio').val();
-                            app.data.store.setItem("patient", app.data.assistant).then(function (params) {
+                            app.data.store.setItem("patient", app.data.paciente).then(function (params) {
                                 app.data.store.setItem("office", app.data.consultorio).then(function (params) {
                                     app.methods.redirectTo('agendar-cita-fecha');
                                 });

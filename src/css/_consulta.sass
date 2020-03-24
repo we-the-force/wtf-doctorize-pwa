@@ -82,6 +82,28 @@
                                     font-size: 19px
                                 @media screen and (max-width: 350px)
                                     font-size: 13px
+                    .card.sqr
+                        order: 0
+                        transition: width 0.5s ease, height 0.5s ease
+                        .fade-in
+                            opacity: 0
+                            transition: opacity 0.5s ease
+                            &.show
+                                opacity: 1
+                                transition: opacity 0.5s ease
+                        .fade-out
+                            opacity: 1
+                            transition: opacity 0.5s ease
+                        &.primary
+                            order: -1
+                            width: 89vw
+                            height: 54vw
+                            transition: width 0.5s ease, height 0.5s ease
+                            @media screen and (max-width: 400px)
+                                width: 86vw
+                            .fade-out
+                                opacity: 0
+                                transition: opacity 0.5s ease
             &.medicamentos
                 .cards
                     .card.v2

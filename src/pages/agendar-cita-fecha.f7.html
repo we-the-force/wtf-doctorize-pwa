@@ -1,27 +1,19 @@
 <template>
-    <div class="page" data-name="agendar-cita-fecha" id="agendar-cita-fecha">
-        <div class="page-content login-screen-content btns">
-            <div class="login-screen-content header-turquoise">
-                <div class="list">
-                    <ul>
-                        <li>
-                            <div class="row">
-                                <a href='/agendar-cita' class=" item-link btn-back" id="back">
-                                    <i class="material-icons">close</i>
-                                </a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row">
-                                <h3>Agendar consulta</h3>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row">
-                                <p>Agregar los datos básicos de la consulta.</p>
-                            </div>
-                        </li>
-                    </ul>
+    <div class="page date-flow" data-name="agendar-cita-fecha" id="agendar-cita-fecha">
+        <div class="page-content">
+            <div class="header-turquoise v2 flex">
+                <div class="header basic center fixed">
+                    <a class="btn-back" id="back" href="/agendar-cita">
+                        <i class="material-icons white">chevron_left</i>
+                    </a>
+                    <p class="title1 white"></p>
+                    <a class="edit none">
+                        <i class="material-icons">more_horiz</i>
+                    </a>
+                </div>
+                <div class="title">
+                    <h3>Agendar consulta</h3>
+                    <p>Agregar los datos básicos de la consulta.</p>
                 </div>
             </div>
             <div>
@@ -48,18 +40,14 @@
                     </ul>
                 </div>
             </div>
-        </div>
-        <div class="list buttons">
-            <ul>
-                <li>
-                    <div class="row">
-                        <a href="#" class="item-link list-button btn-rounded">
-                            <p>Agendar </p>
-                            <i class="material-icons">chevron_right</i>
-                        </a>
-                    </div>
-                </li>
-            </ul>
+            <div class="container right bottom">
+                <div class="btn-2">
+                    <a href="">
+                        <p>Agendar </p>
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -80,7 +68,7 @@
 
                 app.data.store.getItem('office').then(function (value) {
                     app.data.consultorio = value;
-                    app.preloader.show('blue');
+                    /* app.preloader.show('blue'); */
                     app.request.get(app.data.url + '/offices/' + app.data.consultorio.id,
                         function (e) {
                             var x = JSON.parse(e);
@@ -98,53 +86,53 @@
 
                         /* app.data.store.getItem('doctor').then(function (value2) {
                             app.data.doctor = value2; */
-                            app.request.get(app.data.url + '/doctors/' + doctor.id + '/appointments?filter=office&filter=date&search=' + app.data.consultorio.id + '&search=' + z.format("YYYY-MM-DD"),
-                                function (e) {
-                                    let x = JSON.parse(e);
-                                    x = x.map(e => moment(e.date));
-                                    let y = [];
-                                    let startTimeArray = app.data.consultorio.startTime.split(":");
-                                    let startTime = moment(z).hour(startTimeArray[0]).minute(startTimeArray[1]);
-                                    let closeTimeArray = app.data.consultorio.closeTime.split(":");
-                                    let closeTime = moment(z).hour(closeTimeArray[0]).minute(closeTimeArray[1]);
-                                    let lunchStartTimeArray = app.data.consultorio.lunchStartTime.split(":");
-                                    let lunchStartTime = moment(z).hour(lunchStartTimeArray[0]).minute(lunchStartTimeArray[1]);
-                                    let lunchCloseTimeArray = app.data.consultorio.lunchCloseTime.split(":");
-                                    let lunchCloseTime = moment(z).hour(lunchCloseTimeArray[0]).minute(lunchCloseTimeArray[1]);
+                        app.request.get(app.data.url + '/doctors/' + doctor.id + '/appointments?filter=office&filter=date&search=' + app.data.consultorio.id + '&search=' + z.format("YYYY-MM-DD"),
+                            function (e) {
+                                let x = JSON.parse(e);
+                                x = x.map(e => moment(e.date));
+                                let y = [];
+                                let startTimeArray = app.data.consultorio.startTime.split(":");
+                                let startTime = moment(z).hour(startTimeArray[0]).minute(startTimeArray[1]);
+                                let closeTimeArray = app.data.consultorio.closeTime.split(":");
+                                let closeTime = moment(z).hour(closeTimeArray[0]).minute(closeTimeArray[1]);
+                                let lunchStartTimeArray = app.data.consultorio.lunchStartTime.split(":");
+                                let lunchStartTime = moment(z).hour(lunchStartTimeArray[0]).minute(lunchStartTimeArray[1]);
+                                let lunchCloseTimeArray = app.data.consultorio.lunchCloseTime.split(":");
+                                let lunchCloseTime = moment(z).hour(lunchCloseTimeArray[0]).minute(lunchCloseTimeArray[1]);
 
-                                    z = startTime;
+                                z = startTime;
 
-                                    while (z.isBefore(closeTime)) {
-                                        if (z.isAfter(today)) {
-                                            if (!z.isBetween(lunchStartTime, lunchCloseTime)) {
-                                                if (x.every(e => !(e.isSameOrAfter(z) && e.isBefore(moment(z).add(30, 'm'))))) {
-                                                    y.push(z.format("HH:mm"));
-                                                    z.add(30, 'm');
-                                                    continue;
-                                                }
+                                while (z.isBefore(closeTime)) {
+                                    if (z.isAfter(today)) {
+                                        if (!z.isBetween(lunchStartTime, lunchCloseTime)) {
+                                            if (x.every(e => !(e.isSameOrAfter(z) && e.isBefore(moment(z).add(30, 'm'))))) {
+                                                y.push(z.format("HH:mm"));
+                                                z.add(30, 'm');
+                                                continue;
                                             }
                                         }
-                                        z.add(30, 'm');
                                     }
+                                    z.add(30, 'm');
+                                }
 
-                                    $$(document).on('picker:closed', '#time', function (e) {
-                                        enableButton(z, pickerDevice.getValue());
-                                    });
-
-                                    var pickerDevice = app.picker.create({
-                                        inputEl: '#time',
-                                        cols: [
-                                            {
-                                                textAlign: 'center',
-                                                values: y
-                                            }
-                                        ]
-                                    });
-
-                                }, function (params) {
-                                    console.log(params);
-
+                                $$(document).on('picker:closed', '#time', function (e) {
+                                    enableButton(z, pickerDevice.getValue());
                                 });
+
+                                var pickerDevice = app.picker.create({
+                                    inputEl: '#time',
+                                    cols: [
+                                        {
+                                            textAlign: 'center',
+                                            values: y
+                                        }
+                                    ]
+                                });
+
+                            }, function (params) {
+                                console.log(params);
+
+                            });
 
                         /* }); */
 
@@ -196,35 +184,49 @@
                 });
 
                 function enableButton(z, y) {
-                    $$('#agendar-cita-fecha .btn-rounded').removeClass('grey');
-                    $$('#agendar-cita-fecha .btn-rounded').off('click');
-                    $$('#agendar-cita-fecha .btn-rounded').click(function (e) {
+                    $$('#agendar-cita-fecha .btn-2 a').removeClass('grey');
+                    $$('#agendar-cita-fecha .btn-2 a').off('click');
+                    $$('#agendar-cita-fecha .btn-2 a').click(function (e) {
                         app.data.store.getItem('patient').then(function (patient) {
                             app.data.patient = patient;
                             datetime = moment(z.format("YYYY-MM-DD") + 'T' + y);
                             app.preloader.show('blue');
-                            app.request.postJSON(app.data.url + '/doctors/' + doctor.id + '/appointments', {
-                                "email": app.data.paciente.email,
-                                "doctorId": doctor.id,
-                                "officeId": app.data.consultorio.id,
-                                "name": app.data.paciente.nombre,
-                                "phone": app.data.paciente.phone,
-                                "date": datetime.toDate(),
-                            },
-                                function (e) {
-                                    app.preloader.hide();
-                                    app.methods.redirectTo('cita-agendada');
+                            let consulta = localStorage.getItem('consulta');
+                            if (consulta) {
+                                let newCita = { 
+                                    "email": app.data.paciente.email,
+                                    "doctorId": doctor.id,
+                                    "officeId": app.data.consultorio.id,
+                                    "name": app.data.paciente.nombre,
+                                    "phone": app.data.paciente.phone,
+                                    "date": datetime.toDate()
+                                };
+                                localStorage.setItem('cita', JSON.stringify(newCita));
+                                app.methods.redirectTo('nueva-consulta');
+                            } else {
+                                app.request.postJSON(app.data.url + '/doctors/' + doctor.id + '/appointments', {
+                                    "email": app.data.paciente.email,
+                                    "doctorId": doctor.id,
+                                    "officeId": app.data.consultorio.id,
+                                    "name": app.data.paciente.nombre,
+                                    "phone": app.data.paciente.phone,
+                                    "date": datetime.toDate(),
                                 },
-                                function (e) {
-                                    app.preloader.hide();
-                                });
+                                    function (e) {
+                                        app.preloader.hide();
+                                        app.methods.redirectTo('cita-agendada');
+                                    },
+                                    function (e) {
+                                        app.preloader.hide();
+                                    });
+                            }
                         });
                     });
                 };
 
                 function disableButton() {
-                    $$('#agendar-cita-fecha .btn-rounded').addClass('grey');
-                    $$('#agendar-cita-fecha .btn-rounded').off('click');
+                    $$('#agendar-cita-fecha .btn-2 a').addClass('grey');
+                    $$('#agendar-cita-fecha .btn-2 a').off('click');
                 }
 
             }

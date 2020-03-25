@@ -1,27 +1,18 @@
 <template>
-    <div class="page" data-name="asistentes-invitar-03" id='asistentes-invitar-03'>
-        <div class="page-content login-screen-content btns">
-            <div class="login-screen-content header-turquoise">
-                <div class="list">
-                    <ul class="header">
-                        <li>
-                            <div class="row">
-                                <a href='#' class="item-link btn-back" id="cancel">
-                                    <i class="material-icons">close</i>
-                                </a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row">
-                                <h3>Seleccionar Consultorio</h3>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row">
-                                <p><br><br></p>
-                            </div>
-                        </li>
-                    </ul>
+    <div class="page asist-flow" data-name="asistentes-invitar-03" id='asistentes-invitar-03'>
+        <div class="page-content">
+            <div class="header-turquoise v2 flex">
+                <div class="header basic center fixed">
+                    <a class="btn-back" id="cancel" href="">
+                        <i class="material-icons white">chevron_left</i>
+                    </a>
+                    <p class="title1 white"></p>
+                    <a class="edit none">
+                        <i class="material-icons">more_horiz</i>
+                    </a>
+                </div>
+                <div class="title">
+                    <h3>Seleccionar Consultorio</h3>
                 </div>
             </div>
             <div>
@@ -30,18 +21,14 @@
                     </ul>
                 </div>
             </div>
-        </div>
-        <div class="list buttons">
-            <ul>
-                <li>
-                    <div class="row">
-                        <a href="#" class="item-link list-button btn-rounded">
-                            <p>Siguiente </p>
-                            <i class="material-icons">chevron_right</i>
-                        </a>
-                    </div>
-                </li>
-            </ul>
+            <div class="container right bottom">
+                <div class="btn-2">
+                    <a href="">
+                        <p>Siguiente </p>
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -54,76 +41,77 @@
                 var app = self.$app;
                 var items;
                 var doctor = JSON.parse(sessionStorage.getItem('user'));
-                $$('#asistentes-invitar-03 .btn-rounded').addClass('grey');
-                $$('#asistentes-invitar-03 .btn-rounded').off('click');
+                $$('#asistentes-invitar-03 .btn-2 a').addClass('grey');
+                $$('#asistentes-invitar-03 .btn-2 a').off('click');
 
                 app.preloader.show('blue');/* 
                 app.data.store.getItem('doctor').then(function (value) {
                     app.data.doctor = value; */
-                    app.data.store.getItem('assistant').then(function (assistantValue) {
-                        app.data.assistant = assistantValue;
+                app.data.store.getItem('assistant').then(function (assistantValue) {
+                    app.data.assistant = assistantValue;
 
-                        app.request.get(app.data.url + '/doctors/' + doctor.id + '/offices',
-                            function (e) {
-                                var x = JSON.parse(e);
-                                for (var i = 0; i < x.length; i++) {
-                                    $$('<li>' +
-                                        '<label class="radio item-radio item-content">' +
-                                        '<div class="item-inner">' +
-                                        '<div class="item-title-row">' +
-                                        '<div class="item-title dark-blue">' + x[i].name + '</div>' +
-                                        '</div>' +
-                                        '<div class="item-subtitle light-blue">' + x[i].hospital + '</div>' +
-                                        '<div class="item-text dark-blue">' + x[i].address + '</div>' +
-                                        '</div>' +
-                                        '<input type="radio" id="radio" name="demo-radio" data-Name="' + x[i].name + '" value="' + x[i].id + '"/>' +
-                                        '<i class="icon-radio"></i>' +
-                                        '</label>' +
-                                        '</li> ').appendTo("#consultorios");
-                                }
-                                app.preloader.hide();
-                                if (app.data.assistant.addOffice) {
-                                    $$('.header').find('h3').text('Asigne un nuevo consultorio a su asistente.');
-                                    items = $$('[name="demo-radio"]');
-                                    var z = false;
-                                    items.forEach(element => {
-                                        if (app.data.assistant.consultorio.name == $$(element).data('Name')) {
-                                            element.checked = true;
-                                            z = true;
-                                        }
-                                    });
-                                    if (z) {
-                                        enableButton();
-                                    }
-
-                                }
-                            },
-                            function (e) {
-                                app.preloader.hide();
-                            });
-
-                        $$('#asistentes-invitar-03 #cancel').on('click', function (e) {
-                            if (app.data.assistant.addOffice) {
-                                app.data.assistant.addOffice = false;
-                                app.data.store.setItem("assistant", app.data.assistant)
-                                    .then(function (value) {
-                                        app.methods.redirectTo('assistants-offices');
-                                    });
-                            } else {
-                                app.methods.redirectTo('asistentes-invitar-02');
+                    app.request.get(app.data.url + '/doctors/' + doctor.id + '/offices',
+                        function (e) {
+                            var x = JSON.parse(e);
+                            for (var i = 0; i < x.length; i++) {
+                                $$('<li>' +
+                                    '<label class="radio item-radio item-content">' +
+                                    '<div class="item-inner">' +
+                                    '<div class="item-title-row">' +
+                                    '<div class="item-title dark-blue">' + x[i].name + '</div>' +
+                                    '</div>' +
+                                    '<div class="item-subtitle light-blue">' + x[i].hospital + '</div>' +
+                                    '<div class="item-text dark-blue">' + x[i].address + '</div>' +
+                                    '</div>' +
+                                    '<input type="radio" id="radio" name="demo-radio" data-Name="' + x[i].name + '" value="' + x[i].id + '"/>' +
+                                    '<i class="icon-radio"></i>' +
+                                    '</label>' +
+                                    '</li> ').appendTo("#consultorios");
                             }
+                            app.preloader.hide();
+                            if (app.data.assistant.addOffice) {
+                                $$('.header').find('h3').text('Asigne un nuevo consultorio a su asistente.');
+                                items = $$('[name="demo-radio"]');
+                                var z = false;
+                                items.forEach(element => {
+                                    if (app.data.assistant.consultorio.name == $$(element).data('Name')) {
+                                        element.checked = true;
+                                        z = true;
+                                    }
+                                });
+                                if (z) {
+                                    enableButton();
+                                }
+
+                            }
+                        },
+                        function (e) {
+                            app.preloader.hide();
                         });
 
-                        $$('#consultorios').on('change', function (e) {
-                            enableButton();
-                        });
+
+                    $$('#consultorios').on('change', function (e) {
+                        enableButton();
                     });
+                });
                 /* }); */
 
+                $$('#asistentes-invitar-03 #cancel').on('click', function (e) {
+                    if (app.data.assistant.addOffice) {
+                        app.data.assistant.addOffice = false;
+                        app.data.store.setItem("assistant", app.data.assistant)
+                            .then(function (value) {
+                                app.methods.redirectTo('assistants-offices');
+                            });
+                    } else {
+                        app.methods.redirectTo('asistentes-invitar-02');
+                    }
+                });
+
                 function enableButton() {
-                    $$('#asistentes-invitar-03 .btn-rounded').removeClass('grey');
-                    $$('#asistentes-invitar-03 .btn-rounded').off('click');
-                    $$('#asistentes-invitar-03 .btn-rounded').on('click', function (e) {
+                    $$('#asistentes-invitar-03 .btn-2 a').removeClass('grey');
+                    $$('#asistentes-invitar-03 .btn-2 a').off('click');
+                    $$('#asistentes-invitar-03 .btn-2 a').on('click', function (e) {
                         items = $$('[name="demo-radio"]');
                         app.data.assistant.consultorio.id = '';
                         for (var i = 0; i < items.length; i++) {
@@ -133,7 +121,7 @@
                             }
                         }
                         console.log(app.data.assistant.consultorio.id);
-                        
+
                         app.data.store.setItem("assistant", app.data.assistant)
                             .then(function (value) {
                                 app.methods.redirectTo('asistentes-invitar-04');

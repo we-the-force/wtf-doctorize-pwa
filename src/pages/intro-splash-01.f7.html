@@ -157,7 +157,15 @@
                 </div>
             </div>
         </div>
-        <div class="list buttons">
+        <div class="container">
+            <div class="btn-2">
+                <a href="">
+                    <p>Siguiente </p>
+                    <i class="material-icons">chevron_right</i>
+                </a>
+            </div>
+        </div>
+        <!-- <div class="list buttons">
             <ul>
                 <li>
                     <div class="row">
@@ -168,7 +176,7 @@
                     </div>
                 </li>
             </ul>
-        </div>
+        </div> -->
     </div>
 </template>
 <script>
@@ -180,7 +188,7 @@
                 var self = this;
                 var app = self.$app;
 
-                $$('#intro-splash .btn-rounded').on('click', function () {
+                $$('#intro-splash .btn-2 a').on('click', function () {
                     var swiper = app.swiper.get('.swiper-container');
                     if (swiper.isEnd) {
                         app.methods.redirectTo('root');

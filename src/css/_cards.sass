@@ -261,6 +261,31 @@
                 bottom: 15px
                 p
                     opacity: 1
+    &.info_basic
+        display: flex
+        margin: 15px 5px
+        width: auto
+        &.inactive
+            filter: saturate(0) opacity(0.6)
+        .material-icons
+            padding-left: calc( 5% + 5px )
+            padding-right: 10px
+            padding-top: 10px
+            font-size: 30px
+            &.dark-blue
+                color: $dark-blue
+            &.turquoise
+                color: $turquoise-2
+        .card-content
+            flex-grow: 1
+            padding: 9px 0px 9px 0px
+            p
+                &.text
+                    font: $text-1-card
+                &.title
+                    font: $title-card
+                &.footer
+                    font: $footer-card
     &.doc-horarios
         display: flex
         width: auto
@@ -540,6 +565,8 @@
                 font: $Body-4
                 color: $dark-blue
                 line-height: 25px
+                &.light-blue
+                    color: $light-blue
             .title
                 font: $text-1-card
                 font-weight: 300
@@ -548,6 +575,10 @@
                     font-weight: 600
                 &.grey
                     color: $grey
+            &.no-icon
+                margin-left: 15px
+            &.no-margin
+                margin: 0px
         .date
             font: $text-1-card
             font-weight: 600
@@ -564,6 +595,8 @@
             i
                 font-size: 25px
                 color: $dark-blue
+                &.light-blue
+                    color: $light-blue
     &.card-expandable
         margin-bottom: 0px
         background-color: $white
@@ -666,6 +699,32 @@
                 color: $light-blue
             &::before
                 content: none
+    &.user
+        display: flex
+        &.inactive
+            filter: saturate(0) opacity(0.6)
+        .avatar
+            display: flex
+            padding-left: calc( 5% + 10px )
+            padding-right: 10px
+            align-items: center
+            img
+                margin: 5px 0px
+                width: 35px
+                height: 35px
+                border-radius: 50%
+                background: radial-gradient(123.92% 129.39% at 57.54% 104.51%, #00A1C5 0%, #2FCFBC 100%) 
+        .material-icons
+            padding: 5px 10px 0px 5px
+            color: $dark-blue
+            font-size: 30px
+        .card-content
+            align-items: center
+            width: 100%
+            padding: 0px
+            p
+                margin: 9px 0px 9px 0px
+                font: $Body-4
 
 .popover
     background: $white

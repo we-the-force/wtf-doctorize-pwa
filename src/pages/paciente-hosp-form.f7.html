@@ -10,67 +10,72 @@
             </a>
         </div>
         <div class="page-content">
+            <div>
 
-            <div class="two-input">
+                <div class="two-input">
 
-                <div class="item-input v2 half">
-                    <label for="date_in">Admisión</label>
-                    <div class="item-input-inner">
-                        <input class="pdr-10" type="date" name="date_in" id="date_in" placeholder="DD/MM/AAAA" required
-                            validate>
+                    <div class="item-input v2 half">
+                        <label for="date_in">Admisión</label>
+                        <div class="item-input-inner">
+                            <input class="pdr-10" type="date" name="date_in" id="date_in" placeholder="DD/MM/AAAA"
+                                required validate>
+                        </div>
+                    </div>
+
+                    <div class="item-input v2 half">
+                        <label for="date_out">Alta</label>
+                        <div class="item-input-inner">
+                            <input class="pdr-10" type="date" name="date_out" id="date_out" placeholder="DD/MM/AAAA"
+                                required validate>
+                        </div>
                     </div>
                 </div>
 
-                <div class="item-input v2 half">
-                    <label for="date_out">Alta</label>
+                <div class="item-input v2">
+                    <label for="prov">Proveedor de atención médica</label>
                     <div class="item-input-inner">
-                        <input class="pdr-10" type="date" name="date_out" id="date_out" placeholder="DD/MM/AAAA"
+                        <input type="text" name="prov" id="prov" placeholder="Nombre" required validate>
+                        <span class="input-clear-button"></span>
+                    </div>
+                </div>
+                <div class="item-input v2">
+                    <label for="hosp">Hospital</label>
+                    <div class="item-input-inner">
+                        <input type="text" name="hosp" id="hosp" placeholder="Nombre" required validate>
+                        <span class="input-clear-button"></span>
+                    </div>
+                </div>
+                <div class="item-input v2">
+                    <label for="razon">Razón</label>
+                    <div class="item-input-inner">
+                        <input type="text" name="razon" id="razon" placeholder="Ej. Hospitalizacipon por  dolor, etc."
                             required validate>
+                        <span class="input-clear-button"></span>
                     </div>
                 </div>
-            </div>
-
-            <div class="item-input v2">
-                <label for="prov">Proveedor de atención médica</label>
-                <div class="item-input-inner">
-                    <input type="text" name="prov" id="prov" placeholder="Nombre" required validate>
-                    <span class="input-clear-button"></span>
+                <div class="item-input v2 upload">
+                    <label for="file">Resumen de alta</label>
+                    <div class="item-input-inner">
+                        <label for="file">
+                            <input type="file" accept=".txt,.doc,.docx,.pdf,.jpeg,.png,.jpg,.ppt,.pptx,.xls,.xlsx"
+                                name="file" id="file" placeholder="Añadir archivo adjunto" required validate>
+                            <i class="material-icons">attach_file</i>
+                            <p>Añadir archivo adjunto</p>
+                        </label>
+                    </div>
+                    <p class="notes">
+                        Tamaño máximo de archivo 5 MB. (25 MB para archivos de imagen DICOM).
+                        Formatos admitidos: txt, doc, pdf, jpeg, ppt, xls, archivos de imagen DICOM.
+                    </p>
                 </div>
             </div>
-            <div class="item-input v2">
-                <label for="hosp">Hospital</label>
-                <div class="item-input-inner">
-                    <input type="text" name="hosp" id="hosp" placeholder="Nombre" required validate>
-                    <span class="input-clear-button"></span>
-                </div>
-            </div>
-            <div class="item-input v2">
-                <label for="razon">Razón</label>
-                <div class="item-input-inner">
-                    <input type="text" name="razon" id="razon" placeholder="Ej. Hospitalizacipon por  dolor, etc."
-                        required validate>
-                    <span class="input-clear-button"></span>
-                </div>
-            </div>
-            <div class="item-input v2 upload">
-                <label for="file">Resumen de alta</label>
-                <div class="item-input-inner">
-                    <label for="file">
-                        <input type="file" accept=".txt,.doc,.docx,.pdf,.jpeg,.png,.jpg,.ppt,.pptx,.xls,.xlsx" name="file" id="file" placeholder="Añadir archivo adjunto" required validate>
-                        <i class="material-icons">attach_file</i>
-                        <p>Añadir archivo adjunto</p>
-                    </label>
-                </div>
-                <p class="notes">
-                    Tamaño máximo de archivo 5 MB. (25 MB para archivos de imagen DICOM).
-                    Formatos admitidos: txt, doc, pdf, jpeg, ppt, xls, archivos de imagen DICOM.
-                </p>
-            </div>
-            <div class="container">
-                <div class="btn-2 woi">
-                    <a href="">
-                        <p>Confirmar </p>
-                    </a>
+            <div>
+                <div class="container">
+                    <div class="btn-2 woi">
+                        <a href="">
+                            <p>Confirmar </p>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -80,19 +85,88 @@
     import $$ from 'dom7';
     export default {
         on: {
+            pageBeforeOut: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                if (e.detail.direction == 'backward') {
+                    app.data.store.removeItem('edit_patient_data');
+                } else if (e.detail.direction == 'forward') {
+                    app.data.store.removeItem('hosp_id');
+                    app.data.store.removeItem('edit_patient_data');
+                }
+            },
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
+                var edit
 
-                $$('.btn-2 a').click(function (e) {
-                    app.data.store.removeItem('edit_patient_data').then(function (value) {
-                        app.methods.redirectTo('paciente-perfil');
+                app.data.store.getItem('edit_patient_data').then(function (value) {
+                    edit = value;
+
+                    disableButton();
+
+                    if (edit) {
+                        //llena inputs
+                        app.preloader.show('blue');
+                        app.data.store.getItem('patient_id').then(function (value) {
+                            var ptnt_id = value;
+                            app.data.store.getItem('hosp_id').then(function (value) {
+                                var cnd_mdc_id = value;
+                                app.request.get(app.data.url + '/patients/' + ptnt_id,
+                                    function (e) {
+                                        var x = JSON.parse(e);
+                                        document.querySelector("#paciente-hosp-form input#date_in").valueAsDate = new Date();
+                                        document.querySelector("#paciente-hosp-form input#date_out").valueAsDate = new Date();
+                                        $$('#paciente-hosp-form input#prov').val('a');
+                                        $$('#paciente-hosp-form input#hosp').val('s');
+                                        $$('#paciente-hosp-form input#razon').val('d');
+                                        checkval();
+                                        app.preloader.hide();
+                                    },
+                                    function (e) {
+                                        app.preloader.hide();
+                                    });
+                            });
+                        });
+                    }
+
+                    $$('#paciente-hosp-form input').on('change', checkval);
+
+                });
+
+                function checkval() {
+                    var nonempty = $$('#paciente-hosp-form input').filter(function () {
+                        return this.value != ''
                     });
-                });
 
-                $$('.header a').click(function (val) {
-                    app.data.store.removeItem('edit_patient_data');
-                });
+                    console.log(nonempty);
+
+                    if (nonempty.length == 6) {
+                        $$('#paciente-hosp-form .btn-2 a').removeClass('grey');
+                        $$('#paciente-hosp-form .btn-2 a').click(function (val) {
+                            let date_in, date_out, prov, hosp, razon
+                            date_in = $$('#paciente-hosp-form input#date_in').val();
+                            date_out = $$('#paciente-hosp-form input#date_out').val();
+                            prov = $$('#paciente-hosp-form input#prov').val();
+                            hosp = $$('#paciente-hosp-form input#hosp').val();
+                            razon = $$('#paciente-hosp-form input#razon').val();
+                            if (edit) {
+                                console.log('api edit');
+                                app.methods.redirectTo('paciente-perfil');
+                            } else {
+                                console.log('api create');
+                                app.methods.redirectTo('paciente-perfil');
+                            }
+                        });
+                    } else if (nonempty.length < 6) {
+                        disableButton();
+                    }
+                }
+
+                function disableButton() {
+                    $$('#paciente-hosp-form .btn-2 a').addClass('grey');
+                    $$('#paciente-hosp-form .btn-2 a').off('click');
+                }
 
             }
         }

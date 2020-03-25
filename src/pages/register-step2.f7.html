@@ -1,6 +1,6 @@
 <template>
-  <div class="page" data-name="register-step2" id="register-step2">
-    <div class="page-content login-screen-content register-step2 btns">
+  <div class="page register-flow" data-name="register-step2" id="register-step2">
+    <div class="page-content login-screen-content register-step2">
       <div class="screen-title header-blue">
         <div class="list">
           <ul>
@@ -17,44 +17,74 @@
           </ul>
         </div>
       </div>
-      <div class="list">
-        <ul>
-          <li class="item-content item-input">
-            <div class="item-inner">
-              <div class="item-input-wrap rounded">
-                <div class="row">
-                  <div class="col-10">
-                    <i class="material-icons">email</i>
-                  </div>
-                  <div class="col-90">
-                    <input type="email" id="email" placeholder="Correo electrónico" required validate>
-                    <span class="input-clear-button"></span>
+      <div>
+        <div class="list inputs">
+          <ul>
+            <li class="item-content item-input">
+              <div class="item-inner searchbar-inner">
+                <div class="item-input-wrap rounded">
+                  <i class="icons material-icons">email</i>
+                  <input type="email" id="email" placeholder="Correo electrónico" required validate>
+                  <span class="input-clear-button"></span>
+                </div>
+              </div>
+            </li>
+            
+            <li class="item-content item-input">
+              <div class="item-inner searchbar-inner">
+                <div class="item-input-wrap rounded">
+                  <i class="icons material-icons">local_phone</i>
+                  <input type="tel" id="phone" placeholder="Celular" required validate pattern="[0-9]*"
+                        data-error-message="Solo numeros!">
+                  <span class="input-clear-button"></span>
+                </div>
+              </div>
+            </li>
+            <!-- <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-input-wrap rounded">
+                  <div class="row">
+                    <div class="col-10">
+                      <i class="material-icons">email</i>
+                    </div>
+                    <div class="col-90">
+                      <input type="email" id="email" placeholder="Correo electrónico" required validate>
+                      <span class="input-clear-button"></span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </li>
-          <li class="item-content item-input">
-            <div class="item-inner">
-              <div class="item-input-wrap rounded">
-                <div class="row">
-                  <div class="col-10">
-                    <i class="material-icons">local_phone</i>
-                  </div>
-                  <div class="col-90">
-                    <input type="tel" id="phone" placeholder="Celular" required validate pattern="[0-9]*"
-                      data-error-message="Solo numeros!">
-                    <span class="input-clear-button"></span>
+            </li>
+            <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-input-wrap rounded">
+                  <div class="row">
+                    <div class="col-10">
+                      <i class="material-icons">local_phone</i>
+                    </div>
+                    <div class="col-90">
+                      <input type="tel" id="phone" placeholder="Celular" required validate pattern="[0-9]*"
+                        data-error-message="Solo numeros!">
+                      <span class="input-clear-button"></span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </li>
-        </ul>
+            </li> -->
+          </ul>
+        </div>
       </div>
-
+      <div class="container two">
+        <a href="/register-s1" data-view=".view-main" class="item-link btn-simple">Regresar</a>
+        <div class="btn-2">
+          <a href="#">
+            <p>Siguiente </p>
+            <i class="material-icons">chevron_right</i>
+          </a>
+        </div>
+      </div>
     </div>
-    <div class="list buttons">
+    <!-- <div class="list buttons">
       <ul>
         <li>
           <div class="row">
@@ -66,7 +96,7 @@
           </div>
         </li>
       </ul>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -79,8 +109,8 @@
         var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         var regex2 = /^([0-9]){10}$/;
 
-        $$('#register-step2 .btn-rounded').addClass('grey');
-        $$('#register-step2 .btn-rounded').off('click');
+        $$('#register-step2 .btn-2 a').addClass('grey');
+        $$('#register-step2 .btn-2 a').off('click');
 
         app.data.store.getItem('register').then(function (value) {
           app.data.register = value;
@@ -89,9 +119,9 @@
               app.data.register.email = $$('#email').val();
               app.data.register.phone = $$('#phone').val();
               if (regex.test(app.data.register.email) && regex2.test(app.data.register.phone)) {
-                $$('#register-step2 .btn-rounded').removeClass('grey');
-                $$('#register-step2 .btn-rounded').off('click');
-                $$('#register-step2 .btn-rounded').on('click', function (e) {
+                $$('#register-step2 .btn-2 a').removeClass('grey');
+                $$('#register-step2 .btn-2 a').off('click');
+                $$('#register-step2 .btn-2 a').on('click', function (e) {
                   console.log(app.data.register.email);
                   console.log(app.data.register.phone);
                   app.data.store.setItem('register', app.data.register).then(function (value) {
@@ -99,8 +129,8 @@
                   });
                 });
               } else {
-                $$('#register-step2 .btn-rounded').addClass('grey');
-                $$('#register-step2 .btn-rounded').off('click');
+                $$('#register-step2 .btn-2 a').addClass('grey');
+                $$('#register-step2 .btn-2 a').off('click');
               }
             });
           });

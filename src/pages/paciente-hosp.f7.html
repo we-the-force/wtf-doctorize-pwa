@@ -28,10 +28,10 @@
             </div>
             <div class="slot informe">
                 <p class="title">Informe de alta</p>
-                <p class="data dwnld link">
+                <a class="data dwnld link" href="" download>
                     <i class="material-icons">assignment</i>
                     Descargar
-                </p>
+                </a>
             </div>
 
         </div>
@@ -52,9 +52,36 @@
     import $$ from 'dom7';
     export default {
         on: {
+            pageBeforeOut: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                if (e.detail.direction == 'backward') {
+                    app.data.store.removeItem('hosp_id');
+                }
+            },
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
+
+                app.preloader.show('blue');
+                app.data.store.getItem('patient_id').then(function (value) {
+                    var ptnt_id = value;
+                    app.data.store.getItem('hosp_id').then(function (value) {
+                        var cnd_mdc_id = value;
+                        app.request.get(app.data.url + '/patients/' + ptnt_id,
+                            function (e) {
+                                var x = JSON.parse(e);
+                                $$(".slot.when .data").text("Algo");
+                                $$(".slot.razon .data").text("Algo");
+                                $$(".slot.where .data").text("Algo");
+                                $$(".slot.atencion .data").text("Algo");
+                                app.preloader.hide();
+                            },
+                            function (e) {
+                                app.preloader.hide();
+                            });
+                    });
+                });
 
                 $$('.popover-edit .item-link.edit').click(function (x) {
                     app.popover.close();

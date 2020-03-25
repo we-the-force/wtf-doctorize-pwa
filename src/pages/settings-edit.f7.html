@@ -1,8 +1,17 @@
 <template>
     <div class="page settings-edit" data-name="settings-edit" id="settings-edit">
-        <div class="page-content login-screen-content btns">
-            <div class="login-screen-content header-turquoise photo">
-                <div class="list">
+        <div class="page-content login-screen-content">
+            <div class="header-turquoise v2 photo">
+                <div class="header basic center fixed">
+                    <a class="btn-back" href="">
+                        <i class="material-icons white">chevron_left</i>
+                    </a>
+                    <p class="title1 white"></p>
+                    <a class="edit none">
+                        <i class="material-icons">more_horiz</i>
+                    </a>
+                </div>
+                <!-- <div class="list">
                     <ul>
                         <li>
                             <div class="row">
@@ -13,7 +22,7 @@
                             </div>
                         </li>
                     </ul>
-                </div>
+                </div> -->
             </div>
             <div>
                 <div class="list" id="inputs">
@@ -30,8 +39,16 @@
                     </ul>
                 </div>
             </div>
+            <div class="container right">
+                <div class="btn-2">
+                  <a href="">
+                    <p>Aceptar </p>
+                    <i class="material-icons">chevron_right</i>
+                  </a>
+                </div>
+              </div>
         </div>
-        <div class="list buttons">
+        <!-- <div class="list buttons">
             <ul>
                 <li>
                     <div class="row">
@@ -42,7 +59,7 @@
                     </div>
                 </li>
             </ul>
-        </div>
+        </div> -->
     </div>
 </template>
 <script>
@@ -128,9 +145,9 @@
 
                 function inputCheck() {
                     $$(document).on('input:notempty', ".settings-edit input", function (e) {
-                        $$('#settings-edit .btn-rounded').removeClass('grey');
-                        $$('#settings-edit .btn-rounded').off('click');
-                        $$("#settings-edit .btn-rounded").click(function (e) {
+                        $$('#settings-edit .btn-2 a').removeClass('grey');
+                        $$('#settings-edit .btn-2 a').off('click');
+                        $$("#settings-edit .btn-2 a").click(function (e) {
                             callApi($$(".settings-edit input").val());
                         });
                     });
@@ -192,8 +209,8 @@
                 }
 
                 function disableButton() {
-                    $$('#settings-edit .btn-rounded').addClass('grey');
-                    $$('#settings-edit .btn-rounded').off('click');
+                    $$('#settings-edit .btn-2 a').addClass('grey');
+                    $$('#settings-edit .btn-2 a').off('click');
                 }
             }
         }

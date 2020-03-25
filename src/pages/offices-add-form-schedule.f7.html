@@ -1,6 +1,6 @@
 <template>
-    <div class="page" id="offices-add-form-schedule">
-        <div class="page-content login-screen-content offices-add-form-schedule btns">
+    <div class="page office-flow" id="offices-add-form-schedule">
+        <div class="page-content login-screen-content offices-add-form-schedule">
             <div class="login-screen-content header-turquoise">
                 <div class="list">
                     <ul>
@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="content">
-                <div class="list">
+                <div class="list form">
                     <ul>
                         <li>
                             <div class="row days-container">
@@ -106,19 +106,15 @@
                     </ul>
                 </div>
             </div>
-        </div>
-        <div class="list buttons">
-            <ul>
-                <li>
-                    <div class="row">
-                        <a href="/offices-add-form-map" class="item-link btn-simple" id="cancel">Cancelar</a>
-                        <a href="#" class="item-link list-button btn-rounded">
-                            <p>Siguiente </p>
-                            <i class="material-icons">chevron_right</i>
-                        </a>
-                    </div>
-                </li>
-            </ul>
+            <div class="container two">
+                <a href="/offices-add-form-map" data-view=".view-main" id="cancel" class="item-link btn-simple">Cancelar</a>
+                <div class="btn-2">
+                    <a href="">
+                        <p>Siguiente </p>
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -208,9 +204,9 @@
                     });
                 /* }); */
                 function enableButton() {
-                    $$('#offices-add-form-schedule .btn-rounded').removeClass('grey');
-                    $$('#offices-add-form-schedule .btn-rounded').off('click');
-                    $$('#offices-add-form-schedule .btn-rounded').on('click', function (e) {
+                    $$('#offices-add-form-schedule .btn-2 a').removeClass('grey');
+                    $$('#offices-add-form-schedule .btn-2 a').off('click');
+                    $$('#offices-add-form-schedule .btn-2 a').on('click', function (e) {
                         app.data.consultorio.startTime = $$('[name="startTime"]').val();
                         app.data.consultorio.closeTime = $$('[name="closeTime"]').val();
                         app.data.consultorio.lunchStartTime = $$('[name="lunchStartTime"]').val();
@@ -320,8 +316,8 @@
 
 
                 function disableButton() {
-                    $$('#offices-add-form-schedule .btn-rounded').addClass('grey');
-                    $$('#offices-add-form-schedule .btn-rounded').off('click');
+                    $$('#offices-add-form-schedule .btn-2 a').addClass('grey');
+                    $$('#offices-add-form-schedule .btn-2 a').off('click');
                 }
             }
         }

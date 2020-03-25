@@ -1,16 +1,5 @@
 <template>
     <div class="page" id="paciente-perfil">
-        <!-- <div class="header fixed navbar hide">
-            <div class="title">
-                <a class="arrow">
-                    <i class="material-icons">chevron_left</i>
-                </a>
-                <p class="text">Perfil del paciente</p>
-                <a class="add" href="/paciente/perfil/add">
-                    <i class="material-icons">add_circle</i>
-                </a>
-            </div>
-        </div> -->
         <div class="page-content">
             <div class="header paciente">
                 <div class="circle"></div>
@@ -360,7 +349,7 @@
                     </a>
                 </div>
                 <div class="content">
-                    <div class="card v2 pink">
+                    <div class="card v2 pink" data-id="01">
                         <div class="rectangle pink"></div>
                         <div class="card-content">
                             <img src="../static/icons/heart.svg">
@@ -374,7 +363,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="card v2 pink">
+                    <div class="card v2 pink" data-id="02">
                         <div class="rectangle pink"></div>
                         <div class="card-content">
                             <img src="../static/icons/heart.svg">
@@ -388,7 +377,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="card v2 pink">
+                    <div class="card v2 pink" data-id="03">
                         <div class="rectangle pink"></div>
                         <div class="card-content">
                             <img src="../static/icons/heart.svg">
@@ -576,7 +565,7 @@
                 </div>
             </div>
 
-            <div class="slot cirugias/implantes">
+            <div class="slot cirugias">
                 <div class="title">
                     <p class="text">Cirugias / Implantes</p>
                     <a class="arrow">
@@ -600,7 +589,7 @@
                 </div>
             </div>
 
-            <div class="slot Vacunas">
+            <div class="slot vacunas">
                 <div class="title">
                     <p class="text">Vacunas</p>
                     <a class="arrow">
@@ -631,24 +620,370 @@
 
     export default {
         on: {
+            pageBeforeOut: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                if (e.detail.direction == 'backward') {
+                    app.data.store.removeItem('patient_id');
+                }
+            },
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
-                var header = $$('.header.fixed');
+                var moment = require('moment');
+                moment().format();
 
-                /* $$('.page-content').on('scroll', function () {
-                    let t = $$('.page-content .header .title ').offset().top;
-                    t += 35;
-                    if(t <= 0){
-                        $$('.header.fixed').removeClass('hide');
-                    }else{
-                        $$('.header.fixed').addClass('hide');
-                    }
-                }); */
+                app.preloader.show('blue');
 
-                $$('.nav.title a').click(function (val) {
+                app.data.store.getItem('patient_id').then(function (value) {
+                    var ptnt_id = value;
+                    app.request.get(app.data.url + '/patients/' + ptnt_id,
+                        function (e) {
+                            var x = JSON.parse(e);
+                            //name
+                            console.log(x);
+                            $$('.header p.name').text('Gewndolyne Stacy');
+                            //gender
+                            $$('.header .binfo .gender').text('Mujer');
+                            //age (calc)
+                            let now = moment();
+                            let birthdate = moment('02-11-1995', 'DD-MM-YYYY');//change for data on api
+                            $$('.header .binfo .age').text(now.diff(birthdate, 'years') + 'años');
+
+                            //foto
+                            $$('.header .photo img').attr("src", app.data.url + '/' + x.photo + '200.png');
+
+                            //generales
+                            $$('.generales .content #blood .card-footer p').text('122/70');
+                            $$('.generales .content #peso .card-footer p').text('70.4');
+                            $$('.generales .content #altura .card-footer p').text('175');
+                            $$('.generales .content #IMC .card-footer p').text('21');
+                            $$('.generales .content #PGC .card-footer p').text('21');
+
+                            //vitales
+                            $$('.vitales .content #temperatura .card-footer p').text('38°');
+                            $$('.vitales .content #presion .card-footer p').text('122/70');
+                            $$('.vitales .content #respiracion .card-footer p').text('14');
+                            $$('.vitales .content #pulso .card-footer p').text('86');
+
+                            //consultas
+                            let j = [{ a: 'a', b: 'b', c: 'c' }, { a: 'a', b: 'b', c: 'c' }, { a: 'a', b: 'b', c: 'c' }];//data
+                            let [color, i] = ['dark-blue', 0];
+                            j.forEach(el => {
+                                $$('.consultas .content ').append(
+                                    '<div class="card v2 card-expandable ' + color + '" data-id="">' +
+                                    '<div class="card-content">' +
+                                    '<div class="card-header">' +
+                                    '<p>Asma</p>' +
+                                    '<p>21/05/2019</p>' +
+                                    '</div>' +
+                                    '<div class="card-content-padding">' +
+                                    '<p>' +
+                                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor' +
+                                    'incididunt ut labore et dolore magna aliqua.' +
+                                    '</p>' +
+                                    '</div>' +
+                                    '<div class="card-footer">' +
+                                    '<p>Dr. Simi</p>' +
+                                    '<a href="#" class="card-opened-fade-out"><u>ver más...</u></a>' +
+                                    '<a href="#" class="card-close card-opened-fade-in"><u>cerrar</u></a>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>'
+                                );
+                                switch (i) {
+                                    case 0:
+                                        color = 'light-blue';
+                                        break;
+                                    case 1:
+                                        color = 'turquoise';
+                                        break;
+                                    case 2:
+                                        color = '';
+                                        break;
+                                    case 3:
+                                        color = 'dark-blue';
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                (i == 3) ? i = 0 : i++;
+                            });
+
+                            //pagos
+                            let pagos = [{}, {}, {}]
+                            pagos.forEach(el => {
+                                $$('.pagos .content ').append(
+                                    '<div class="card v2 yellow">' +
+                                    '<div class="rectangle yellow"></div>' +
+                                    '<div class="card-content">' +
+                                    '<i class="material-icons icon yellow">monetization_on</i>' +
+                                    '<div class="data">' +
+                                    '<p class="text">$600.00</p>' +
+                                    '<p class="title bold">Consulta</p>' +
+                                    '</div>' +
+                                    '<div class="date">17/02/2020</div>' +
+                                    '<a class="arrow">' +
+                                    '<i class="material-icons">chevron_right</i>' +
+                                    '</a>' +
+                                    '</div>' +
+                                    '</div>'
+                                );
+                            });
+
+
+                            //condiciones medicas
+
+                            let cond = [{}, {}, {}]
+                            cond.forEach(el => {
+                                $$('.condiciones .content ').append(
+                                    '<div class="card v2 pink">' +
+                                    '<div class="rectangle pink"></div>' +
+                                    '<div class="card-content">' +
+                                    '<img src="../static/icons/heart.svg">' +
+                                    '<div class="data">' +
+                                    '<p class="text">Diabetes Tipo II</p>' +
+                                    '<p class="title">Linagliptina/Metformina</p>' +
+                                    '</div>' +
+                                    '<div class="date">08/02/2020</div>' +
+                                    '<a class="arrow">' +
+                                    '<i class="material-icons">chevron_right</i>' +
+                                    '</a>' +
+                                    '</div>' +
+                                    '</div>'
+                                );
+                            });
+
+                            //medicamentos
+                            let med = [{}, {}, {}]
+                            med.forEach(el => {
+                                $$('.medicamentos .content ').append(
+                                    '<div class="card v2 light-blue">' +
+                                    '<div class="rectangle light-blue"></div>' +
+                                    '<div class="card-content">' +
+                                    '<img src="../static/icons/Medicinas.svg">' +
+                                    '<div class="data">' +
+                                    '<p class="text">Linagliptina/Metformina</p>' +
+                                    '<p class="title grey">Tableta - Oral</p>' +
+                                    '</div>' +
+                                    '<a class="arrow">' +
+                                    '<i class="material-icons">chevron_right</i>' +
+                                    '</a>' +
+                                    '</div>' +
+                                    '</div>'
+                                );
+                            });
+
+                            //alergias
+                            let aler = [{}, {}, {}]
+                            aler.forEach(el => {
+                                $$('.alergias .content ').append(
+                                    '<div class="card v2">' +
+                                    '<div class="rectangle green"></div>' +
+                                    '<div class="card-content">' +
+                                    '<img src="../static/icons/Alergias.svg">' +
+                                    '<div class="data">' +
+                                    '<p class="text">Dermatitis</p>' +
+                                    '<p class="title">Linagliptina/Metformina</p>' +
+                                    '</div>' +
+                                    '<a class="arrow">' +
+                                    '<i class="material-icons">chevron_right</i>' +
+                                    '</a>' +
+                                    '</div>' +
+                                    '</div>'
+                                );
+                            });
+
+                            //historia social
+                            let hsocial = [{}, {}, {}]
+                            hsocial.forEach(el => {
+                                $$('.hSocial .content ').append(
+                                    '<div class="card v2">' +
+                                    '<div class="rectangle light-blue"></div>' +
+                                    '<div class="card-content">' +
+                                    '<img src="../static/icons/HistoriaSocial.svg">' +
+                                    '<div class="data">' +
+                                    '<p class="text">Ingeniero</p>' +
+                                    '<p class="title grey">Saltillo Coah.</p>' +
+                                    '</div>' +
+                                    '<a class="arrow">' +
+                                    '<i class="material-icons">chevron_right</i>' +
+                                    '</a>' +
+                                    '</div>' +
+                                    '</div>'
+                                );
+                            });
+
+                            //historia medica familiar
+                            let hmedfam = [{}, {}, {}]
+                            hmedfam.forEach(el => {
+                                $$('.hMedicaFam .content ').append(
+                                    '<div class="card v2">' +
+                                    '<div class="rectangle pink"></div>' +
+                                    '<div class="card-content">' +
+                                    '<img src="../static/icons/HistorialFamilia.svg">' +
+                                    '<div class="data">' +
+                                    '<p class="text">Madre</p>' +
+                                    '<p class="title grey">Lorem ipsum dolor sit amet.</p>' +
+                                    '</div>' +
+                                    '<a class="arrow">' +
+                                    '<i class="material-icons">chevron_right</i>' +
+                                    '</a>' +
+                                    '</div>' +
+                                    '</div>'
+                                );
+                            });
+
+                            //contraindicaciones
+                            let contra = [{}, {}, {}]
+                            contra.forEach(el => {
+                                $$('.contraindicaciones .content ').append(
+                                    '<div class="card v2">' +
+                                    '<div class="rectangle light-blue"></div>' +
+                                    '<div class="card-content">' +
+                                    '<img src="../static/icons/Contradicciones.svg">' +
+                                    '<div class="data">' +
+                                    '<p class="text">Lorem ipsum dolor sit...</p>' +
+                                    '</div>' +
+                                    '<a class="arrow">' +
+                                    '<i class="material-icons">chevron_right</i>' +
+                                    '</a>' +
+                                    '</div>' +
+                                    '</div>'
+                                );
+                            });
+
+                            //hospitalizaciones
+                            let hosp = [{}, {}, {}]
+                            hosp.forEach(el => {
+                                $$('.hospitalizaciones .content').append(
+                                    '<div class="card v2">' +
+                                    '<div class="rectangle red"></div>' +
+                                    '<div class="card-content">' +
+                                    '<img src="../static/icons/case.svg">' +
+                                    '<div class="data">' +
+                                    '<p class="text">Dolor severo en el pecho</p>' +
+                                    '<p class="title grey">24/01/2020 - 02/02/2020</p>' +
+                                    '</div>' +
+                                    '<a class="arrow">' +
+                                    '<i class="material-icons">chevron_right</i>' +
+                                    '</a>' +
+                                    '</div>' +
+                                    '</div>'
+                                );
+                            });
+
+                            //cirugias implantes
+                            let ciru = [{}, {}, {}]
+                            ciru.forEach(el => {
+                                $$('.cirugias .content').append(
+                                    '<div class="card v2">' +
+                                    '<div class="rectangle turquoise"></div>' +
+                                    '<div class="card-content">' +
+                                    '<img src="../static/icons/Bisturi.svg">' +
+                                    '<div class="data">' +
+                                    '<p class="text">Cirugía de implante dental</p>' +
+                                    '<p class="title grey">Implante dental</p>' +
+                                    '</div>' +
+                                    '<a class="arrow">' +
+                                    '<i class="material-icons">chevron_right</i>' +
+                                    '</a>' +
+                                    '</div>' +
+                                    '</div>'
+                                );
+                            });
+
+                            //vacunas
+                            let vacu = [{}, {}, {}]
+                            vacu.forEach(el => {
+                                $$('.vacunas .content').append(
+                                    '<div class="card v2">' +
+                                    '<div class="rectangle light-blue"></div>' +
+                                    '<div class="card-content">' +
+                                    '<img src="../static/icons/Inyeccion.svg">' +
+                                    '<div class="data">' +
+                                    '<p class="text">Hepatitis B</p>' +
+                                    '<p class="title">Hep B</p>' +
+                                    '</div>' +
+                                    '<a class="arrow">' +
+                                    '<i class="material-icons">chevron_right</i>' +
+                                    '</a>' +
+                                    '</div>' +
+                                    '</div>'
+                                );
+                            });
+
+                            app.preloader.hide();
+
+                            $$('.card.v2').click(function (e) {
+                                let x = $$(this).parent().parent().attr('class').split(' ')[1];
+                                switch (x) {
+                                    case 'condiciones':
+                                        console.log('condiciones');
+                                        app.data.store.setItem("cond_med_id", $$(this).data('id')).then(function (value) {
+                                            app.methods.redirectTo('paciente-cond-med');
+                                        });
+                                        break;
+                                    case 'medicamentos':
+                                        console.log('medicamentos');
+                                        app.data.store.setItem("med_id", $$(this).data('id')).then(function (value) {
+                                            app.methods.redirectTo('paciente-medicamento');
+                                        });
+                                        break;
+                                    case 'alergias':
+                                        console.log('alergias');
+                                        app.data.store.setItem("aler_id", $$(this).data('id')).then(function (value) {
+                                            app.methods.redirectTo('paciente-alergias');
+                                        });
+                                        break;
+                                    case 'hSocial':
+                                        console.log('hSocial');
+                                        app.data.store.setItem("hsocial_id", $$(this).data('id')).then(function (value) {
+                                            app.methods.redirectTo('paciente-hist-social');
+                                        });
+                                        break;
+                                    case 'hMedicaFam':
+                                        console.log('hMedicaFam');
+                                        app.data.store.setItem("hmedfam_id", $$(this).data('id')).then(function (value) {
+                                            app.methods.redirectTo('paciente-hist-medica-fam');
+                                        });
+                                        break;
+                                    case 'contraindicaciones':
+                                        console.log('contraindicaciones');
+                                        app.data.store.setItem("contra_id", $$(this).data('id')).then(function (value) {
+                                            app.methods.redirectTo('paciente-contra');
+                                        });
+                                        break;
+                                    case 'hospitalizaciones':
+                                        console.log('hospitalizaciones');
+                                        app.data.store.setItem("hosp_id", $$(this).data('id')).then(function (value) {
+                                            app.methods.redirectTo('paciente-hosp');
+                                        });
+                                        break;
+                                    case 'cirugias':
+                                        console.log('cirugias/implantes');
+                                        app.data.store.setItem("cir_id", $$(this).data('id')).then(function (value) {
+                                            app.methods.redirectTo('paciente-cirugia-implantes');
+                                        });
+                                        break;
+                                    case 'vacunas':
+                                        console.log('Vacunas');
+                                        app.data.store.setItem("vac_id", $$(this).data('id')).then(function (value) {
+                                            app.methods.redirectTo('paciente-vacunas');
+                                        });
+                                        break;
+                                }
+
+                            });
+                        },
+                        function (e) {
+                            app.preloader.hide();
+
+                        });
+                });
+
+                $$('.nav.title .arrow').click(function (val) {
                     app.methods.redirectTo('home');
-                    /* $$('.header.fixed').toggleClass('hide'); */
                 });
 
                 $$('.card.v2').click(function (e) {
@@ -656,42 +991,57 @@
                     switch (x) {
                         case 'condiciones':
                             console.log('condiciones');
-                            /* app.data.store.setItem("id_patient_cond", $$(this).attr('id')).then(function (value) {
-                                    app.methods.redirectTo('home');
-                            }); */
-                            app.methods.redirectTo('paciente-cond-med');
+                            app.data.store.setItem("cond_med_id", $$(this).data('id')).then(function (value) {
+                                app.methods.redirectTo('paciente-cond-med');
+                            });
                             break;
                         case 'medicamentos':
                             console.log('medicamentos');
-                            app.methods.redirectTo('paciente-medicamento');
+                            app.data.store.setItem("med_id", $$(this).data('id')).then(function (value) {
+                                app.methods.redirectTo('paciente-medicamento');
+                            });
                             break;
                         case 'alergias':
                             console.log('alergias');
-                            app.methods.redirectTo('paciente-alergias');
+                            app.data.store.setItem("aler_id", $$(this).data('id')).then(function (value) {
+                                app.methods.redirectTo('paciente-alergias');
+                            });
                             break;
                         case 'hSocial':
                             console.log('hSocial');
-                            app.methods.redirectTo('paciente-hist-social');
+                            app.data.store.setItem("hsocial_id", $$(this).data('id')).then(function (value) {
+                                app.methods.redirectTo('paciente-hist-social');
+                            });
                             break;
                         case 'hMedicaFam':
                             console.log('hMedicaFam');
-                            app.methods.redirectTo('paciente-hist-medica-fam');
+                            app.data.store.setItem("hmedfam_id", $$(this).data('id')).then(function (value) {
+                                app.methods.redirectTo('paciente-hist-medica-fam');
+                            });
                             break;
                         case 'contraindicaciones':
                             console.log('contraindicaciones');
-                            app.methods.redirectTo('paciente-contra');
+                            app.data.store.setItem("contra_id", $$(this).data('id')).then(function (value) {
+                                app.methods.redirectTo('paciente-contra');
+                            });
                             break;
                         case 'hospitalizaciones':
                             console.log('hospitalizaciones');
-                            app.methods.redirectTo('paciente-hosp');
+                            app.data.store.setItem("hosp_id", $$(this).data('id')).then(function (value) {
+                                app.methods.redirectTo('paciente-hosp');
+                            });
                             break;
-                        case 'cirugias/implantes':
+                        case 'cirugias':
                             console.log('cirugias/implantes');
-                            app.methods.redirectTo('paciente-cirugia-implantes');
+                            app.data.store.setItem("cir_id", $$(this).data('id')).then(function (value) {
+                                app.methods.redirectTo('paciente-cirugia-implantes');
+                            });
                             break;
-                        case 'Vacunas':
+                        case 'vacunas':
                             console.log('Vacunas');
-                            app.methods.redirectTo('paciente-vacunas');
+                            app.data.store.setItem("vac_id", $$(this).data('id')).then(function (value) {
+                                app.methods.redirectTo('paciente-vacunas');
+                            });
                             break;
                     }
 

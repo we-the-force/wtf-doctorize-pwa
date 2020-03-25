@@ -10,44 +10,49 @@
             </a>
         </div>
         <div class="page-content">
-            <div class="relaciones">
-                <div class="rel-cond" id="id_1">
-                    <div class="item-input v2">
-                        <label for="rel">Relación familiar</label>
-                        <div class="item-input-inner dropdown-blue">
-                            <select name="rel" placeholder="Seleccionar">
-                                <option value="mother">Madre</option>
-                                <option value="father">Padre</option>
-                            </select>
-                        </div>
-                    </div>
+            <div>
 
-                    <div class="item-input v2">
-                        <label for="desc">Descripción de la condición médica</label>
-                        <div class="item-input-inner textarea">
-                            <textarea class="resizable"
-                                placeholder="Ej, Historial de diabetes, hypertensión y cancer..."></textarea>
+                <div class="relaciones">
+                    <div class="rel-cond" id="id_1">
+                        <div class="item-input v2">
+                            <label for="rel">Relación familiar</label>
+                            <div class="item-input-inner dropdown-blue">
+                                <select name="rel" placeholder="Seleccionar">
+                                    <option value="Madre">Madre</option>
+                                    <option value="Padre">Padre</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="item-input v2">
+                            <label for="desc">Descripción de la condición médica</label>
+                            <div class="item-input-inner textarea">
+                                <textarea class="resizable"
+                                    placeholder="Ej, Historial de diabetes, hypertensión y cancer..."></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="trash">
-                <a class="icon">
+                <div class="trash">
+                    <a class="icon">
 
-                </a>
-            </div>
-
-            <div class="add_rel add_module">
-                <a>
-                    <i class="material-icons">add_circle</i>
-                    <p>Agregar Historia</p>
-                </a>
-            </div>
-            <div class="container">
-                <div class="btn-2 woi">
-                    <a href="">
-                        <p>Confirmar </p>
                     </a>
+                </div>
+
+                <div class="add_rel add_module">
+                    <a>
+                        <i class="material-icons">add_circle</i>
+                        <p>Agregar Historia</p>
+                    </a>
+                </div>
+            </div>
+            <div>
+                <div class="container">
+                    <div class="btn-2 woi">
+                        <a href="">
+                            <p>Confirmar </p>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -57,54 +62,123 @@
     import $$ from 'dom7';
     export default {
         on: {
+            pageBeforeOut: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                if (e.detail.direction == 'backward') {
+                    app.data.store.removeItem('edit_patient_data');
+                } else if (e.detail.direction == 'forward') {
+                    app.data.store.removeItem('hmedfam_id');
+                    app.data.store.removeItem('edit_patient_data');
+                }
+            },
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
+                var edit
 
-                $$('.add_module a').on('click', function (e) {
-                    let x = $$('.relaciones').children().length;
-                    if (x == 1) {
-                        $$('.trash .icon').append('<i class="material-icons">delete</i>');
-                    }
-                    $$('.relaciones').append('<div class="rel-cond bor_top" id="id_' + x + '">' +
-                        '<div class="item-input v2">' +
-                        '<label for="rel">Relación familiar</label>' +
-                        '<div class="item-input-inner dropdown-blue">' +
-                        '<select name="rel" placeholder="Seleccionar">' +
-                        '<option value="mother">Madre</option>' +
-                        '<option value="father">Padre</option>' +
-                        '</select>' +
-                        '</div>' +
-                        '</div>' +
-                        '<div class="item-input v2">' +
-                        '<label for="desc">Descripción de la condición médica</label>' +
-                        '<div class="item-input-inner textarea">' +
-                        '<textarea class="resizable" placeholder="Ej, Historial de diabetes, hypertensión y cancer..."></textarea>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>');
-                });
+                app.data.store.getItem('edit_patient_data').then(function (value) {
+                    edit = value;
 
-                $$('.trash a').click(function (e) {
-                    let x = $$('.relaciones').children().length;
-                    if (x > 2) {
-                        $$('.relaciones').children(":last-child").remove();
-                    } else if (x == 2) {
-                        $$('.relaciones').children(":last-child").remove();
-                        $$(this).children().remove();
+                    disableButton();
+
+                    if (edit) {
+                        //llena inputs
+                        app.preloader.show('blue');
+                        app.data.store.getItem('patient_id').then(function (value) {
+                            var ptnt_id = value;
+                            app.data.store.getItem('hmedfam_id').then(function (value) {
+                                var cnd_mdc_id = value;
+                                app.request.get(app.data.url + '/patients/' + ptnt_id,
+                                    function (e) {
+                                        var x = JSON.parse(e);
+                                        $$('#paciente-hist-med-fam-form select').val('Padre');
+                                        $$('#paciente-hist-med-fam-form textarea').val('asdf');
+
+                                        checkval();
+                                        app.preloader.hide();
+                                    },
+                                    function (e) {
+                                        app.preloader.hide();
+                                    });
+                            });
+                        });
                     }
 
-                });
+                    $$('.add_module a').on('click', function (e) {
+                        let x = $$('.relaciones').children().length;
+                        if (x == 1) {
+                            $$('.trash .icon').append('<i class="material-icons">delete</i>');
+                        }
+                        $$('.relaciones').append('<div class="rel-cond bor_top" id="id_' + x + '">' +
+                            '<div class="item-input v2">' +
+                            '<label for="rel">Relación familiar</label>' +
+                            '<div class="item-input-inner dropdown-blue">' +
+                            '<select name="rel" placeholder="Seleccionar">' +
+                            '<option value="mother">Madre</option>' +
+                            '<option value="father">Padre</option>' +
+                            '</select>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="item-input v2">' +
+                            '<label for="desc">Descripción de la condición médica</label>' +
+                            '<div class="item-input-inner textarea">' +
+                            '<textarea class="resizable" placeholder="Ej, Historial de diabetes, hypertensión y cancer..."></textarea>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>');
 
-                $$('.btn-2 a').click(function (e) {
-                    app.data.store.removeItem('edit_patient_data').then(function (value) {
-                        app.methods.redirectTo('paciente-perfil');
+
+                        $$('#paciente-hist-med-fam-form textarea, #paciente-hist-med-fam-form select').on('change', checkval);
                     });
+
+                    $$('.trash a').click(function (e) {
+                        let x = $$('.relaciones').children().length;
+                        if (x > 2) {
+                            $$('.relaciones').children(":last-child").remove();
+                        } else if (x == 2) {
+                            $$('.relaciones').children(":last-child").remove();
+                            $$(this).children().remove();
+                        }
+
+                        checkval();
+                    });
+
+
+                    $$('#paciente-hist-med-fam-form textarea, #paciente-hist-med-fam-form select').on('change', checkval);
                 });
 
-                $$('.header a').click(function (val) {
-                    app.data.store.removeItem('edit_patient_data');
-                });
+                function checkval() {
+                    var nonempty = $$('#paciente-hist-med-fam-form textarea, #paciente-hist-med-fam-form select').filter(function () {
+                        return this.value != ''
+                    });
+
+                    console.log(nonempty);
+                    
+                    if (nonempty.length == 2) {
+                        $$('#paciente-hist-med-fam-form .btn-2 a').removeClass('grey');
+                        $$('#paciente-hist-med-fam-form .btn-2 a').click(function (val) {
+                            let rel, desc;
+
+                            rel = $$('#paciente-hist-med-fam-form select').val();
+                            desc = $$('#paciente-hist-med-fam-form textarea').val();
+                            if (edit) {
+                                console.log('api edit');
+                                app.methods.redirectTo('paciente-perfil');
+                            } else {
+                                console.log('api create');
+                                app.methods.redirectTo('paciente-perfil');
+                            }
+                        });
+                    } else if (nonempty.length < 2) {
+                        disableButton();
+                    }
+                }
+
+                function disableButton() {
+                    $$('#paciente-hist-med-fam-form .btn-2 a').addClass('grey');
+                    $$('#paciente-hist-med-fam-form .btn-2 a').off('click');
+                }
 
             }
         }

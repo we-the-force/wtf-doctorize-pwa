@@ -65,6 +65,10 @@ import PacienteContraForm from '../pages/paciente-contra-form.f7.html';
 import PacienteHospForm from '../pages/paciente-hosp-form.f7.html';
 import PacienteCirugForm from '../pages/paciente-cirug-form.f7.html';
 import PacienteVacunasForm from '../pages/paciente-vacunas-form.f7.html';
+import PacienteDiagnosticos from '../pages/paciente-diagnosticos.f7.html';
+import PacienteVitales from '../pages/paciente-vitales.f7.html';
+import PacienteVital from '../pages/paciente-vital.f7.html';
+import NuevaConsulta from '../pages/nueva-consulta.f7.html';
 
 var routes = [
 
@@ -72,6 +76,11 @@ var routes = [
         name: "root",
         path: '/',
         component: LoginPage,
+    },
+    {
+        name: "nueva-consulta",
+        path: "/consulta/new",
+        component: NuevaConsulta,
     },
     {
         name: "paciente-perfil",
@@ -82,6 +91,21 @@ var routes = [
         name: "paciente-perfil-add",
         path: "/paciente/perfil/add",
         component: PacientePerfilAdd,
+    },
+    {
+        name: "paciente-diagnosticos",
+        path: "/paciente/diagnosticos",
+        component: PacienteDiagnosticos,
+    },
+    {
+        name: "paciente-vitales",
+        path: "/paciente/vitales",
+        component: PacienteVitales,
+    },
+    {
+        name: "paciente-vital",
+        path: "/paciente/vital",
+        component: PacienteVital,
     },
     {
         name: "paciente-cond-med",

@@ -32,7 +32,7 @@
             </div>
             <div class="container">
                 <div class="btn-2">
-                    <a href="/doctor/agregar/pago/success">
+                    <a href="#">
                         <p>Agregar </p>
                     </a>
                 </div>
@@ -48,6 +48,18 @@
             pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
+
+                $$('.container .btn-2 a').click(function (e) {
+                    let consulta = localStorage.getItem('consulta');
+                    if (consulta) {
+                        let newMed = { "pago": "pago" };
+                        localStorage.setItem('pago', JSON.stringify(newMed));
+                        app.methods.redirectTo('nueva-consulta');
+                    } else {
+                        app.methods.redirectTo('doctor-agregar-pago-success');
+                    }
+
+                });
 
             }
         }

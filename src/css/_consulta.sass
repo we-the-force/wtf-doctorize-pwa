@@ -1,0 +1,295 @@
+#nueva_consulta
+    .page-content
+        display: flex
+        flex-direction: column
+        padding-bottom: 86px
+        img
+            margin-left: auto
+            margin-right: auto
+        .slot
+            margin-left: 5px
+            margin-right: 5px
+            margin-top: 20px
+            .title
+                display: flex
+                align-items: center
+                justify-content: baseline
+                margin-top: 5px
+                .text
+                    margin: 0px
+                    font: $H1
+                    font-size: 24px
+                    line-height: 33px
+                    color: $dark-blue
+            &.datos_generales
+                .item-input.v2
+                    margin: 15px 0px
+                    label
+                        font-family: Nunito
+                        font-style: normal
+                        font-weight: normal
+                        font-size: 18px
+                        line-height: 127.9%
+                        color: $dark-blue
+                .dropdown-blue::before
+                    color: $dark-blue !important
+            &.archivos
+                .item-input.v2
+                    flex-direction: column
+                    justify-content: center
+                    label
+                        box-shadow: -2px 2px 15px rgba(16, 43, 200, 0.2)
+                        border-radius: 8px
+                        background: $turquoise-2
+                        margin-left: 0px
+                        display: flex
+                        justify-content: center
+                        align-items: center
+                        padding: 2px
+                        height: 36px
+                        p,i
+                            color: $white
+                            font-size: 20px
+                        p
+                            margin-left: 2px
+                            font: $Body-2
+                        input,.item-input-error-message
+                            display: none
+                    .notes
+                        margin: 5px auto
+                .cards
+                    .card.v2
+                        margin: 15px 0px
+                        .clip
+                            transform: rotate(-135deg)
+                            color: $turquoise-2
+                            margin-left: 7px
+                            margin-right: 7px
+                        .data
+                            p.title
+                                font: $text-2-card
+                                font-weight: normal
+            &.vitales
+                .content
+                    display: flex
+                    flex-wrap: wrap
+                    align-items: center
+                    #temperatura,#respiracion
+                        .card-header
+                            p
+                                font-size: 13px
+                                @media screen and (max-width: 400px)
+                                    font-size: 19px
+                                @media screen and (max-width: 350px)
+                                    font-size: 13px
+                    .card.sqr
+                        order: 0
+                        transition: width 0.5s ease, height 0.5s ease
+                        .card-header.fade-in
+                            justify-content: center
+                            border-bottom: 0.8px solid #EFF2F7
+                            padding: 8px 0px 0px 0px
+                            margin: 0px 12px 0px 12px
+                            img
+                                position: absolute
+                                left: 0px
+                                margin: unset
+                            p
+                                &.edit
+                                    position: absolute
+                                    right: 0px
+                                    flex-grow: unset
+                                    font-family: Nunito
+                                    font-style: normal
+                                    font-weight: normal
+                                    font-size: 13px !important
+                                    line-height: 18px
+                                    text-align: center
+                                    color: #D3DCE6
+                                &.title
+                                    flex-grow: unset
+                                    font: $Body-4
+                                    line-height: 25px
+                                    color: $dark-blue
+                        .card-content.fade-in
+                            display: flex
+                            justify-content: center
+                            align-items: flex-start
+                            p
+                                font-size: 36px
+                                line-height: 49px
+                                flex-grow: unset
+                                height: 30px
+                                width: 30px
+                                margin: 10px 0px 10px auto
+                            input
+                                border: 1.5px solid #E5E9F2
+                                box-sizing: border-box
+                                border-radius: 10px
+                                height: 70px
+                                width: 70px
+                                max-width: 58%
+                                font-family: Nunito
+                                font-style: normal
+                                font-weight: normal
+                                font-size: 48px
+                                line-height: 65px
+                                color: $light-blue
+                                margin: 10px 9px
+                                text-align: center
+                                &#unity
+                                    margin: 10px auto 10px 0px
+                                    height: 30px
+                                    width: 30px
+                                    max-width: 29%
+                                    font-weight: 600
+                                    font-size: 24px
+                                    line-height: 33px
+                        .card-footer.fade-in
+                            .container
+                                flex-direction: row
+                                .btn-2
+                                    margin-bottom: 15px
+                                    &.red a
+                                        background: $red
+                                    a p
+                                        font: $Body-1
+                                        font-weight: 900
+                                        font-size: 14px
+                                        line-height: 18px
+                                        color: $white
+                        .fade-in
+                            opacity: 0
+                            transition: opacity 0.5s ease
+                            &.show
+                                opacity: 1
+                                transition: opacity 0.5s ease
+                        .fade-out
+                            opacity: 1
+                            transition: opacity 0.5s ease
+                        &.primary
+                            order: -1
+                            width: 89vw
+                            height: 54vw
+                            transition: width 0.5s ease, height 0.5s ease
+                            @media screen and (max-width: 400px)
+                                width: 86vw
+                            .fade-out
+                                opacity: 0
+                                transition: opacity 0.5s ease
+            &.medicamentos
+                .cards
+                    .card.v2
+                        margin: 15px 0px
+                        img
+                            margin-left: 6px
+                            margin-right: 10px
+            &.dates_pays
+                .card
+                    margin: 15px 0px
+                    &.cita
+                        .card-content
+                            margin-left: 8px
+                            flex-direction: column
+                            align-items: unset
+                            .head,.date_row
+                                margin-top: 5px
+                                margin-bottom: 5px
+                                display: flex
+                                justify-content: space-between
+                                i.turquoise
+                                    color: $turquoise-2
+                                p
+                                    font: $Body-4
+                                    color: $dark-blue
+                                .date
+                                    font: $Body-4
+                                    font-weight: normal
+                                    color: $grey
+                            .name
+                                margin-top: 5px
+                                margin-bottom: 5px
+                                font: $Body-4
+                                color: $dark-blue
+                            .phone
+                                margin-top: 5px
+                                margin-bottom: 5px
+                                font: $Body-4
+                                color: $light-blue
+                            .data
+                                margin-top: 5px
+                                margin-bottom: 5px
+                                color: $grey
+                                font-family: Nunito
+                                font-style: normal
+                                font-weight: normal
+                                font-size: 16px
+                                line-height: 20px
+                    &.pago
+                        .card-content
+                            margin-left: 8px
+                            flex-direction: column
+                            align-items: unset
+                            .head,.date_row
+                                margin-top: 5px
+                                margin-bottom: 5px
+                                display: flex
+                                justify-content: space-between
+                                p
+                                    font: $Body-4
+                                    color: $dark-blue
+                                .date
+                                    font: $Body-4
+                                    font-weight: normal
+                                    color: $grey
+                            .money
+                                margin-top: 5px
+                                margin-bottom: 5px
+                                font: $Body-4
+                                color: $dark-blue
+                            .status
+                                margin-top: 5px
+                                margin-bottom: 5px
+                                font: $Body-4
+                                color: $red
+                                &.paid
+                                    color: $light-blue
+            .item-input.v2
+                margin: 15px 0px 25px 0px
+                display: flex
+                a
+                    height: 38px
+                    box-shadow: -2px 2px 15px rgba(16, 43, 200, 0.2)
+                    border-radius: 8px
+                    color: $white
+                    display: flex
+                    justify-content: center
+                    align-items: center
+                    i
+                        font-size: 20px
+                    p
+                        margin: 5px 15px 5px 2px
+                        font: $Body-2
+                    &.med
+                        background: $light-blue
+                    &.cita
+                        background: $turquoise-2
+                    &.pago
+                        background: $yellow-2
+        .container
+            flex-direction: column
+            .fab
+                position: relative
+                left: unset
+                transform: unset
+                bottom: unset
+                margin-top: 40px
+                margin-bottom: 15px
+                a
+                    --f7-fab-size: 48px
+                    background-color: $red
+                    .icon
+                        font-size: 33px
+                        transform: translate3d(-50%, -50%, 0) rotate(45deg) scale(1)
+        .none
+            display: none !important

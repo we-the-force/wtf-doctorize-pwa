@@ -1,0 +1,562 @@
+<template>
+    <div class="page consulta-flow" id="nueva_consulta">
+        <div class="header basic center fixed">
+            <a class="back">
+                <i class="material-icons">chevron_left</i>
+            </a>
+            <p class="title1">Nueva Consulta</p>
+            <a class="edit none">
+                <i class="material-icons">more_horiz</i>
+            </a>
+        </div>
+        <div class="page-content">
+            <img src="../static/icons/logo_t.svg" alt="">
+            <div class="slot datos_generales">
+                <div class="title">
+                    <p class="text">Datos Generales</p>
+                </div>
+                <div class="content">
+                    <div class="item-input v2">
+                        <label for="nombre">Nombre del paciente</label>
+                        <div class="item-input-inner dropdown-blue">
+                            <input class="notnull" list="pacientes" type="text" id="nombre"
+                                placeholder="Nombre del paciente">
+                        </div>
+                    </div>
+                    <div class="item-input v2">
+                        <label for="motivo">Motivo de consulta</label>
+                        <div class="item-input-inner textarea">
+                            <textarea class="resizable notnull" id="motivo" placeholder="Agrege algo mas..."></textarea>
+                        </div>
+                    </div>
+                    <div class="item-input v2">
+                        <label for="notes">Notas</label>
+                        <div class="item-input-inner textarea">
+                            <textarea class="resizable" id="notes" placeholder="Agrege algo mas..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slot archivos">
+                <div class="title">
+                    <p class="text">Añadir archivos</p>
+                </div>
+                <div class="content">
+                    <div class="cards">
+
+                    </div>
+                    <div class="item-input v2 upload">
+                        <label for="file">
+                            <input type="file" accept=".txt,.doc,.docx,.pdf,.jpeg,.png,.jpg,.ppt,.pptx,.xls,.xlsx"
+                                name="file" id="file" placeholder="Añadir archivo adjunto" required validate>
+                            <i class="material-icons">add_circle</i>
+                            <p>Agregar archivo</p>
+                        </label>
+                        <p class="notes">
+                            Tamaño máximo 5MB.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="slot vitales">
+                <div class="title">
+                    <p class="text">Vitales</p>
+                </div>
+                <div class="content">
+                    <div class="card v2 sqr" id="temperatura">
+                        <div class="card-header fade-out">
+                            <a class="add">
+                                <i class="material-icons">add_circle</i>
+                            </a>
+                            <p>Temperatura</p>
+                        </div>
+                        <div class="card-header fade-in none">
+                            <img src="../static/icons/Temperatura.svg" alt="">
+                            <p class="title">Temperatura</p>
+                            <p class="edit">Editar</p>
+                        </div>
+                        <div class="card-content fade-out">
+                            <img src="../static/icons/Temperatura.svg" alt="">
+                            <p>c</p>
+                        </div>
+                        <div class="card-content fade-in none">
+                            <p>°</p>
+                            <input type="number" name="temp_num" id="temp_num" onkeypress="this.style.width = ((this.value.length + 1) * 48) + 'px';">
+                            <input type="text" name="unity" id="unity" onkeypress="this.style.width = ((this.value.length + 1) * 24) + 'px';">
+                        </div>
+                        <div class="card-footer fade-out">
+                            <p class="notnull">-°</p>
+                        </div>
+                        <div class="card-footer fade-in none">
+                            <div class="container two">
+                                <div class="btn-2 woi red">
+                                    <a href="#">
+                                        <p>Cancelar </p>
+                                    </a>
+                                </div>
+                                <div class="btn-2 woi">
+                                    <a href="#">
+                                        <p>Siguiente </p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card v2 sqr" id="presion">
+                        <div class="card-header fade-out">
+                            <a class="add">
+                                <i class="material-icons">add_circle</i>
+                            </a>
+                            <p>Presión</p>
+                        </div>
+                        <div class="card-header fade-in none">
+                            <img src="../static/icons/Presión.svg" alt="">
+                            <p class="title">Presión</p>
+                            <p class="edit">Editar</p>
+                        </div>
+                        <div class="card-content fade-out">
+                            <img src="../static/icons/Presión.svg" alt="">
+                            <p>mm/Hg</p>
+                        </div>
+                        <div class="card-content fade-in none">
+                            <p></p>
+                            <input type="number" name="temp_num" id="temp_num" onkeypress="this.style.width = ((this.value.length + 1) * 48) + 'px';">
+                            <input type="text" name="unity" id="unity" onkeypress="this.style.width = ((this.value.length + 1) * 24) + 'px';">
+                        </div>
+                        <div class="card-footer fade-out">
+                            <p class="notnull">-/-</p>
+                        </div>
+                        <div class="card-footer fade-in none">
+                            <div class="container two">
+                                <div class="btn-2 woi red">
+                                    <a href="#">
+                                        <p>Cancelar </p>
+                                    </a>
+                                </div>
+                                <div class="btn-2 woi">
+                                    <a href="#">
+                                        <p>Siguiente </p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card v2 sqr" id="respiracion">
+                        <div class="card-header fade-out">
+                            <a class="add">
+                                <i class="material-icons">add_circle</i>
+                            </a>
+                            <p>Respiración</p>
+                        </div>
+                        <div class="card-header fade-in none">
+                            <img src="../static/icons/Respiración.svg" alt="">
+                            <p class="title">Respiración</p>
+                            <p class="edit">Editar</p>
+                        </div>
+                        <div class="card-content fade-out">
+                            <img src="../static/icons/Respiración.svg" alt="">
+                            <p>resp/min</p>
+                        </div>
+                        <div class="card-content fade-in none">
+                            <p></p>
+                            <input type="number" name="temp_num" id="temp_num" onkeypress="this.style.width = ((this.value.length + 1) * 48) + 'px';">
+                            <input type="text" name="unity" id="unity" onkeypress="this.style.width = ((this.value.length + 1) * 24) + 'px';">
+                        </div>
+                        <div class="card-footer fade-out">
+                            <p class="notnull">-</p>
+                        </div>
+                        <div class="card-footer fade-in none">
+                            <div class="container two">
+                                <div class="btn-2 woi red">
+                                    <a href="#">
+                                        <p>Cancelar </p>
+                                    </a>
+                                </div>
+                                <div class="btn-2 woi">
+                                    <a href="#">
+                                        <p>Siguiente </p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card v2 sqr" id="pulso">
+                        <div class="card-header fade-out">
+                            <a class="add">
+                                <i class="material-icons">add_circle</i>
+                            </a>
+                            <p class="edit">Pulso</p>
+                        </div>
+                        <div class="card-header fade-in none">
+                            <img src="../static/icons/Pulso.svg" alt="">
+                            <p class="title">Pulso</p>
+                            <p class="edit">Editar</p>
+                        </div>
+                        <div class="card-content fade-out">
+                            <img src="../static/icons/Pulso.svg" alt="">
+                            <p>ppm</p>
+                        </div>
+                        <div class="card-content fade-in none">
+                            <p></p>
+                            <input type="number" name="temp_num" id="temp_num" onkeypress="this.style.width = ((this.value.length + 1) * 48) + 'px';">
+                            <input type="text" name="unity" id="unity" onkeypress="this.style.width = ((this.value.length + 1) * 24) + 'px';">
+                        </div>
+                        <div class="card-footer fade-out">
+                            <p class="notnull">-</p>
+                        </div>
+                        <div class="card-footer fade-in none">
+                            <div class="container two">
+                                <div class="btn-2 woi red">
+                                    <a href="#">
+                                        <p>Cancelar </p>
+                                    </a>
+                                </div>
+                                <div class="btn-2 woi">
+                                    <a href="#">
+                                        <p>Siguiente </p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slot medicamentos">
+                <div class="title">
+                    <p class="text">Medicamentos</p>
+                </div>
+                <div class="content">
+                    <div class="cards">
+
+                    </div>
+                    <div class="item-input v2">
+                        <a class="med">
+                            <i class="material-icons">add_circle</i>
+                            <p>Agregar medicamento</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="slot dates_pays">
+                <div class="title">
+                    <p class="text">Citas y Pagos</p>
+                </div>
+                <div class="content">
+                    <div class="card v2 cita none">
+                        <div class="rectangle turquoise"></div>
+                        <div class="card-content">
+                            <div class="head">
+                                <i class="material-icons turquoise">today</i>
+                                <a class="arrow popover-open" data-popover=".popover-file">
+                                    <i class="material-icons">more_horiz</i>
+                                </a>
+                            </div>
+                            <div class="date_row">
+                                <p>Clinica</p>
+                                <p class="date">13 / Mar / 2020</p>
+                            </div>
+                            <p class="name">William Aristeo Gonzalez</p>
+                            <p class="phone">8449876543</p>
+                            <p class="data">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                tempor incididunt. </p>
+                        </div>
+                    </div>
+                    <div class="item-input v2 cita">
+                        <a class="cita">
+                            <i class="material-icons">today</i>
+                            <p>Próxima cita</p>
+                        </a>
+                    </div>
+                    <div class="card v2 yellow pago none">
+                        <div class="rectangle yellow"></div>
+                        <div class="card-content">
+                            <div class="head">
+                                <i class="material-icons icon yellow">monetization_on</i>
+                                <a class="arrow">
+                                    <i class="material-icons">more_horiz</i>
+                                </a>
+                            </div>
+                            <div class="date_row">
+                                <p>Consulta</p>
+                                <p class="date">13 / Mar / 2020</p>
+                            </div>
+                            <p class="money">$600.00</p>
+                            <p class="status paid">Pagado</p>
+                        </div>
+                    </div>
+                    <div class="item-input v2 pago">
+                        <a class="pago">
+                            <i class="material-icons">monetization_on</i>
+                            <p>Pago</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="btn-2 woi">
+                    <a href="">
+                        <p>Aceptar </p>
+                    </a>
+                </div>
+                <div class="fab fab-center-bottom color-red">
+                    <a href="#">
+                        <i class="icon f7-icons if-not-md">plus</i>
+                        <i class="icon material-icons md-only">add</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <datalist id="pacientes">
+            <option value="Alejandro De Leon">
+        </datalist>
+
+        <div class="popover popover-file">
+            <div class="popover-inner">
+                <div class="list">
+                    <ul>
+                        <li><a class="list-button item-link download" href="#">Descargar PDF</a></li>
+                        <hr>
+                        <li><a class="list-button item-link delete" href="#">Eliminar</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageBeforeIn: function (e, page) {
+                var self = this;
+                var app = self.$app;
+
+                app.request.get(app.data.url,
+                    function (e) {
+                        var x = JSON.parse(e);
+                        app.data.store.setItem('pacientes', x);
+                    }
+                );
+            },
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+                var files = [], medics = [], pago, cita;
+                var moment = require('moment');
+
+                moment.locale('es');
+                moment().format();
+
+                localStorage.setItem('consulta', true);
+                app.data.store.getItem('paciente').then(function (value) {
+                    /* value.forEach(element => {
+                        $$('datalist').append(
+                            '<option value="' + element.name + '">'
+                        );
+                    }); */
+                    $$('datalist').append(
+                        '<option value="William Aristeo">'
+                    );
+                    $$('datalist').append(
+                        '<option value="Elias">'
+                    );
+                    $$('datalist').append(
+                        '<option value="Karina">'
+                    );
+                    $$('datalist').append(
+                        '<option value="Cesar Molina">'
+                    );
+                });
+
+                getData();
+
+                $$('.card.sqr').click(function (e) {
+                    if ($$(this).parent().find('.primary').length == 0) {
+                        animateOut(this, 0);
+                    } else if (!$$(this).hasClass('primary')) {
+                        animateIn();
+                        animateOut(this, 300);
+                    }
+                });
+
+                $$('#file').change(function (e) {
+                    let file = this.files[0];
+                    if (file.size <= 5000000) {
+                        files.push(file);
+                        addFilesCards();
+                        localStorage.setItem('files', files);
+                    } else {
+                        app.dialog.alert('El archivo excede el tamaño maximo');
+                    }
+                });
+
+                $$('input#nombre').change(function (e) {
+                    localStorage.setItem('consultaName', $$(this).val());
+                });
+
+                $$('textarea#motivo').change(function (e) {
+                    localStorage.setItem('consultaMotivo', $$(this).val());
+                });
+
+                $$('textarea#notes').change(function (e) {
+                    localStorage.setItem('consultaNotes', $$(this).val());
+                });
+
+                $$('.item-input .med').click(function (e) {
+                    app.methods.redirectTo('paciente-medicamento-form');
+                });
+
+                $$('.item-input .cita').click(function (e) {
+                    app.methods.redirectTo('agendar-cita');
+                });
+
+                $$('.item-input .pago').click(function (e) {
+                    app.methods.redirectTo('doctor-agregar-pago');
+                });
+
+                disableButton();
+                $$('#nueva_consulta .btn-2 a').removeClass('grey');
+                $$('#nueva_consulta .btn-2 a').click(function (val) {
+                    console.log('guardar');
+
+                });
+
+                function animateIn() {
+                    $$('.card.sqr.primary').find('.fade-in').toggleClass('show');
+                    /* setTimeout(function () { */
+                        $$('.card.sqr.primary').find('.fade-in').toggleClass('none');
+                    /* }, 50);
+                    setTimeout(function () { */
+                        $$('.card.sqr.primary').find('.fade-out').toggleClass('none');
+                    /* }, 50);
+                    setTimeout(function () { */
+                        $$('.card.sqr.primary').toggleClass('primary');
+                    /* }, 200); */
+                }
+
+                function animateOut(e, x) {
+                    setTimeout(function () {
+                        $$(e).toggleClass('primary');
+                    }, 0 + x);
+                    setTimeout(function () {
+                        $$('.card.sqr.primary').find('.fade-out').toggleClass('none');
+                    }, 250 + x);
+                    setTimeout(function () {
+                        $$('.card.sqr.primary').find('.fade-in').toggleClass('none');
+                    }, 250 + x);
+                    setTimeout(function () {
+                        $$('.card.sqr.primary').find('.fade-in').toggleClass('show');
+                    }, 500 + x);
+                }
+
+                function checkData(e) {
+                    var nonempty = $$('#nueva_consulta .notnull').filter(function () {
+                        return this.value != ''
+                    });
+
+                    if (nonemptyinput.length == 6) {
+
+                    }
+                }
+
+                function getData(e) {
+                    let prevPageMedics = page.pageFrom != undefined && page.pageFrom.el.id == 'paciente-med-form';
+                    if (localStorage.getItem('files')) {
+                        files = localStorage.getItem('files');
+                        addFilesCards();
+                    }
+                    if (localStorage.getItem('medics')) {
+                        medics = JSON.parse(localStorage.getItem('medics'));
+                        if (prevPageMedics) {
+                            refillMedics();
+                        }
+                        addMedsCards();
+                    } else if (prevPageMedics) {
+                        refillMedics();
+                        addMedsCards();
+                    }
+                    if (localStorage.getItem('cita')) {
+                        //llenar tarjeta
+                        $$('.card.cita').toggleClass("none");
+                        $$('.item-input.cita').toggleClass("none");
+                    }
+                    if (localStorage.getItem('pago')) {
+                        //llenar tarjeta
+                        $$('.card.pago').toggleClass("none");
+                        $$('.item-input.pago').toggleClass("none");
+                    }
+                    if (localStorage.getItem('consultaName')) {
+                        $$('input#nombre').val(localStorage.getItem('consultaName'));
+                    }
+                    if (localStorage.getItem('consultaMotivo')) {
+                        $$('textarea#motivo').val(localStorage.getItem('consultaMotivo'));
+                    }
+                    if (localStorage.getItem('consultaNotes')) {
+                        $$('textarea#notes').val(localStorage.getItem('consultaNotes'));
+                    }
+                }
+
+                function refillMedics(e) {
+                    medics.push(JSON.parse(localStorage.getItem('medicina')));
+                    localStorage.setItem('medics', JSON.stringify(medics));
+                }
+
+                function addFilesCards() {
+                    $$('.archivos .cards').empty();
+                    files.forEach(el => {
+                        console.log(el);
+                        let date = moment(el.lastModifiedDate);
+                        $$('.archivos .cards').append(
+                            '<div class="card v2">' +
+                            '<div class="rectangle turquoise"></div>' +
+                            '<div class="card-content">' +
+                            '<i class="material-icons clip">attach_file</i>' +
+                            '<div class="data">' +
+                            '<p class="text">' + el.name + '</p>' +
+                            '<p class="title grey">' + date.format('DD/MM/YYYY') + '</p>' +
+                            '</div>' +
+                            '<a class="arrow popover-open" data-popover=".popover-file">' +
+                            '<i class="material-icons">more_horiz</i>' +
+                            '</a>' +
+                            '</div>' +
+                            '</div>'
+                        );
+
+
+                    });
+                }
+
+                function addMedsCards() {
+                    $$('.medicamentos .cards').empty();
+                    medics.forEach(el => {
+                        console.log(el);
+                        $$('.medicamentos .cards').append(
+                            '<div class="card v2 light-blue">' +
+                            '<div class="rectangle light-blue"></div>' +
+                            '<div class="card-content">' +
+                            '<img src="../static/icons/Medicinas.svg">' +
+                            '<div class="data">' +
+                            '<p class="text">' + el.name + '</p>' +
+                            '<p class="title grey">' + el.tipo_med + ' - ' + el.tipo_ing + '</p>' +
+                            '</div>' +
+                            '<a class="arrow">' +
+                            '<i class="material-icons">chevron_right</i>' +
+                            '</a>' +
+                            '</div>' +
+                            '</div>'
+                        );
+
+
+                    });
+                }
+
+
+                function disableButton() {
+                    $$('#nueva_consulta .btn-2 a').addClass('grey');
+                    $$('#nueva_consulta .btn-2 a').off('click');
+                }
+            }
+        }
+    }
+</script>

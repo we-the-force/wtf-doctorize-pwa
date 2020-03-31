@@ -55,84 +55,64 @@
   </div>
 </template>
 <script>
-  import $$ from 'dom7';
+    import $$ from 'dom7';
 
-  export default {
-    on: {
-      pageInit: function (e, page) {
-        var self = this;
-        var app = self.$app;
-        var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        /* var email_login = '',
-          password_login = ''; */
+    export default {
+        on: {
+            pageInit: function(e, page) {
+                var self = this;
+                var app = self.$app;
+                var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
-        disableButton();
+                disableButton();
 
-        $$('.login input').on('input:notempty', function (e) {
-          var nonempty = $$('.login input').filter(function () {
-            return this.value != ''
-          });
-          if (nonempty.length == 2) {
-            enableButton();
-          }
-        });
-
-        /* $$(document).on('input:notempty', '#username', function (e) {
-          if (password_login != '') {
-            email_login = $$('#username').val();
-            enableButton();
-          } else {
-            email_login = $$('#username').val();
-          }
-        }); */
-
-        /* $$(document).on('input:notempty', '#password', function (e) {
-          if (email_login != '') {
-            password_login = $$('#password').val();
-            enableButton();
-          } else {
-            password_login = $$('#password').val();
-          }
-        }); */
-
-        $$('.login input').on('input:empty', function (e) {
-          disableButton();
-        });
-
-        function enableButton() {
-          let email = $$('#username').val();
-          let password = $$('#password').val();
-          if (regex.test(email)) {
-            $$('#login .btn-2 a').removeClass('grey');
-            $$('#login .btn-2 a').off('click');
-            $$('#login .btn-2 a').on('click', function (e) {
-              e.preventDefault();
-              app.preloader.show('blue');
-              app.request.postJSON(app.data.url + '/auth/local', {
-                "identifier": email,
-                "password": password
-              },
-                function (e) {
-                  app.preloader.hide();
-                  console.log(e);
-                  sessionStorage.setItem('user', JSON.stringify(e));
-                  app.methods.redirectTo('home');
-                },
-                function (e) {
-                  app.preloader.hide();
-                  app.dialog.alert('Tus datos de acceso son incorrectos. <br>Intenta nuevamente.</p>');
+                $$('.login input').on('input:notempty', function(e) {
+                    var nonempty = $$('.login input').filter(function() {
+                        return this.value != ''
+                    });
+                    if (nonempty.length == 2) {
+                        enableButton();
+                    }
                 });
-            });
-          } else {
-            disableButton();
-          }
-        }
 
-        function disableButton() {
-          $$('#login .btn-2 a').addClass('grey');
-          $$('#login .btn-2 a').off('click');
+                $$('.login input').on('input:empty', function(e) {
+                    disableButton();
+                });
+
+                function enableButton() {
+                    let email = $$('#username').val();
+                    let password = $$('#password').val();
+                    if (regex.test(email)) {
+                        $$('#login .btn-2 a').removeClass('grey');
+                        $$('#login .btn-2 a').off('click');
+                        $$('#login .btn-2 a').on('click', function(e) {
+                            e.preventDefault();
+                            app.preloader.show('blue');
+                            app.request.postJSON(app.data.url + '/auth/local', {
+                                    "identifier": email,
+                                    "password": password
+                                },
+                                function(e) {
+                                    app.preloader.hide();
+                                    console.log(e);
+                                    sessionStorage.setItem('user', JSON.stringify(e));
+                                    app.methods.redirectTo('home');
+                                },
+                                function(e) {
+                                    app.preloader.hide();
+                                    app.dialog.alert('Tus datos de acceso son incorrectos. <br>Intenta nuevamente.</p>');
+                                });
+                        });
+                    } else {
+                        disableButton();
+                    }
+                }
+
+                function disableButton() {
+                    $$('#login .btn-2 a').addClass('grey');
+                    $$('#login .btn-2 a').off('click');
+                }
+            }
         }
-      }
     }
-  }
 </script>

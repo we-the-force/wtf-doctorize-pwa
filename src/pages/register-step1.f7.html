@@ -29,7 +29,7 @@
                 </div>
               </div>
             </li>
-            
+
             <li class="item-content item-input">
               <div class="item-inner searchbar-inner">
                 <div class="item-input-wrap rounded">
@@ -53,66 +53,98 @@
       </div>
     </div>
 
-      
+
   </div>
 </template>
 <script>
-  import $$ from 'dom7';
-  export default {
-    on: {
-      pageInit: function (e, page) {
-        var self = this;
-        var app = self.$app;
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageBeforeOut: function(e, page) {
+                var self = this;
+                var app = self.$app;
+                if (e.detail.direction == 'backward') {
+                    app.data.store.removeItem('flow');
+                }
+            },
+            pageInit: function(e, page) {
+                var self = this;
+                var app = self.$app;
 
-        let urlParams = (new URL(document.location)).searchParams;
-        var query = app.utils.parseUrlQuery(window.location.href);
-        let code = query.code;
-        let email = query.email;
+                var urlParams = (new URL(document.location)).searchParams;
+                var query = app.utils.parseUrlQuery(window.location.href);
+                var code = query.code;
+                var email = query.email;
 
-        if (!app.methods.isEmpty(query)) {
-          app.data.flow = 'RA';
-        } else {
-          app.data.flow = 'RD';
+                /* if (!app.methods.isEmpty(query)) {
+                    app.data.store.setItem('flow', 'RA');
+                } else {
+                    app.data.store.setItem('flow', 'RD');
+                } */
+
+                /* $$('#register-step1 .btn-simple').on('click', function(e) {
+                    app.methods.redirectTo('root');
+                }); */
+
+                $$('#register-step1 input').on('input:notempty', function(e) {
+                    var nonempty = $$('#register-step1 input').filter(function() {
+                        return this.value != ''
+                    });
+                    if (nonempty.length == 2) {
+                        enableButton();
+                    }
+                });
+
+                $$('#register-step1 input').on('input:empty', function(e) {
+                    disableButton();
+                });
+                /* disableButton(); */
+
+                /* $$(document).on('input:notempty', '#fullname', function (e) {
+                  $$(document).on('input:notempty', '#pass', function (e) {
+
+                  });
+                }); */
+
+                function enableButton(e) {
+                    $$('#register-step1 .btn-2 a').removeClass('grey');
+                    $$('#register-step1 .btn-2 a').off('click');
+                    $$('#register-step1 .btn-2 a').on('click', function(e) {
+                        if (app.methods.isEmpty(query)) {
+                            app.data.store.setItem('username', $$('#fullname').val());
+                            app.data.store.setItem('pwd', $$('#pass').val());
+                            app.data.store.setItem('flow', 'RD');
+                            /* app.data.register.username = $$('#fullname').val();
+                            app.data.register.password = $$('#pass').val(); */
+                            /* app.data.store.setItem('flow', app.data.flow).then(function(value) {
+                                app.data.store.setItem('register', app.data.register).then(function(value) { */
+                            app.methods.redirectTo('register-s2');
+                            /* });
+}); */
+                        } else if (!app.methods.isEmpty(query)) {
+                            app.data.store.setItem('username', $$('#fullname').val());
+                            app.data.store.setItem('pwd', $$('#pass').val());
+                            app.data.store.setItem('email', email);
+                            app.data.store.setItem('code', code);
+                            app.data.store.setItem('flow', 'RA');
+                            /* app.data.assistant.name = $$('#fullname').val();
+                            app.data.assistant.password = $$('#pass').val();
+                            app.data.assistant.email = email;
+                            app.data.assistant.code = code; */
+                            /* app.data.store.setItem('flow', app.data.flow).then(function(value) {
+                                app.data.store.setItem('assistant', app.data.assistant).then(function(value) { */
+                            app.methods.redirectTo('photo-module');
+                            /* });
+                            }); */
+                        }
+                    });
+                }
+
+                function disableButton() {
+                    $$('#register-step1 .btn-2 a').addClass('grey');
+                    $$('#register-step1 .btn-2 a').off('click');
+                }
+            }
         }
-
-        $$('#register-step1 .btn-simple').on('click', function (e) {
-          app.data.flow = 'default';
-          app.data.store.removeItem('flow');
-          app.methods.redirectTo('root');
-        });
-
-        $$('#register-step1 .btn-2 a').addClass('grey');
-        $$('#register-step1 .btn-2 a').off('click');
-        $$(document).on('input:notempty', '#fullname', function (e) {
-          $$(document).on('input:notempty', '#pass', function (e) {
-            $$('#register-step1 .btn-2 a').removeClass('grey');
-            $$('#register-step1 .btn-2 a').off('click');
-            $$('#register-step1 .btn-2 a').on('click', function (e) {
-              if (app.data.flow == 'RD') {
-                app.data.register.username = $$('#fullname').val();
-                app.data.register.password = $$('#pass').val();
-                app.data.store.setItem('flow', app.data.flow).then(function (value) {
-                  app.data.store.setItem('register', app.data.register).then(function (value) {
-                    app.methods.redirectTo('register-s2');
-                  });
-                });
-              } else if (app.data.flow == 'RA') {
-                app.data.assistant.name = $$('#fullname').val();
-                app.data.assistant.password = $$('#pass').val();
-                app.data.assistant.email = email;
-                app.data.assistant.code = code;
-                app.data.store.setItem('flow', app.data.flow).then(function (value) {
-                  app.data.store.setItem('assistant', app.data.assistant).then(function (value) {
-                    app.methods.redirectTo('photo-module');
-                  });
-                });
-              } else {
-                app.methods.redirectTo('root');//avisar de error
-              }
-            });
-          });
-        });
-      }
     }
-  }
 </script>

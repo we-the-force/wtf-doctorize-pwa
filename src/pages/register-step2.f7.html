@@ -29,13 +29,13 @@
                 </div>
               </div>
             </li>
-            
+
             <li class="item-content item-input">
               <div class="item-inner searchbar-inner">
                 <div class="item-input-wrap rounded">
                   <i class="icons material-icons">local_phone</i>
                   <input type="tel" id="phone" placeholder="Celular" required validate pattern="[0-9]*"
-                        data-error-message="Solo numeros!">
+                    data-error-message="Solo numeros!">
                   <span class="input-clear-button"></span>
                 </div>
               </div>
@@ -84,58 +84,61 @@
         </div>
       </div>
     </div>
-    <!-- <div class="list buttons">
-      <ul>
-        <li>
-          <div class="row">
-            <a href="/register-s1" class="item-link btn-simple">Regresar</a>
-            <a href="#" class="item-link list-button btn-rounded">
-              <p>Siguiente </p>
-              <i class="material-icons">chevron_right</i>
-            </a>
-          </div>
-        </li>
-      </ul>
-    </div> -->
   </div>
 </template>
 <script>
-  import $$ from 'dom7';
-  export default {
-    on: {
-      pageInit: function (e, page) {
-        var self = this;
-        var app = self.$app;
-        var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        var regex2 = /^([0-9]){10}$/;
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageBeforeOut: function(e, page) {
+                var self = this;
+                var app = self.$app;
+                if (e.detail.direction == 'backward') {
+                    app.data.store.removeItem('username');
+                    app.data.store.removeItem('pwd');
+                }
+            },
+            pageInit: function(e, page) {
+                var self = this;
+                var app = self.$app;
+                var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                var regex2 = /^([0-9]){10}$/;
 
-        $$('#register-step2 .btn-2 a').addClass('grey');
-        $$('#register-step2 .btn-2 a').off('click');
-
-        app.data.store.getItem('register').then(function (value) {
-          app.data.register = value;
-          $$(document).on('input:notempty', '#email', function (e) {
-            $$(document).on('input:notempty', '#phone', function (e) {
-              app.data.register.email = $$('#email').val();
-              app.data.register.phone = $$('#phone').val();
-              if (regex.test(app.data.register.email) && regex2.test(app.data.register.phone)) {
-                $$('#register-step2 .btn-2 a').removeClass('grey');
-                $$('#register-step2 .btn-2 a').off('click');
-                $$('#register-step2 .btn-2 a').on('click', function (e) {
-                  console.log(app.data.register.email);
-                  console.log(app.data.register.phone);
-                  app.data.store.setItem('register', app.data.register).then(function (value) {
-                    app.methods.redirectTo('photo-module');
-                  });
+                $$('#register-step2 input').on('input:notempty', function(e) {
+                    var nonempty = $$('#register-step2 input').filter(function() {
+                        return this.value != ''
+                    });
+                    if (nonempty.length == 2) {
+                        enableButton();
+                    }
                 });
-              } else {
+
+                $$('#register-step2 input').on('input:empty', function(e) {
+                    disableButton();
+                });
+                /* 
                 $$('#register-step2 .btn-2 a').addClass('grey');
-                $$('#register-step2 .btn-2 a').off('click');
-              }
-            });
-          });
-        });
-      }
+                $$('#register-step2 .btn-2 a').off('click'); */
+
+                function enableButton() {
+                    let email = $$('#register-step2 #email').val();
+                    let phone = $$('#register-step2 #phone').val();
+                    if (regex.test(email) && regex2.test(phone)) {
+                        $$('#register-step2 .btn-2 a').removeClass('grey');
+                        $$('#register-step2 .btn-2 a').off('click');
+                        $$('#register-step2 .btn-2 a').on('click', function(e) {
+                            app.data.store.setItem('email', email);
+                            app.data.store.setItem('phone', phone);
+                            app.methods.redirectTo('photo-module');
+                        });
+                    }
+                }
+
+                function disableButton() {
+                    $$('#register-step2 .btn-2 a').addClass('grey');
+                    $$('#register-step2 .btn-2 a').off('click');
+                }
+            }
+        }
     }
-  }
 </script>

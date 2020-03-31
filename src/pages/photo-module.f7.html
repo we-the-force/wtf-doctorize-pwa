@@ -33,21 +33,21 @@
                     <div class="item-input v2" id="picker" style="visibility:hidden">
                         <div class="item-input-inner dropdown-blue">
                             <i class="material-icons">local_hospital</i>
-                            <input type="text" name="specialty" placeholder="Especialidad"
-                                                readonly="readonly" id="specialty-picker">
+                            <input type="text" name="specialty" placeholder="Especialidad" readonly="readonly"
+                                id="specialty-picker">
                         </div>
                     </div>
                 </div>
-    
+
                 <div class="container two">
                     <a href="#" data-view=".view-main" class="item-link btn-simple">Regresar</a>
                     <div class="btn-2">
-                      <a href="#">
-                        <p>Guardar </p>
-                        <i class="material-icons">chevron_right</i>
-                      </a>
+                        <a href="#">
+                            <p>Guardar </p>
+                            <i class="material-icons">chevron_right</i>
+                        </a>
                     </div>
-                  </div>
+                </div>
             </div>
         </div>
         <!-- <div class="list buttons">
@@ -89,7 +89,7 @@
         width: 100%;
         height: 100%;
     }
-
+    
     .croppie-container .cr-image {
         z-index: -1;
         position: absolute;
@@ -99,7 +99,7 @@
         max-height: none;
         max-width: none;
     }
-
+    
     .croppie-container .cr-boundary {
         position: relative;
         overflow: hidden;
@@ -108,7 +108,7 @@
         width: 100%;
         height: 100%;
     }
-
+    
     .croppie-container .cr-viewport,
     .croppie-container .cr-resizer {
         position: absolute;
@@ -121,19 +121,19 @@
         box-shadow: 0 0 2000px 2000px rgba(0, 0, 0, 0.5);
         z-index: 0;
     }
-
+    
     .croppie-container .cr-resizer {
         z-index: 2;
         box-shadow: none;
         pointer-events: none;
     }
-
+    
     .croppie-container .cr-resizer-vertical,
     .croppie-container .cr-resizer-horisontal {
         position: absolute;
         pointer-events: all;
     }
-
+    
     .croppie-container .cr-resizer-vertical::after,
     .croppie-container .cr-resizer-horisontal::after {
         display: block;
@@ -145,61 +145,61 @@
         height: 10px;
         content: '';
     }
-
+    
     .croppie-container .cr-resizer-vertical {
         bottom: -5px;
         cursor: row-resize;
         width: 100%;
         height: 10px;
     }
-
+    
     .croppie-container .cr-resizer-vertical::after {
         left: 50%;
         margin-left: -5px;
     }
-
+    
     .croppie-container .cr-resizer-horisontal {
         right: -5px;
         cursor: col-resize;
         width: 10px;
         height: 100%;
     }
-
+    
     .croppie-container .cr-resizer-horisontal::after {
         top: 50%;
         margin-top: -5px;
     }
-
+    
     .croppie-container .cr-original-image {
         display: none;
     }
-
+    
     .croppie-container .cr-vp-circle {
         border-radius: 50%;
     }
-
+    
     .croppie-container .cr-overlay {
         z-index: 1;
         position: absolute;
         cursor: move;
         touch-action: none;
     }
-
+    
     .croppie-container .cr-slider-wrap {
         width: 75%;
         margin: 15px auto;
         text-align: center;
     }
-
+    
     .croppie-result {
         position: relative;
         overflow: hidden;
     }
-
+    
     .croppie-result img {
         position: absolute;
     }
-
+    
     .croppie-container .cr-image,
     .croppie-container .cr-overlay,
     .croppie-container .cr-viewport {
@@ -208,13 +208,12 @@
         -ms-transform: translateZ(0);
         transform: translateZ(0);
     }
-
     /*************************************/
     /***** STYLING RANGE INPUT ***********/
     /*************************************/
     /*http://brennaobrien.com/blog/2014/05/style-input-type-range-in-every-browser.html */
     /*************************************/
-
+    
     .cr-slider {
         -webkit-appearance: none;
         /*removes default webkit styles*/
@@ -227,7 +226,7 @@
         padding-bottom: 8px;
         background-color: transparent;
     }
-
+    
     .cr-slider::-webkit-slider-runnable-track {
         width: 100%;
         height: 3px;
@@ -235,7 +234,7 @@
         border: 0;
         border-radius: 3px;
     }
-
+    
     .cr-slider::-webkit-slider-thumb {
         -webkit-appearance: none;
         border: none;
@@ -245,17 +244,16 @@
         background: #ddd;
         margin-top: -6px;
     }
-
+    
     .cr-slider:focus {
         outline: none;
     }
-
     /*
     .cr-slider:focus::-webkit-slider-runnable-track {
     background: #ccc;
     }
     */
-
+    
     .cr-slider::-moz-range-track {
         width: 100%;
         height: 3px;
@@ -263,7 +261,7 @@
         border: 0;
         border-radius: 3px;
     }
-
+    
     .cr-slider::-moz-range-thumb {
         border: none;
         height: 16px;
@@ -272,14 +270,13 @@
         background: #ddd;
         margin-top: -6px;
     }
-
     /*hide the outline behind the border*/
-
+    
     .cr-slider:-moz-focusring {
         outline: 1px solid white;
         outline-offset: -1px;
     }
-
+    
     .cr-slider::-ms-track {
         width: 100%;
         height: 5px;
@@ -291,17 +288,17 @@
         color: transparent;
         /*remove default tick marks*/
     }
-
+    
     .cr-slider::-ms-fill-lower {
         background: rgba(0, 0, 0, 0.5);
         border-radius: 10px;
     }
-
+    
     .cr-slider::-ms-fill-upper {
         background: rgba(0, 0, 0, 0.5);
         border-radius: 10px;
     }
-
+    
     .cr-slider::-ms-thumb {
         border: none;
         height: 16px;
@@ -310,43 +307,42 @@
         background: #ddd;
         margin-top: 1px;
     }
-
+    
     .cr-slider:focus::-ms-fill-lower {
         background: rgba(0, 0, 0, 0.5);
     }
-
+    
     .cr-slider:focus::-ms-fill-upper {
         background: rgba(0, 0, 0, 0.5);
     }
-
     /*******************************************/
     /***********************************/
     /* Rotation Tools */
     /***********************************/
-
+    
     .cr-rotate-controls {
         position: absolute;
         bottom: 5px;
         left: 5px;
         z-index: 1;
     }
-
+    
     .cr-rotate-controls button {
         border: 0;
         background: none;
     }
-
+    
     .cr-rotate-controls i:before {
         display: inline-block;
         font-style: normal;
         font-weight: 900;
         font-size: 22px;
     }
-
+    
     .cr-rotate-l i:before {
         content: '↺';
     }
-
+    
     .cr-rotate-r i:before {
         content: '↻';
     }
@@ -359,7 +355,15 @@
     } from 'lodash';
     export default {
         on: {
-            pageInit: function (e) {
+            pageBeforeOut: function(e, page) {
+                var self = this;
+                var app = self.$app;
+                if (e.detail.direction == 'backward') {
+                    app.data.store.removeItem('email');
+                    app.data.store.removeItem('phone');
+                }
+            },
+            pageInit: function(e) {
                 var self = this;
                 var app = self.$app;
                 var specialties = app.data.specialties;
@@ -393,17 +397,17 @@
                 });
                 var doctor = JSON.parse(sessionStorage.getItem('user'));
 
-                $$('.upload-photo').on('click', function () {
+                $$('.upload-photo').on('click', function() {
                     ac.open();
 
-                    $$('.actions-group #cancel').on('click', function () {
+                    $$('.actions-group #cancel').on('click', function() {
                         ac.close();
                     });
 
                     if (window.File && window.FileReader && window.FormData) {
                         var $inputField = $$('#file-upload');
                         $inputField.off('change');
-                        $inputField.on('change', function (e) {
+                        $inputField.on('change', function(e) {
 
                             var file = e.target.files[0];
 
@@ -426,7 +430,7 @@
 
                 });
 
-                app.data.store.getItem('flow').then(function (flow) {
+                app.data.store.getItem('flow').then(function(flow) {
                     app.data.flow = flow;
                     switch (app.data.flow) {
                         case 'RD':
@@ -443,7 +447,7 @@
                             break;
                     }
 
-                    $$('#photo-module .btn-simple').on('click', function (e) {
+                    $$('#photo-module .btn-simple').on('click', function(e) {
                         switch (app.data.flow) {
                             case 'RD':
                                 app.methods.redirectTo('register-s2');
@@ -466,35 +470,84 @@
                 function registrarDoctor() {
 
                     $$('#picker').css("visibility", "visible");
-                    app.data.store.getItem('register').then(function (value) {
-                        app.data.register = value;
-                        $$('#photo-module .btn-2 a').off('click');
-                        $$('#photo-module .btn-2 a').on('click', function (e) {
-                            specialityID = specialties.values.indexOf(picker.value[0]);
-                            specialityID++;
-                            c.result('base64').then(function (blob) {
+                    /* app.data.store.getItem('register').then(function (value) {
+                        app.data.register = value; */
+                    $$('#photo-module .btn-2 a').off('click');
+                    $$('#photo-module .btn-2 a').on('click', function(e) {
+                        specialityID = specialties.values.indexOf(picker.value[0]);
+                        specialityID++;
+                        let username, email, pwd, phone;
+                        app.data.store.iterate(function(val, key, i) {
+                            switch (key) {
+                                case 'username':
+                                    username = val;
+                                    break;
+                                case 'email':
+                                    email = val;
+                                    break;
+                                case 'pwd':
+                                    pwd = val;
+                                    break;
+                                case 'phone':
+                                    phone = val;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }).then(function(e) {
+                            c.result('base64').then(function(blob) {
                                 app.preloader.show('blue');
-                                app.request.postJSON(app.data.url + '/doctors', {
-                                    "password": app.data.register.password,
-                                    "name": app.data.register.username,
-                                    "email": app.data.register.email,
-                                    "cellphone": app.data.register.phone,
-                                    "imageData": blob,
-                                    "specialty": {
-                                        "id": specialityID
-                                    }
-                                }, function (e) {
-                                    app.data.store.removeItem('flow').then(function (value) {
+                                app.request.postJSON(app.data.url + '/auth/local/register', {
+                                        "username": username,
+                                        "email": email,
+                                        "password": pwd,
+                                        "img_data": blob,
+                                        "telefono": phone
+                                    },
+                                    function(e) {
+                                        app.request.postJSON(app.data.url + '/doctors', {
+                                                "user": e.user.id
+                                            },
+                                            function(el) {
+                                                app.data.store.clear();
+                                                app.preloader.hide();
+                                                app.methods.redirectTo('register-s4');
+                                            },
+                                            function(el) {
+                                                //error delete user
+                                                app.dialog.alert("Error al registrarse <br> Verifique que esta cuenta no este registrada o que todos lo datos sean correctos");
+                                                app.preloader.hide();
+                                            });
+                                    },
+                                    function(e) {
+                                        app.dialog.alert("Error al registrarse <br> Verifique que esta cuenta no este registrada o que todos lo datos sean correctos");
                                         app.preloader.hide();
-                                        app.methods.redirectTo('register-s4');
                                     });
-                                }, function (e) {
-                                    app.dialog.alert("Error al registrarse <br> Verifique que esta cuenta no este registrada o que todos lo datos sean correctos");
-                                    app.preloader.hide();
-                                });
-
                             });
                         });
+                        /* c.result('base64').then(function (blob) {
+                            app.preloader.show('blue');
+                            app.request.postJSON(app.data.url + '/doctors', {
+                                "password": app.data.register.password,
+                                "name": app.data.register.username,
+                                "email": app.data.register.email,
+                                "cellphone": app.data.register.phone,
+                                "imageData": blob,
+                                "specialty": {
+                                    "id": specialityID
+                                }
+                            }, function (e) {
+                                app.data.store.removeItem('flow').then(function (value) {
+                                    app.preloader.hide();
+                                    app.methods.redirectTo('register-s4');
+                                });
+                            }, function (e) {
+                                app.dialog.alert("Error al registrarse <br> Verifique que esta cuenta no este registrada o que todos lo datos sean correctos");
+                                app.preloader.hide();
+                            });
+
+                        }); */
+                        /* }); */
                     });
                 }
 
@@ -503,48 +556,48 @@
                     $$('.header-blue p').text('Agrega tu foto de perfil');
                     /* app.data.store.getItem('doctor').then(function (value) {
                         app.data.doctor = value; */
-                        $$('#photo-module .btn-2 a').off('click');
-                        $$('#photo-module .btn-2 a').on('click', function (e) {
-                            c.result('base64').then(function (blob) {
-                                app.preloader.show('blue');
-                                app.request({
-                                    url: app.data.url + '/doctors/' + doctor.id,
-                                    method: "PATCH",
-                                    crossDomain: true,
-                                    data: {
-                                        "imageData": blob
-                                    },
-                                    success: function (e) {
-                                        app.data.store.removeItem('flow').then(function (value) {
-                                            app.preloader.hide();
-                                            app.request.get(app.data.url + '/doctors/' + doctor.id,
-                                                function (i) {
-                                                    var x = JSON.parse(i);
-                                                    app.data.store.setItem("doctor", x);
-                                                    app.methods.redirectTo('settings');
-                                                    location.reload();
-                                                });
-                                        });
-                                    },
-                                    error: function (e) {
-                                        app.dialog.alert("error");
+                    $$('#photo-module .btn-2 a').off('click');
+                    $$('#photo-module .btn-2 a').on('click', function(e) {
+                        c.result('base64').then(function(blob) {
+                            app.preloader.show('blue');
+                            app.request({
+                                url: app.data.url + '/doctors/' + doctor.id,
+                                method: "PATCH",
+                                crossDomain: true,
+                                data: {
+                                    "imageData": blob
+                                },
+                                success: function(e) {
+                                    app.data.store.removeItem('flow').then(function(value) {
                                         app.preloader.hide();
-                                    }
-                                });
+                                        app.request.get(app.data.url + '/doctors/' + doctor.id,
+                                            function(i) {
+                                                var x = JSON.parse(i);
+                                                app.data.store.setItem("doctor", x);
+                                                app.methods.redirectTo('settings');
+                                                location.reload();
+                                            });
+                                    });
+                                },
+                                error: function(e) {
+                                    app.dialog.alert("error");
+                                    app.preloader.hide();
+                                }
                             });
                         });
+                    });
                     /* }); */
                 }
 
                 function registrarAsistente() {
-                    app.data.store.getItem('assistant').then(function (value) {
+                    app.data.store.getItem('assistant').then(function(value) {
                         app.data.assistant = value;
                         $$('.photo-module h1').text('Foto de Perfil');
                         $$('.photo-module h4').text('Agrega tu foto de perfil');
 
                         $$('#photo-module .btn-2 a').off('click');
-                        $$('#photo-module .btn-2 a').on('click', function (e) {
-                            c.result('base64').then(function (blob) {
+                        $$('#photo-module .btn-2 a').on('click', function(e) {
+                            c.result('base64').then(function(blob) {
                                 app.preloader.show('blue');
                                 app.request.postJSON(app.data.url + '/account/confirmation/assistant', {
                                     "email": app.data.assistant.email,
@@ -552,12 +605,12 @@
                                     "name": app.data.assistant.name,
                                     "password": app.data.assistant.password,
                                     "imageData": blob
-                                }, function (e) {
-                                    app.data.store.removeItem('flow').then(function (value) {
+                                }, function(e) {
+                                    app.data.store.removeItem('flow').then(function(value) {
                                         app.preloader.hide();
                                         app.methods.redirectTo('root');
                                     });
-                                }, function (e) {
+                                }, function(e) {
                                     app.preloader.hide();
                                     app.dialog.alert("Error");
                                 });
@@ -573,7 +626,7 @@
                     var image = new Image();
                     image.src = dataURL;
 
-                    image.onload = function () {
+                    image.onload = function() {
                         var width = image.width;
                         var height = image.height;
                         var shouldResize = (width > maxWidth) || (height > maxHeight);
@@ -608,7 +661,7 @@
                         sendFile(dataURL);
                     };
 
-                    image.onerror = function () {
+                    image.onerror = function() {
                         alert('There was an error processing your file!');
                     };
                 }
@@ -633,11 +686,11 @@
                 function readFile(file) {
                     var reader = new FileReader();
 
-                    reader.onloadend = function () {
+                    reader.onloadend = function() {
                         processFile(reader.result, file.type);
                     }
 
-                    reader.onerror = function () {
+                    reader.onerror = function() {
                         alert('There was an error reading the file!');
                     }
 
@@ -646,5 +699,4 @@
             }
         }
     }
-
 </script>

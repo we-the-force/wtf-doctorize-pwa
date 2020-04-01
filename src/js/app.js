@@ -99,7 +99,7 @@ var app = new Framework7({
                 pressure: '',
             },
             /* url: '//api.mydoctorize.com' */
-            url: '//api.mydoctorize.com'
+            url: 'https://api.mydoctorize.com'
         };
     },
     // App root methods

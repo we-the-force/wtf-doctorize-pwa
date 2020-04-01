@@ -99,87 +99,88 @@
 
 </template>
 <script>
-  import $$ from 'dom7';
-  export default {
-    on: {
-      pageInit: function (e, page) {
-        var self = this;
-        var app = self.$app;
-        var moment = require('moment');
-        moment.locale('es');
-        moment().format();
-        var doctor = JSON.parse(sessionStorage.getItem('user'));
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageInit: function(e, page) {
+                var self = this;
+                var app = self.$app;
+                var moment = require('moment');
+                moment.locale('es');
+                moment().format();
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
+                console.log(doctor);
 
-        $$('.patients .block-title').click(function (e) {
-          app.data.store.setItem('search', 'home_search_patients').then(function (value) {
-            app.methods.redirectTo('search-module');
-          });          
-        });
+                $$('.patients .block-title').click(function(e) {
+                    app.data.store.setItem('search', 'home_search_patients').then(function(value) {
+                        app.methods.redirectTo('search-module');
+                    });
+                });
 
-        if (doctor != null && doctor != 'undefined' && doctor != '') {
-          $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + doctor.photo + '50.png" alt="not found">');
-          $$('.transparent .ajustes img').attr('src', app.data.url + '/' + doctor.photo + '100.png');
-          $$('.background .name').text('Dr. ' + doctor.name);
-        }
+                if (doctor != null && doctor != 'undefined' && doctor != '') {
+                    $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + doctor.user.img_data.url + '" alt="not found">');
+                    $$('.transparent .ajustes img').attr('src', app.data.url + '/' + doctor.user.img_data.url);
+                    $$('.background .name').text('Dr. ' + doctor.user.username);
+                }
 
 
-        //consultar fotos de pacientes
-        for (let i = 0; i < $$('#home li.patients .row').children().length; i++) {
-          const element = $$('#home li.patients .row').children()[i];
+                //consultar fotos de pacientes
+                for (let i = 0; i < $$('#home li.patients .row').children().length; i++) {
+                    const element = $$('#home li.patients .row').children()[i];
 
-        }
-        //consulta citas
-        app.request.get(app.data.url + '/doctors/' + doctor.id + '/appointments', function (e) {
-          let today = moment();
-          let cards = 0;
-          var x = JSON.parse(e);
-          var swiper = app.swiper.get('.appointments .swiper-container');
-          x.forEach(element => {
-            let date = moment(element.date);
-            if (today.isBefore(date) && cards < 10) {
-              swiper.appendSlide(
-                '<div class="swiper-slide" id="id_' + element.id + '">' +
-                '<div class="card card-outline home appointments">' +
-                '<div class="rectangle turquoise"></div>' +
-                '<div class="card-content card-content-padding">' +
-                '<p class="title dark-blue">Cita</p>' +
-                '<p class="text dark-blue">' + element.name + '</p>' +
-                '<p class="text2 dark-blue">Centro Hospitalario la Concepción</p>' +
-                '<div class="footer light-blue">' +
-                '<i class="icon material-icons">watch_later</i>' +
-                '<p>&nbsp;	08:00 - 21:00</p>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>'
-              );
-              cards++;
+                }
+                //consulta citas
+                app.request.get(app.data.url + '/doctors/' + doctor.id + '/appointments', function(e) {
+                    let today = moment();
+                    let cards = 0;
+                    var x = JSON.parse(e);
+                    var swiper = app.swiper.get('.appointments .swiper-container');
+                    x.forEach(element => {
+                        let date = moment(element.date);
+                        if (today.isBefore(date) && cards < 10) {
+                            swiper.appendSlide(
+                                '<div class="swiper-slide" id="id_' + element.id + '">' +
+                                '<div class="card card-outline home appointments">' +
+                                '<div class="rectangle turquoise"></div>' +
+                                '<div class="card-content card-content-padding">' +
+                                '<p class="title dark-blue">Cita</p>' +
+                                '<p class="text dark-blue">' + element.name + '</p>' +
+                                '<p class="text2 dark-blue">Centro Hospitalario la Concepción</p>' +
+                                '<div class="footer light-blue">' +
+                                '<i class="icon material-icons">watch_later</i>' +
+                                '<p>&nbsp;	08:00 - 21:00</p>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>'
+                            );
+                            cards++;
+                        }
+                    });
+                });
+
+                //consultar cobros
+                for (let i = 0; i < 3; i++) {
+                    $$('#home li.payments .swiper-wrapper').append(
+                        '<div class="swiper-slide" id="">' +
+                        '<div class="card card-outline home payments">' +
+                        '<div class="rectangle yellow"></div>' +
+                        '<div class="card-content card-content-padding">' +
+                        '<p class="title dark-blue">Consulta</p>' +
+                        '<p class="text dark-blue">Xavier Lopez</p>' +
+                        '<p class="cash dark-blue">$400</p>' +
+                        '<div class="footer light-blue">' +
+                        '<i class="icon material-icons">today</i>' +
+                        '<p>&nbsp; 12 Ene 2020</p>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>'
+                    );
+
+                }
+
             }
-          });
-        });
-
-        //consultar cobros
-        for (let i = 0; i < 3; i++) {
-          $$('#home li.payments .swiper-wrapper').append(
-            '<div class="swiper-slide" id="">' +
-            '<div class="card card-outline home payments">' +
-            '<div class="rectangle yellow"></div>' +
-            '<div class="card-content card-content-padding">' +
-            '<p class="title dark-blue">Consulta</p>' +
-            '<p class="text dark-blue">Xavier Lopez</p>' +
-            '<p class="cash dark-blue">$400</p>' +
-            '<div class="footer light-blue">' +
-            '<i class="icon material-icons">today</i>' +
-            '<p>&nbsp; 12 Ene 2020</p>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '</div>'
-          );
-
         }
-
-      }
     }
-  }
 </script>

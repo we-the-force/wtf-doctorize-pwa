@@ -353,24 +353,24 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageBeforeIn: function (e, page) {
+            pageBeforeIn: function(e, page) {
                 var self = this;
                 var app = self.$app;
 
             },
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 var doctor = JSON.parse(sessionStorage.getItem('user'));
                 var pagos;
 
                 if (doctor != null && doctor != 'undefined' && doctor != '') {
-                    $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + doctor.photo + '50.png" alt="not found">');
+                    $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + doctor.user.img_data.url + '50.png" alt="not found">');
                 }
 
                 app.preloader.show('blue');
                 app.request.get(app.data.url,
-                    function (e) {
+                    function(e) {
 
                         pagos = JSON.parse(e);
                         let recibidos = [];
@@ -381,17 +381,17 @@
                         fillPage('pendientes', pendientes);
 
                         app.preloader.hide();
-                        $$('.header .toolbar .tab-link').click(function (x) {
+                        $$('.header .toolbar .tab-link').click(function(x) {
                             let tab = $$(this);
                             if (tab.attr('id') == 'recibidos_tab') {
-                                $$('.header .TotalIncome').text('$100,899.00');//agregar valor
+                                $$('.header .TotalIncome').text('$100,899.00'); //agregar valor
                                 $$('.header .TotalIncome').toggleClass('light-blue');
                                 $$('.header .labelIncome').text('Total de ingresos');
 
                                 fillPage('recibidos');
                             } else if (tab.attr('id') == 'pendientes_tab') {
                                 //llenar pagina
-                                $$('.header .TotalIncome').text('$30,899.00');//agregar valor
+                                $$('.header .TotalIncome').text('$30,899.00'); //agregar valor
                                 $$('.header .TotalIncome').toggleClass('light-blue');
                                 $$('.header .labelIncome').text('Total pendientes');
 
@@ -399,21 +399,21 @@
                             }
                         });
 
-                        $$('#pagos-home .card.pagos').click(function (x) {
+                        $$('#pagos-home .card.pagos').click(function(x) {
                             let card = $$(this);
                             if (card.parent().attr('id') == 'recibidos') {
-                                app.data.store.setItem('details', 'recibidos').then(function (value) {
+                                app.data.store.setItem('details', 'recibidos').then(function(value) {
                                     app.methods.redirectTo('pago-details');
                                 });
                             } else if (card.parent().attr('id') == 'pendientes') {
-                                app.data.store.setItem('details', 'pendientes').then(function (value) {
+                                app.data.store.setItem('details', 'pendientes').then(function(value) {
                                     app.methods.redirectTo('pago-details');
                                 });
                             }
                         });
 
                     },
-                    function (e) {
+                    function(e) {
 
                         let recibidos = [];
                         let pendientes = [];
@@ -423,17 +423,17 @@
                         fillPage('pendientes', pendientes);
                         app.preloader.hide();
 
-                        $$('.header .toolbar .tab-link').click(function (x) {
+                        $$('.header .toolbar .tab-link').click(function(x) {
                             let tab = $$(this);
                             if (tab.attr('id') == 'recibidos_tab') {
-                                $$('.header .TotalIncome').text('$100,899.00');//agregar valor
+                                $$('.header .TotalIncome').text('$100,899.00'); //agregar valor
                                 $$('.header .TotalIncome').toggleClass('light-blue');
                                 $$('.header .labelIncome').text('Total de ingresos');
 
                                 fillPage('recibidos');
                             } else if (tab.attr('id') == 'pendientes_tab') {
                                 //llenar pagina
-                                $$('.header .TotalIncome').text('$30,899.00');//agregar valor
+                                $$('.header .TotalIncome').text('$30,899.00'); //agregar valor
                                 $$('.header .TotalIncome').toggleClass('light-blue');
                                 $$('.header .labelIncome').text('Total pendientes');
 
@@ -441,15 +441,15 @@
                             }
                         });
 
-                        $$('#pagos-home .card.pagos').click(function (x) {
+                        $$('#pagos-home .card.pagos').click(function(x) {
                             let card = $$(this);
                             console.log('card clicked redirect to details');
                             if (card.parent().attr('id') == 'recibidos') {
-                                app.data.store.setItem('details', 'recibidos').then(function (value) {
+                                app.data.store.setItem('details', 'recibidos').then(function(value) {
                                     app.methods.redirectTo('pago-details');
                                 });
                             } else if (card.parent().attr('id') == 'pendientes') {
-                                app.data.store.setItem('details', 'pendientes').then(function (value) {
+                                app.data.store.setItem('details', 'pendientes').then(function(value) {
                                     app.methods.redirectTo('pago-details');
                                 });
                             }
@@ -472,7 +472,8 @@
                 function fillDay(x, y) {
                     /* y.forEach(el => {
                         fillDay(x, el);
-                    }); *//* $$('#'+x) */
+                    }); */
+                    /* $$('#'+x) */
                     let color, letter_color;
                     if (x == 'recibidos') {
                         color = 'yellow-2';

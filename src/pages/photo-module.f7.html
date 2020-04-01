@@ -495,59 +495,68 @@
                                     break;
                             }
                         }).then(function(e) {
-                            c.result('base64').then(function(blob) {
-                                app.preloader.show('blue');
-                                app.request.postJSON(app.data.url + '/auth/local/register', {
-                                        "username": username,
-                                        "email": email,
-                                        "password": pwd,
-                                        "img_data": blob,
-                                        "telefono": phone
-                                    },
-                                    function(e) {
-                                        app.request.postJSON(app.data.url + '/doctors', {
-                                                "user": e.user.id
-                                            },
-                                            function(el) {
-                                                app.data.store.clear();
-                                                app.preloader.hide();
-                                                app.methods.redirectTo('register-s4');
-                                            },
-                                            function(el) {
-                                                //error delete user
-                                                app.dialog.alert("Error al registrarse <br> Verifique que esta cuenta no este registrada o que todos lo datos sean correctos");
-                                                app.preloader.hide();
-                                            });
-                                    },
-                                    function(e) {
-                                        app.dialog.alert("Error al registrarse <br> Verifique que esta cuenta no este registrada o que todos lo datos sean correctos");
-                                        app.preloader.hide();
-                                    });
-                            });
-                        });
-                        /* c.result('base64').then(function (blob) {
                             app.preloader.show('blue');
-                            app.request.postJSON(app.data.url + '/doctors', {
-                                "password": app.data.register.password,
-                                "name": app.data.register.username,
-                                "email": app.data.register.email,
-                                "cellphone": app.data.register.phone,
-                                "imageData": blob,
-                                "specialty": {
-                                    "id": specialityID
-                                }
-                            }, function (e) {
-                                app.data.store.removeItem('flow').then(function (value) {
-                                    app.preloader.hide();
-                                    app.methods.redirectTo('register-s4');
-                                });
-                            }, function (e) {
-                                app.dialog.alert("Error al registrarse <br> Verifique que esta cuenta no este registrada o que todos lo datos sean correctos");
-                                app.preloader.hide();
-                            });
+                            app.request.postJSON(app.data.url + '/auth/local/register', {
+                                    "username": username,
+                                    "email": email,
+                                    "password": pwd,
+                                    "telefono": phone
+                                },
+                                function(e) {
 
-                        }); */
-                        /* }); */
+                                    c.result('blob').then(blob => {
+                                        let file = new File([blob], "perfil.png", new Date());
+                                        const data = new FormData();
+                                        data.append("files", file);
+                                        data.append("refId", e.user.id);
+                                        data.append("ref", "user");
+                                        data.append('source', 'users-permissions');
+                                        data.append('field', 'img_data');
+                                        app.request({
+                                            url: app.data.url + '/upload',
+                                            method: "POST",
+                                            crossDomain: true,
+                                            contentType: "multipart/form-data",
+                                            data: data
+                                        });
+
+                                    });
+                                    app.request.postJSON(app.data.url + '/doctors', {
+                                            "nombre": username,
+                                            "user": e.user.id
+                                        },
+                                        function(el) {
+                                            console.log(el);
+                                            /* app.request({
+                                                url: app.data.url + '/users/' + e.user.id,
+                                                data: {
+                                                    "doctor": el.id
+                                                },
+                                                method: "PUT",
+                                                crossDomain: true,
+                                                success: function(e) {
+                                                    app.data.store.clear();
+                                                    app.preloader.hide();
+                                                    app.methods.redirectTo('register-s4');
+                                                },
+                                                error: function(e) {}
+                                            }); */
+
+                                            app.data.store.clear();
+                                            app.preloader.hide();
+                                            app.methods.redirectTo('register-s4');
+                                        },
+                                        function(el) {
+                                            app.dialog.alert("Error al registrarse <br> Verifique que esta cuenta no este registrada o que todos lo datos sean correctos");
+                                            app.preloader.hide();
+                                        });
+                                },
+                                function(e) {
+                                    app.dialog.alert("Error al registrarse <br> Verifique que esta cuenta no este registrada o que todos lo datos sean correctos");
+                                    app.preloader.hide();
+                                });
+
+                        });
                     });
                 }
 

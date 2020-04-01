@@ -94,8 +94,8 @@
                                 },
                                 function(e) {
                                     app.preloader.hide();
-                                    console.log(e);
-                                    sessionStorage.setItem('user', JSON.stringify(e));
+                                    sessionStorage.setItem('key', JSON.stringify(e.jwt));
+                                    sessionStorage.setItem('user', JSON.stringify(e.user));
                                     app.methods.redirectTo('home');
                                 },
                                 function(e) {

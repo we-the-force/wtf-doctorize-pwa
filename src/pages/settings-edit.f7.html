@@ -41,12 +41,12 @@
             </div>
             <div class="container right">
                 <div class="btn-2">
-                  <a href="">
-                    <p>Aceptar </p>
-                    <i class="material-icons">chevron_right</i>
-                  </a>
+                    <a href="">
+                        <p>Aceptar </p>
+                        <i class="material-icons">chevron_right</i>
+                    </a>
                 </div>
-              </div>
+            </div>
         </div>
         <!-- <div class="list buttons">
             <ul>
@@ -66,17 +66,17 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 var specialties, specialityID;
                 var doctor = JSON.parse(sessionStorage.getItem('user'));
-
+                var flow
                 disableButton();
 
-                app.data.store.getItem('flow').then(function (e) {
-                    app.data.flow = e;
-                    switch (app.data.flow) {
+                app.data.store.getItem('flow').then(function(e) {
+                    flow = e;
+                    switch (flow) {
                         case 'SN':
                             setName();
                             break;
@@ -96,11 +96,9 @@
                 });
 
 
-                $$(".btn-back").click(function (e) {
-                    app.data.flow = 'default';
-                    app.data.store.removeItem('flow').then(function (value) {
-                        app.methods.redirectTo('settings');
-                    });
+                $$(".btn-back").click(function(e) {
+                    app.data.store.removeItem('flow');
+                    app.methods.redirectTo('settings');
                 });
 
                 function setSpeciality() {
@@ -108,7 +106,7 @@
                     $$(".settings-edit .item-label").text("Especialidad");
                     $$(".settings-edit input").attr("type", "text");
                     $$(".settings-edit input").attr("id", "picker");
-                    $$(".settings-edit input").val(doctor.specialty.name);
+                    $$(".settings-edit input").val(doctor.doctor.especialidad);
                     specialties = app.data.specialties;
                     var picker = app.picker.create({
                         inputEl: '#picker',
@@ -124,7 +122,7 @@
                     $$(".settings-edit .title").text("Edita tu celular");
                     $$(".settings-edit .item-label").text("Celular");
                     $$(".settings-edit input").attr("type", "tel");
-                    $$(".settings-edit input").val(doctor.cellphone);
+                    $$(".settings-edit input").val(doctor.telefono);
                     inputCheck();
                 }
 
@@ -139,73 +137,124 @@
                 function setName() {
                     $$(".settings-edit .title").text("Edita tu nombre");
                     $$(".settings-edit .item-label").text("Nombre");
-                    $$(".settings-edit input").val(doctor.name);
+                    $$(".settings-edit input").val(doctor.username);
                     inputCheck();
                 }
 
                 function inputCheck() {
-                    $$(document).on('input:notempty', ".settings-edit input", function (e) {
+                    $$(document).on('input:notempty', ".settings-edit input", function(e) {
                         $$('#settings-edit .btn-2 a').removeClass('grey');
                         $$('#settings-edit .btn-2 a').off('click');
-                        $$("#settings-edit .btn-2 a").click(function (e) {
+                        $$("#settings-edit .btn-2 a").click(function(e) {
                             callApi($$(".settings-edit input").val());
                         });
                     });
-                    $$(document).on('input:empty', function (e) {
+                    $$(document).on('input:empty', function(e) {
                         disableButton();
                     });
                 }
 
                 function callApi(value) {
-                    var j;
-                    switch (app.data.flow) {
+                    var j, k;
+                    switch (flow) {
                         case "SN":
                             j = {
-                                "name": value
+                                "username": value
                             }
+                            k = {
+                                "nombre": value
+                            }
+                            app.request({
+                                url: app.data.url + '/users/' + doctor.id,
+                                method: "PUT",
+                                crossDomain: true,
+                                data: j,
+                                success: function(e) {
+                                    app.request({
+                                        url: app.data.url + '/doctors/' + doctor.doctor.id,
+                                        method: "PUT",
+                                        crossDomain: true,
+                                        data: k,
+                                        success: function(e) {
+                                            console.log('ahoy');
+                                        },
+                                        error: function(e) {
+                                            app.preloader.hide();
+                                        }
+                                    }).then(getUser());
+                                },
+                                error: function(e) {
+                                    app.preloader.hide();
+                                }
+                            });
                             break;
                         case "SM":
                             j = {
                                 "email": value
                             }
+                            app.request({
+                                url: app.data.url + '/users/' + doctor.id,
+                                method: "PUT",
+                                crossDomain: true,
+                                data: j,
+                                success: function(e) {
+                                    console.log('ahoy');
+                                },
+                                error: function(e) {
+                                    app.preloader.hide();
+                                }
+                            }).then(getUser());
                             break;
                         case "SC":
                             j = {
-                                "cellphone": value
+                                "telefono": value
                             }
+                            app.request({
+                                url: app.data.url + '/users/' + doctor.id,
+                                method: "PUT",
+                                crossDomain: true,
+                                data: j,
+                                success: function(e) {
+                                    console.log('ahoy');
+                                },
+                                error: function(e) {
+                                    app.preloader.hide();
+                                }
+                            }).then(getUser());
                             break;
                         case "SS":
-                            specialityID = specialties.values.indexOf(value);
-                            specialityID++;
+                            /* specialityID = specialties.values.indexOf(value);
+                            specialityID++; */
                             j = {
-                                "specialty": {
-                                    "id": specialityID,
-                                }
+                                "especialidad": value
                             }
+                            app.request({
+                                url: app.data.url + '/doctors/' + doctor.doctor.id,
+                                method: "PUT",
+                                crossDomain: true,
+                                data: j,
+                                success: function(e) {
+                                    console.log('ahoy');
+
+                                },
+                                error: function(e) {
+                                    app.preloader.hide();
+                                }
+                            }).then(getUser());
                             break;
                     }
-                    app.request({
-                        url: app.data.url + '/doctors/' + doctor.id,
-                        method: "PATCH",
-                        crossDomain: true,
-                        data: j,
-                        success: function (e) {
-                            app.data.store.removeItem('flow').then(function (e) {
-                                app.request.get(app.data.url + '/doctors/' + doctor.id,
-                                    function (i) {
-                                        var x = JSON.parse(i);
-                                        app.preloader.hide();
-                                        sessionStorage.setItem('user', JSON.stringify(x));
-                                        app.data.store.setItem("doctor", x);
-                                        app.methods.redirectTo('settings');
-                                        location.reload();
-                                    });
-                            });
-                        },
-                        error: function (e) {
+                }
+
+                function getUser() {
+                    app.data.store.removeItem('flow');
+                    app.request.get(app.data.url + '/users/' + doctor.id,
+                        function(ele) {
+                            var x = JSON.parse(ele);
                             app.preloader.hide();
-                        }
-                    });
+                            sessionStorage.setItem('user', JSON.stringify(x));
+                            app.methods.redirectTo('settings');
+                            /* location.reload(); */
+                        });
                 }
 
                 function disableButton() {

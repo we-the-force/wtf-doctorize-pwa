@@ -563,39 +563,46 @@
                 function modificarDoctor() {
                     $$('.photo-module h1').text('Foto de Perfil');
                     $$('.header-blue p').text('Agrega tu foto de perfil');
-                    /* app.data.store.getItem('doctor').then(function (value) {
-                        app.data.doctor = value; */
                     $$('#photo-module .btn-2 a').off('click');
                     $$('#photo-module .btn-2 a').on('click', function(e) {
-                        c.result('base64').then(function(blob) {
+                        c.result('blob').then(blob => {
+                            console.log('yep');
+
                             app.preloader.show('blue');
+                            let file = new File([blob], "perfil.png", new Date());
+                            const data = new FormData();
+                            data.append("files", file);
+                            data.append("refId", doctor.id);
+                            data.append("ref", "user");
+                            data.append('source', 'users-permissions');
+                            data.append('field', 'img_data');
                             app.request({
-                                url: app.data.url + '/doctors/' + doctor.id,
-                                method: "PATCH",
+                                url: app.data.url + '/upload',
+                                method: "POST",
                                 crossDomain: true,
-                                data: {
-                                    "imageData": blob
-                                },
+                                contentType: "multipart/form-data",
+                                data: data,
                                 success: function(e) {
-                                    app.data.store.removeItem('flow').then(function(value) {
-                                        app.preloader.hide();
-                                        app.request.get(app.data.url + '/doctors/' + doctor.id,
-                                            function(i) {
-                                                var x = JSON.parse(i);
-                                                app.data.store.setItem("doctor", x);
-                                                app.methods.redirectTo('settings');
-                                                location.reload();
-                                            });
-                                    });
+                                    console.log('ahoy');
                                 },
                                 error: function(e) {
-                                    app.dialog.alert("error");
                                     app.preloader.hide();
+                                },
+                                complete: function(e) {
+                                    app.data.store.removeItem('flow');
+                                    app.preloader.hide();
+                                    app.request.get(app.data.url + '/users/' + doctor.id,
+                                        function(i) {
+                                            var x = JSON.parse(i);
+                                            app.preloader.hide();
+                                            sessionStorage.setItem('user', JSON.stringify(x));
+                                            app.methods.redirectTo('settings');
+                                        });
                                 }
                             });
+
                         });
                     });
-                    /* }); */
                 }
 
                 function registrarAsistente() {

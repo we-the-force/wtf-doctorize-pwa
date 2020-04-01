@@ -365,7 +365,7 @@
                 var pagos;
 
                 if (doctor != null && doctor != 'undefined' && doctor != '') {
-                    $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + doctor.user.img_data.url + '50.png" alt="not found">');
+                    $$(".toolbar .profile").html('<img src="' + app.data.url + doctor.img_data.url + '" alt="not found">');
                 }
 
                 app.preloader.show('blue');

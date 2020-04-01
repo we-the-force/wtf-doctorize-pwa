@@ -109,8 +109,6 @@
                 moment.locale('es');
                 moment().format();
                 var doctor = JSON.parse(sessionStorage.getItem('user'));
-                console.log(doctor);
-
                 $$('.patients .block-title').click(function(e) {
                     app.data.store.setItem('search', 'home_search_patients').then(function(value) {
                         app.methods.redirectTo('search-module');
@@ -118,9 +116,9 @@
                 });
 
                 if (doctor != null && doctor != 'undefined' && doctor != '') {
-                    $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + doctor.user.img_data.url + '" alt="not found">');
-                    $$('.transparent .ajustes img').attr('src', app.data.url + '/' + doctor.user.img_data.url);
-                    $$('.background .name').text('Dr. ' + doctor.user.username);
+                    $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + doctor.img_data.url + '" alt="not found">');
+                    $$('.transparent .ajustes img').attr('src', app.data.url + '/' + doctor.img_data.url);
+                    $$('.background .name').text('Dr. ' + doctor.username);
                 }
 
 

@@ -78,29 +78,53 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageInit: function (e, page) {
+            pageBeforeOut: function(e, page) {
                 var self = this;
                 var app = self.$app;
-                var hospital = '', direction = '', consultorio = '';
+                if (e.detail.direction == 'backward') {
+                    app.data.store.removeItem('email');
+                    app.data.store.removeItem('nombre');
+                    app.data.store.removeItem('phone');
+                }
+            },
+            pageInit: function(e, page) {
+                var self = this;
+                var app = self.$app;
+                var hospital = '',
+                    direction = '',
+                    consultorio = '';
                 var regex = /^[0-9]*$/;
 
 
-                app.data.store.getItem('office').then(function (value) {
-                    app.data.consultorio = value;
+                app.data.store.getItem('officeEdit').then(function(value) {
 
                     disableButton();
 
-                    if (app.data.consultorio.edit) {
-                        $$('#hospital').val(app.data.consultorio.hospital);
-                        $$('#direction').val(app.data.consultorio.address);
-                        $$('#consultorio').val(app.data.consultorio.number);
-                        hospital = app.data.consultorio.hospital;
-                        direction = app.data.consultorio.address;
-                        consultorio = app.data.consultorio.number;
-                        enableButton();
+                    if (value) {
+                        let hospital, address, number;
+                        app.data.store.iterate(function(val, key, i) {
+                            switch (key) {
+                                case 'address':
+                                    address = val;
+                                    break;
+                                case 'hospital':
+                                    hospital = val;
+                                    break;
+                                case 'number':
+                                    number = val;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }).then(function(e) {
+                            $$('#hospital').val(hospital);
+                            $$('#direction').val(address);
+                            $$('#consultorio').val(number);
+                            enableButton();
+                        });
                     }
 
-                    $$(document).on('input:notempty', '#hospital', function (e) {
+                    /* $$(document).on('input:notempty', '#hospital', function(e) {
                         if (direction != '' && consultorio != '') {
                             hospital = $$('#hospital').val();
                             enableButton();
@@ -109,7 +133,7 @@
                         }
                     });
 
-                    $$(document).on('input:notempty', '#direction', function (e) {
+                    $$(document).on('input:notempty', '#direction', function(e) {
                         if (hospital != '' && consultorio != '') {
                             direction = $$('#direction').val();
                             enableButton();
@@ -118,40 +142,44 @@
                         }
                     });
 
-                    $$(document).on('input:notempty', '#consultorio', function (e) {
+                    $$(document).on('input:notempty', '#consultorio', function(e) {
                         if (direction != '' && hospital != '') {
                             consultorio = $$('#consultorio').val();
                             enableButton();
                         } else {
                             consultorio = $$('#consultorio').val();
                         }
+                    }); */
+
+                    $$('#offices-add-form-map input').on('input:notempty', function(e) {
+                        var nonempty = $$('#offices-add-form-map input').filter(function() {
+                            return this.value != ''
+                        });
+                        if (nonempty.length == 3) {
+                            enableButton();
+                        }
                     });
 
 
-                    $$('#offices-add-form-map #cancel').on('click', function (e) {
+                    $$('#offices-add-form-map #cancel').on('click', function(e) {
                         app.methods.redirectTo('offices-add-form-basic');
                     });
 
-                    $$(document).on('input:empty', function (e) {
+                    $$(document).on('input:empty', function(e) {
                         disableButton();
                     });
                 });
 
                 function enableButton() {
+                    let consultorio = $$('#consultorio').val();
                     if (regex.test(consultorio)) {
-                        app.data.consultorio.hospital = $$('[name="hospital"]').val();
-                        app.data.consultorio.address = $$('[name="direction"]').val();
-                        app.data.consultorio.number = $$('[name="consultorio"]').val();
                         $$('#offices-add-form-map .btn-2 a').removeClass('grey');
                         $$('#offices-add-form-map .btn-2 a').off('click');
-                        $$('#offices-add-form-map .btn-2 a').on('click', function (e) {
-                            app.data.store.setItem("office", app.data.consultorio)
-                                .then(function (value) {
-                                    app.methods.redirectTo('offices-add-form-schedule');
-                                })
-                                .catch(function (err) {
-                                    console.log(err);
-                                });
+                        $$('#offices-add-form-map .btn-2 a').on('click', function(e) {
+                            app.data.store.setItem("hospital", $$('[name="hospital"]').val());
+                            app.data.store.setItem("address", $$('[name="direction"]').val());
+                            app.data.store.setItem("number", consultorio);
+                            app.methods.redirectTo('offices-add-form-schedule');
                         });
                     }
                 }

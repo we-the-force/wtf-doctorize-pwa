@@ -17,7 +17,7 @@
                 </div>
                 <div class="item-inner">
                     <div class="fab btn-fab color-lime">
-                        <a href="/asistentes-invitar-02">
+                        <a href="#">
                             <i class="material-icons">add</i>
                         </a>
                     </div>
@@ -49,7 +49,7 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 var id_asist;
@@ -58,115 +58,143 @@
                 /* 
                 app.data.store.getItem('doctor').then(function (value) {
                     app.data.doctor = value; */
-                app.request.get(app.data.url + '/doctors/' + doctor.id + '/assistants', function (e) {
-                    var x = JSON.parse(e);
-                    console.log(x);
-                    // AGREGAR IM�GEN DEFAULT CUANDO NO TENGA EL ASISTENTE
-                    for (var i = 0; i < x.length; i++) {
-                        if (x[i].name == null) {
-                            x[i].name = 'Por Confirmar...'
-                        }
-                        $$('#asistentes').append(
-                            '<li id="card' + x[i].id + '">' +
-                            '<div class="card v2 card-outline user active">' +
-                            '<div class="rectangle turquoise"></div>' +
-                            '<div class="avatar">' +
-                            '<img src="' + app.data.url + '/' + x[i].photo + '200.png">' +
-                            '</div>' +
-                            '<div class="card-content card-content-padding">' +
-                            '<p class="dark-blue" data-id="' + x[i].id + '">' + x[i].name + '</p>' +
-                            '</div>' +
-                            '<a class="popover-open" data-popover=".popover-set">' +
-                            '<i class="points material-icons dark-blue" data-id="' + x[i].id + '">' +
-                            'more_horiz' +
-                            '</i>' +
-                            '</a>' +
-                            '</div>' +
-                            '</li>'
-                        );
+                app.request.get(app.data.url + '/asistentes?doctor.id=' + doctor.doctor.id,
+                    function(ele) {
+                        var x = JSON.parse(ele);
+                        x.forEach(y => {
+                            let photo;
+                            let activ = y.Activo == true ? "active" : "inactive";
+                            if (y.nombre == null) {
+                                y.nombre = 'Por Confirmar...';
+                                photo = '<img src="../static/images/logo_v2.png" style="background: unset">';
+                            } else {
+                                photo = '<img src="' + app.data.url + y.img_data.url + '">';
+                            }
+
+                            $$('#asistentes').append(
+                                '<li id="card' + y.id + '">' +
+                                '<div class="card v2 card-outline user ' + activ + '">' +
+                                '<div class="rectangle turquoise"></div>' +
+                                '<div class="avatar">' +
+                                photo +
+                                '</div>' +
+                                '<div class="card-content card-content-padding">' +
+                                '<p class="dark-blue" data-id="' + y.id + '">' + y.nombre + '</p>' +
+                                '</div>' +
+                                '<a class="popover-open" data-popover=".popover-set">' +
+                                '<i class="points material-icons dark-blue" data-id="' + y.id + '">' +
+                                'more_horiz' +
+                                '</i>' +
+                                '</a>' +
+                                '</div>' +
+                                '</li>'
+                            );
+                        });
+
+                        app.preloader.hide();
+
+                        $$('.fab').click(function() {
+                            app.data.store.setItem('asistenteEdit', false);
+                            app.methods.redirectTo('asistentes-invitar-02');
+                        });
 
 
-                    }
-                    app.preloader.hide();
+                        $$('#asistentes-invitar-01 .points').click(function(e) {
+                            //guarda el id del horario *****************
+                            id_asist = $$(this).data('id');
+                            //cambia el texto del menu dependiendo si el horario esta desactivado o no
+                            if ($$(this).closest('li').children('div').hasClass('active')) {
+                                $$('.popover-inner li').children('a.state').text('Desactivar');
+                            } else if ($$(this).closest('li').children('div').hasClass('inactive')) {
+                                $$('.popover-inner li').children('a.state').text('Activar');
+                            }
+                        });
 
-                    $$('#asistentes-invitar-01 .points').click(function (e) {
-                        //guarda el id del horario *****************
-                        id_asist = $$(this).data('id');
-                        //cambia el texto del menu dependiendo si el horario esta desactivado o no
-                        if ($$(this).closest('li').children('div').hasClass('active')) {
-                            $$('.popover-inner li').children('a.state').text('Desactivar');
-                        } else if ($$(this).closest('li').children('div').hasClass('inactive')) {
-                            $$('.popover-inner li').children('a.state').text('Activar');
-                        }
-                    });
-
-                    $$('.item-link.delete').click(function (x) {
-                        //cierra pop over
-                        app.popover.close();
-                        //crea cuadro de dialogo
-                        var dialog = app.dialog.create({
-                            cssClass: 'delete',
-                            title: '<i class="material-icons">error</i>',
-                            text: 'Esta seguro que desea eliminar este asistente?',
-                            content: 'Esta operación es irreversible',
-                            buttons: [
-                                {
+                        $$('.item-link.delete').click(function(x) {
+                            //cierra pop over
+                            app.popover.close();
+                            //crea cuadro de dialogo
+                            var dialog = app.dialog.create({
+                                cssClass: 'delete',
+                                title: '<i class="material-icons">error</i>',
+                                text: 'Esta seguro que desea eliminar este asistente?',
+                                content: 'Esta operación es irreversible',
+                                buttons: [{
                                     text: '<p>Cancelar</p> <i class="material-icons">chevron_right</i>',
                                     cssClass: 'cancel',
                                     onClick:
-                                        //cancela la accion, cierra ventana
-                                        function (x, y) {
-                                            dialog.close();
-                                            console.log('Not deleted');
+                                    //cancela la accion, cierra ventana
+                                        function(x, y) {
+                                        dialog.close();
+                                        console.log('Not deleted');
 
-                                        }
-                                },
-                                {
+                                    }
+                                }, {
                                     text: '<p>Eliminar</p> <i class="material-icons">chevron_right</i>',
                                     cssClass: 'delete',
-                                    onClick:
-                                        function (x, y) {
-                                            app.preloader.show('blue');
-                                            app.request({
-                                                url: app.data.url + '/doctors/' + doctor.id + '/assistants/' + id_asist,
-                                                method: "DELETE",
-                                                crossDomain: true,
-                                                success: function (e) {
-                                                    app.preloader.hide();
-                                                    app.dialog.alert('Se eliminó el asistente.', function () {
-                                                        app.methods.cuteHide($$('#asistentes-invitar-01 ul li#card' + id_asist));
-                                                    });
-                                                },
-                                                error: function (e) {
-                                                    app.preloader.hide();
-                                                    app.dialog.alert('Ha ocurrido un error elminando el asistente.');
-                                                }
-                                            });
-                                        }
+                                    onClick: function(x, y) {
+                                        app.preloader.show('blue');
+                                        app.request({
+                                            url: app.data.url + '/asistentes/' + id_asist,
+                                            method: "DELETE",
+                                            crossDomain: true,
+                                            success: function(e) {
+                                                app.preloader.hide();
+                                                app.dialog.alert('Se eliminó el asistente.', function() {
+                                                    app.methods.cuteHide($$('#asistentes-invitar-01 ul li#card' + id_asist));
+                                                });
+                                            },
+                                            error: function(e) {
+                                                app.preloader.hide();
+                                                app.dialog.alert('Ha ocurrido un error elminando el asistente.');
+                                            }
+                                        });
+                                    }
+                                }]
+                            });
+                            //abre cuadro de dialogo
+                            dialog.open();
+                        });
+
+                        $$('.item-link.state').click(function(x) {
+                            let value;
+                            app.preloader.show();
+                            if ($$('#asistentes-invitar-01 #asistentes').find('li#card' + id_asist).children().hasClass('active')) {
+                                value = false;
+                            } else {
+                                value = true;
+                            }
+                            app.request({
+                                url: app.data.url + '/asistentes/' + id_asist,
+                                method: "PUT",
+                                crossDomain: true,
+                                data: {
+                                    "Activo": value
+                                },
+                                success: function(e) {
+                                    app.preloader.hide();
+                                    $$('#asistentes-invitar-01 #asistentes').find('li#card' + id_asist).children().toggleClass('active');
+                                    $$('#asistentes-invitar-01 #asistentes').find('li#card' + id_asist).children().toggleClass('inactive');
+                                },
+                                error: function(e) {
+                                    app.preloader.hide();
                                 }
-                            ]
-                        });
-                        //abre cuadro de dialogo
-                        dialog.open();
-                    });
-
-                    $$('.item-link.edit').click(function (x) {
-                        //salva variable para saber que es edicion, cierra el popover y redirecciona
-                        app.data.assistant.id = id_asist;
-                        app.data.store.setItem('assistant', app.data.assistant).then(function (value) {
+                            });
+                            //mandar desactivar*******************
                             app.popover.close();
-                            app.methods.redirectTo('assistants-offices');
                         });
-                    });
 
-                    $$('.item-link.state').click(function (x) {
-                        //activa desactiva el horario
-                        $$('#asistentes-invitar-01 #asistentes').find('li#card' + id_asist).children().toggleClass('active');
-                        $$('#asistentes-invitar-01 #asistentes').find('li#card' + id_asist).children().toggleClass('inactive');
-                        //mandar desactivar*******************
-                        app.popover.close();
-                    });
-                });
+                        $$('.item-link.edit').click(function(x) {
+                            //salva variable para saber que es edicion, cierra el popover y redirecciona
+                            app.data.store.setItem('asistenteId', id_asist);
+                            app.data.store.setItem('asistenteEdit', true).then(function(e) {
+                                app.popover.close();
+                                app.methods.redirectTo('assistants-offices');
+                            });
+
+                        });
+                    }
+                );
             }
         }
     }

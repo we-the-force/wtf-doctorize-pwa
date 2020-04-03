@@ -80,109 +80,209 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 var items;
                 var doctor = JSON.parse(sessionStorage.getItem('user'));
-                /* app.data.store.getItem('doctor').then(function (value) {
-                    app.data.doctor = value; */
-                app.data.store.getItem('assistant').then(function (assistantValue) {
-                    app.data.assistant = assistantValue;
-                    console.log(assistantValue);
 
-
-                    $$('#asistentes-invitar-04 #cancel').on('click', function (e) {
-                        if (app.data.assistant.edit) {
-                            app.data.assistant.edit = false;
-                            app.data.store.setItem("assistant", app.data.assistant)
-                                .then(function (value) {
-                                    app.methods.redirectTo('assistants-offices');
+                //edit
+                app.data.store.getItem('asistenteEdit').then(function(edit) {
+                    app.data.store.getItem('addOffice').then(function(add) {
+                        if (edit && !add) {
+                            let name, Agenda, Pagos, Expedientes, Pacientes;
+                            app.data.store.iterate(
+                                function(val, key, i) {
+                                    switch (key) {
+                                        case 'Pagos':
+                                            Pagos = val;
+                                            break;
+                                        case 'Agenda':
+                                            Agenda = val;
+                                            break;
+                                        case 'Expedientes':
+                                            Expedientes = val;
+                                            break;
+                                        case 'Pacientes':
+                                            Pacientes = val;
+                                            break;
+                                        case 'consultorioNombre':
+                                            name = val;
+                                            break;
+                                    }
+                                }
+                            ).then(function() {
+                                $$('.header').find('h3').html(name + '<br>Permisos del asistente');
+                                items = $$('[name="chbx"]');
+                                items.forEach(x => {
+                                    switch (x.value) {
+                                        case '1':
+                                            x.checked = Agenda;
+                                            break;
+                                        case '2':
+                                            x.checked = Pacientes;
+                                            break;
+                                        case '3':
+                                            x.checked = Expedientes;
+                                            break;
+                                        case '4':
+                                            x.checked = Pagos;
+                                            break;
+                                        default:
+                                            break;
+                                    }
                                 });
-                        } else {
-                            app.methods.redirectTo('asistentes-invitar-03');
+                            });
                         }
-                    });
 
-                    if (app.data.assistant.edit) {
-                        $$('.header').find('h3').html(app.data.assistant.consultorio.name + '<br>Permisos del asistente');
-                        items = $$('[name="chbx"]');
-                        items.forEach(x => {
-                            var z = false;
-                            app.data.assistant.permisos.forEach(element => {
-                                if (element.id == x.value) {
-                                    x.checked = true;
-                                    z = true;
+                        $$('#asistentes-invitar-04 .btn-2 a').on('click', function(e) {
+                            app.preloader.show('blue');
+                            items = $$('[name="chbx"]');
+                            let Agenda = false,
+                                Pacientes = false,
+                                Expedientes = false,
+                                Pagos = false,
+                                email, consultorioId, asistente_permisos_id, asistenteId;
+                            items.forEach(x => {
+                                if (x.checked == true) {
+                                    switch (x.value) {
+                                        case '1':
+                                            Agenda = true;
+                                            break;
+                                        case '2':
+                                            Pacientes = true;
+                                            break;
+                                        case '3':
+                                            Expedientes = true;
+                                            break;
+                                        case '4':
+                                            Pagos = true;
+                                            break;
+                                    }
                                 }
                             });
-                            if (!z) {
-                                x.checked = false;
+                            app.data.store.iterate(function(value, key, i) {
+                                switch (key) {
+                                    case "consultorioId":
+                                        consultorioId = value;
+                                        break;
+                                    case "asistenteId":
+                                        asistenteId = value;
+                                        break;
+                                    case "email":
+                                        email = value;
+                                        break;
+                                    case "asistente_permisos_id":
+                                        asistente_permisos_id = value;
+                                        break;
+                                    default:
+                                        break;
+                                }
+
+                            }).then(function(e) {
+                                if (add) {
+                                    app.request.postJSON(app.data.url + '/asistente-permisos', {
+                                        "Agenda": Agenda,
+                                        "Pacientes": Pacientes,
+                                        "Expedientes": Expedientes,
+                                        "Pagos": Pagos,
+                                        "asistente": asistenteId,
+                                        "consultorio": consultorioId
+                                    }, function(el) {
+                                        redirectOffices();
+                                    }, function(el) {
+                                        app.dialog.alert('Ha ocurrido un error añadiendo los permisos del asistente.', function() {
+                                            redirectOffices();
+                                        });
+                                    });
+                                } else if (edit) {
+                                    //agregar endpoint
+                                    app.request({
+                                        url: app.data.url + '/asistente-permisos/' + asistente_permisos_id,
+                                        method: "PUT",
+                                        crossDomain: true,
+                                        data: {
+                                            "Agenda": Agenda,
+                                            "Pacientes": Pacientes,
+                                            "Expedientes": Expedientes,
+                                            "Pagos": Pagos
+                                        },
+                                        success: function(e) {
+                                            redirectOffices();
+                                        },
+                                        error: function(e) {
+                                            app.dialog.alert('Ha ocurrido un error modificando los permisos del asistente.', function() {
+                                                redirectOffices();
+                                            });
+
+                                        }
+                                    });
+                                } else {
+
+                                    app.request.postJSON(app.data.url + '/asistentes', {
+                                        "correo": email,
+                                        "doctor": doctor.doctor.id
+                                    }, function(e) {
+                                        app.request.postJSON(app.data.url + '/asistente-permisos', {
+                                            "Agenda": Agenda,
+                                            "Pacientes": Pacientes,
+                                            "Expedientes": Expedientes,
+                                            "Pagos": Pagos,
+                                            "asistente": e.id,
+                                            "consultorio": consultorioId
+                                        }, function(el) {
+
+                                            app.data.store.clear();
+                                            app.preloader.hide();
+                                            app.methods.redirectTo('asistentes-confirmar');
+
+                                        }, function(el) {
+
+                                            app.preloader.hide();
+
+                                        });
+                                    }, function(e) {
+                                        app.preloader.hide();
+                                    });
+                                }
+
+                            });
+                        });
+
+                        $$('#asistentes-invitar-04 #cancel').on('click', function(e) {
+                            if (add) {
+                                app.data.store.removeItem("consultorioId");
+                                app.methods.redirectTo('asistentes-invitar-03');
+                            } else if (edit) {
+                                app.data.store.removeItem("Agenda");
+                                app.data.store.removeItem("Pacientes");
+                                app.data.store.removeItem("Expedientes");
+                                app.data.store.removeItem("Pagos");
+                                app.data.store.removeItem("consultorioId");
+                                app.data.store.removeItem("consultorioNombre");
+                                app.data.store.removeItem("asistente_permisos_id");
+                                app.methods.redirectTo('assistants-offices');
+                            } else {
+                                app.data.store.removeItem('consultorioId');
+                                app.methods.redirectTo('asistentes-invitar-03');
                             }
                         });
-                    }
 
-                    $$('#asistentes-invitar-04 .btn-2 a').on('click', function (e) {
-                        items = $$('[name="chbx"]');
-                        app.data.assistant.permisos = [];
-                        for (var i = 0; i < items.length; i++) {
-                            if (items[i].checked == true) {
-                                app.data.assistant.permisos.push({ 'id': items[i].value });
-                            }
-                        }
-                        app.preloader.show('blue');
-                        console.log(app.data.assistant);
-                        console.log(app.data.doctor.id);
-
-                        if (app.data.assistant.edit || app.data.assistant.addOffice) {
-                            //agregar endpoint
-                            app.request({
-                                url: app.data.url + '/doctors/' + doctor.id + '/assistants/' + app.data.assistant.id,
-                                method: "PATCH",
-                                crossDomain: true,
-                                data: {
-                                    "id": app.data.assistant.id,
-                                    "offices": [{
-                                        "doctorId": doctor.id,
-                                        "officeName": app.data.assistant.consultorio.name,
-                                        "officeId": app.data.assistant.consultorio.id,
-                                        "permissions": app.data.assistant.permisos
-                                    }]
-
-                                },
-                                success: function (e) {
-                                    redirectOffices();
-                                },
-                                error: function (e) {
-                                    redirectOffices();
-                                }
-                            });
-                        } else {
-                            app.request.postJSON(app.data.url + '/doctors/' + doctor.id + '/assistants', {
-                                "email": app.data.assistant.email,
-                                "doctorId": doctor.id,
-                                "officeId": app.data.assistant.consultorio.id,
-                                "permissions": app.data.assistant.permisos
-                            }, function (e) {
-                                app.preloader.hide();
-                                app.methods.redirectTo('asistentes-confirmar');
-                            },
-                                function (e) {
+                        function redirectOffices() {
+                            app.data.store.getItem('asistenteId').then(function(a_id) {
+                                let edit_a = edit;
+                                let id_a = a_id;
+                                app.data.store.clear().then(function(e) {
+                                    app.data.store.setItem('asistenteEdit', edit_a);
+                                    app.data.store.setItem('asistenteId', id_a);
+                                    app.methods.redirectTo('assistants-offices');
                                     app.preloader.hide();
                                 });
+
+                            });
                         }
                     });
                 });
-                /*  }); */
-
-                function redirectOffices() {
-                    app.data.assistant.addOffice = false;
-                    app.data.assistant.edit = false;
-                    app.data.store.setItem("assistant", app.data.assistant)
-                        .then(function (value) {
-                            app.methods.redirectTo('assistants-offices');
-                            app.preloader.hide();
-                        });
-                }
             }
         }
     }

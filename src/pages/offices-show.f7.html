@@ -61,26 +61,11 @@
                 app.request.get(app.data.url + '/consultorios?doctor.id=' + doctor.doctor.id,
                     function(ele) {
                         var x = JSON.parse(ele);
-                        app.preloader.hide();
 
                         $$('.fab').click(function() {
                             app.data.store.setItem('officeEdit', false);
                             app.methods.redirectTo('offices-add-form-basic');
                         });
-                        /*  }); */
-                        /* app.data.store.getItem('doctor').then(function (value) {
-                            app.data.doctor = value; */
-                        /* 
-                                        $$('.fab').click(function() {
-                                            app.data.consultorio.edit = false;
-                                            app.data.store.setItem('office', app.data.consultorio).then(function(value) {
-                                                app.methods.redirectTo('offices-add-form-basic');
-                                            });
-                                        }); */
-
-                        /* app.request.get(app.data.url + '/doctors/' + doctor.id + '/offices',
-                            function(e) {
-                                var x = JSON.parse(e); */
                         for (var i = 0; i < x.length; i++) {
                             let HA = x[i].HorarioApertura.split(":");
                             let HC = x[i].HorarioCierre.split(":");

@@ -511,7 +511,7 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 var new_x = false;
@@ -519,16 +519,22 @@
                 var moment = require('moment');
                 moment().format();
 
+                app.data.store.getItem('horario-json').then(function(ele) {
+                    ele.forEach(x => {
+                        fillEdit(x);
+                    });
+                });
+
                 //llenar datos ya guardarlos ********************
 
                 //cuando la tarjeta se expande cambia la direccion de la flecha y esconde el resumen de horarios
-                $$('.accordion-item').on('accordion:open', function () {
+                $$('.accordion-item').on('accordion:open', function() {
                     $$(this).find('.item-link').children('i').text('keyboard_arrow_up');
                     $$(this).find('.resume').css('display', 'none');
                 });
 
                 //cuando la tarjeta se contrae cambia la direccion de la flecha
-                $$('.accordion-item').on('accordion:close', function () {
+                $$('.accordion-item').on('accordion:close', function() {
                     $$(this).find('.item-link').children('i').text('keyboard_arrow_down');
                     //si la tarjeta esta inactiva se queda escondido el resumen
                     if (!$$(this).children('.card').hasClass('inactive')) {
@@ -538,7 +544,7 @@
                 });
 
                 //evento al abrir el pop up de horario
-                $$('.edit-timetable').on('popup:open', function (e) {
+                $$('.edit-timetable').on('popup:open', function(e) {
                     let ti, to;
                     //checa si es nuevo horario o edicion
                     if (new_x) {
@@ -563,7 +569,7 @@
                 });
 
                 //evento al cambiar la hora en el input
-                $$('.time-selector input').change(function (val) {
+                $$('.time-selector input').change(function(val) {
                     //formato al los valores
                     let ti = moment($$('.edit-timetable').find('#time-in').val(), "hh:mm");
                     let to = moment($$('.edit-timetable').find('#time-out').val(), "hh:mm");
@@ -587,7 +593,7 @@
                 });
 
                 //funcionamiento de botones entrada salida
-                $$('.popup .head .in').click(function (x) {
+                $$('.popup .head .in').click(function(x) {
                     $$('.popup .body .in-time').addClass('active');
                     $$('.popup .body .out-time').removeClass('active');
                     $$('.popup .body .out-time').children('input').prop('disabled', true);
@@ -595,7 +601,7 @@
                 });
 
                 //funcionamiento de botones entrada salida
-                $$('.popup .head .out').click(function (x) {
+                $$('.popup .head .out').click(function(x) {
                     $$('.popup .body .out-time').addClass('active');
                     $$('.popup .body .in-time').removeClass('active');
                     $$('.popup .body .in-time').children('input').prop('disabled', true);
@@ -603,7 +609,7 @@
                 });
 
                 //evento nuevo horario dentro de la tarjeta
-                $$('.new_horario').click(function (x) {
+                $$('.new_horario').click(function(x) {
                     //guarda dia de la semana
                     //varibale de nuevo horario
                     //crea pop op
@@ -617,7 +623,7 @@
                 });
 
                 //cuando hace click en los horarios
-                $$('.popup_open').click(function (x) {
+                $$('.popup_open').click(function(x) {
                     //guarda el numero de linea
                     //guarda dia de la semana
                     //guarda horas de el horario
@@ -636,7 +642,7 @@
                 //dehabilita doble click del boton
                 $$('.btn .add').off('click');
                 //evento click del boton
-                $$('.btn .add').click(function (x) {
+                $$('.btn .add').click(function(x) {
                     //si esta deshabilitado sale de la funcion
                     if ($$(this).hasClass('grey')) {
                         return;
@@ -679,39 +685,39 @@
                     $$('a.close').click(deleteHour);
                 });
                 //activa/deactiva horario
-                $$('.toggle').change(function (val) {
+                $$('.toggle').change(function(val) {
                     var toggle = app.toggle.get($$(this));
                     if (!toggle.checked) {
                         $$(this).closest('.card').addClass('inactive');
                     } else {
                         $$(this).closest('.card').removeClass('inactive');
-                        
+
                     }
                 });
 
-                $$('.btn .last').click(function (x) {
+                $$('.btn .last').click(function(x) {
                     //guarda datos
                     let json = [{}, {}, {}, {}, {}, {}, {}];
                     let cards = $$('#doctor-horarios-edit #cards ul').children('.accordion-item');
                     for (let i = 0; i < cards.length; i++) {
                         let card = cards[i];
-                        json[i].name = $$(card).attr('id');//dia
-                        if (!$$(card).children('.card').hasClass('inactive')) {//activo 
-                            json[i].active = true;
+                        json[i].nombre = $$(card).attr('id'); //dia
+                        if (!$$(card).children('.card').hasClass('inactive')) { //activo 
+                            json[i].activo = true;
                         } else {
-                            json[i].active = false;
+                            json[i].activo = false;
                         }
-                        json[i].hours = [];//horas
+                        json[i].horas = []; //horas
                         for (let j = 0; j < $$(card).find('ul').children().length; j++) {
                             let hour = $$(card).find('ul').children()[j];
-                            json[i].hours.push({});
+                            json[i].horas.push({});
                             let arr = $$(hour).children('p').text().split(' - ');
-                            json[i].hours[j].start = arr[0];
-                            json[i].hours[j].end = arr[1];
+                            json[i].horas[j].start = arr[0] + ':00.000';
+                            json[i].horas[j].end = arr[1] + ':00.000';
                         }
                     }
                     //guarda datos y envia a la pagina anterior
-                    app.data.store.setItem('horario-json', json).then(function (value) {
+                    app.data.store.setItem('horario-json', json).then(function(value) {
                         app.methods.redirectTo('doctor-horarios-add');
                     });
                 });
@@ -725,6 +731,46 @@
                     //quita del reumen
                     $$(this).closest('.card-content').children('.resume').children('p#r' + tid).prev().remove();
                     $$(this).closest('.card-content').children('.resume').children('p#r' + tid).remove();
+                }
+
+                function fillEdit(val) {
+                    var toggle = app.toggle.get($$('#' + val.nombre + ' .card-content .toggle'));
+                    if (val.activo) {
+                        toggle.checked = true;
+                        $$('#' + val.nombre + ' .card').closest('.card').removeClass('inactive');
+                    } else {
+                        toggle.checked = false;
+                        $$('#' + val.nombre + ' .card').closest('.card').addClass('inactive');
+                        $$('#' + val.nombre + ' .card').find('.resume').css('display', 'none');
+                    }
+                    $$('#' + val.nombre + ' .resume').empty();
+                    $$('#' + val.nombre + ' .list ul').empty();
+                    for (let i = 0; i < val.horas.length; i++) {
+                        const y = val.horas[i];
+                        let ArrST = y.start.split(":");
+                        let ArrEt = y.end.split(":");
+                        let st = ArrST[0] + ':' + ArrST[1];
+                        let et = ArrEt[0] + ':' + ArrEt[1];
+
+                        $$('#' + val.nombre + ' .list ul').append('<li class="row hora" id="' + y.id + '">' +
+                            '<a class="close">' +
+                            '<i class="material-icons">' +
+                            'close' +
+                            '</i>' +
+                            '</a>' +
+                            '<p class="popup_open" data-popup=".edit-timetable"> ' + st + ' - ' + et + ' </p>' +
+                            '<a class="edit popup_open" data-popup=".edit-timetable">' +
+                            '<i class="material-icons">' +
+                            'chevron_right' +
+                            '</i>' +
+                            '</a>' +
+                            '</li>'
+                        );
+                        if (i != 0) {
+                            $$('#' + val.nombre + ' .resume').append('<hr>');
+                        }
+                        $$('#' + val.nombre + ' .resume').append('<p id="r' + y.id + '"> ' + st + ' - ' + et + '</p>');
+                    }
                 }
             }
         }

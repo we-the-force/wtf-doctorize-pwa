@@ -18,8 +18,8 @@
                                 <i class="material-icons grey">
                                     monetization_on
                                 </i>
-                                <input type="text" name="quantity" id="quantity" placeholder="Cantidad" required
-                                    validate value="$600.00">
+                                <input type="number" name="quantity" id="quantity" placeholder="Cantidad" required
+                                    validate value="600.00">
                                 <span class="input-clear-button"></span>
                             </div>
                         </div>
@@ -40,12 +40,12 @@
                 </div>
                 <div class="method">
                     <p class="label">Metodo de pago</p>
-                    <p class="data dark-blue">Efectivo</p>
+                    <p class="data dark-blue" style="text-align: right;">Efectivo</p>
                 </div>
             </div>
             <div class="container">
                 <div class="btn-2">
-                    <a href="/doctor/agregar/pago/summary">
+                    <a href="#">
                         <p>Siguiente </p>
                         <i class="material-icons white">chevron_right</i>
                     </a>
@@ -59,16 +59,47 @@
 
     export default {
         on: {
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
-                app.request.get(app.data.url,
-                    function (e) {
+                app.data.store.getItem('metodo').then(function(e) {
+                    $$('#doctor-agregar-pago-info .method .data').text(e);
+
+                    enableButton();
+
+                    $$(document).on('input:empty', function(e) {
+                        disableButton();
+                    });
+
+                    $$('#doctor-agregar-pago-info input').on('input:notempty', function(e) {
+                        $$('#doctor-agregar-pago-info .total .data').text('$' + $$(this).val());
+                        $$('#doctor-agregar-pago-info .total2pay .data').text('$' + $$(this).val());
+                        enableButton();
+                    });
+                });
+
+                function disableButton() {
+                    $$('#doctor-agregar-pago-info .btn-2 a').addClass('grey');
+                    $$('#doctor-agregar-pago-info .btn-2 a').off('click');
+                }
+
+                function enableButton() {
+                    $$('#doctor-agregar-pago-info .btn-2 a').removeClass('grey');
+                    $$('#doctor-agregar-pago-info .btn-2 a').off('click');
+                    $$('#doctor-agregar-pago-info .btn-2 a').click(function() {
+                        app.data.store.setItem('costo', $$('#doctor-agregar-pago-info input').val()).then(function() {
+                            app.methods.redirectTo('doctor-agregar-pago-summary');
+                        });
+
+                    });
+                }
+                /* app.request.get(app.data.url,
+                    function(e) {
                         var x = JSON.parse(e);
                         $$('#doctor-agregar-pago-info .total .data').val('$500.00');
                         $$('#doctor-agregar-pago-info .total2pay .data').val('$500.00');
                     },
-                );
+                ); */
             }
         }
     }

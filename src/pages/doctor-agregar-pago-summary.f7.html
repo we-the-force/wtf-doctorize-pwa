@@ -23,7 +23,7 @@
                 </div>
                 <div class="method">
                     <p class="label">Metodo de pago</p>
-                    <p class="data dark-blue">Efectivo</p>
+                    <p class="data dark-blue" style="text-align: right;">Efectivo</p>
                 </div>
                 <div class="total">
                     <p class="label">Total</p>
@@ -45,22 +45,68 @@
 
     export default {
         on: {
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
-
-                $$('.container .btn-2 a').click(function (e) {
-                    let consulta = localStorage.getItem('consulta');
-                    if (consulta) {
-                        let newMed = { "pago": "pago" };
-                        localStorage.setItem('pago', JSON.stringify(newMed));
-                        app.methods.redirectTo('nueva-consulta');
-                    } else {
-                        app.methods.redirectTo('doctor-agregar-pago-success');
+                var nombre, pacienteId, metodo, total, consulta;
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
+                app.data.store.iterate(function(value, key, i) {
+                    switch (key) {
+                        case "pago-patient":
+                            nombre = value;
+                            break;
+                        case "pago-patient-id":
+                            pacienteId = value;
+                            break;
+                        case "metodo":
+                            metodo = value;
+                            break;
+                        case "costo":
+                            total = value;
+                            break;
+                        case "pado-pend-id":
+                            consulta = value;
+                            break;
+                        default:
+                            break;
                     }
 
-                });
+                }).then(function(e) {
+                    $$('#doctor-agregar-pago-summary .name .data').text(nombre);
+                    $$('#doctor-agregar-pago-summary .method .data').text(metodo);
+                    $$('#doctor-agregar-pago-summary .total .data').text('$' + total);
+                    $$('.container .btn-2 a').click(function(e) {
+                        app.preloader.show('blue');
+                        app.request.postJSON(app.data.url + '/pagos', {
+                                "costo": total,
+                                "metodo": metodo,
+                                "estatus": "confirmado",
+                                "paciente": pacienteId,
+                                "doctor": doctor.doctor.id,
+                                "consulta": consulta
+                            },
+                            function(el) {
+                                app.preloader.hide();
+                                app.methods.redirectTo('doctor-agregar-pago-success');
+                            },
+                            function(el) {
+                                app.dialog.alert("Error al registrar pago");
+                                app.preloader.hide();
+                            });
 
+                        /* 
+                        let consulta = localStorage.getItem('consulta');
+                        if (consulta) {
+                            let newMed = {
+                                "pago": "pago"
+                            };
+                            localStorage.setItem('pago', JSON.stringify(newMed));
+                            app.methods.redirectTo('nueva-consulta');
+                        } else { */
+
+                        /* } */
+                    });
+                });
             }
         }
     }

@@ -3,7 +3,7 @@
         <div class="page-content">
             <div class="header">
                 <div class="addPay">
-                    <a class="back">
+                    <a class="">
                         <i class="material-icons">chevron_left</i>
                     </a>
                     <p class="title1">Nuevo pago</p>
@@ -104,45 +104,77 @@
 
     export default {
         on: {
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
+                let pago, paciente, metodo;
+
+                disableButton();
                 //checar
-                app.data.store.getItem('pago-pend').then(function (value) {
-                    $$('#doctor-agregar-pago #pay .card-content .data .text').text(value);
-                    //check
+                app.data.store.getItem('pago-pend').then(function(value) {
+                    app.data.store.getItem('pago-pend-id').then(function(val) {
+                        $$('#doctor-agregar-pago #pay .card-content .data .text').text(value);
+                        $$('#doctor-agregar-pago #pay .card-content .data .text').data('id', val);
+                        pago = value == null ? false : true;
+                        //trigger para checkar values
+                        if (value != null) $$(document).trigger("checkValues");
+                    });
                 });
 
-                app.data.store.getItem('pago-patient').then(function (value) {
-                    $$('#doctor-agregar-pago #patient .card-content .data .text').text(value);
-                    //check
+                app.data.store.getItem('pago-patient').then(function(value) {
+                    app.data.store.getItem('pago-patient-id').then(function(val) {
+                        $$('#doctor-agregar-pago #patient .card-content .data .text').text(value);
+                        $$('#doctor-agregar-pago #patient .card-content .data .text').data('id', val);
+                        //check
+                        paciente = value == null ? false : true;
+                        //trigger para checkar values
+                        if (value != null) $$(document).trigger("checkValues");
+                    });
                 });
 
-                $$('.popover-pay a.option').click(function (x) {
+                $$('.popover-pay a.option').click(function(x) {
                     let row = $$(this);
                     row.parent().parent().find('.active').removeClass('active');
                     row.addClass('active');
                     $$('#doctor-agregar-pago #type .card-content .data .text').text(row.text());
-                    //checar 
+                    metodo = true;
+                    $$(document).trigger("checkValues");
                 });
 
-                $$('.card#pay').click(function (x) {
+                $$('.card#pay').click(function(x) {
                     app.methods.redirectTo('doctor-pagos-pendientes');
                 });
 
-                $$('.card#patient').click(function (x) {
-                    app.data.store.setItem('search', 'patients_pagos').then(function (value) {
+                $$('.card#patient').click(function(x) {
+                    app.data.store.setItem('search', 'patients_pagos').then(function(value) {
                         app.methods.redirectTo('search-module');
                     });
                 });
 
-                $$('.container .btn-2').click(function (x) {
-                    app.methods.redirectTo('doctor-agregar-pago-info');
-                })
 
-                $$('#doctor-agregar-pago .header a').click(function (val) {
-                    app.data.store.clear();
+                $$('#doctor-agregar-pago .header a').click(function(val) {
+                    app.data.store.clear().then(function(e) {
+                        app.methods.redirectTo('home');
+                    });
                 });
+
+                $$(document).on('checkValues', function(val) {
+                    //si los 3 valores estan activa boton
+                    if (metodo && paciente && pago) {
+                        console.log('ahoy');
+                        $$('.container .btn-2 a').removeClass('grey');
+                        $$('.container .btn-2 a').click(function(x) {
+                            app.data.store.setItem('metodo', $$('#doctor-agregar-pago #type .card-content .data .text').text()).then(function() {
+                                app.methods.redirectTo('doctor-agregar-pago-info');
+                            });
+                        });
+                    }
+                });
+
+                function disableButton() {
+                    $$('#doctor-agregar-pago .btn-2 a').addClass('grey');
+                    $$('#doctor-agregar-pago .btn-2 a').off('click');
+                }
             }
         }
     }

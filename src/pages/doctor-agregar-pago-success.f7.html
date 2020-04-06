@@ -43,13 +43,34 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
+                let nombre, metodo, total;
+                app.data.store.iterate(function(value, key, i) {
+                    switch (key) {
+                        case "pago-patient":
+                            nombre = value;
+                            break;
+                        case "metodo":
+                            metodo = value;
+                            break;
+                        case "costo":
+                            total = value;
+                            break;
+                        default:
+                            break;
+                    }
 
-                $$('#doctor-agregar-pago-success .fab-center-bottom a').click(function (x) {
-                    app.data.store.clear();
+                }).then(function(e) {
+                    $$('#doctor-agregar-pago-success .patient .data').text(nombre);
+                    $$('#doctor-agregar-pago-success .method .data').text(metodo);
+                    $$('#doctor-agregar-pago-success .pay .data').text('$' + total);
+                    $$('#doctor-agregar-pago-success .fab-center-bottom a').click(function(x) {
+                        app.data.store.clear();
+                    });
                 });
+
 
             }
         }

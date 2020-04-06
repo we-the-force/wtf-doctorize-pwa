@@ -26,90 +26,6 @@
             <div class="searchbar-backdrop"></div>
             <div class="list searchbar-found">
                 <ul>
-                    <!--                     <li>
-                        <div class="card card-outline search patients">
-                            <div class="rectangle turquoise"></div>
-                            <div class="avatar">
-                                <img>
-                            </div>
-                            <div class="card-content card-content-padding">
-                                <p class="dark-blue data" data-id="' + i + '">Silvia Navarro</p>
-                                <p class="addr">Avda. Arroyos, 185. Col. Lomas Bajas</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="card card-outline search patients">
-                            <div class="rectangle turquoise"></div>
-                            <div class="avatar">
-                                <img>
-                            </div>
-                            <div class="card-content card-content-padding">
-                                <p class="dark-blue data" data-id="' + i + '">Segio Alcantara</p>
-                                <p class="addr">Calle Mariano Abasolo 1090</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="card card-outline search patients">
-                            <div class="rectangle turquoise"></div>
-                            <div class="avatar">
-                                <img>
-                            </div>
-                            <div class="card-content card-content-padding">
-                                <p class="dark-blue data" data-id="' + i + '">Laura Rodríguez</p>
-                                <p class="addr">Rayon 1030</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="card card-outline search patients">
-                            <div class="rectangle turquoise"></div>
-                            <div class="avatar">
-                                <img>
-                            </div>
-                            <div class="card-content card-content-padding">
-                                <p class="dark-blue data" data-id="' + i + '">Andrea Escareño</p>
-                                <p class="addr">Blvd. Fundadores 2820</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="card card-outline search patients">
-                            <div class="rectangle turquoise"></div>
-                            <div class="avatar">
-                                <img>
-                            </div>
-                            <div class="card-content card-content-padding">
-                                <p class="dark-blue data" data-id="' + i + '">Pablo Alberto</p>
-                                <p class="addr">Calle Mariano Abasolo 1090</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="card card-outline search patients">
-                            <div class="rectangle turquoise"></div>
-                            <div class="avatar">
-                                <img>
-                            </div>
-                            <div class="card-content card-content-padding">
-                                <p class="dark-blue data" data-id="' + i + '">Alejandro Reyes</p>
-                                <p class="addr">Rayon 1030</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="card card-outline search patients">
-                            <div class="rectangle turquoise"></div>
-                            <div class="avatar">
-                                <img>
-                            </div>
-                            <div class="card-content card-content-padding">
-                                <p class="dark-blue data" data-id="' + i + '">Saraí Delgado</p>
-                                <p class="addr">Blvd. Fundadores 2820</p>
-                            </div>
-                        </div>
-                    </li> -->
                 </ul>
             </div>
             <div class="block searchbar-not-found">
@@ -124,26 +40,32 @@
 
     export default {
         on: {
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
 
-                app.request.get(app.data.url,
-                    function (e) {
-                        /* y.forEach(el => {
-                        fillDay(x, el);
-                    }); *//* $$('#'+x) */
-                        for (let i = 0; i < 6; i++) {
+                app.request.get(app.data.url + '/pacientes',
+                    function(e) {
+                        var x = JSON.parse(e);
+                        for (let i = 0; i < x.length; i++) {
+                            const ele = x[i];
+                            let photo;
+                            let direc = ele.direccion == null ? '' : ele.direccion;
+                            if (ele.img_data != null) {
+                                photo = '<img src="' + app.data.url + ele.img_data.url + '">';
+                            } else {
+                                photo = '<img src="../static/images/logo_v2.png" style="background: unset">';
+                            }
                             $$('.searchbar-found ul').append(
                                 '<li>' +
                                 '<div class="card card-outline search patients">' +
                                 '<div class="rectangle turquoise"></div>' +
                                 '<div class="avatar">' +
-                                '<img>' +
+                                photo +
                                 '</div>' +
                                 '<div class="card-content card-content-padding">' +
-                                '<p class="dark-blue data" data-id="' + i + '">Silvia Navarro</p>' +
-                                '<p class="addr">Avda. Arroyos, 185. Col. Lomas Bajas</p>' +
+                                '<p class="dark-blue data" data-id="' + ele.id + '">' + ele.nombre + '</p>' +
+                                '<p class="addr">' + direc + '</p>' +
                                 '</div>' +
                                 '</div>' +
                                 '</li>'
@@ -155,99 +77,32 @@
                             searchContainer: '.searchbar-found',
                             searchIn: '.data',
                             on: {
-                                search(sb, query, previousQuery) {
-                                    console.log(query, previousQuery);
-                                }
+                                search(sb, query, previousQuery) {}
                             }
                         });
 
-                        app.data.store.getItem('search').then(function (value) {
+                        app.data.store.getItem('search').then(function(value) {
                             if (value == 'patients_pagos') {
                                 $$('#search-module .header .title1').text('Pacientes');
-                                $$('.card.search').click(function (x) {
-                                    let data = $$(this).find('.data').text();//cambiar a ir
-                                    app.data.store.setItem('pago-patient', data).then(function (value) {
+                                $$('.card.search').click(function(x) {
+                                    let data = $$(this).find('.data').text(); //cambiar a ir
+                                    let data_id = $$(this).find('.data').data('id');
+                                    app.data.store.setItem('pago-patient-id', data_id);
+                                    app.data.store.setItem('pago-patient', data).then(function(value) {
                                         app.data.store.removeItem('search');
                                         app.methods.redirectTo('doctor-agregar-pago');
                                     });
                                 });
                             } else if (value == 'home_search_patients') {
-                                $$('.card.search').click(function (x) {
+                                $$('.card.search').click(function(x) {
                                     app.data.store.removeItem('search');
                                     app.methods.redirectTo('paciente-perfil');
                                 });
                             }
                         });
                     },
-                    function (e) {
-                        for (let i = 0; i < 6; i++) {
-                            $$('.searchbar-found ul').append(
-                                '<li>' +
-                                '<div class="card card-outline search patients">' +
-                                '<div class="rectangle turquoise"></div>' +
-                                '<div class="avatar">' +
-                                '<img>' +
-                                '</div>' +
-                                '<div class="card-content card-content-padding">' +
-                                '<p class="dark-blue data" data-id="' + i + '">Silvia Navarro</p>' +
-                                '<p class="addr">Avda. Arroyos, 185. Col. Lomas Bajas</p>' +
-                                '</div>' +
-                                '</div>' +
-                                '</li>'
-                            );
-                        }
-
-
-                        var searchbar = app.searchbar.create({
-                            el: '.searchbar',
-                            searchContainer: '.searchbar-found',
-                            searchIn: '.data',
-                            on: {
-                                search(sb, query, previousQuery) {
-                                    console.log(query, previousQuery);
-                                }
-                            }
-                        });
-
-                        app.data.store.getItem('search').then(function (value) {
-                            if (value == 'patients_pagos') {
-                                $$('#search-module .header .title1').text('Pacientes');
-                                $$('.card.search').click(function (x) {
-                                    let data = $$(this).find('.data').text();//cambiar a ir
-                                    app.data.store.setItem('pago-patient', data).then(function (value) {
-                                        app.data.store.removeItem('search');
-                                        app.methods.redirectTo('doctor-agregar-pago');
-                                    });
-                                });
-                            } else if (value == 'home_search_patients') {
-                                $$('.card.search').click(function (x) {
-                                    app.data.store.removeItem('search');
-                                    app.methods.redirectTo('paciente-perfil');
-                                });
-                            }
-                        });
-                    }
+                    function(e) {}
                 );
-
-
-                /* app.data.store.getItem('search').then(function (value) {
-                    if (value == 'patients_pagos') {
-                        $$('#search-module .header .title1').text('Pacientes');
-                        $$('.card.search').click(function (x) {
-                            let data = $$(this).find('.data').text();//cambiar a ir
-                            app.data.store.setItem('pago-patient', data).then(function (value) {
-                                app.data.store.removeItem('search');
-                                app.methods.redirectTo('doctor-agregar-pago');
-                            });
-                        });
-                    } else if (value == 'home_search_patients') {
-                        $$('.card.search').click(function (x) {
-                            app.data.store.removeItem('search');
-                            app.methods.redirectTo('paciente-perfil');
-                        });
-                    }
-                }); */
-
             }
         }
     }

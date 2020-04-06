@@ -112,35 +112,16 @@
                     }
                 });
 
-                /* $$(document).on('input:notempty', '#nombre', function(e) {
-                    if (email != '' && phone != '') {
-                        name = $$('#nombre').val();
-                        enableButton();
-                    } else {
-                        name = $$('#nombre').val();
-                    }
-                });
-
-                $$(document).on('input:notempty', '#email', function(e) {
-                    if (name != '' && phone != '') {
-                        email = $$('#email').val();
-                        enableButton();
-                    } else {
-                        email = $$('#email').val();
-                    }
-                });
-
-                $$(document).on('input:notempty', '#phone', function(e) {
-                    if (name != '' && email != '') {
-                        phone = $$('#phone').val();
-                        enableButton();
-                    } else {
-                        phone = $$('#phone').val();
-                    }
-                }); */
-
                 $$(document).on('input:empty', function(e) {
                     disableButton();
+                });
+
+                $$('#agendar-cita .btn-back').click(function() {
+                    app.data.store.clear().then(
+                        function() {
+                            app.methods.redirectTo('home');
+                        }
+                    );
                 });
 
                 function enableButton() {

@@ -71,74 +71,6 @@
                 app.data.store.getItem('consultorio').then(function(e) {
                     app.request.get(app.data.url + '/consultorios/' + e, function(val) {
                         var x = JSON.parse(val);
-                        /* app.data.store.getItem('office').then(function (value) {
-            app.data.consultorio = value;
-            app.request.get(app.data.url + '/offices/' + app.data.consultorio.id,
-                function (e) {
-                    var x = JSON.parse(e);
-                    app.data.consultorio.startTime = x.startTime;
-                    app.data.consultorio.closeTime = x.closeTime;
-                    app.data.consultorio.lunchStartTime = x.lunchStartTime;
-                    app.data.consultorio.lunchCloseTime = x.lunchCloseTime;
-                    app.data.consultorio.days = x.days;
-                    app.preloader.hide();
-                });
- 
-            calendarModal.on('change', function (x, y) {
-                var z = moment(new Date(calendarModal.getValue()));
-                today = moment();
- 
-                app.request.get(app.data.url + '/doctors/' + doctor.id + '/appointments?filter=office&filter=date&search=' + app.data.consultorio.id + '&search=' + z.format("YYYY-MM-DD"),
-                    function (e) {
-                        let x = JSON.parse(e);
-                        x = x.map(e => moment(e.date));
-                        let y = [];
-                        let startTimeArray = app.data.consultorio.startTime.split(":");
-                        let startTime = moment(z).hour(startTimeArray[0]).minute(startTimeArray[1]);
-                        let closeTimeArray = app.data.consultorio.closeTime.split(":");
-                        let closeTime = moment(z).hour(closeTimeArray[0]).minute(closeTimeArray[1]);
-                        let lunchStartTimeArray = app.data.consultorio.lunchStartTime.split(":");
-                        let lunchStartTime = moment(z).hour(lunchStartTimeArray[0]).minute(lunchStartTimeArray[1]);
-                        let lunchCloseTimeArray = app.data.consultorio.lunchCloseTime.split(":");
-                        let lunchCloseTime = moment(z).hour(lunchCloseTimeArray[0]).minute(lunchCloseTimeArray[1]);
- 
-                        z = startTime;
- 
-                        while (z.isBefore(closeTime)) {
-                            if (z.isAfter(today)) {
-                                if (!z.isBetween(lunchStartTime, lunchCloseTime)) {
-                                    if (x.every(e => !(e.isSameOrAfter(z) && e.isBefore(moment(z).add(30, 'm'))))) {
-                                        y.push(z.format("HH:mm"));
-                                        z.add(30, 'm');
-                                        continue;
-                                    }
-                                }
-                            }
-                            z.add(30, 'm');
-                        }
- 
-                        $$(document).on('picker:closed', '#time', function (e) {
-                            enableButton(z, pickerDevice.getValue());
-                        });
- 
-                        var pickerDevice = app.picker.create({
-                            inputEl: '#time',
-                            cols: [
-                                {
-                                    textAlign: 'center',
-                                    values: y
-                                }
-                            ]
-                        });
- 
-                    }, function (params) {
-                        console.log(params);
- 
-                    });
- 
-            });
- 
-        }); */
 
                         var calendarModal = app.calendar.create({
                             inputEl: '#date',
@@ -235,6 +167,13 @@
                     });
                 });
 
+                $$('#agendar-cita-fecha .btn-back').click(function() {
+                    app.data.store.clear().then(
+                        function() {
+                            app.methods.redirectTo('agendar-cita');
+                        }
+                    );
+                });
 
                 function enableButton(z, y) {
                     $$('#agendar-cita-fecha .btn-2 a').removeClass('grey');
@@ -272,48 +211,17 @@
                                     "consultorio": consultorio
                                 },
                                 function(e) {
-                                    app.preloader.hide();
-                                    app.methods.redirectTo('cita-agendada');
+                                    app.data.store.clear().then(
+                                        function() {
+                                            app.preloader.hide();
+                                            app.methods.redirectTo('cita-agendada');
+                                        }
+                                    );
                                 },
                                 function(e) {
                                     app.preloader.hide();
                                 });
                         });
-
-                        /* app.data.store.getItem('patient').then(function(patient) {
-                            app.data.patient = patient;
-                            datetime = moment(z.format("YYYY-MM-DD") + 'T' + y);
-                            app.preloader.show('blue');
-                            let consulta = localStorage.getItem('consulta');
-                            if (consulta) {
-                                let newCita = {
-                                    "email": app.data.paciente.email,
-                                    "doctorId": doctor.id,
-                                    "officeId": app.data.consultorio.id,
-                                    "name": app.data.paciente.nombre,
-                                    "phone": app.data.paciente.phone,
-                                    "date": datetime.toDate()
-                                };
-                                localStorage.setItem('cita', JSON.stringify(newCita));
-                                app.methods.redirectTo('nueva-consulta');
-                            } else {
-                                app.request.postJSON(app.data.url + '/doctors/' + doctor.id + '/appointments', {
-                                        "email": app.data.paciente.email,
-                                        "doctorId": doctor.id,
-                                        "officeId": app.data.consultorio.id,
-                                        "name": app.data.paciente.nombre,
-                                        "phone": app.data.paciente.phone,
-                                        "date": datetime.toDate(),
-                                    },
-                                    function(e) {
-                                        app.preloader.hide();
-                                        app.methods.redirectTo('cita-agendada');
-                                    },
-                                    function(e) {
-                                        app.preloader.hide();
-                                    });
-                            }
-                        }); */
                     });
                 };
 

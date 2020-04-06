@@ -182,6 +182,7 @@
                         '</div>',
                     buttons: [{}]
                 });
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
 
                 disableButton();
 
@@ -224,7 +225,8 @@
                                 },
                                 "peso": weight,
                                 "estatura": height,
-                                "tipo_sangre": blood
+                                "tipo_sangre": blood,
+                                "doctor": doctor.doctor.id
                             },
                             function(e) {
                                 console.log(e);

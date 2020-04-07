@@ -122,6 +122,8 @@
                                     app.request.get(app.data.url + '/citas?fecha=' + z.format("YYYY-MM-DD"),
                                         function(el) {
                                             let v = JSON.parse(el);
+
+                                            console.log(v);
                                             v = v.map(e => {
                                                 let horaArr = e.hora.split(":");
                                                 return moment(z).hour(horaArr[0]).minute(horaArr[1]);
@@ -149,6 +151,7 @@
                                                 }
                                                 z.add(30, 'm');
                                             }
+
                                             var pickerDevice = app.picker.create({
                                                 inputEl: '#time',
                                                 cols: [{
@@ -201,6 +204,8 @@
                             }
 
                         }).then(function(e) {
+                            console.log(z.format("YYYY-MM-DD"));
+
                             app.request.postJSON(app.data.url + '/citas', {
                                     "correo": email,
                                     "telefono": phone,

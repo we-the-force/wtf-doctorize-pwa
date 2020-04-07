@@ -155,7 +155,7 @@
                 );
 
                 //consulta citas
-                app.request.get(app.data.url + '/citas?doctor.id=' + doctor.doctor.id + '&_limit=10&_sort=fecha:desc', function(e) {
+                app.request.get(app.data.url + '/citas?doctor.id=' + doctor.doctor.id + '&_limit=10&_sort=fecha:asc', function(e) {
                     let today = moment();
                     let cards = 0;
                     let x = JSON.parse(e);

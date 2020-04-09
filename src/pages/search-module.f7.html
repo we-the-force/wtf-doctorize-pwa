@@ -95,8 +95,12 @@
                                 });
                             } else if (value == 'home_search_patients') {
                                 $$('.card.search').click(function(x) {
-                                    app.data.store.removeItem('search');
-                                    app.methods.redirectTo('paciente-perfil');
+                                    let id_p = $$(this).find('.data').data('id');
+                                    console.log(id_p);
+                                    app.data.store.setItem('search', true)
+                                    app.data.store.setItem('patient_id', id_p).then(function(value) {
+                                        app.methods.redirectTo('paciente-perfil');
+                                    });
                                 });
                             }
                         });

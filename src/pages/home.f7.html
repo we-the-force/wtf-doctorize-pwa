@@ -138,18 +138,30 @@
                         for (let i = 0; i < 5; i++) {
                             const element = x[i];
                             let photo;
+                            let id_p;
                             if (element == undefined) {
                                 photo = '<img src="../static/images/logo.png" alt="not found">';
+                                id_p = null;
                             } else {
                                 photo = '<img src="' + app.data.url + '/' + element.img_data.url + '" alt="not found">';
+                                id_p = element.id
                             }
 
                             $$('#home li.patients .row').append(
-                                '<a class="col">' +
+                                '<a class="col" data-patient="' + id_p + '"">' +
                                 photo +
                                 '</a>'
                             );
+
                         }
+                        $$('#home li.patients .row a').click(function(val) {
+                            let id_p = $$(this).data('patient');
+                            if (id_p != null) {
+                                app.data.store.setItem('patient_id', id_p).then(function(value) {
+                                    app.methods.redirectTo('paciente-perfil');
+                                });
+                            }
+                        });
 
                     }
                 );
@@ -188,7 +200,6 @@
                     let x = JSON.parse(e);
                     let swiper = app.swiper.get('.payments .swiper-container');
                     x.forEach(element => {
-                        console.log(element);
                         let date = moment(element.updated_at);
                         swiper.appendSlide(
                             '<div class="swiper-slide" id="' + element.id + '">' +

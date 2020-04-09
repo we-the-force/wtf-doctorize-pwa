@@ -123,27 +123,26 @@
                     if (edit) {
                         //llena inputs
                         app.preloader.show('blue');
-                        app.data.store.getItem('patient_id').then(function(value) {
-                            var ptnt_id = value;
-                            app.data.store.getItem('cond_med_id').then(function(value) {
-                                var cnd_mdc_id = value;
-                                app.request.get(app.data.url + '/patients/' + ptnt_id,
-                                    function(e) {
-                                        var x = JSON.parse(e);
-                                        $$('#paciente-cond-med-form input#name').val('Alejandro');
-                                        $$('#paciente-cond-med-form select').val('inactiva');
-                                        document.querySelector("#paciente-cond-med-form input#date").valueAsDate = new Date();
-                                        $$('#paciente-cond-med-form input#tp').val('Alejandro');
-                                        $$('#paciente-cond-med-form .medicamentos #id_1 input').val('Paracetamol');
-                                        $$('#paciente-cond-med-form textarea').val('just a note');
+                        app.data.store.getItem('cond_med_id').then(function(value) {
+                            var cnd_mdc_id = value;
+                            app.request.get(app.data.url + '/condicion-medicas/' + cnd_mdc_id,
+                                function(e) {
+                                    var x = JSON.parse(e);
+                                    console.log(x);
+                                    let date = new Date(x.fecha_diagnostico);
+                                    $$('#paciente-cond-med-form input#name').val(x.nombre);
+                                    $$('#paciente-cond-med-form select').val(x.activa == true ? 'Activa' : 'Inactiva');
+                                    document.querySelector("#paciente-cond-med-form input#date").valueAsDate = date;
+                                    $$('#paciente-cond-med-form input#tp').val(x.tratado_por);
+                                    $$('#paciente-cond-med-form .medicamentos #id_1 input').val(x.medicamentos[0].nombre);
+                                    $$('#paciente-cond-med-form textarea').val(x.notas);
 
-                                        checkval();
-                                        app.preloader.hide();
-                                    },
-                                    function(e) {
-                                        app.preloader.hide();
-                                    });
-                            });
+                                    checkval();
+                                    app.preloader.hide();
+                                },
+                                function(e) {
+                                    app.preloader.hide();
+                                });
                         });
                     }
 
@@ -234,8 +233,34 @@
                                         });
                                 });
                             } else {
-                                console.log('api create');
-
+                                app.data.store.getItem('patient_id').then(function(value) {
+                                    var ptnt_id = value;
+                                    app.data.store.getItem('cond_med_id').then(function(value) {
+                                        var cnd_mdc_id = value;
+                                        status = status == 'Activa' ? true : false;
+                                        app.request({
+                                            url: app.data.url + '/condicion-medicas/' + cnd_mdc_id,
+                                            method: "PUT",
+                                            crossDomain: true,
+                                            data: {
+                                                "nombre": name,
+                                                "activa": status,
+                                                "fecha_diagnostico": date,
+                                                "tratado_por": tp,
+                                                "medicamentos": med,
+                                                "notas": nota,
+                                                "paciente": ptnt_id
+                                            },
+                                            success: function(e) {
+                                                app.preloader.hide();
+                                                app.methods.redirectTo('paciente-perfil');
+                                            },
+                                            error: function(e) {
+                                                app.preloader.hide();
+                                            }
+                                        });
+                                    });
+                                });
                             }
                         });
                     } else if (nonempty.length < num_input) {

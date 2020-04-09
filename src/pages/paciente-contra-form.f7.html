@@ -94,7 +94,7 @@
                                 app.data.store.getItem('patient_id').then(function(value) {
                                     var ptnt_id = value;
                                     app.request.postJSON(app.data.url + '/contraindicaciones', {
-                                            "contraindicaciones": contra,
+                                            "contraindicacion": contra,
                                             "paciente": ptnt_id
                                         },
                                         function(e) {

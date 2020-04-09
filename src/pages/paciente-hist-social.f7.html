@@ -12,55 +12,53 @@
         <div class="page-content">
             <div class="slot ocupacion">
                 <p class="title">Ocupación</p>
-                <p class="data">Ingeniero</p>
+                <p class="data"></p>
             </div>
             <div class="slot education">
                 <p class="title">Educación</p>
-                <p class="data">Licenciatura / 2018</p>
+                <p class="data"></p>
             </div>
             <div class="slot nacimiento">
                 <p class="title">Lugar de nacimiento</p>
-                <p class="data link">Saltillo, Coah.</p>
+                <p class="data link"></p>
             </div>
             <div class="slot civil">
                 <p class="title">Estado Civil</p>
-                <p class="data">Soltero</p>
+                <p class="data"></p>
             </div>
             <div class="slot hijos">
                 <p class="title">Hijos</p>
-                <p class="data">No</p>
+                <p class="data"></p>
             </div>
             <div class="slot sex">
                 <p class="title">Orientación sexual</p>
-                <p class="data">Heterosexual</p>
+                <p class="data"></p>
             </div>
             <div class="slot smoke">
                 <p class="title">Fuma</p>
-                <p class="data">Si</p>
+                <p class="data"></p>
             </div>
             <div class="slot alcohol">
                 <p class="title">Alcohol</p>
-                <p class="data">Si</p>
+                <p class="data"></p>
             </div>
             <div class="slot drugs">
                 <p class="title">Sustancias</p>
-                <p class="data">cannabis</p>
+                <p class="data"></p>
             </div>
             <div class="slot ejercicio">
                 <p class="title">Ejercicio</p>
-                <p class="data">Ocasional</p>
+                <p class="data"></p>
             </div>
             <div class="slot stres">
                 <p class="title">Estres</p>
-                <p class="data">Moderado</p>
+                <p class="data"></p>
             </div>
             <div class="slot notes">
                 <p class="title">Notas</p>
-                <p class="data">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                <p class="added">Agregada por: Dr. Bryan Thomas Gosling </p>
-                <p class="date">19/02/2020 11:15 PM</p>
+                <p class="data"></p>
+                <!-- <p class="added">Agregada por: Dr. Bryan Thomas Gosling </p>
+                <p class="date">19/02/2020 11:15 PM</p> -->
             </div>
 
         </div>
@@ -81,89 +79,89 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageBeforeOut: function (e,page) {
+            pageBeforeOut: function(e, page) {
                 var self = this;
                 var app = self.$app;
-                if(e.detail.direction == 'backward')
-                {
+                if (e.detail.direction == 'backward') {
                     app.data.store.removeItem('hsocial_id');
                 }
             },
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
 
                 app.preloader.show('blue');
-                app.data.store.getItem('patient_id').then(function (value) {
-                    var ptnt_id = value;
-                    app.data.store.getItem('hsocial_id').then(function (value) {
-                        var cnd_mdc_id = value;
-                        app.request.get(app.data.url + '/patients/' + ptnt_id,
-                            function (e) {
-                                var x = JSON.parse(e);
-                                $$(".slot.ocupacion .data").text("Algo");
-                                $$(".slot.education .data").text("Algo");
-                                $$(".slot.nacimiento .data").text("Algo");
-                                $$(".slot.civil .data").text("Algo");
-                                $$(".slot.hijos .data").text("Algo");
-                                $$(".slot.sex .data").text("Algo");
-                                $$(".slot.smoke .data").text("Algo");
-                                $$(".slot.alcohol .data").text("Algo");
-                                $$(".slot.drugs .data").text("Algo");
-                                $$(".slot.ejercicio .data").text("Algo");
-                                $$(".slot.stres .data").text("Algo");
-                                $$(".slot.notes .data").text("Algo");
-                                app.preloader.hide();
-                            },
-                            function (e) {
-                                app.preloader.hide();
-                            });
-                    });
-                });
+                app.data.store.getItem('hsocial').then(function(value) {
+                    var x = value;
+                    $$(".slot.ocupacion .data").text(x.ocupacion);
+                    $$(".slot.education .data").text(x.educacion);
+                    $$(".slot.nacimiento .data").text(x.lugar_nacimiento);
+                    $$(".slot.civil .data").text(x.estado_civil);
+                    $$(".slot.hijos .data").text(x.hijos);
+                    $$(".slot.sex .data").text(x.orientacion_sexual);
+                    $$(".slot.smoke .data").text(x.fuma == true ? 'Si' : 'No');
+                    $$(".slot.alcohol .data").text(x.alcohol == true ? 'Si' : 'No');
+                    $$(".slot.drugs .data").text(x.sustancias);
+                    $$(".slot.ejercicio .data").text(x.ejercicio);
+                    $$(".slot.stres .data").text(x.estres);
+                    $$(".slot.notes .data").text(x.notas);
+                    app.preloader.hide();
 
-                $$('.popover-edit .item-link.edit').click(function (x) {
-                    app.popover.close();
-                    app.data.store.setItem('edit_patient_data', true).then(function (value) {
-                        app.methods.redirectTo('paciente-hist-social-form');
+                    $$('.popover-edit .item-link.edit').click(function(x) {
+                        app.popover.close();
+                        app.data.store.setItem('edit_patient_data', true).then(function(value) {
+                            app.methods.redirectTo('paciente-hist-social-form');
+                        });
                     });
-                });
 
-                $$('.popover-edit .item-link.delete').click(function (x) {
-                    //cierra pop over
-                    app.popover.close();
-                    //crea cuadro de dialogo
-                    var dialog = app.dialog.create({
-                        cssClass: 'delete',
-                        title: '<i class="material-icons">error</i>',
-                        text: 'Esta seguro que desea eliminar?',
-                        content: 'Esta operación es irreversible',
-                        buttons: [
-                            {
+                    $$('.popover-edit .item-link.delete').click(function(x) {
+                        //cierra pop over
+                        app.popover.close();
+                        //crea cuadro de dialogo
+                        var dialog = app.dialog.create({
+                            cssClass: 'delete',
+                            title: '<i class="material-icons">error</i>',
+                            text: 'Esta seguro que desea eliminar?',
+                            content: 'Esta operación es irreversible',
+                            buttons: [{
                                 text: '<p>Cancelar</p> <i class="material-icons">chevron_right</i>',
                                 cssClass: 'cancel',
                                 onClick:
-                                    //cancela la accion, cierra ventana
-                                    function (x, y) {
-                                        dialog.close();
-                                        console.log('do not delete ');
+                                //cancela la accion, cierra ventana
+                                    function(x, y) {
+                                    dialog.close();
+                                    console.log('do not delete ');
 
-                                    }
-                            },
-                            {
+                                }
+                            }, {
                                 text: '<p>Eliminar</p> <i class="material-icons">chevron_right</i>',
                                 cssClass: 'delete',
-                                onClick:
-                                    function (x, y) {
-                                        //mandar eliminar el horario**********+
-                                        //cierra ventana, elimina tarjeta
-                                        dialog.close();
-                                        console.log('delete');
-                                    }
-                            }
-                        ]
+                                onClick: function(x, y) {
+                                    app.preloader.show('blue');
+                                    app.data.store.getItem('patient_id').then(function(value) {
+                                        var ptnt_id = value;
+                                        app.request({
+                                            url: app.data.url + '/pacientes/' + ptnt_id,
+                                            method: "PUT",
+                                            crossDomain: true,
+                                            data: {
+                                                "Historia_social": {}
+                                            },
+                                            success: function(e) {
+                                                app.preloader.hide();
+                                                app.methods.redirectTo('paciente-perfil');
+                                            },
+                                            error: function(e) {
+                                                app.preloader.hide();
+                                            }
+                                        });
+                                    });
+                                }
+                            }]
+                        });
+                        //abre cuadro de dialogo
+                        dialog.open();
                     });
-                    //abre cuadro de dialogo
-                    dialog.open();
                 });
             }
         }

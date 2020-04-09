@@ -12,35 +12,35 @@
         <div class="page-content">
             <div class="slot alergia">
                 <p class="title">Alergía</p>
-                <p class="data">Dermatitis de contacto</p>
+                <p class="data"></p>
             </div>
             <div class="slot cause">
                 <p class="title">Causado por</p>
-                <p class="data">Polen</p>
+                <p class="data"></p>
             </div>
             <div class="slot med">
                 <p class="title">Medicamento</p>
-                <p class="data link">Linagliptina/Metformina</p>
+                <!-- 
+                <p class="data link">Linagliptina/Metformina</p> -->
             </div>
             <div class="slot react">
                 <p class="title">Reacción</p>
-                <p class="data">Sarpullido de la piel ocasionado por el contacto con polen</p>
+                <p class="data"></p>
             </div>
-            <div class="slot last">
+            <!-- <div class="slot last">
                 <p class="title">Último caso</p>
                 <p class="data ">20/ 02 /2020</p>
-            </div>
+            </div> -->
             <div class="slot since">
                 <p class="title">Desde</p>
-                <p class="data ">2018</p>
+                <p class="data "></p>
             </div>
             <div class="slot notes">
                 <p class="title">Notas</p>
-                <p class="data">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p class="data"></p>
+                <!-- 
                 <p class="added">Agregada por: Dr. Bryan Thomas Gosling </p>
-                <p class="date">19/02/2020 11:15 PM</p>
+                <p class="date">19/02/2020 11:15 PM</p> -->
             </div>
 
         </div>
@@ -61,84 +61,94 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageBeforeOut: function (e,page) {
+            pageBeforeOut: function(e, page) {
                 var self = this;
                 var app = self.$app;
-                if(e.detail.direction == 'backward')
-                {
+                if (e.detail.direction == 'backward') {
                     app.data.store.removeItem('aler_id');
                 }
             },
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
-
+                var moment = require('moment');
+                moment.locale('es');
+                moment().format();
                 app.preloader.show('blue');
-                app.data.store.getItem('patient_id').then(function (value) {
-                    var ptnt_id = value;
-                    app.data.store.getItem('aler_id').then(function (value) {
-                        var cnd_mdc_id = value;
-                        app.request.get(app.data.url + '/patients/' + ptnt_id,
-                            function (e) {
-                                var x = JSON.parse(e);
-                                $$(".slot.alergia .data").text("Algo");
-                                $$(".slot.cause .data").text("Algo");
-                                $$(".slot.med .data").text("Algo");
-                                $$(".slot.react .data").text("Algo");
-                                $$(".slot.last .data").text("Algo");
-                                $$(".slot.since .data").text("Algo");
-                                $$(".slot.notes .data").text("Algo");
-                                app.preloader.hide();
-                            },
-                            function (e) {
-                                app.preloader.hide();
+                app.data.store.getItem('aler_id').then(function(value) {
+                    var cnd_mdc_id = value;
+                    app.request.get(app.data.url + '/alergias/' + cnd_mdc_id,
+                        function(e) {
+                            var x = JSON.parse(e);
+                            console.log(x);
+                            let date = moment(x.primer_diagnostico);
+                            $$(".slot.alergia .data").text(x.nombre);
+                            $$(".slot.cause .data").text(x.causa);
+                            x.medicamentos.forEach(element => {
+                                $$(".slot.med").append(
+                                    '<p class="data link">' + element.nombre + '</p>'
+                                );
                             });
-                    });
-                });
+                            $$(".slot.react .data").text(x.reacciones);
+                            $$(".slot.since .data").text(date.format('DD/MM/YYYY'));
+                            $$(".slot.notes .data").text(x.notas);
+                            app.preloader.hide();
 
-                $$('.popover-edit .item-link.edit').click(function (x) {
-                    app.popover.close();
-                    app.data.store.setItem('edit_patient_data', true).then(function (value) {
-                        app.methods.redirectTo('paciente-alergias-form');
-                    });
-                });
+                            $$('.popover-edit .item-link.edit').click(function(x) {
+                                app.popover.close();
+                                app.data.store.setItem('edit_patient_data', true).then(function(value) {
+                                    app.methods.redirectTo('paciente-alergias-form');
+                                });
+                            });
 
-                $$('.popover-edit .item-link.delete').click(function (x) {
-                    //cierra pop over
-                    app.popover.close();
-                    //crea cuadro de dialogo
-                    var dialog = app.dialog.create({
-                        cssClass: 'delete',
-                        title: '<i class="material-icons">error</i>',
-                        text: 'Esta seguro que desea eliminar?',
-                        content: 'Esta operación es irreversible',
-                        buttons: [
-                            {
-                                text: '<p>Cancelar</p> <i class="material-icons">chevron_right</i>',
-                                cssClass: 'cancel',
-                                onClick:
-                                    //cancela la accion, cierra ventana
-                                    function (x, y) {
-                                        dialog.close();
-                                        console.log('do not delete ');
+                            $$('.popover-edit .item-link.delete').click(function(x) {
+                                //cierra pop over
+                                app.popover.close();
+                                //crea cuadro de dialogo
+                                var dialog = app.dialog.create({
+                                    cssClass: 'delete',
+                                    title: '<i class="material-icons">error</i>',
+                                    text: 'Esta seguro que desea eliminar?',
+                                    content: 'Esta operación es irreversible',
+                                    buttons: [{
+                                        text: '<p>Cancelar</p> <i class="material-icons">chevron_right</i>',
+                                        cssClass: 'cancel',
+                                        onClick:
+                                        //cancela la accion, cierra ventana
+                                            function(x, y) {
+                                            dialog.close();
+                                            console.log('do not delete ');
 
-                                    }
-                            },
-                            {
-                                text: '<p>Eliminar</p> <i class="material-icons">chevron_right</i>',
-                                cssClass: 'delete',
-                                onClick:
-                                    function (x, y) {
-                                        //mandar eliminar el horario**********+
-                                        //cierra ventana, elimina tarjeta
-                                        dialog.close();
-                                        console.log('delete');
-                                    }
-                            }
-                        ]
-                    });
-                    //abre cuadro de dialogo
-                    dialog.open();
+                                        }
+                                    }, {
+                                        text: '<p>Eliminar</p> <i class="material-icons">chevron_right</i>',
+                                        cssClass: 'delete',
+                                        onClick: function(x, y) {
+                                            app.preloader.show('blue');
+                                            app.request({
+                                                url: app.data.url + '/alergias/' + cnd_mdc_id,
+                                                method: "DELETE",
+                                                crossDomain: true,
+                                                success: function(e) {
+                                                    app.preloader.hide();
+                                                    app.dialog.alert('Se ha eliminado.', function() {
+                                                        app.methods.redirectTo('paciente-perfil');
+                                                    });
+                                                },
+                                                error: function(e) {
+                                                    app.preloader.hide();
+                                                }
+                                            });
+                                        }
+                                    }]
+                                });
+                                //abre cuadro de dialogo
+                                dialog.open();
+                            });
+                        },
+                        function(e) {
+                            app.preloader.hide();
+                        });
                 });
             }
         }

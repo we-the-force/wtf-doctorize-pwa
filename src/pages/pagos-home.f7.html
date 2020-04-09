@@ -402,7 +402,7 @@
                                     total = +x.costo;
                                 });
                                 $$('.header .TotalIncome').text('$' + total);
-                                $$('.header .TotalIncome').toggleClass('light-blue');
+                                $$('.header .TotalIncome').removeClass('light-blue');
                                 $$('.header .labelIncome').text('Total de ingresos');
                                 /* fillPage('recibidos'); */
                             } else if (tab.attr('id') == 'pendientes_tab') {
@@ -411,7 +411,7 @@
                                     total = +x.costo;
                                 });
                                 $$('.header .TotalIncome').text('$' + total); //agregar valor
-                                $$('.header .TotalIncome').toggleClass('light-blue');
+                                $$('.header .TotalIncome').addClass('light-blue');
                                 $$('.header .labelIncome').text('Total pendientes');
                                 /* fillPage('pendientes'); */
                             }

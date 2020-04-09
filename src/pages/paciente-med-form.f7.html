@@ -200,32 +200,30 @@
                     if (edit) {
                         //llena inputs
                         app.preloader.show('blue');
-                        app.data.store.getItem('patient_id').then(function(value) {
-                            var ptnt_id = value;
-                            app.data.store.getItem('med_id').then(function(value) {
-                                var cnd_mdc_id = value;
-                                app.request.get(app.data.url + '/patients/' + ptnt_id,
-                                    function(e) {
-                                        var x = JSON.parse(e);
-                                        $$('#paciente-med-form input#med_name').val('Alejandro');
-                                        $$('#paciente-med-form select#type').val('Capsula');
-                                        $$('#paciente-med-form select#type_ing').val('inyeccion');
-                                        $$('#paciente-med-form input#quantity').val('12');
-                                        $$('#paciente-med-form select#unity').val('ml');
-                                        $$('#paciente-med-form input#dosis').val('2');
-                                        $$('#paciente-med-form input#dosis_2').val('diario');
-                                        $$('#paciente-med-form input#when').val('en la mañana');
-                                        $$('#paciente-med-form input#period').val('7 dias');
-                                        $$('#paciente-med-form input#medicine').val('diabetes');
-                                        $$('#paciente-med-form input#prescript').val('diabetes');
-                                        $$('#paciente-med-form input#secound').val('picazon');
-                                        checkval();
-                                        app.preloader.hide();
-                                    },
-                                    function(e) {
-                                        app.preloader.hide();
-                                    });
-                            });
+                        app.data.store.getItem('med_id').then(function(value) {
+                            var cnd_mdc_id = value;
+                            app.request.get(app.data.url + '/medicamentos/' + cnd_mdc_id,
+                                function(e) {
+                                    var x = JSON.parse(e);
+                                    $$('#paciente-med-form input#med_name').val(x.nombre);
+                                    $$('#paciente-med-form select#type').val(x.tipo_medicina);
+                                    $$('#paciente-med-form select#type_ing').val(x.tipo_ingesta);
+                                    $$('#paciente-med-form input#quantity').val(x.cantidad);
+                                    $$('#paciente-med-form select#unity').val(x.unidad);
+                                    $$('#paciente-med-form input#dosis').val(x.dosis[0].dosis);
+                                    $$('#paciente-med-form input#dosis_2').val(x.dosis[0].frecuencia);
+                                    $$('#paciente-med-form input#when').val(x.dosis[0].cuando);
+                                    $$('#paciente-med-form input#period').val(x.periodo);
+                                    $$('#paciente-med-form input#medicine').val(x.medicina_para);
+                                    $$('#paciente-med-form input#prescript').val(x.prescrita_por);
+                                    $$('#paciente-med-form input#secound').val(x.efectos_secundarios);
+                                    $$('#paciente-med-form textarea').val(x.notas);
+                                    checkval();
+                                    app.preloader.hide();
+                                },
+                                function(e) {
+                                    app.preloader.hide();
+                                });
                         });
                     }
 
@@ -328,8 +326,39 @@
 
                             let consulta = localStorage.getItem('consulta');
                             if (edit) {
-                                console.log('api edit');
-                                app.methods.redirectTo('paciente-perfil');
+                                app.data.store.getItem('patient_id').then(function(value) {
+                                    var ptnt_id = value;
+                                    app.data.store.getItem('med_id').then(function(value) {
+                                        var cnd_mdc_id = value;
+                                        app.request({
+                                            url: app.data.url + '/medicamentos/' + cnd_mdc_id,
+                                            method: "PUT",
+                                            crossDomain: true,
+                                            data: {
+                                                "nombre": name,
+                                                "tipo_medicina": tipo_med,
+                                                "tipo_ingesta": tipo_ing,
+                                                "cantidad": quantity,
+                                                "unidad": medida,
+                                                "periodo": period,
+                                                "notas": notas,
+                                                "medicina_para": medicine,
+                                                "prescrita_por": prescript,
+                                                "efectos_secundarios": secound,
+                                                "paciente": ptnt_id,
+                                                "dosis": dosis_arr
+                                            },
+                                            success: function(e) {
+                                                app.preloader.hide();
+                                                app.methods.redirectTo('paciente-perfil');
+                                            },
+                                            error: function(e) {
+                                                app.preloader.hide();
+                                            }
+                                        });
+                                    });
+                                });
+
                             } else if (consulta) {
                                 let newMed = {
                                     name,

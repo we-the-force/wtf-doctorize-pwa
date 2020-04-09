@@ -174,31 +174,39 @@
                     if (edit) {
                         //llena inputs
                         app.preloader.show('blue');
-                        app.data.store.getItem('patient_id').then(function(value) {
-                            var ptnt_id = value;
-                            app.data.store.getItem('hsocial_id').then(function(value) {
-                                var cnd_mdc_id = value;
-                                app.request.get(app.data.url + '/patients/' + ptnt_id,
-                                    function(e) {
-                                        var x = JSON.parse(e);
-                                        $$('#paciente-hist-social-form input#ocupacion').val('coronavirus');
-                                        $$('#paciente-hist-social-form input#edu').val('coronavirus');
-                                        $$('#paciente-hist-social-form input#place').val('coronavirus');
-                                        $$('#paciente-hist-social-form input#children').val('coronavirus');
-                                        $$('#paciente-hist-social-form input#drugs').val('coronavirus');
-                                        $$('#paciente-hist-social-form input#ejercicio').val('coronavirus');
-                                        $$('#paciente-hist-social-form input#stres').val('coronavirus');
-                                        $$('#paciente-hist-social-form select#civil').val('Viudo');
-                                        $$('#paciente-hist-social-form select#sex').val('Demisexual');
-                                        $$('#paciente-hist-social-form input#no[name="demo-radio-smoke"]').prop("checked", true);
-                                        $$('#paciente-hist-social-form input#yes[name="demo-radio-alcohol"]').prop("checked", true);
-                                        checkval();
-                                        app.preloader.hide();
-                                    },
-                                    function(e) {
-                                        app.preloader.hide();
-                                    });
-                            });
+                        app.data.store.getItem('hsocial').then(function(value) {
+                            /* var cnd_mdc_id = value;
+                            app.request.get(app.data.url + '/patients/' + ptnt_id,
+                                function (e) { */
+                            var x = value;
+                            console.log(x);
+
+                            $$('#paciente-hist-social-form input#ocupacion').val(x.ocupacion);
+                            $$('#paciente-hist-social-form input#edu').val(x.educacion);
+                            $$('#paciente-hist-social-form input#place').val(x.lugar_nacimiento);
+                            $$('#paciente-hist-social-form input#children').val(x.hijos);
+                            $$('#paciente-hist-social-form input#drugs').val(x.sustancias);
+                            $$('#paciente-hist-social-form input#ejercicio').val(x.ejercicio);
+                            $$('#paciente-hist-social-form input#stres').val(x.estres);
+                            $$('#paciente-hist-social-form select#civil').val(x.estado_civil);
+                            $$('#paciente-hist-social-form select#sex').val(x.orientacion_sexual);
+                            $$('#paciente-hist-social-form textarea').val(x.notas);
+                            if (x.fuma) {
+                                $$('#paciente-hist-social-form input#yes[name="demo-radio-smoke"]').prop("checked", true);
+                            } else {
+                                $$('#paciente-hist-social-form input#no[name="demo-radio-smoke"]').prop("checked", true);
+                            }
+                            if (x.alcohol) {
+                                $$('#paciente-hist-social-form input#yes[name="demo-radio-alcohol"]').prop("checked", true);
+                            } else {
+                                $$('#paciente-hist-social-form input#no[name="demo-radio-alcohol"]').prop("checked", true);
+                            }
+                            checkval();
+                            app.preloader.hide();
+                            /* },
+                            function(e) {
+                                app.preloader.hide();
+                            }); */
                         });
                     }
 
@@ -230,43 +238,43 @@
                             nota = $$('#paciente-hist-social-form textarea').val();
                             smoke = smoke == 'yes' ? true : false;
                             alcohol = alcohol == 'yes' ? true : false;
-                            if (edit) {
+                            /* if (edit) {
                                 console.log('api edit');
                                 app.methods.redirectTo('paciente-perfil');
-                            } else {
-                                app.preloader.show('blue');
-                                app.data.store.getItem('patient_id').then(function(value) {
-                                    var ptnt_id = value;
-                                    app.request({
-                                        url: app.data.url + '/pacientes/' + ptnt_id,
-                                        method: "PUT",
-                                        crossDomain: true,
-                                        data: {
-                                            "Historia_social": {
-                                                "ocupacion": ocupacion,
-                                                "educacion": edu,
-                                                "lugar_nacimiento": place,
-                                                "estado_civil": civil,
-                                                "hijos": children,
-                                                "orientacion_sexual": sex,
-                                                "fuma": smoke,
-                                                "alcohol": alcohol,
-                                                "sustancias": drugs,
-                                                "ejercicio": ejercicio,
-                                                "estres": stres,
-                                                "notas": nota
-                                            }
-                                        },
-                                        success: function(e) {
-                                            app.preloader.hide();
-                                            app.methods.redirectTo('paciente-perfil');
-                                        },
-                                        error: function(e) {
-                                            app.preloader.hide();
+                            } else { */
+                            app.preloader.show('blue');
+                            app.data.store.getItem('patient_id').then(function(value) {
+                                var ptnt_id = value;
+                                app.request({
+                                    url: app.data.url + '/pacientes/' + ptnt_id,
+                                    method: "PUT",
+                                    crossDomain: true,
+                                    data: {
+                                        "Historia_social": {
+                                            "ocupacion": ocupacion,
+                                            "educacion": edu,
+                                            "lugar_nacimiento": place,
+                                            "estado_civil": civil,
+                                            "hijos": children,
+                                            "orientacion_sexual": sex,
+                                            "fuma": smoke,
+                                            "alcohol": alcohol,
+                                            "sustancias": drugs,
+                                            "ejercicio": ejercicio,
+                                            "estres": stres,
+                                            "notas": nota
                                         }
-                                    });
+                                    },
+                                    success: function(e) {
+                                        app.preloader.hide();
+                                        app.methods.redirectTo('paciente-perfil');
+                                    },
+                                    error: function(e) {
+                                        app.preloader.hide();
+                                    }
                                 });
-                            }
+                            });
+                            /* } */
                         });
                     } else if (nonempty.length < 11) {
                         disableButton();

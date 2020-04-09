@@ -93,24 +93,24 @@
                     if (edit) {
                         //llena inputs
                         app.preloader.show('blue');
-                        app.data.store.getItem('patient_id').then(function(value) {
-                            var ptnt_id = value;
-                            app.data.store.getItem('_id').then(function(value) {
-                                var cnd_mdc_id = value;
-                                app.request.get(app.data.url + '/patients/' + ptnt_id,
-                                    function(e) {
-                                        var x = JSON.parse(e);
-                                        document.querySelector("#paciente-cirugia-form input#date").valueAsDate = new Date();
-                                        $$('#paciente-cirugia-form input#name').val('a');
-                                        $$('#paciente-cirugia-form input#imp').val('s');
-                                        $$('#paciente-cirugia-form input#who').val('d');
-                                        checkval();
-                                        app.preloader.hide();
-                                    },
-                                    function(e) {
-                                        app.preloader.hide();
-                                    });
-                            });
+                        app.data.store.getItem('cir_id').then(function(value) {
+                            var cnd_mdc_id = value;
+                            app.request.get(app.data.url + '/cirugias/' + cnd_mdc_id,
+                                function(e) {
+                                    var x = JSON.parse(e);
+                                    console.log(x);
+                                    let date = new Date(x.fecha);
+                                    document.querySelector("#paciente-cirugia-form input#date").valueAsDate = date;
+                                    $$('#paciente-cirugia-form input#name').val(x.nombre);
+                                    $$('#paciente-cirugia-form input#imp').val(x.implante);
+                                    $$('#paciente-cirugia-form input#who').val(x.especialista);
+                                    $$('#paciente-cirugia-form textarea').val(x.notas);
+                                    checkval();
+                                    app.preloader.hide();
+                                },
+                                function(e) {
+                                    app.preloader.hide();
+                                });
                         });
                     }
 
@@ -134,8 +134,32 @@
                             who = $$('#paciente-cirugia-form input#who').val();
                             notas = $$('#paciente-cirugia-form textarea').val();
                             if (edit) {
-                                console.log('api edit');
-                                app.methods.redirectTo('paciente-perfil');
+                                app.data.store.getItem('patient_id').then(function(value) {
+                                    var ptnt_id = value;
+                                    app.data.store.getItem('cir_id').then(function(value) {
+                                        var cnd_mdc_id = value;
+                                        app.request({
+                                            url: app.data.url + '/cirugias/' + cnd_mdc_id,
+                                            method: "PUT",
+                                            crossDomain: true,
+                                            data: {
+                                                "nombre": name,
+                                                "implante": imp,
+                                                "fecha": date,
+                                                "especialista": who,
+                                                "notas": notas,
+                                                "paciente": ptnt_id
+                                            },
+                                            success: function(e) {
+                                                app.preloader.hide();
+                                                app.methods.redirectTo('paciente-perfil');
+                                            },
+                                            error: function(e) {
+                                                app.preloader.hide();
+                                            }
+                                        });
+                                    });
+                                });
                             } else {
                                 app.preloader.show('blue');
                                 app.data.store.getItem('patient_id').then(function(value) {

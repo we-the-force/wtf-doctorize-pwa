@@ -85,23 +85,20 @@
                     if (edit) {
                         //llena inputs
                         app.preloader.show('blue');
-                        app.data.store.getItem('patient_id').then(function(value) {
-                            var ptnt_id = value;
-                            app.data.store.getItem('hmedfam_id').then(function(value) {
-                                var cnd_mdc_id = value;
-                                app.request.get(app.data.url + '/patients/' + ptnt_id,
-                                    function(e) {
-                                        var x = JSON.parse(e);
-                                        $$('#paciente-hist-med-fam-form select').val('Padre');
-                                        $$('#paciente-hist-med-fam-form textarea').val('asdf');
+                        app.data.store.getItem('hmedfam_id').then(function(value) {
+                            var cnd_mdc_id = value;
+                            app.request.get(app.data.url + '/historia-familiars/' + cnd_mdc_id,
+                                function(e) {
+                                    var x = JSON.parse(e);
+                                    $$('#paciente-hist-med-fam-form select').val(x.relacion_familiar);
+                                    $$('#paciente-hist-med-fam-form textarea').val(x.descripcion_condicion_familiar);
 
-                                        checkval();
-                                        app.preloader.hide();
-                                    },
-                                    function(e) {
-                                        app.preloader.hide();
-                                    });
-                            });
+                                    checkval();
+                                    app.preloader.hide();
+                                },
+                                function(e) {
+                                    app.preloader.hide();
+                                });
                         });
                     }
 
@@ -161,8 +158,29 @@
                             rel = $$('#paciente-hist-med-fam-form select').val();
                             desc = $$('#paciente-hist-med-fam-form textarea').val();
                             if (edit) {
-                                console.log('api edit');
-                                app.methods.redirectTo('paciente-perfil');
+                                app.data.store.getItem('patient_id').then(function(value) {
+                                    var ptnt_id = value;
+                                    app.data.store.getItem('hmedfam_id').then(function(value) {
+                                        var cnd_mdc_id = value;
+                                        app.request({
+                                            url: app.data.url + '/historia-familiars/' + cnd_mdc_id,
+                                            method: "PUT",
+                                            crossDomain: true,
+                                            data: {
+                                                "relacion_familiar": rel,
+                                                "descripcion_condicion_familiar": desc,
+                                                "paciente": ptnt_id
+                                            },
+                                            success: function(e) {
+                                                app.preloader.hide();
+                                                app.methods.redirectTo('paciente-perfil');
+                                            },
+                                            error: function(e) {
+                                                app.preloader.hide();
+                                            }
+                                        });
+                                    });
+                                });
                             } else {
                                 app.preloader.show('blue');
                                 app.data.store.getItem('patient_id').then(function(value) {

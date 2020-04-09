@@ -108,25 +108,25 @@
                     if (edit) {
                         //llena inputs
                         app.preloader.show('blue');
-                        app.data.store.getItem('patient_id').then(function(value) {
-                            var ptnt_id = value;
-                            app.data.store.getItem('hosp_id').then(function(value) {
-                                var cnd_mdc_id = value;
-                                app.request.get(app.data.url + '/patients/' + ptnt_id,
-                                    function(e) {
-                                        var x = JSON.parse(e);
-                                        document.querySelector("#paciente-hosp-form input#date_in").valueAsDate = new Date();
-                                        document.querySelector("#paciente-hosp-form input#date_out").valueAsDate = new Date();
-                                        $$('#paciente-hosp-form input#prov').val('a');
-                                        $$('#paciente-hosp-form input#hosp').val('s');
-                                        $$('#paciente-hosp-form input#razon').val('d');
-                                        checkval();
-                                        app.preloader.hide();
-                                    },
-                                    function(e) {
-                                        app.preloader.hide();
-                                    });
-                            });
+                        app.data.store.getItem('hosp_id').then(function(value) {
+                            var cnd_mdc_id = value;
+                            app.request.get(app.data.url + '/hospitalizaciones/' + cnd_mdc_id,
+                                function(e) {
+                                    var x = JSON.parse(e);
+                                    console.log(x);
+                                    let date_in = new Date(x.admision);
+                                    let date_out = new Date(x.alta);
+                                    document.querySelector("#paciente-hosp-form input#date_in").valueAsDate = date_in;
+                                    document.querySelector("#paciente-hosp-form input#date_out").valueAsDate = date_out;
+                                    $$('#paciente-hosp-form input#prov').val(x.proveedor_atencion_medica);
+                                    $$('#paciente-hosp-form input#hosp').val(x.hospital);
+                                    $$('#paciente-hosp-form input#razon').val(x.razon);
+                                    checkval();
+                                    app.preloader.hide();
+                                },
+                                function(e) {
+                                    app.preloader.hide();
+                                });
                         });
                     }
 
@@ -157,8 +157,32 @@
                             hosp = $$('#paciente-hosp-form input#hosp').val();
                             razon = $$('#paciente-hosp-form input#razon').val();
                             if (edit) {
-                                console.log('api edit');
-                                app.methods.redirectTo('paciente-perfil');
+                                app.data.store.getItem('patient_id').then(function(value) {
+                                    var ptnt_id = value;
+                                    app.data.store.getItem('hosp_id').then(function(value) {
+                                        var cnd_mdc_id = value;
+                                        app.request({
+                                            url: app.data.url + '/hospitalizaciones/' + cnd_mdc_id,
+                                            method: "PUT",
+                                            crossDomain: true,
+                                            data: {
+                                                "admision": date_in,
+                                                "alta": date_out,
+                                                "proveedor_atencion_medica": prov,
+                                                "hospital": hosp,
+                                                "paciente": ptnt_id,
+                                                "razon": razon
+                                            },
+                                            success: function(e) {
+                                                app.preloader.hide();
+                                                app.methods.redirectTo('paciente-perfil');
+                                            },
+                                            error: function(e) {
+                                                app.preloader.hide();
+                                            }
+                                        });
+                                    });
+                                });
                             } else {
                                 app.preloader.show('blue');
                                 app.data.store.getItem('patient_id').then(function(value) {

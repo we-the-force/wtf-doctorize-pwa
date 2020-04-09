@@ -122,26 +122,26 @@
                     if (edit) {
                         //llena inputs
                         app.preloader.show('blue');
-                        app.data.store.getItem('patient_id').then(function(value) {
-                            var ptnt_id = value;
-                            app.data.store.getItem('aler_id').then(function(value) {
-                                var cnd_mdc_id = value;
-                                app.request.get(app.data.url + '/patients/' + ptnt_id,
-                                    function(e) {
-                                        var x = JSON.parse(e);
-                                        $$('#paciente-alergias-form input#aler_name').val('coronavirus');
-                                        $$('#paciente-alergias-form input#cause').val('no c');
-                                        $$('#paciente-alergias-form input#reaction').val('alergia');
-                                        $$('#paciente-alergias-form input#frecuency').val('12');
-                                        document.querySelector("#paciente-alergias-form input#date").valueAsDate = new Date();
-                                        $$('#paciente-alergias-form .medicamentos #id_1 input').val('paracetamol');
-                                        checkval();
-                                        app.preloader.hide();
-                                    },
-                                    function(e) {
-                                        app.preloader.hide();
-                                    });
-                            });
+                        app.data.store.getItem('aler_id').then(function(value) {
+                            var cnd_mdc_id = value;
+                            app.request.get(app.data.url + '/alergias/' + cnd_mdc_id,
+                                function(e) {
+                                    var x = JSON.parse(e);
+                                    console.log(x);
+                                    let date = new Date(x.primer_diagnostico);
+                                    $$('#paciente-alergias-form input#aler_name').val(x.nombre);
+                                    $$('#paciente-alergias-form input#cause').val(x.causa);
+                                    $$('#paciente-alergias-form input#reaction').val(x.reacciones);
+                                    $$('#paciente-alergias-form input#frecuency').val(x.frecuencia);
+                                    document.querySelector("#paciente-alergias-form input#date").valueAsDate = date;
+                                    $$('#paciente-alergias-form .medicamentos #id_1 input').val(x.medicamentos[0].nombre);
+                                    $$('#paciente-alergias-form textarea').val(x.notas);
+                                    checkval();
+                                    app.preloader.hide();
+                                },
+                                function(e) {
+                                    app.preloader.hide();
+                                });
                         });
                     }
 
@@ -208,8 +208,34 @@
                             });
                             nota = $$('#paciente-alergias-form textarea').val();
                             if (edit) {
-                                console.log('api edit');
-                                app.methods.redirectTo('paciente-perfil');
+                                app.data.store.getItem('patient_id').then(function(value) {
+                                    var ptnt_id = value;
+                                    app.data.store.getItem('aler_id').then(function(value) {
+                                        var cnd_mdc_id = value;
+                                        app.request({
+                                            url: app.data.url + '/alergias/' + cnd_mdc_id,
+                                            method: "PUT",
+                                            crossDomain: true,
+                                            data: {
+                                                "nombre": name,
+                                                "causa": cause,
+                                                "reacciones": reaction,
+                                                "frecuencia": frecuency,
+                                                "medicamentos": med,
+                                                "primer_diagnostico": date,
+                                                "paciente": ptnt_id,
+                                                "notas": nota
+                                            },
+                                            success: function(e) {
+                                                app.preloader.hide();
+                                                app.methods.redirectTo('paciente-perfil');
+                                            },
+                                            error: function(e) {
+                                                app.preloader.hide();
+                                            }
+                                        });
+                                    });
+                                });
                             } else {
                                 app.preloader.show('blue');
                                 app.data.store.getItem('patient_id').then(function(value) {

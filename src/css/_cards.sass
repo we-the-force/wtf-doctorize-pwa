@@ -212,6 +212,26 @@
                     font: $text-2-card
                 &.footer
                     font: $footer-card
+            &.show
+                min-height: 165px !important
+                flex-direction: column
+                justify-content: space-between
+                .head,.cont,.foot
+                    display: flex
+                    width: 100%
+                .head
+                    justify-content: space-between
+                .cont
+                    justify-content: center
+                    padding-top: 10px
+                    flex-grow: 1
+                .foot
+                    justify-content: space-between
+                    font-size: 16px
+                    .card-close
+                        position: unset
+                        right: unset
+                        margin-left: unset
         i
             &.time
                 font-size: 16px
@@ -586,7 +606,7 @@
     width: auto
     margin: 15px 5px
     .card-content
-        padding: 10px 12px 10px 5%
+        padding: 10px 12px 10px 12px
         display: flex
         align-items: flex-start
         .data

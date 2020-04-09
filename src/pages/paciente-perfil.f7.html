@@ -206,83 +206,7 @@
                     <p class="text">Consultas</p>
                 </div>
                 <div class="content">
-                    <div class="card v2 dark-blue card-expandable">
 
-                        <div class="card-content">
-                            <div class="card-header">
-                                <p>Consulta</p>
-                                <p>21/05/2019</p>
-                            </div>
-                            <div class="card-content-padding">
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.
-                                </p>
-                            </div>
-                            <div class="card-footer">
-                                <p>Dr. Simi</p>
-                                <a href="#" class="card-opened-fade-out"><u>ver más...</u></a>
-                                <a href="#" class="card-close card-opened-fade-in"><u>cerrar</u></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card v2 light-blue card-expandable">
-                        <div class="card-content">
-                            <div class="card-header">
-                                <p>Tendinitis</p>
-                                <p>21/05/2019</p>
-                            </div>
-                            <div class="card-content-padding">
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.
-                                </p>
-                            </div>
-                            <div class="card-footer">
-                                <p>Dr. Simi</p>
-                                <a href="#" class="card-opened-fade-out"><u>ver más...</u></a>
-                                <a href="#" class="card-close card-opened-fade-in"><u>cerrar</u></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card v2 turquoise card-expandable">
-                        <div class="card-content">
-                            <div class="card-header">
-                                <p>Gripe</p>
-                                <p>21/05/2019</p>
-                            </div>
-                            <div class="card-content-padding">
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.
-                                </p>
-                            </div>
-                            <div class="card-footer">
-                                <p>Dr. Simi</p>
-                                <a href="#" class="card-opened-fade-out"><u>ver más...</u></a>
-                                <a href="#" class="card-close card-opened-fade-in"><u>cerrar</u></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card v2 card-expandable">
-                        <div class="card-content">
-                            <div class="card-header">
-                                <p>Asma</p>
-                                <p>21/05/2019</p>
-                            </div>
-                            <div class="card-content-padding">
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.
-                                </p>
-                            </div>
-                            <div class="card-footer">
-                                <p>Dr. Simi</p>
-                                <a href="#" class="card-opened-fade-out"><u>ver más...</u></a>
-                                <a href="#" class="card-close card-opened-fade-in"><u>cerrar</u></a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -294,50 +218,7 @@
                     </a>
                 </div>
                 <div class="content">
-                    <div class="card v2 yellow">
-                        <div class="rectangle yellow"></div>
-                        <div class="card-content">
-                            <i class="material-icons icon yellow">monetization_on</i>
-                            <div class="data">
-                                <p class="text">$600.00</p>
-                                <p class="title bold">Consulta</p>
-                            </div>
-                            <div class="date">17/02/2020</div>
-                            <a class="arrow">
-                                <i class="material-icons">chevron_right</i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="card v2 yellow">
-                        <div class="rectangle yellow"></div>
-                        <div class="card-content">
-                            <i class="material-icons icon yellow">monetization_on</i>
-                            <div class="data">
-                                <p class="text">$600.00</p>
-                                <p class="title bold">Consulta</p>
-                            </div>
-                            <div class="date">08/02/2020</div>
-                            <a class="arrow">
-                                <i class="material-icons">chevron_right</i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="card v2 yellow">
-                        <div class="rectangle yellow"></div>
-                        <div class="card-content">
-                            <i class="material-icons icon yellow">monetization_on</i>
-                            <div class="data">
-                                <p class="text">$600.00</p>
-                                <p class="title bold">Consulta</p>
-                            </div>
-                            <div class="date">11/09/2019</div>
-                            <a class="arrow">
-                                <i class="material-icons">chevron_right</i>
-                            </a>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
 
@@ -620,116 +501,151 @@
 
     export default {
         on: {
-            pageBeforeOut: function (e, page) {
+            pageBeforeOut: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 if (e.detail.direction == 'backward') {
                     app.data.store.removeItem('patient_id');
                 }
             },
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 var moment = require('moment');
+                moment.locale('es');
                 moment().format();
+
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
 
                 app.preloader.show('blue');
 
-                app.data.store.getItem('patient_id').then(function (value) {
+                app.data.store.getItem('patient_id').then(function(value) {
                     var ptnt_id = value;
-                    app.request.get(app.data.url + '/patients/' + ptnt_id,
-                        function (e) {
+                    app.request.get(app.data.url + '/pacientes/' + ptnt_id,
+                        function(e) {
                             var x = JSON.parse(e);
                             //name
                             console.log(x);
-                            $$('.header p.name').text('Gewndolyne Stacy');
+                            $$('.header p.name').text(x.nombre);
                             //gender
-                            $$('.header .binfo .gender').text('Mujer');
+                            $$('.header .binfo .gender').text(x.genero);
                             //age (calc)
                             let now = moment();
-                            let birthdate = moment('02-11-1995', 'DD-MM-YYYY');//change for data on api
-                            $$('.header .binfo .age').text(now.diff(birthdate, 'years') + 'años');
+                            let birthdate = moment(x.fecha_nacimiento); //change for data on api
+                            $$('.header .binfo .age').text(now.diff(birthdate, 'years') + ' años');
 
                             //foto
-                            $$('.header .photo img').attr("src", app.data.url + '/' + x.photo + '200.png');
+                            $$('.header .photo img').attr("src", app.data.url + '/' + x.img_data.url);
 
                             //generales
-                            $$('.generales .content #blood .card-footer p').text('122/70');
-                            $$('.generales .content #peso .card-footer p').text('70.4');
-                            $$('.generales .content #altura .card-footer p').text('175');
-                            $$('.generales .content #IMC .card-footer p').text('21');
-                            $$('.generales .content #PGC .card-footer p').text('21');
+                            $$('.generales .content #blood .card-footer p').text(x.tipo_sangre);
+                            $$('.generales .content #peso .card-footer p').text(x.peso);
+                            $$('.generales .content #altura .card-footer p').text(x.altura);
+                            $$('.generales .content #IMC .card-footer p').text('--');
+                            $$('.generales .content #PGC .card-footer p').text('--');
 
                             //vitales
-                            $$('.vitales .content #temperatura .card-footer p').text('38°');
-                            $$('.vitales .content #presion .card-footer p').text('122/70');
-                            $$('.vitales .content #respiracion .card-footer p').text('14');
-                            $$('.vitales .content #pulso .card-footer p').text('86');
+                            $$('.vitales .content #temperatura .card-footer p').text('°');
+                            $$('.vitales .content #presion .card-footer p').text('---/--');
+                            $$('.vitales .content #respiracion .card-footer p').text('--');
+                            $$('.vitales .content #pulso .card-footer p').text('--');
 
                             //consultas
-                            let j = [{ a: 'a', b: 'b', c: 'c' }, { a: 'a', b: 'b', c: 'c' }, { a: 'a', b: 'b', c: 'c' }];//data
-                            let [color, i] = ['dark-blue', 0];
-                            j.forEach(el => {
-                                $$('.consultas .content ').append(
-                                    '<div class="card v2 card-expandable ' + color + '" data-id="">' +
-                                    '<div class="card-content">' +
-                                    '<div class="card-header">' +
-                                    '<p>Asma</p>' +
-                                    '<p>21/05/2019</p>' +
-                                    '</div>' +
-                                    '<div class="card-content-padding">' +
-                                    '<p>' +
-                                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor' +
-                                    'incididunt ut labore et dolore magna aliqua.' +
-                                    '</p>' +
-                                    '</div>' +
-                                    '<div class="card-footer">' +
-                                    '<p>Dr. Simi</p>' +
-                                    '<a href="#" class="card-opened-fade-out"><u>ver más...</u></a>' +
-                                    '<a href="#" class="card-close card-opened-fade-in"><u>cerrar</u></a>' +
-                                    '</div>' +
-                                    '</div>' +
-                                    '</div>'
-                                );
-                                switch (i) {
-                                    case 0:
-                                        color = 'light-blue';
-                                        break;
-                                    case 1:
-                                        color = 'turquoise';
-                                        break;
-                                    case 2:
-                                        color = '';
-                                        break;
-                                    case 3:
-                                        color = 'dark-blue';
-                                        break;
-                                    default:
-                                        break;
+                            app.request.get(app.data.url + '/consultas?&_sort=created_at:asc&doctor.id=' + doctor.doctor.id + '&paciente.id=' + x.id,
+                                function(ele) {
+                                    let y = JSON.parse(ele);
+                                    let [color, i] = ['dark-blue', 0];
+                                    y.forEach(el => {
+                                        let date = moment(el.created_at);
+                                        $$('.consultas .content ').append(
+                                            '<div class="card v2 card-expandable ' + color + '" data-id="' + el.id + '">' +
+                                            '<div class="card-content">' +
+                                            '<div class="card-header show card-opened-fade-out">' +
+                                            '<div class="head">' +
+                                            '<p>' + el.motivo + '</p>' +
+                                            '<p>' + date.format('DD/MM/YYYY') + '</p>' +
+                                            '</div>' +
+                                            '<div class="cont">' +
+                                            '<p>' +
+                                            el.notas +
+                                            '</p>' +
+                                            '</div>' +
+                                            '<div class="foot">' +
+                                            '<p>' + el.doctor.Nombre + '</p>' +
+                                            '<a href="#" class="card-close "><u>ver más...</u></a>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '<div class="card-header into card-opened-fade-in">' +
+                                            '<p>' + el.motivo + '</p>' +
+                                            '<p>' + date.format('DD/MM/YYYY') + '</p>' +
+                                            '</div>' +
+                                            '<div class="card-content-padding into card-opened-fade-in">' +
+                                            '<p>' +
+                                            el.notas +
+                                            '</p>' +
+                                            '</div>' +
+                                            '<div class="card-footer into card-opened-fade-in">' +
+                                            '<p>' + el.doctor.Nombre + '</p>' +
+                                            '<a href="#" class="card-close"><u>cerrar</u></a>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '</div>'
+                                        );
+                                        switch (i) {
+                                            case 0:
+                                                color = 'light-blue';
+                                                break;
+                                            case 1:
+                                                color = 'turquoise';
+                                                break;
+                                            case 2:
+                                                color = '';
+                                                break;
+                                            case 3:
+                                                color = 'dark-blue';
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                        (i == 3) ? i = 0: i++;
+
+                                        $$(document).on('card:beforeopen', function(e) {
+                                            $$(e.srcElement).find('.show').hide();
+                                        });
+
+                                        $$(document).on('card:close', function(e) {
+                                            $$(e.srcElement).find('.show').show();
+                                        });
+                                    });
                                 }
-                                (i == 3) ? i = 0 : i++;
-                            });
+                            );
 
                             //pagos
-                            let pagos = [{}, {}, {}]
-                            pagos.forEach(el => {
-                                $$('.pagos .content ').append(
-                                    '<div class="card v2 yellow">' +
-                                    '<div class="rectangle yellow"></div>' +
-                                    '<div class="card-content">' +
-                                    '<i class="material-icons icon yellow">monetization_on</i>' +
-                                    '<div class="data">' +
-                                    '<p class="text">$600.00</p>' +
-                                    '<p class="title bold">Consulta</p>' +
-                                    '</div>' +
-                                    '<div class="date">17/02/2020</div>' +
-                                    '<a class="arrow">' +
-                                    '<i class="material-icons">chevron_right</i>' +
-                                    '</a>' +
-                                    '</div>' +
-                                    '</div>'
-                                );
-                            });
+                            app.request.get(app.data.url + '/pagos?&_sort=created_at:asc&doctor.id=' + doctor.doctor.id + '&paciente.id=' + x.id,
+                                function(el) {
+                                    let y = JSON.parse(el);
+                                    console.log(y);
+                                    let date = moment(el.created_at);
+                                    y.forEach(ele => {
+                                        $$('.pagos .content ').append(
+                                            '<div class="card v2 yellow">' +
+                                            '<div class="rectangle yellow"></div>' +
+                                            '<div class="card-content">' +
+                                            '<i class="material-icons icon yellow">monetization_on</i>' +
+                                            '<div class="data">' +
+                                            '<p class="text">$' + ele.costo + '</p>' +
+                                            '<p class="title bold">Consulta</p>' +
+                                            '</div>' +
+                                            '<div class="date">' + date.format('DD/MM/YYYY') + '</div>' +
+                                            '<a class="arrow">' +
+                                            '<i class="material-icons">chevron_right</i>' +
+                                            '</a>' +
+                                            '</div>' +
+                                            '</div>'
+                                        );
+                                    });
+                                }
+                            );
 
 
                             //condiciones medicas
@@ -915,60 +831,60 @@
 
                             app.preloader.hide();
 
-                            $$('.card.v2').click(function (e) {
+                            $$('.card.v2').click(function(e) {
                                 let x = $$(this).parent().parent().attr('class').split(' ')[1];
                                 switch (x) {
                                     case 'condiciones':
                                         console.log('condiciones');
-                                        app.data.store.setItem("cond_med_id", $$(this).data('id')).then(function (value) {
+                                        app.data.store.setItem("cond_med_id", $$(this).data('id')).then(function(value) {
                                             app.methods.redirectTo('paciente-cond-med');
                                         });
                                         break;
                                     case 'medicamentos':
                                         console.log('medicamentos');
-                                        app.data.store.setItem("med_id", $$(this).data('id')).then(function (value) {
+                                        app.data.store.setItem("med_id", $$(this).data('id')).then(function(value) {
                                             app.methods.redirectTo('paciente-medicamento');
                                         });
                                         break;
                                     case 'alergias':
                                         console.log('alergias');
-                                        app.data.store.setItem("aler_id", $$(this).data('id')).then(function (value) {
+                                        app.data.store.setItem("aler_id", $$(this).data('id')).then(function(value) {
                                             app.methods.redirectTo('paciente-alergias');
                                         });
                                         break;
                                     case 'hSocial':
                                         console.log('hSocial');
-                                        app.data.store.setItem("hsocial_id", $$(this).data('id')).then(function (value) {
+                                        app.data.store.setItem("hsocial_id", $$(this).data('id')).then(function(value) {
                                             app.methods.redirectTo('paciente-hist-social');
                                         });
                                         break;
                                     case 'hMedicaFam':
                                         console.log('hMedicaFam');
-                                        app.data.store.setItem("hmedfam_id", $$(this).data('id')).then(function (value) {
+                                        app.data.store.setItem("hmedfam_id", $$(this).data('id')).then(function(value) {
                                             app.methods.redirectTo('paciente-hist-medica-fam');
                                         });
                                         break;
                                     case 'contraindicaciones':
                                         console.log('contraindicaciones');
-                                        app.data.store.setItem("contra_id", $$(this).data('id')).then(function (value) {
+                                        app.data.store.setItem("contra_id", $$(this).data('id')).then(function(value) {
                                             app.methods.redirectTo('paciente-contra');
                                         });
                                         break;
                                     case 'hospitalizaciones':
                                         console.log('hospitalizaciones');
-                                        app.data.store.setItem("hosp_id", $$(this).data('id')).then(function (value) {
+                                        app.data.store.setItem("hosp_id", $$(this).data('id')).then(function(value) {
                                             app.methods.redirectTo('paciente-hosp');
                                         });
                                         break;
                                     case 'cirugias':
                                         console.log('cirugias/implantes');
-                                        app.data.store.setItem("cir_id", $$(this).data('id')).then(function (value) {
+                                        app.data.store.setItem("cir_id", $$(this).data('id')).then(function(value) {
                                             app.methods.redirectTo('paciente-cirugia-implantes');
                                         });
                                         break;
                                     case 'vacunas':
                                         console.log('Vacunas');
-                                        app.data.store.setItem("vac_id", $$(this).data('id')).then(function (value) {
+                                        app.data.store.setItem("vac_id", $$(this).data('id')).then(function(value) {
                                             app.methods.redirectTo('paciente-vacunas');
                                         });
                                         break;
@@ -976,70 +892,70 @@
 
                             });
                         },
-                        function (e) {
+                        function(e) {
                             app.preloader.hide();
 
                         });
                 });
 
-                $$('.nav.title .arrow').click(function (val) {
+                $$('.nav.title .arrow').click(function(val) {
                     app.methods.redirectTo('home');
                 });
 
-                $$('.card.v2').click(function (e) {
+                $$('.card.v2').click(function(e) {
                     let x = $$(this).parent().parent().attr('class').split(' ')[1];
                     switch (x) {
                         case 'condiciones':
                             console.log('condiciones');
-                            app.data.store.setItem("cond_med_id", $$(this).data('id')).then(function (value) {
+                            app.data.store.setItem("cond_med_id", $$(this).data('id')).then(function(value) {
                                 app.methods.redirectTo('paciente-cond-med');
                             });
                             break;
                         case 'medicamentos':
                             console.log('medicamentos');
-                            app.data.store.setItem("med_id", $$(this).data('id')).then(function (value) {
+                            app.data.store.setItem("med_id", $$(this).data('id')).then(function(value) {
                                 app.methods.redirectTo('paciente-medicamento');
                             });
                             break;
                         case 'alergias':
                             console.log('alergias');
-                            app.data.store.setItem("aler_id", $$(this).data('id')).then(function (value) {
+                            app.data.store.setItem("aler_id", $$(this).data('id')).then(function(value) {
                                 app.methods.redirectTo('paciente-alergias');
                             });
                             break;
                         case 'hSocial':
                             console.log('hSocial');
-                            app.data.store.setItem("hsocial_id", $$(this).data('id')).then(function (value) {
+                            app.data.store.setItem("hsocial_id", $$(this).data('id')).then(function(value) {
                                 app.methods.redirectTo('paciente-hist-social');
                             });
                             break;
                         case 'hMedicaFam':
                             console.log('hMedicaFam');
-                            app.data.store.setItem("hmedfam_id", $$(this).data('id')).then(function (value) {
+                            app.data.store.setItem("hmedfam_id", $$(this).data('id')).then(function(value) {
                                 app.methods.redirectTo('paciente-hist-medica-fam');
                             });
                             break;
                         case 'contraindicaciones':
                             console.log('contraindicaciones');
-                            app.data.store.setItem("contra_id", $$(this).data('id')).then(function (value) {
+                            app.data.store.setItem("contra_id", $$(this).data('id')).then(function(value) {
                                 app.methods.redirectTo('paciente-contra');
                             });
                             break;
                         case 'hospitalizaciones':
                             console.log('hospitalizaciones');
-                            app.data.store.setItem("hosp_id", $$(this).data('id')).then(function (value) {
+                            app.data.store.setItem("hosp_id", $$(this).data('id')).then(function(value) {
                                 app.methods.redirectTo('paciente-hosp');
                             });
                             break;
                         case 'cirugias':
                             console.log('cirugias/implantes');
-                            app.data.store.setItem("cir_id", $$(this).data('id')).then(function (value) {
+                            app.data.store.setItem("cir_id", $$(this).data('id')).then(function(value) {
                                 app.methods.redirectTo('paciente-cirugia-implantes');
                             });
                             break;
                         case 'vacunas':
                             console.log('Vacunas');
-                            app.data.store.setItem("vac_id", $$(this).data('id')).then(function (value) {
+                            app.data.store.setItem("vac_id", $$(this).data('id')).then(function(value) {
                                 app.methods.redirectTo('paciente-vacunas');
                             });
                             break;

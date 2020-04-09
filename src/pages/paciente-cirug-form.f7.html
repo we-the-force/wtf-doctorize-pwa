@@ -69,7 +69,7 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageBeforeOut: function (e, page) {
+            pageBeforeOut: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 if (e.detail.direction == 'backward') {
@@ -79,13 +79,13 @@
                     app.data.store.removeItem('edit_patient_data');
                 }
             },
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
 
                 var edit
 
-                app.data.store.getItem('edit_patient_data').then(function (value) {
+                app.data.store.getItem('edit_patient_data').then(function(value) {
                     edit = value;
 
                     disableButton();
@@ -93,12 +93,12 @@
                     if (edit) {
                         //llena inputs
                         app.preloader.show('blue');
-                        app.data.store.getItem('patient_id').then(function (value) {
+                        app.data.store.getItem('patient_id').then(function(value) {
                             var ptnt_id = value;
-                            app.data.store.getItem('_id').then(function (value) {
+                            app.data.store.getItem('_id').then(function(value) {
                                 var cnd_mdc_id = value;
                                 app.request.get(app.data.url + '/patients/' + ptnt_id,
-                                    function (e) {
+                                    function(e) {
                                         var x = JSON.parse(e);
                                         document.querySelector("#paciente-cirugia-form input#date").valueAsDate = new Date();
                                         $$('#paciente-cirugia-form input#name').val('a');
@@ -107,38 +107,55 @@
                                         checkval();
                                         app.preloader.hide();
                                     },
-                                    function (e) {
+                                    function(e) {
                                         app.preloader.hide();
                                     });
                             });
                         });
                     }
 
-                    $$('#paciente-cirugia-form input').on('change', checkval);
+                    $$('#paciente-cirugia-form input').on('input:notempty', checkval);
 
                 });
 
                 function checkval() {
-                    var nonempty = $$('#paciente-cirugia-form input').filter(function () {
+                    var nonempty = $$('#paciente-cirugia-form input').filter(function() {
                         return this.value != ''
                     });
 
-                    console.log(nonempty);
-
                     if (nonempty.length == 4) {
                         $$('#paciente-cirugia-form .btn-2 a').removeClass('grey');
-                        $$('#paciente-cirugia-form .btn-2 a').click(function (val) {
-                            let date, name, imp, who;
+                        $$('#paciente-cirugia-form .btn-2 a').off('click');
+                        $$('#paciente-cirugia-form .btn-2 a').click(function(val) {
+                            let date, name, imp, who, notas;
                             date = $$('#paciente-cirugia-form input#date').val();
                             name = $$('#paciente-cirugia-form input#name').val();
                             imp = $$('#paciente-cirugia-form input#imp').val();
                             who = $$('#paciente-cirugia-form input#who').val();
+                            notas = $$('#paciente-cirugia-form textarea').val();
                             if (edit) {
                                 console.log('api edit');
                                 app.methods.redirectTo('paciente-perfil');
                             } else {
-                                console.log('api create');
-                                app.methods.redirectTo('paciente-perfil');
+                                app.preloader.show('blue');
+                                app.data.store.getItem('patient_id').then(function(value) {
+                                    var ptnt_id = value;
+                                    app.request.postJSON(app.data.url + '/cirugias', {
+                                            "nombre": name,
+                                            "implante": imp,
+                                            "fecha": date,
+                                            "especialista": who,
+                                            "notas": notas,
+                                            "paciente": ptnt_id
+                                        },
+                                        function(e) {
+                                            app.preloader.hide();
+                                            app.methods.redirectTo('paciente-perfil');
+                                        },
+                                        function(e) {
+                                            app.preloader.hide();
+                                        });
+                                });
                             }
                         });
                     } else if (nonempty.length < 4) {

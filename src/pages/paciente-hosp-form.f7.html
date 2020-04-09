@@ -85,7 +85,7 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageBeforeOut: function (e, page) {
+            pageBeforeOut: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 if (e.detail.direction == 'backward') {
@@ -95,12 +95,12 @@
                     app.data.store.removeItem('edit_patient_data');
                 }
             },
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
-                var edit
+                var edit, file;
 
-                app.data.store.getItem('edit_patient_data').then(function (value) {
+                app.data.store.getItem('edit_patient_data').then(function(value) {
                     edit = value;
 
                     disableButton();
@@ -108,12 +108,12 @@
                     if (edit) {
                         //llena inputs
                         app.preloader.show('blue');
-                        app.data.store.getItem('patient_id').then(function (value) {
+                        app.data.store.getItem('patient_id').then(function(value) {
                             var ptnt_id = value;
-                            app.data.store.getItem('hosp_id').then(function (value) {
+                            app.data.store.getItem('hosp_id').then(function(value) {
                                 var cnd_mdc_id = value;
                                 app.request.get(app.data.url + '/patients/' + ptnt_id,
-                                    function (e) {
+                                    function(e) {
                                         var x = JSON.parse(e);
                                         document.querySelector("#paciente-hosp-form input#date_in").valueAsDate = new Date();
                                         document.querySelector("#paciente-hosp-form input#date_out").valueAsDate = new Date();
@@ -123,27 +123,33 @@
                                         checkval();
                                         app.preloader.hide();
                                     },
-                                    function (e) {
+                                    function(e) {
                                         app.preloader.hide();
                                     });
                             });
                         });
                     }
 
-                    $$('#paciente-hosp-form input').on('change', checkval);
+                    $$('#paciente-hosp-form input').on('input:notempty', checkval);
+
+                    $$('#file').change(function(e) {
+                        file = this.files[0];
+                        if (file.size <= 5000000) {
+                            $$(this).parent().find('p').text(file.name);
+                        }
+                    });
 
                 });
 
                 function checkval() {
-                    var nonempty = $$('#paciente-hosp-form input').filter(function () {
+                    var nonempty = $$('#paciente-hosp-form input').filter(function() {
                         return this.value != ''
                     });
 
-                    console.log(nonempty);
-
                     if (nonempty.length == 6) {
                         $$('#paciente-hosp-form .btn-2 a').removeClass('grey');
-                        $$('#paciente-hosp-form .btn-2 a').click(function (val) {
+                        $$('#paciente-hosp-form .btn-2 a').off('click');
+                        $$('#paciente-hosp-form .btn-2 a').click(function(val) {
                             let date_in, date_out, prov, hosp, razon
                             date_in = $$('#paciente-hosp-form input#date_in').val();
                             date_out = $$('#paciente-hosp-form input#date_out').val();
@@ -154,8 +160,45 @@
                                 console.log('api edit');
                                 app.methods.redirectTo('paciente-perfil');
                             } else {
-                                console.log('api create');
-                                app.methods.redirectTo('paciente-perfil');
+                                app.preloader.show('blue');
+                                app.data.store.getItem('patient_id').then(function(value) {
+                                    var ptnt_id = value;
+                                    app.request.postJSON(app.data.url + '/hospitalizaciones', {
+                                            "admision": date_in,
+                                            "alta": date_out,
+                                            "proveedor_atencion_medica": prov,
+                                            "hospital": hosp,
+                                            "paciente": ptnt_id,
+                                            "razon": razon
+                                        },
+                                        function(e) {
+                                            const data = new FormData();
+                                            data.append("files", file);
+                                            data.append("refId", e.id);
+                                            data.append("ref", "hospitalizaciones");
+                                            data.append('source', 'users-permissions');
+                                            data.append('field', 'resumen');
+                                            app.request({
+                                                url: app.data.url + '/upload',
+                                                method: "POST",
+                                                crossDomain: true,
+                                                contentType: "multipart/form-data",
+                                                data: data,
+                                                success: function(e) {
+                                                    app.preloader.hide();
+                                                    app.methods.redirectTo('paciente-perfil');
+                                                },
+                                                error: function(e) {
+                                                    app.preloader.hide();
+                                                }
+                                            });
+                                            app.preloader.hide();
+                                            app.methods.redirectTo('paciente-perfil');
+                                        },
+                                        function(e) {
+                                            app.preloader.hide();
+                                        });
+                                });
                             }
                         });
                     } else if (nonempty.length < 6) {

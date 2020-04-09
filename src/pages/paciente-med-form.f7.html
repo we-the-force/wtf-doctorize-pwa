@@ -55,7 +55,15 @@
                         <div class="item-input-inner dropdown-blue">
                             <select name="unity" id="unity" class="light-blue">
                                 <option value="mg">mg</option>
-                                <option value="ml">mL</option>
+                                <option value="mcg">mcg</option>
+                                <option value="gm">gm</option>
+                                <option value="unidades">unidades</option>
+                                <option value="porcentaje">%</option>
+                                <option value="ml">ml</option>
+                                <option value="onzas">onzas</option>
+                                <option value="cuchara">cuchara</option>
+                                <option value="inhalador">inhalador</option>
+                                <option value="mghr">mghr</option>
                             </select>
                         </div>
                     </div>
@@ -169,7 +177,7 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageBeforeOut: function (e, page) {
+            pageBeforeOut: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 if (e.detail.direction == 'backward') {
@@ -179,12 +187,12 @@
                     app.data.store.removeItem('edit_patient_data');
                 }
             },
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 var edit
 
-                app.data.store.getItem('edit_patient_data').then(function (value) {
+                app.data.store.getItem('edit_patient_data').then(function(value) {
                     edit = value;
 
                     disableButton();
@@ -192,12 +200,12 @@
                     if (edit) {
                         //llena inputs
                         app.preloader.show('blue');
-                        app.data.store.getItem('patient_id').then(function (value) {
+                        app.data.store.getItem('patient_id').then(function(value) {
                             var ptnt_id = value;
-                            app.data.store.getItem('med_id').then(function (value) {
+                            app.data.store.getItem('med_id').then(function(value) {
                                 var cnd_mdc_id = value;
                                 app.request.get(app.data.url + '/patients/' + ptnt_id,
-                                    function (e) {
+                                    function(e) {
                                         var x = JSON.parse(e);
                                         $$('#paciente-med-form input#med_name').val('Alejandro');
                                         $$('#paciente-med-form select#type').val('Capsula');
@@ -214,7 +222,7 @@
                                         checkval();
                                         app.preloader.hide();
                                     },
-                                    function (e) {
+                                    function(e) {
                                         app.preloader.hide();
                                     });
                             });
@@ -222,7 +230,7 @@
                     }
 
 
-                    $$('.add_module a').on('click', function (e) {
+                    $$('.add_module a').on('click', function(e) {
                         let x = $$('.dosis_container').children().length;
                         if (x == 1) {
                             $$('.trash .icon').append('<i class="material-icons">delete</i>');
@@ -250,10 +258,10 @@
                             '</div>' +
                             '</div>');
 
-                        $$('#paciente-med-form input').on('change', checkval);
+                        $$('#paciente-med-form input').on('input:notempty', checkval);
                     });
 
-                    $$('.trash a').click(function (e) {
+                    $$('.trash a').click(function(e) {
                         let x = $$('.dosis_container').children().length;
                         if (x > 2) {
                             $$('.dosis_container').children(":last-child").remove();
@@ -264,7 +272,7 @@
                         checkval();
                     });
 
-                    $$('.details .title').click(function (e) {
+                    $$('.details .title').click(function(e) {
                         let x = $$('.details .title a i').text();
                         if (x == 'expand_more') {
                             $$('.details .title a i').text('expand_less');
@@ -274,7 +282,7 @@
                         $$('.details .content').toggleClass("hide");
                     });
 
-                    $$('#paciente-med-form input').on('change', checkval);
+                    $$('#paciente-med-form input').on('input:notempty', checkval);
 
                 });
 
@@ -285,30 +293,35 @@
                 }); */
 
                 function checkval() {
-                    var nonempty = $$('#paciente-med-form input').filter(function () {
+                    var nonempty = $$('#paciente-med-form input').filter(function() {
                         return this.value != ''
                     });
 
                     if (nonempty.length == 9) {
                         $$('#paciente-med-form .btn-2 a').removeClass('grey');
-                        $$('#paciente-med-form .btn-2 a').click(function (val) {
+                        $$('#paciente-med-form .btn-2 a').off('click');
+                        $$('#paciente-med-form .btn-2 a').click(function(val) {
                             let dosis_arr = [];
-                            $$('.dosis_container .bor_top').each(function (e) {
-                                let dosis,dosis_1, dosis_2, when;
+                            $$('.dosis_container .bor_top').each(function(e) {
+                                let dosis, dosis_1, dosis_2, when;
                                 dosis_1 = $$(this).find('input#dosis').val();
                                 dosis_2 = $$(this).find('input#dosis_2').val();
                                 when = $$(this).find('input#when').val();
-                                dosis = {dosis_1,dosis_2,when};
+                                dosis = {
+                                    "dosis": dosis_1,
+                                    "frecuencia": dosis_2,
+                                    "cuando": when
+                                };
                                 dosis_arr.push(dosis);
                             });
-                            let name, quantity, period, medicine, prescript, secound,tipo_med,tipo_ing,medida;
+                            let name, quantity, period, medicine, prescript, secound, tipo_med, tipo_ing, medida, notas;
                             name = $$('#paciente-med-form input#med_name').val();
                             quantity = $$('#paciente-med-form input#quantity').val();
                             period = $$('#paciente-med-form input#period').val();
                             medicine = $$('#paciente-med-form input#medicine').val();
                             prescript = $$('#paciente-med-form input#prescript').val();
                             secound = $$('#paciente-med-form input#secound').val();
-
+                            notas = $$('#paciente-med-form textarea').val();
                             tipo_med = $$('#paciente-med-form select#type').val();
                             tipo_ing = $$('#paciente-med-form select#type_ing').val();
                             medida = $$('#paciente-med-form select#unity').val();
@@ -318,12 +331,47 @@
                                 console.log('api edit');
                                 app.methods.redirectTo('paciente-perfil');
                             } else if (consulta) {
-                                let newMed = { name, quantity, dosis_arr,period,medicine,prescript,secound,tipo_med,tipo_ing,medida};
-                                localStorage.setItem('medicina',JSON.stringify(newMed));
+                                let newMed = {
+                                    name,
+                                    quantity,
+                                    dosis_arr,
+                                    period,
+                                    medicine,
+                                    prescript,
+                                    secound,
+                                    tipo_med,
+                                    tipo_ing,
+                                    medida
+                                };
+                                localStorage.setItem('medicina', JSON.stringify(newMed));
                                 app.methods.redirectTo('nueva-consulta');
                             } else {
-                                console.log('api create');
-                                app.methods.redirectTo('paciente-perfil');
+                                app.preloader.show('blue');
+                                app.data.store.getItem('patient_id').then(function(value) {
+                                    var ptnt_id = value;
+                                    app.request.postJSON(app.data.url + '/Medicamentos', {
+                                            "nombre": name,
+                                            "tipo_medicina": tipo_med,
+                                            "tipo_ingesta": tipo_ing,
+                                            "cantidad": quantity,
+                                            "unidad": medida,
+                                            "periodo": period,
+                                            "notas": notas,
+                                            "medicina_para": medicine,
+                                            "prescrita_por": prescript,
+                                            "efectos_secundarios": secound,
+                                            "paciente": ptnt_id,
+                                            "dosis": dosis_arr
+                                        },
+                                        function(e) {
+                                            app.preloader.hide();
+                                            app.methods.redirectTo('paciente-perfil');
+                                        },
+                                        function(e) {
+                                            app.preloader.hide();
+                                        });
+                                });
+
                             }
                         });
                     } else if (nonempty.length < 9) {

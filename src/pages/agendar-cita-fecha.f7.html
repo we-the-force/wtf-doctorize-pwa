@@ -205,8 +205,30 @@
 
                         }).then(function(e) {
                             console.log(z.format("YYYY-MM-DD"));
-
-                            app.request.postJSON(app.data.url + '/citas', {
+                            let consulta = localStorage.getItem('consulta');
+                            if (!consulta) {
+                                app.request.postJSON(app.data.url + '/citas', {
+                                        "correo": email,
+                                        "telefono": phone,
+                                        "nombre": nombre,
+                                        "fecha": z.format("YYYY-MM-DD"),
+                                        "hora": y + ':00.000',
+                                        "doctor": doctor.doctor.id,
+                                        "consultorio": consultorio
+                                    },
+                                    function(e) {
+                                        app.data.store.clear().then(
+                                            function() {
+                                                app.preloader.hide();
+                                                app.methods.redirectTo('cita-agendada');
+                                            }
+                                        );
+                                    },
+                                    function(e) {
+                                        app.preloader.hide();
+                                    });
+                            } else {
+                                let newCita = {
                                     "correo": email,
                                     "telefono": phone,
                                     "nombre": nombre,
@@ -214,18 +236,10 @@
                                     "hora": y + ':00.000',
                                     "doctor": doctor.doctor.id,
                                     "consultorio": consultorio
-                                },
-                                function(e) {
-                                    app.data.store.clear().then(
-                                        function() {
-                                            app.preloader.hide();
-                                            app.methods.redirectTo('cita-agendada');
-                                        }
-                                    );
-                                },
-                                function(e) {
-                                    app.preloader.hide();
-                                });
+                                };
+                                localStorage.setItem('cita', JSON.stringify(newCita));
+                                app.methods.redirectTo('nueva-consulta');
+                            }
                         });
                     });
                 };

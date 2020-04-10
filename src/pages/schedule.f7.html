@@ -97,10 +97,7 @@
                     $$('.tabs').children('.tab-active').removeClass('tab-active');
                     $$('.tabs').children($$(this).attr('href')).addClass('tab-active');
                     fillPage($$(this).attr('href'), $$(this).data("date"));
-
-
                 });
-
 
                 /* esconde la subnavbar y el icono de la toolbar cuando una carta se expande */
                 /* $$(document).on('card:beforeopen', function(e) {
@@ -194,7 +191,10 @@
 
                                     $$('#schedule .card').off('click');
                                     $$('#schedule .card').click(function(val) {
-                                        console.log('redirect to consulta');
+                                        localStorage.setItem('consulta', true);
+                                        app.data.store.setItem('back_consulta', 'schedule').then(function() {
+                                            app.methods.redirectTo('nueva-consulta');
+                                        });
                                     });
 
                                     /* checa cuando cerrar la lista y cuando no */

@@ -112,13 +112,19 @@
                 disableButton();
                 //checar
                 app.data.store.getItem('pago-pend').then(function(value) {
-                    app.data.store.getItem('pago-pend-id').then(function(val) {
-                        $$('#doctor-agregar-pago #pay .card-content .data .text').text(value);
-                        $$('#doctor-agregar-pago #pay .card-content .data .text').data('id', val);
-                        pago = value == null ? false : true;
-                        //trigger para checkar values
-                        if (value != null) $$(document).trigger("checkValues");
-                    });
+                    let consulta = localStorage.getItem('consulta');
+                    if (consulta) {
+                        $$('.card#pay').attr('style', 'filter: saturate(0)');
+                        $$('.card#pay').off('click');
+                    } else {
+                        app.data.store.getItem('pago-pend-id').then(function(val) {
+                            $$('#doctor-agregar-pago #pay .card-content .data .text').text(value);
+                            $$('#doctor-agregar-pago #pay .card-content .data .text').data('id', val);
+                            pago = value == null ? false : true;
+                            //trigger para checkar values
+                            if (value != null) $$(document).trigger("checkValues");
+                        });
+                    }
                 });
 
                 app.data.store.getItem('pago-patient').then(function(value) {
@@ -153,21 +159,39 @@
 
 
                 $$('#doctor-agregar-pago .header a').click(function(val) {
-                    app.data.store.clear().then(function(e) {
-                        app.methods.redirectTo('home');
-                    });
+                    let consulta = localStorage.getItem('consulta');
+                    if (consulta) {
+                        app.methods.redirectTo('nueva-consulta');
+                    } else {
+                        app.data.store.clear().then(
+                            function() {
+                                app.methods.redirectTo('home');
+                            }
+                        );
+                    }
                 });
 
                 $$(document).on('checkValues', function(val) {
                     //si los 3 valores estan activa boton
-                    if (metodo && paciente && pago) {
-                        console.log('ahoy');
-                        $$('.container .btn-2 a').removeClass('grey');
-                        $$('.container .btn-2 a').click(function(x) {
-                            app.data.store.setItem('metodo', $$('#doctor-agregar-pago #type .card-content .data .text').text()).then(function() {
-                                app.methods.redirectTo('doctor-agregar-pago-info');
+                    let consulta = localStorage.getItem('consulta');
+                    if (consulta) {
+                        if (metodo && paciente) {
+                            $$('.container .btn-2 a').removeClass('grey');
+                            $$('.container .btn-2 a').click(function(x) {
+                                app.data.store.setItem('metodo', $$('#doctor-agregar-pago #type .card-content .data .text').text()).then(function() {
+                                    app.methods.redirectTo('doctor-agregar-pago-info');
+                                });
                             });
-                        });
+                        }
+                    } else {
+                        if (metodo && paciente && pago) {
+                            $$('.container .btn-2 a').removeClass('grey');
+                            $$('.container .btn-2 a').click(function(x) {
+                                app.data.store.setItem('metodo', $$('#doctor-agregar-pago #type .card-content .data .text').text()).then(function() {
+                                    app.methods.redirectTo('doctor-agregar-pago-info');
+                                });
+                            });
+                        }
                     }
                 });
 

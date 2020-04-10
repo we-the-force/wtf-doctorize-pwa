@@ -43,8 +43,8 @@
             pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
-
-                app.request.get(app.data.url + '/pacientes',
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
+                app.request.get(app.data.url + '/pacientes?doctor.id=' + doctor.doctor.id,
                     function(e) {
                         var x = JSON.parse(e);
                         for (let i = 0; i < x.length; i++) {

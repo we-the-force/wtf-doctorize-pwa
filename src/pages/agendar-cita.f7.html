@@ -3,7 +3,7 @@
         <div class="page-content">
             <div class="header-turquoise v2 flex">
                 <div class="header basic center fixed">
-                    <a class="btn-back" id="back" href="/home">
+                    <a class="btn-back" id="back" href="">
                         <i class="material-icons white">chevron_left</i>
                     </a>
                     <p class="title1 white"></p>
@@ -92,7 +92,7 @@
                     function(e) {
                         var x = JSON.parse(e);
                         for (var i = 0; i < x.length; i++) {
-                            $$('<option value="' + x[i].id + '">' + x[i].nombre + '</option>').appendTo("#consultorio");
+                            $$('<option value="' + x[i].id + '" data-name="' + x[i].nombre + '">' + x[i].nombre + '</option>').appendTo("#consultorio");
                         }
                         app.preloader.hide();
                     },
@@ -117,11 +117,16 @@
                 });
 
                 $$('#agendar-cita .btn-back').click(function() {
-                    app.data.store.clear().then(
-                        function() {
-                            app.methods.redirectTo('home');
-                        }
-                    );
+                    let consulta = localStorage.getItem('consulta');
+                    if (consulta) {
+                        app.methods.redirectTo('nueva-consulta');
+                    } else {
+                        app.data.store.clear().then(
+                            function() {
+                                app.methods.redirectTo('home');
+                            }
+                        );
+                    }
                 });
 
                 function enableButton() {
@@ -133,9 +138,11 @@
                         $$('#agendar-cita .btn-2 a').removeClass('grey');
                         $$('#agendar-cita .btn-2 a').off('click');
                         $$('#agendar-cita .btn-2 a').on('click', function(e) {
-                            app.data.store.setItem("nombre", name)
-                            app.data.store.setItem("email", email)
-                            app.data.store.setItem("phone", phone)
+                            app.data.store.setItem("nombre", name);
+                            app.data.store.setItem("email", email);
+                            app.data.store.setItem("phone", phone);
+                            let index = $$('#consultorio')[0].options.selectedIndex;
+                            app.data.store.setItem("cita_cons_name", $$($$('#consultorio')[0].options[index]).data('name'));
                             app.data.store.setItem("consultorio", consultorio).then(function(params) {
                                 app.methods.redirectTo('agendar-cita-fecha');
                             });

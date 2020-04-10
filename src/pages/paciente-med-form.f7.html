@@ -360,20 +360,27 @@
                                 });
 
                             } else if (consulta) {
-                                let newMed = {
-                                    name,
-                                    quantity,
-                                    dosis_arr,
-                                    period,
-                                    medicine,
-                                    prescript,
-                                    secound,
-                                    tipo_med,
-                                    tipo_ing,
-                                    medida
-                                };
-                                localStorage.setItem('medicina', JSON.stringify(newMed));
-                                app.methods.redirectTo('nueva-consulta');
+
+                                app.data.store.getItem('patient_id').then(function(value) {
+                                    var ptnt_id = value;
+                                    let newMed = {
+                                        "nombre": name,
+                                        "tipo_medicina": tipo_med,
+                                        "tipo_ingesta": tipo_ing,
+                                        "cantidad": quantity,
+                                        "unidad": medida,
+                                        "periodo": period,
+                                        "notas": notas,
+                                        "medicina_para": medicine,
+                                        "prescrita_por": prescript,
+                                        "efectos_secundarios": secound,
+                                        "paciente": ptnt_id,
+                                        "dosis": dosis_arr
+                                    };
+
+                                    localStorage.setItem('medicina', JSON.stringify(newMed));
+                                    app.methods.redirectTo('nueva-consulta');
+                                });
                             } else {
                                 app.preloader.show('blue');
                                 app.data.store.getItem('patient_id').then(function(value) {

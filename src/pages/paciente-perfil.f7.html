@@ -349,7 +349,7 @@
                 var moment = require('moment');
                 moment.locale('es');
                 moment().format();
-                var hsocial;
+                var hsocial, nombre;
                 var doctor = JSON.parse(sessionStorage.getItem('user'));
 
                 app.preloader.show('blue');
@@ -360,8 +360,8 @@
                         function(e) {
                             var x = JSON.parse(e);
                             hsocial = x.Historia_social;
+                            nombre = x.nombre;
                             //name
-                            console.log(x);
                             $$('.header p.name').text(x.nombre);
                             //gender
                             $$('.header .binfo .gender').text(x.genero);
@@ -381,10 +381,21 @@
                             $$('.generales .content #PGC .card-footer p').text('--');
 
                             //vitales
-                            $$('.vitales .content #temperatura .card-footer p').text('°');
-                            $$('.vitales .content #presion .card-footer p').text('---/--');
-                            $$('.vitales .content #respiracion .card-footer p').text('--');
-                            $$('.vitales .content #pulso .card-footer p').text('--');
+                            app.request.get(app.data.url + '/vitales?paciente.id=' + ptnt_id + '&_sort=updated_at:desc',
+                                function(el) {
+
+                                    let y = JSON.parse(el);
+                                    console.log(y);
+
+                                    $$('.vitales .content #temperatura .card-footer p').text(y[0].Temperatura.value);
+                                    $$('.vitales .content #presion .card-footer p').text(y[0].presion.value);
+                                    $$('.vitales .content #respiracion .card-footer p').text(y[0].Respiracion.value);
+                                    $$('.vitales .content #pulso .card-footer p').text(y[0].pulso.value);
+                                },
+                                function(el) {
+                                    app.preloader.hide();
+                                }
+                            );
 
                             //consultas
                             app.request.get(app.data.url + '/consultas?&_sort=created_at:asc&doctor.id=' + doctor.doctor.id + '&paciente.id=' + x.id,
@@ -721,6 +732,24 @@
                             app.preloader.hide();
 
                         });
+                });
+
+                $$('.header .options .appointment').click(function(e) {
+                    app.data.store.getItem('patient_id').then(function(value) {
+                        var ptnt_id = value;
+                        localStorage.setItem('patient_id', ptnt_id);
+                        localStorage.setItem('consulta', true);
+                        app.data.store.setItem('back_consulta', 'paciente').then(function() {
+                            app.methods.redirectTo('nueva-consulta');
+                        });
+                    });
+                });
+
+                $$('.header .options .payment').click(function(e) {
+                    app.methods.redirectTo('doctor-agregar-pago');
+                });
+                $$('.header .options .schedule').click(function(e) {
+                    app.methods.redirectTo('agendar-cita');
                 });
 
                 $$('.nav.title .arrow').click(function(val) {

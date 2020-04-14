@@ -88,7 +88,7 @@
                                 const ele = x[i];
                                 if (ele.pago == null) {
                                     let date = moment(ele.created_at);
-                                    $$('.list ul').append(
+                                    $$('#doctor-pagos-pendientes .list ul').append(
                                         '<li>' +
                                         '<div class="card card-outline pagos pend" id="' + ele.id + '">' +
                                         '<div class="rectangle turquoise"></div>' +

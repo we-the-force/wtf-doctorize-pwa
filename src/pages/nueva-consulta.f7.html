@@ -20,13 +20,14 @@
                         <label for="nombre">Nombre del paciente</label>
                         <div class="item-input-inner dropdown-blue">
                             <input class="notnull" list="pacientes" type="text" id="nombre"
-                                placeholder="Nombre del paciente">
+                                placeholder="Nombre del paciente" required validate>
                         </div>
                     </div>
                     <div class="item-input v2">
                         <label for="motivo">Motivo de consulta</label>
                         <div class="item-input-inner textarea">
-                            <textarea class="resizable notnull" id="motivo" placeholder="Agrege algo mas..."></textarea>
+                            <textarea class="resizable notnull" id="motivo" placeholder="Agrege algo mas..." required
+                                validate></textarea>
                         </div>
                     </div>
                     <div class="item-input v2">
@@ -300,17 +301,19 @@
                     </div>
                 </div>
             </div>
-            <div class="container bsc">
-                <div class="btn-2 woi">
-                    <a href="">
-                        <p>Aceptar </p>
-                    </a>
-                </div>
-                <div class="fab fab-center-bottom color-red">
-                    <a href="#">
-                        <i class="icon f7-icons if-not-md">plus</i>
-                        <i class="icon material-icons md-only">add</i>
-                    </a>
+            <div>
+                <div class="container bsc">
+                    <div class="btn-2 woi">
+                        <a href="">
+                            <p>Aceptar </p>
+                        </a>
+                    </div>
+                    <div class="fab fab-center-bottom color-red">
+                        <a href="#">
+                            <!-- <i class="icon f7-icons if-not-md">plus</i> -->
+                            <i class="icon material-icons">add</i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -335,7 +338,7 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageBeforeIn: function(e, page) {
+            pageBeforeIn: function (e, page) {
                 var self = this;
                 var app = self.$app;
                 var var1 = false,
@@ -344,7 +347,7 @@
                     var4 = false;
                 var doctor = JSON.parse(sessionStorage.getItem('user'));
                 app.request.get(app.data.url + '/pacientes?doctor.id=' + doctor.doctor.id,
-                    function(e) {
+                    function (e) {
                         var x = JSON.parse(e);
                         x.forEach(element => {
                             $$('datalist').append(
@@ -354,7 +357,7 @@
                     }
                 );
             },
-            pageInit: function(e, page) {
+            pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
                 var files = [],
@@ -369,7 +372,7 @@
 
                 let prevPageMedics = page.pageFrom != undefined && page.pageFrom.el.id == 'paciente-med-form';
                 if (localStorage.getItem('files')) {
-                    app.data.store.getItem('files').then(function(val) {
+                    app.data.store.getItem('files').then(function (val) {
                         files = val;
                         addFilesCards();
                     });
@@ -387,7 +390,7 @@
                 if (localStorage.getItem('cita')) {
                     let z = JSON.parse(localStorage.getItem('cita'));
                     let date = moment(z.fecha);
-                    app.data.store.getItem('cita_cons_name').then(function(val) {
+                    app.data.store.getItem('cita_cons_name').then(function (val) {
                         $$('.card.cita .date_row .title').text(val);
                     });
                     $$('.card.cita .date_row .data').text(date.format('DD / MMM / YYYY'));
@@ -439,7 +442,7 @@
                     $$('input#pres_num').closest('.card.sqr').find('.show_num').text(localStorage.getItem('pres_num'));
                 }
 
-                $$('.card.sqr').click(function(e) {
+                $$('.card.sqr').click(function (e) {
                     if ($$(this).parent().find('.primary').length == 0) {
                         animateOut(this, 0);
                     } else if (!$$(this).hasClass('primary')) {
@@ -453,7 +456,7 @@
                     }
                 });
 
-                $$('#file').change(function(e) {
+                $$('#file').change(function (e) {
                     let file = this.files[0];
                     if (file.size <= 5000000) {
                         files.push(file);
@@ -465,8 +468,8 @@
                     }
                 });
 
-                $$('#nueva_consulta .notnull').on('input:notempty', function(e) {
-                    var nonempty = $$('input#nombre, textarea#motivo').filter(function() {
+                $$('#nueva_consulta .notnull').on('input:notempty', function (e) {
+                    var nonempty = $$('input#nombre, textarea#motivo').filter(function () {
                         return this.value != ''
                     });
                     if (nonempty.length == 2) {
@@ -474,8 +477,8 @@
                     }
                 });
 
-                $$('#nueva_consulta .btn_back').click(function(val) {
-                    app.data.store.getItem('back_consulta').then(function(value) {
+                $$('#nueva_consulta .btn_back').click(function (val) {
+                    app.data.store.getItem('back_consulta').then(function (value) {
                         localStorage.clear();
                         if (value == 'schedule') {
                             app.methods.redirectTo('schedule');
@@ -485,42 +488,42 @@
                     });
                 });
 
-                $$('input#nombre').on('input:notempty', function(e) {
+                $$('input#nombre').on('input:notempty', function (e) {
                     localStorage.setItem('consultaName', $$(this).val());
                     localStorage.setItem('patient_id', $$('#pacientes option[value="' + $$(this).val() + '"]').data('id'));
                 });
 
-                $$('textarea#motivo').on('input:notempty', function(e) {
+                $$('textarea#motivo').on('input:notempty', function (e) {
                     localStorage.setItem('consultaMotivo', $$(this).val());
                 });
 
-                $$('textarea#notes').on('input:notempty', function(e) {
+                $$('textarea#notes').on('input:notempty', function (e) {
                     localStorage.setItem('consultaNotes', $$(this).val());
                 });
 
-                $$('.card.sqr .notnull').on('input:notempty', function(e) {
+                $$('.card.sqr .notnull').on('input:notempty', function (e) {
                     localStorage.setItem($$(this).attr('id'), $$(this).val());
                     $$(this).closest('.card.sqr').find('.show_num').text($$(this).val());
                 });
 
-                $$('.item-input .med').click(function(e) {
+                $$('.item-input .med').click(function (e) {
                     app.methods.redirectTo('paciente-medicamento-form');
                 });
 
-                $$('.item-input .cita').click(function(e) {
+                $$('.item-input .cita').click(function (e) {
                     app.methods.redirectTo('agendar-cita');
                 });
 
-                $$('.item-input .pago').click(function(e) {
+                $$('.item-input .pago').click(function (e) {
                     app.methods.redirectTo('doctor-agregar-pago');
                 });
 
                 function enableButton(params) {
                     $$('#nueva_consulta .bsc .btn-2 a').off('click');
                     $$('#nueva_consulta .bsc .btn-2 a').removeClass('grey');
-                    $$('#nueva_consulta .bsc .btn-2 a').click(function(val) {
+                    $$('#nueva_consulta .bsc .btn-2 a').click(function (val) {
                         /* app.data.store.getItem('patient_id').then(function(pnt_id) { */
-                        app.data.store.getItem('files').then(function(files) {
+                        app.data.store.getItem('files').then(function (files) {
                             var pnt_id = localStorage.getItem('patient_id');
                             if (pnt_id != undefined) {
                                 let paciente, nombre, motivo, notas, archivos = [],
@@ -549,83 +552,83 @@
                                 };
                                 cita = JSON.parse(localStorage.getItem('cita'));
                                 pago = JSON.parse(localStorage.getItem('pago'));
-                                medics.forEach(function(med) {
+                                medics.forEach(function (med) {
                                     med.paciente = pnt_id;
                                     app.preloader.show('blue');
                                     app.request.postJSON(app.data.url + '/medicamentos', med,
-                                        function(el) {
+                                        function (el) {
                                             console.log(el);
                                             medics_ids.push(el.id);
                                         },
-                                        function(el) {
+                                        function (el) {
                                             app.preloader.hide();
                                         });
                                 });
                                 app.request.postJSON(app.data.url + '/consultas', {
-                                        "motivo": motivo,
-                                        "notas": notas,
-                                        "medicamentos": medics_ids,
-                                        "paciente": pnt_id,
-                                        "doctor": doctor.doctor.id
-                                    },
-                                    function(el) {
+                                    "motivo": motivo,
+                                    "notas": notas,
+                                    "medicamentos": medics_ids,
+                                    "paciente": pnt_id,
+                                    "doctor": doctor.doctor.id
+                                },
+                                    function (el) {
                                         app.request.postJSON(app.data.url + '/citas', cita,
-                                            function(e) {
+                                            function (e) {
                                                 app.preloader.hide();
                                                 localStorage.clear();
                                                 app.data.store.clear();
                                                 out();
                                             },
-                                            function(e) {
+                                            function (e) {
                                                 app.preloader.hide();
                                             });
                                         app.request.postJSON(app.data.url + '/pagos', {
-                                                "costo": pago.costo,
-                                                "metodo": pago.metodo,
-                                                "estatus": "confirmado",
-                                                "paciente": pnt_id,
-                                                "doctor": doctor.doctor.id,
-                                                "consulta": el.id
-                                            },
-                                            function(el) {
+                                            "costo": pago.costo,
+                                            "metodo": pago.metodo,
+                                            "estatus": "confirmado",
+                                            "paciente": pnt_id,
+                                            "doctor": doctor.doctor.id,
+                                            "consulta": el.id
+                                        },
+                                            function (el) {
                                                 app.preloader.hide();
                                                 localStorage.clear();
                                                 app.data.store.clear();
                                                 out();
                                             },
-                                            function(el) {
+                                            function (el) {
                                                 app.preloader.hide();
                                             });
                                         app.request.postJSON(app.data.url + '/vitales', {
-                                                "Temperatura": {
-                                                    "value": localStorage.getItem('temp_num')
-                                                },
-                                                "presion": {
-                                                    "value": localStorage.getItem('pres_num')
-                                                },
-                                                "Respiracion": {
-                                                    "value": localStorage.getItem('resp_num')
-                                                },
-                                                "pulso": {
-                                                    "value": localStorage.getItem('puls_num')
-                                                },
-                                                "paciente": pnt_id,
-                                                "consulta": el.id
-
+                                            "Temperatura": {
+                                                "value": localStorage.getItem('temp_num')
                                             },
-                                            function(el) {
+                                            "presion": {
+                                                "value": localStorage.getItem('pres_num')
+                                            },
+                                            "Respiracion": {
+                                                "value": localStorage.getItem('resp_num')
+                                            },
+                                            "pulso": {
+                                                "value": localStorage.getItem('puls_num')
+                                            },
+                                            "paciente": pnt_id,
+                                            "consulta": el.id
+
+                                        },
+                                            function (el) {
                                                 app.preloader.hide();
                                                 localStorage.clear();
                                                 app.data.store.clear();
                                                 out();
                                             },
-                                            function(el) {
+                                            function (el) {
                                                 app.preloader.hide();
                                             }
                                         );
 
                                         const data = new FormData();
-                                        archivos.forEach(function(file) {
+                                        archivos.forEach(function (file) {
                                             data.append("files", file);
                                         });
                                         data.append("refId", el.id);
@@ -638,18 +641,18 @@
                                             crossDomain: true,
                                             contentType: "multipart/form-data",
                                             data: data,
-                                            success: function(e) {
+                                            success: function (e) {
                                                 app.preloader.hide();
                                                 localStorage.clear();
                                                 app.data.store.clear();
                                                 out();
                                             },
-                                            error: function(e) {
+                                            error: function (e) {
                                                 app.preloader.hide();
                                             }
                                         });
                                     },
-                                    function(el) {
+                                    function (el) {
                                         app.preloader.hide();
                                     }
                                 );
@@ -677,23 +680,23 @@
                 }
 
                 function animateOut(e, x) {
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $$(e).toggleClass('primary');
                     }, 0 + x);
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $$('.card.sqr.primary').find('.fade-out').toggleClass('none');
                     }, 250 + x);
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $$('.card.sqr.primary').find('.fade-in').toggleClass('none');
                     }, 250 + x);
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $$('.card.sqr.primary').find('.fade-in').toggleClass('show');
                     }, 500 + x);
 
                 }
 
                 function checkData(e) {
-                    var nonempty = $$('#nueva_consulta .notnull').filter(function() {
+                    var nonempty = $$('#nueva_consulta .notnull').filter(function () {
                         return this.value != ''
                     });
 

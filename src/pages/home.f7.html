@@ -167,13 +167,15 @@
                 );
 
                 //consulta citas
-                app.request.get(app.data.url + '/citas?doctor.id=' + doctor.doctor.id + '&_limit=10&_sort=fecha:asc', function(e) {
+                app.request.get(app.data.url + '/citas?doctor.id=' + doctor.doctor.id + '&_sort=fecha:desc&_limit=10', function(e) {
                     let today = moment();
                     let cards = 0;
-                    let x = JSON.parse(e);
+                    let x = JSON.parse(e); 
+                    x.reverse();
                     let swiper = app.swiper.get('.appointments .swiper-container');
                     x.forEach(element => {
                         let date = moment(element.fecha + 'T' + element.hora, 'YYYY-MM-DDTHH:mm:ss.SSS');
+                        date.add(1,'d');
                         if (today.isBefore(date) && cards < 10) {
                             swiper.appendSlide(
                                 '<div class="swiper-slide" id="id_' + element.id + '">' +

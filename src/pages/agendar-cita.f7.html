@@ -75,7 +75,7 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageInit: function(e, page) {
+            pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
                 var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -89,22 +89,22 @@
                 var doctor = JSON.parse(sessionStorage.getItem('user'));
                 app.preloader.show('blue');
                 app.request.get(app.data.url + '/consultorios?doctor.id=' + doctor.doctor.id,
-                    function(e) {
+                    function (e) {
                         var x = JSON.parse(e);
                         for (var i = 0; i < x.length; i++) {
                             $$('<option value="' + x[i].id + '" data-name="' + x[i].nombre + '">' + x[i].nombre + '</option>').appendTo("#consultorio");
                         }
                         app.preloader.hide();
                     },
-                    function(e) {
+                    function (e) {
                         app.preloader.hide();
                     });
 
 
                 disableButton();
 
-                $$('#agendar-cita input').on('input:notempty', function(e) {
-                    var nonempty = $$('#agendar-cita input').filter(function() {
+                $$('#agendar-cita input').on('input:notempty', function (e) {
+                    var nonempty = $$('#agendar-cita input').filter(function () {
                         return this.value != ''
                     });
                     if (nonempty.length == 3) {
@@ -112,20 +112,32 @@
                     }
                 });
 
-                $$(document).on('input:empty', function(e) {
+                $$(document).on('input:empty', function (e) {
                     disableButton();
                 });
 
-                $$('#agendar-cita .btn-back').click(function() {
+                $$('#agendar-cita .btn-back').click(function () {
                     let consulta = localStorage.getItem('consulta');
                     if (consulta) {
                         app.methods.redirectTo('nueva-consulta');
                     } else {
-                        app.data.store.clear().then(
-                            function() {
+                        app.data.store.getItem('back_cita').then(function (value) {
+                            localStorage.clear();
+                            if (value == 'paciente') {
+                                app.methods.redirectTo('paciente-perfil');
+                            } else {
+                                app.data.store.clear().then(
+                                    function () {
+                                        app.methods.redirectTo('home');
+                                    }
+                                );
+                            }
+                        });
+                        /* app.data.store.clear().then(
+                            function () {
                                 app.methods.redirectTo('home');
                             }
-                        );
+                        ); */
                     }
                 });
 
@@ -137,13 +149,13 @@
                     if (regex.test(email) && regex2.test(phone)) {
                         $$('#agendar-cita .btn-2 a').removeClass('grey');
                         $$('#agendar-cita .btn-2 a').off('click');
-                        $$('#agendar-cita .btn-2 a').on('click', function(e) {
+                        $$('#agendar-cita .btn-2 a').on('click', function (e) {
                             app.data.store.setItem("nombre", name);
                             app.data.store.setItem("email", email);
                             app.data.store.setItem("phone", phone);
                             let index = $$('#consultorio')[0].options.selectedIndex;
                             app.data.store.setItem("cita_cons_name", $$($$('#consultorio')[0].options[index]).data('name'));
-                            app.data.store.setItem("consultorio", consultorio).then(function(params) {
+                            app.data.store.setItem("consultorio", consultorio).then(function (params) {
                                 app.methods.redirectTo('agendar-cita-fecha');
                             });
                         });

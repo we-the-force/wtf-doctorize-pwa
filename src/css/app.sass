@@ -42,6 +42,8 @@
                 height: calc(100% - 18%)
                 @media screen and (max-height: 600px)
                     height: calc(100% - 70px)
+            .flex_grow
+                flex-grow: 1
         .list
             &.buttons
                 background: transparent
@@ -123,7 +125,7 @@
         hr
             display: none
     .card.v2 .card-content
-        padding-left: 16px
+        padding-left: 20px
     .item-input-error-message
         position: absolute
         margin-bottom: 0px
@@ -191,6 +193,7 @@
             left: unset
             margin-top: unset
             width: auto
+            bottom: unset;
 
 .md
     .popover-menu

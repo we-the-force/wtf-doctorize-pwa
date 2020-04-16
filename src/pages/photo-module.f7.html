@@ -523,7 +523,8 @@
                                     });
                                     app.request.postJSON(app.data.url + '/doctors', {
                                             "nombre": username,
-                                            "user": e.user.id
+                                            "user": e.user.id,
+                                            "correo": email
                                         },
                                         function(el) {
                                             console.log(el);

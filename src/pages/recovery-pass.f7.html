@@ -141,8 +141,28 @@
                                 "password": pass1,
                                 "passwordConfirmation": pass2,
                             }, function(e) {
-                                app.preloader.hide();
-                                app.methods.redirectTo('root');
+                                console.log(e.email); //mandar pedir doctor con email
+                                app.request.get(app.data.url + '/doctors', function(doc) {
+                                        app.request({
+                                            url: app.data.url + '/doctors/=' + doc.id,
+                                            method: "PUT",
+                                            crossDomain: true,
+                                            data: {
+                                                "user": e.id
+                                            },
+                                            success: function(e) {
+                                                app.preloader.hide();
+                                                app.methods.redirectTo('root');
+                                            },
+                                            error: function(e) {
+                                                app.preloader.hide();
+                                            }
+                                        });
+                                    },
+                                    function(err) {
+                                        app.preloader.hide();
+                                    }
+                                );
                             }, function(e) {
                                 app.preloader.hide();
                             });

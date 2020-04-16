@@ -4,13 +4,13 @@
             <div class="header paciente">
                 <div class="circle"></div>
                 <div class="photo">
-                    <img src="../static/images/gwen.jpeg" alt="">
+                    <img src="" alt="">
                 </div>
-                <p class="name">Gewndolyne Stacy</p>
+                <p class="name"></p>
                 <div class="binfo">
-                    <p class="gender">Mujer</p>
+                    <p class="gender"></p>
                     <p>&nbsp;/&nbsp;</p>
-                    <p class="age">23 años</p>
+                    <p class="age"></p>
                 </div>
                 <div class="dots">
                     <div class="dot call">
@@ -336,14 +336,14 @@
 
     export default {
         on: {
-            pageBeforeOut: function(e, page) {
+            pageBeforeOut: function (e, page) {
                 var self = this;
                 var app = self.$app;
                 if (e.detail.direction == 'backward') {
                     app.data.store.removeItem('patient_id');
                 }
             },
-            pageInit: function(e, page) {
+            pageInit: function (e, page) {
                 var self = this;
                 var app = self.$app;
                 var moment = require('moment');
@@ -354,10 +354,10 @@
 
                 app.preloader.show('blue');
 
-                app.data.store.getItem('patient_id').then(function(value) {
+                app.data.store.getItem('patient_id').then(function (value) {
                     var ptnt_id = value;
                     app.request.get(app.data.url + '/pacientes/' + ptnt_id,
-                        function(e) {
+                        function (e) {
                             var x = JSON.parse(e);
                             hsocial = x.Historia_social;
                             nombre = x.nombre;
@@ -382,7 +382,7 @@
 
                             //vitales
                             app.request.get(app.data.url + '/vitales?paciente.id=' + ptnt_id + '&_sort=updated_at:desc',
-                                function(el) {
+                                function (el) {
 
                                     let y = JSON.parse(el);
                                     console.log(y);
@@ -392,14 +392,14 @@
                                     $$('.vitales .content #respiracion .card-footer p').text(y[0].Respiracion.value);
                                     $$('.vitales .content #pulso .card-footer p').text(y[0].pulso.value);
                                 },
-                                function(el) {
+                                function (el) {
                                     app.preloader.hide();
                                 }
                             );
 
                             //consultas
                             app.request.get(app.data.url + '/consultas?&_sort=created_at:asc&doctor.id=' + doctor.doctor.id + '&paciente.id=' + x.id,
-                                function(ele) {
+                                function (ele) {
                                     let y = JSON.parse(ele);
                                     let [color, i] = ['dark-blue', 0];
                                     y.forEach(el => {
@@ -454,13 +454,13 @@
                                             default:
                                                 break;
                                         }
-                                        (i == 3) ? i = 0: i++;
+                                        (i == 3) ? i = 0 : i++;
 
-                                        $$(document).on('card:beforeopen', function(e) {
+                                        $$(document).on('card:beforeopen', function (e) {
                                             $$(e.srcElement).find('.show').hide();
                                         });
 
-                                        $$(document).on('card:close', function(e) {
+                                        $$(document).on('card:close', function (e) {
                                             $$(e.srcElement).find('.show').show();
                                         });
                                     });
@@ -469,7 +469,7 @@
 
                             //pagos
                             app.request.get(app.data.url + '/pagos?&_sort=created_at:asc&doctor.id=' + doctor.doctor.id + '&paciente.id=' + x.id,
-                                function(el) {
+                                function (el) {
                                     let y = JSON.parse(el);
                                     let date = moment(el.created_at);
                                     y.forEach(ele => {
@@ -489,7 +489,7 @@
                                             '</div>' +
                                             '</div>'
                                         );
-                                        $$('.card.v2').click(function(e) {
+                                        $$('.card.v2').click(function (e) {
                                             console.log('pago details');
 
                                             /* app.data.store.setItem("contra_id", $$(this).data('id')).then(function (value) {
@@ -503,7 +503,7 @@
 
                             //condiciones medicas
                             app.request.get(app.data.url + '/condicion-medicas?paciente.id=' + x.id,
-                                function(el) {
+                                function (el) {
                                     let y = JSON.parse(el);
                                     y.forEach(el => {
                                         let date = moment(el.fecha_diagnostico);
@@ -530,7 +530,7 @@
 
                             //medicamentos
                             app.request.get(app.data.url + '/medicamentos?paciente.id=' + x.id,
-                                function(el) {
+                                function (el) {
                                     let y = JSON.parse(el);
                                     y.forEach(el => {
                                         $$('.medicamentos .content ').append(
@@ -555,7 +555,7 @@
 
                             //alergias
                             app.request.get(app.data.url + '/alergias?paciente.id=' + x.id,
-                                function(el) {
+                                function (el) {
                                     let y = JSON.parse(el);
 
                                     y.forEach(el => {
@@ -601,7 +601,7 @@
                             }
                             //historia medica familiar
                             app.request.get(app.data.url + '/historia-familiars?paciente.id=' + x.id,
-                                function(el) {
+                                function (el) {
                                     let hmedfam = JSON.parse(el);
                                     hmedfam.forEach(el => {
                                         $$('.hMedicaFam .content ').append(
@@ -626,7 +626,7 @@
 
                             //contraindicaciones
                             app.request.get(app.data.url + '/contraindicaciones?paciente.id=' + x.id,
-                                function(el) {
+                                function (el) {
                                     let y = JSON.parse(el);
                                     y.forEach(el => {
                                         $$('.contraindicaciones .content ').append(
@@ -650,7 +650,7 @@
 
                             //hospitalizaciones
                             app.request.get(app.data.url + '/hospitalizaciones?paciente.id=' + x.id,
-                                function(el) {
+                                function (el) {
                                     let y = JSON.parse(el);
                                     y.forEach(el => {
                                         let date_in = moment(el.admision);
@@ -677,7 +677,7 @@
 
                             //cirugias implantes
                             app.request.get(app.data.url + '/cirugias?paciente.id=' + x.id,
-                                function(el) {
+                                function (el) {
                                     let y = JSON.parse(el);
                                     y.forEach(el => {
                                         $$('.cirugias .content').append(
@@ -702,7 +702,7 @@
 
                             //vacunas
                             app.request.get(app.data.url + '/vacunas?paciente.id=' + x.id,
-                                function(el) {
+                                function (el) {
                                     let y = JSON.parse(el);
                                     y.forEach(el => {
                                         $$('.vacunas .content').append(
@@ -728,90 +728,102 @@
 
                             app.preloader.hide();
                         },
-                        function(e) {
+                        function (e) {
                             app.preloader.hide();
 
                         });
                 });
 
-                $$('.header .options .appointment').click(function(e) {
-                    app.data.store.getItem('patient_id').then(function(value) {
+                $$('.header .options .appointment').click(function (e) {
+                    app.data.store.getItem('patient_id').then(function (value) {
                         var ptnt_id = value;
                         localStorage.setItem('patient_id', ptnt_id);
                         localStorage.setItem('consulta', true);
-                        app.data.store.setItem('back_consulta', 'paciente').then(function() {
+                        app.data.store.setItem('back_consulta', 'paciente').then(function () {
                             app.methods.redirectTo('nueva-consulta');
                         });
                     });
                 });
 
-                $$('.header .options .payment').click(function(e) {
-                    app.methods.redirectTo('doctor-agregar-pago');
+                $$('.header .options .payment').click(function (e) {
+                    app.data.store.getItem('patient_id').then(function (value) {
+                        var ptnt_id = value;
+                        localStorage.setItem('patient_id', ptnt_id);
+                        app.data.store.setItem('back_pago', 'paciente').then(function () {
+                            app.methods.redirectTo('doctor-agregar-pago');
+                        });
+                    });
                 });
-                $$('.header .options .schedule').click(function(e) {
-                    app.methods.redirectTo('agendar-cita');
+                $$('.header .options .schedule').click(function (e) {
+                    app.data.store.getItem('patient_id').then(function (value) {
+                        var ptnt_id = value;
+                        localStorage.setItem('patient_id', ptnt_id);
+                        app.data.store.setItem('back_cita', 'paciente').then(function () {
+                            app.methods.redirectTo('agendar-cita');
+                        });
+                    });
                 });
 
-                $$('.nav.title .arrow').click(function(val) {
-                    app.data.store.clear().then(function(value) {
+                $$('.nav.title .arrow').click(function (val) {
+                    app.data.store.clear().then(function (value) {
                         app.methods.redirectTo('home');
                     });
                 });
 
                 function checkCard() {
                     $$('.card.v2').off('click');
-                    $$('.card.v2').click(function(e) {
+                    $$('.card.v2').click(function (e) {
                         let x = $$(this).parent().parent().attr('class').split(' ')[1];
                         switch (x) {
                             case 'condiciones':
-                                app.data.store.setItem("cond_med_id", $$(this).data('id')).then(function(value) {
+                                app.data.store.setItem("cond_med_id", $$(this).data('id')).then(function (value) {
                                     app.methods.redirectTo('paciente-cond-med');
                                 });
                                 break;
                             case 'medicamentos':
                                 console.log('medicamentos');
-                                app.data.store.setItem("med_id", $$(this).data('id')).then(function(value) {
+                                app.data.store.setItem("med_id", $$(this).data('id')).then(function (value) {
                                     app.methods.redirectTo('paciente-medicamento');
                                 });
                                 break;
                             case 'alergias':
                                 console.log('alergias');
-                                app.data.store.setItem("aler_id", $$(this).data('id')).then(function(value) {
+                                app.data.store.setItem("aler_id", $$(this).data('id')).then(function (value) {
                                     app.methods.redirectTo('paciente-alergias');
                                 });
                                 break;
                             case 'hSocial':
-                                app.data.store.setItem("hsocial", hsocial).then(function(value) {
+                                app.data.store.setItem("hsocial", hsocial).then(function (value) {
                                     app.methods.redirectTo('paciente-hist-social');
                                 });
                                 break;
                             case 'hMedicaFam':
                                 console.log('hMedicaFam');
-                                app.data.store.setItem("hmedfam_id", $$(this).data('id')).then(function(value) {
+                                app.data.store.setItem("hmedfam_id", $$(this).data('id')).then(function (value) {
                                     app.methods.redirectTo('paciente-hist-medica-fam');
                                 });
                                 break;
                             case 'contraindicaciones':
                                 console.log('contraindicaciones');
-                                app.data.store.setItem("contra_id", $$(this).data('id')).then(function(value) {
+                                app.data.store.setItem("contra_id", $$(this).data('id')).then(function (value) {
                                     app.methods.redirectTo('paciente-contra');
                                 });
                                 break;
                             case 'hospitalizaciones':
                                 console.log('hospitalizaciones');
-                                app.data.store.setItem("hosp_id", $$(this).data('id')).then(function(value) {
+                                app.data.store.setItem("hosp_id", $$(this).data('id')).then(function (value) {
                                     app.methods.redirectTo('paciente-hosp');
                                 });
                                 break;
                             case 'cirugias':
                                 console.log('cirugias/implantes');
-                                app.data.store.setItem("cir_id", $$(this).data('id')).then(function(value) {
+                                app.data.store.setItem("cir_id", $$(this).data('id')).then(function (value) {
                                     app.methods.redirectTo('paciente-cirugia-implantes');
                                 });
                                 break;
                             case 'vacunas':
                                 console.log('Vacunas');
-                                app.data.store.setItem("vac_id", $$(this).data('id')).then(function(value) {
+                                app.data.store.setItem("vac_id", $$(this).data('id')).then(function (value) {
                                     app.methods.redirectTo('paciente-vacunas');
                                 });
                                 break;

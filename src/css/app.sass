@@ -42,6 +42,8 @@
                 height: calc(100% - 18%)
                 @media screen and (max-height: 600px)
                     height: calc(100% - 70px)
+            .flex_grow
+                flex-grow: 1
         .list
             &.buttons
                 background: transparent
@@ -111,24 +113,43 @@
     --f7-toggle-height: 24px
     --f7-toggle-width: 48px
     --f7-input-invalid-border-color: #ff0000
+    .actions-modal .actions-button
+        i
+            margin-left: 15px
+            margin-right: -15px
+        &:first-child:last-child
+            border-radius: unset
+    .page .header 
+        .searchbar:after
+            content: none
+        hr
+            display: none
+    .card.v2 .card-content
+        padding-left: 20px
+    .item-input-error-message
+        position: absolute
+        margin-bottom: 0px
+        margin-top: 0px
+        bottom: -15px
+        left: 30px
     .item-input-invalid
         color: #ff0000
     .item-input-wrap::after,.item-inner::after
         content: none
     .item-input:not(.item-input-outline) .item-input-wrap:after
-        content: '';
-        position: absolute;
-        background-color: var(--f7-list-item-border-color);
-        display: block;
-        z-index: 15;
-        top: auto;
-        right: auto;
-        bottom: 0;
-        left: 0;
-        height: 1px;
-        width: 100%;
-        transform-origin: 50% 100%;
-        transform: scaleY(calc(1 / var(--f7-device-pixel-ratio)));
+        content: ''
+        position: absolute
+        background-color: var(--f7-list-item-border-color)
+        display: block
+        z-index: 15
+        top: auto
+        right: auto
+        bottom: 0
+        left: 0
+        height: 1px
+        width: 100%
+        transform-origin: 50% 100%
+        transform: scaleY(calc(1 / var(--f7-device-pixel-ratio)))
     #schedule
         li.item-divider::before
             content: none
@@ -162,8 +183,8 @@
             &::after
                 content: none
     input[type="radio"]:checked ~ .icon-radio
-        &::after    
-            color: $turquoise-2 
+        &::after
+            color: $turquoise-2
     .paciente-input-item
         .item-input-error-message
             position: absolute
@@ -172,6 +193,7 @@
             left: unset
             margin-top: unset
             width: auto
+            bottom: unset;
 
 .md
     .popover-menu
@@ -200,4 +222,4 @@
                 padding-top: 15px
         input[type="radio"]:checked ~ .icon-radio
             &::after
-                background-color: $turquoise-2 
+                background-color: $turquoise-2

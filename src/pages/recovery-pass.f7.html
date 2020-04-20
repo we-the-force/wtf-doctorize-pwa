@@ -142,9 +142,9 @@
                                 "passwordConfirmation": pass2,
                             }, function(e) {
                                 console.log(e.email); //mandar pedir doctor con email
-                                app.request.get(app.data.url + '/doctors', function(doc) {
+                                app.request.get(app.data.url + '/doctors?correo=' + e.mail, function(doc) {
                                         app.request({
-                                            url: app.data.url + '/doctors/=' + doc.id,
+                                            url: app.data.url + '/doctors/' + doc.id,
                                             method: "PUT",
                                             crossDomain: true,
                                             data: {

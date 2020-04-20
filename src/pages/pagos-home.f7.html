@@ -377,6 +377,8 @@
                     function(e) {
 
                         pagos = JSON.parse(e);
+                        console.log(pagos);
+
                         let recibidos = [];
                         let pendientes = [];
                         recibidos = pagos.filter(e => {
@@ -419,8 +421,8 @@
 
                         $$('#pagos-home .card.pagos').click(function(x) {
                             let card = $$(this);
+                            app.data.store.setItem('pagoId', card.data('id'));
                             if (card.parent().attr('id') == 'recibidos') {
-
                                 app.data.store.setItem('details', 'recibidos').then(function(value) {
                                     app.methods.redirectTo('pago-details');
                                 });
@@ -526,7 +528,7 @@
                     );
                     y.forEach(el => {
                         $$('#' + x).append(
-                            '<div class="card card-outline pagos">' +
+                            '<div class="card card-outline pagos" data-id="' + el.id + '">' +
                             '<div class="rectangle ' + color + '"></div>' +
                             '<div class="card-content card-content-padding">' +
                             '<div class="name">' + el.paciente.nombre + '</div>' +

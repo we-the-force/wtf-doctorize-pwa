@@ -192,18 +192,32 @@
                             j = {
                                 "email": value
                             }
+                            k = {
+                                "correo": value
+                            }
                             app.request({
                                 url: app.data.url + '/users/' + doctor.id,
                                 method: "PUT",
                                 crossDomain: true,
                                 data: j,
                                 success: function(e) {
-                                    console.log('ahoy');
+                                    app.request({
+                                        url: app.data.url + '/doctors/' + doctor.doctor.id,
+                                        method: "PUT",
+                                        crossDomain: true,
+                                        data: k,
+                                        success: function(e) {
+                                            console.log('ahoy');
+                                        },
+                                        error: function(e) {
+                                            app.preloader.hide();
+                                        }
+                                    }).then(getUser());
                                 },
                                 error: function(e) {
                                     app.preloader.hide();
                                 }
-                            }).then(getUser());
+                            });
                             break;
                         case "SC":
                             j = {

@@ -140,15 +140,18 @@
                                 "code": code,
                                 "password": pass1,
                                 "passwordConfirmation": pass2,
-                            }, function(e) {
-                                console.log(e.email); //mandar pedir doctor con email
-                                app.request.get(app.data.url + '/doctors?correo=' + e.mail, function(doc) {
+                            }, function(el) {
+                                //mandar pedir doctor con email
+                                app.request.get(app.data.url + '/doctors?correo=' + el.user.email, function(doc) {
+                                        let doctor = JSON.parse(doc);
+                                        console.log(doctor[0].id);
+
                                         app.request({
-                                            url: app.data.url + '/doctors/' + doc.id,
+                                            url: app.data.url + '/doctors/' + doctor[0].id,
                                             method: "PUT",
                                             crossDomain: true,
                                             data: {
-                                                "user": e.id
+                                                "user": el.user.id
                                             },
                                             success: function(e) {
                                                 app.preloader.hide();

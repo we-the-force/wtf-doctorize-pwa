@@ -93,6 +93,8 @@
                                     "password": password
                                 },
                                 function(e) {
+                                    console.log(e.user.email);
+
                                     app.preloader.hide();
                                     sessionStorage.setItem('key', JSON.stringify(e.jwt));
                                     sessionStorage.setItem('user', JSON.stringify(e.user));

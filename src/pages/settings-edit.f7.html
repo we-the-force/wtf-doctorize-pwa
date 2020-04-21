@@ -162,7 +162,7 @@
                                 "username": value
                             }
                             k = {
-                                "nombre": value
+                                "Nombre": value
                             }
                             app.request({
                                 url: app.data.url + '/users/' + doctor.id,
@@ -177,11 +177,12 @@
                                         data: k,
                                         success: function(e) {
                                             console.log('ahoy');
+                                            getUser()
                                         },
                                         error: function(e) {
                                             app.preloader.hide();
                                         }
-                                    }).then(getUser());
+                                    });
                                 },
                                 error: function(e) {
                                     app.preloader.hide();
@@ -208,11 +209,12 @@
                                         data: k,
                                         success: function(e) {
                                             console.log('ahoy');
+                                            getUser()
                                         },
                                         error: function(e) {
                                             app.preloader.hide();
                                         }
-                                    }).then(getUser());
+                                    });
                                 },
                                 error: function(e) {
                                     app.preloader.hide();

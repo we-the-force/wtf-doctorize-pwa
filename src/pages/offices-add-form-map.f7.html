@@ -32,8 +32,7 @@
                             <div class="item-inner">
                                 <div class="item-label dark-blue">Hospital</div>
                                 <div class="item-input-wrap">
-                                    <input type="text" name="hospital" id="hospital" placeholder="Hospital" required
-                                        validate>
+                                    <input type="text" name="hospital" id="hospital" placeholder="Hospital (Opcional)">
                                     <span class="input-clear-button"></span>
                                 </div>
                             </div>
@@ -42,7 +41,7 @@
                             <div class="item-inner">
                                 <div class="item-label dark-blue">Dirección</div>
                                 <div class="item-input-wrap">
-                                    <input type="text" name="direction" id="direction" placeholder="Dirección" required
+                                    <input type="text" class="rqrd" name="direction" id="direction" placeholder="Dirección" required
                                         validate>
                                     <span class="input-clear-button"></span>
                                 </div>
@@ -52,8 +51,8 @@
                             <div class="item-inner">
                                 <div class="item-label dark-blue">Número de Consultorio</div>
                                 <div class="item-input-wrap">
-                                    <input type="text" name="consultorio" id="consultorio" placeholder="Consultorio"
-                                        required validate pattern="[0-9]*" data-error-message="Only numbers please!">
+                                    <input type="text" name="consultorio" id="consultorio" placeholder="Consultorio (Opcional)"
+                                        validate>
                                     <span class="input-clear-button"></span>
                                 </div>
                             </div>
@@ -152,10 +151,10 @@
                     }); */
 
                     $$('#offices-add-form-map input').on('input:notempty', function(e) {
-                        var nonempty = $$('#offices-add-form-map input').filter(function() {
+                        var nonempty = $$('#offices-add-form-map input.rqrd').filter(function() {
                             return this.value != ''
                         });
-                        if (nonempty.length == 3) {
+                        if (nonempty.length >= 1) {
                             enableButton();
                         }
                     });
@@ -165,23 +164,23 @@
                         app.methods.redirectTo('offices-add-form-basic');
                     });
 
-                    $$(document).on('input:empty', function(e) {
+                    $$('#offices-add-form-map input.rqrd').on('input:empty', function(e) {
                         disableButton();
                     });
                 });
 
                 function enableButton() {
                     let consultorio = $$('#consultorio').val();
-                    if (regex.test(consultorio)) {
-                        $$('#offices-add-form-map .btn-2 a').removeClass('grey');
-                        $$('#offices-add-form-map .btn-2 a').off('click');
-                        $$('#offices-add-form-map .btn-2 a').on('click', function(e) {
-                            app.data.store.setItem("hospital", $$('[name="hospital"]').val());
-                            app.data.store.setItem("address", $$('[name="direction"]').val());
-                            app.data.store.setItem("number", consultorio);
-                            app.methods.redirectTo('offices-add-form-schedule');
-                        });
-                    }
+                    /* if (regex.test(consultorio)) { */
+                    $$('#offices-add-form-map .btn-2 a').removeClass('grey');
+                    $$('#offices-add-form-map .btn-2 a').off('click');
+                    $$('#offices-add-form-map .btn-2 a').on('click', function(e) {
+                        app.data.store.setItem("hospital", $$('[name="hospital"]').val());
+                        app.data.store.setItem("address", $$('[name="direction"]').val());
+                        app.data.store.setItem("number", consultorio);
+                        app.methods.redirectTo('offices-add-form-schedule');
+                    });
+                    /*  } */
                 }
 
                 function disableButton() {

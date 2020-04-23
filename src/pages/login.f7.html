@@ -62,7 +62,11 @@
             pageBeforeIn: function(e, page) {
                 var self = this;
                 var app = self.$app;
-                if (sessionStorage.getItem('user') != null) {
+                console.log(localStorage.getItem('login-user'));
+
+                if (localStorage.getItem('login-user') != null) {
+                    sessionStorage.setItem('key', localStorage.getItem('login-key'));
+                    sessionStorage.setItem('user', localStorage.getItem('login-user'));
                     window.location.href = '/#!/home';
                     window.location.reload();
                 }
@@ -71,6 +75,9 @@
                 var self = this;
                 var app = self.$app;
                 var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+                console.log('ahoy');
+
 
                 disableButton();
 
@@ -106,6 +113,8 @@
                                     app.preloader.hide();
                                     sessionStorage.setItem('key', JSON.stringify(e.jwt));
                                     sessionStorage.setItem('user', JSON.stringify(e.user));
+                                    localStorage.setItem('login-key', JSON.stringify(e.jwt));
+                                    localStorage.setItem('login-user', JSON.stringify(e.user));
                                     app.methods.redirectTo('home');
                                 },
                                 function(e) {

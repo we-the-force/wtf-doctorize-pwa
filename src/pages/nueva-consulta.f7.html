@@ -479,6 +479,8 @@
                 $$('#nueva_consulta .btn_back').click(function(val) {
                     app.data.store.getItem('back_consulta').then(function(value) {
                         localStorage.clear();
+                        localStorage.setItem('login-user', sessionStorage.getItem('user'));
+                        localStorage.setItem('login-key', sessionStorage.getItem('key'));
                         if (value == 'schedule') {
                             app.methods.redirectTo('schedule');
                         } else if (value == 'paciente') {
@@ -671,6 +673,8 @@
                 }
 
                 function out() {
+                    localStorage.setItem('login-user', sessionStorage.getItem('user'));
+                    localStorage.setItem('login-key', sessionStorage.getItem('key'));
                     app.methods.redirectTo('home');
                 }
 

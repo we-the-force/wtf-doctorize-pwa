@@ -123,6 +123,8 @@
                     } else {
                         app.data.store.getItem('back_cita').then(function(value) {
                             localStorage.clear();
+                            localStorage.setItem('login-user', sessionStorage.getItem('user'));
+                            localStorage.setItem('login-key', sessionStorage.getItem('key'));
                             if (value == 'paciente') {
                                 app.methods.redirectTo('paciente-perfil');
                             } else {

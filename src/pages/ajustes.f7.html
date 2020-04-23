@@ -237,24 +237,26 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
 
-                $$(".config #personal_settings").click(function (e) {
+                $$(".config #personal_settings").click(function(e) {
                     app.methods.redirectTo('settings');
                 });
-                $$(".config #offices_settings").click(function (e) {
+                $$(".config #offices_settings").click(function(e) {
                     app.methods.redirectTo('offices-show');
                 });
-                $$(".config #assistants_settings").click(function (e) {
+                $$(".config #assistants_settings").click(function(e) {
                     app.methods.redirectTo('asistentes-invitar-01');
                 });
-                $$(".config #horarios_settings").click(function (e) {
+                $$(".config #horarios_settings").click(function(e) {
                     app.methods.redirectTo('doctor-horarios');
                 });
-                $$(".config #log_out").click(function (params) {
+                $$(".config #log_out").click(function(params) {
                     app.data.store.clear();
+                    localStorage.clear();
+                    sessionStorage.clear();
                     app.methods.redirectTo('root');
                 });
             }

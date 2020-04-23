@@ -34,7 +34,7 @@
               <div class="item-inner searchbar-inner">
                 <div class="item-input-wrap rounded">
                   <i class="icons material-icons">vpn_key</i>
-                  <input type="text" id="pass" class="pass" placeholder="Contraseña" required validate>
+                  <input type="password" id="pass" class="pass" placeholder="Contraseña" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" required validate>
                   <span class="input-clear-button"></span>
                 </div>
               </div>
@@ -75,17 +75,6 @@
                 var query = app.utils.parseUrlQuery(window.location.href);
                 var code = query.code;
                 var email = query.email;
-
-                /* if (!app.methods.isEmpty(query)) {
-                    app.data.store.setItem('flow', 'RA');
-                } else {
-                    app.data.store.setItem('flow', 'RD');
-                } */
-
-                /* $$('#register-step1 .btn-simple').on('click', function(e) {
-                    app.methods.redirectTo('root');
-                }); */
-
                 $$('#register-step1 input').on('input:notempty', function(e) {
                     var nonempty = $$('#register-step1 input').filter(function() {
                         return this.value != ''
@@ -98,46 +87,37 @@
                 $$('#register-step1 input').on('input:empty', function(e) {
                     disableButton();
                 });
-                /* disableButton(); */
 
-                /* $$(document).on('input:notempty', '#fullname', function (e) {
-                  $$(document).on('input:notempty', '#pass', function (e) {
-
-                  });
-                }); */
+                $$('#register-step1 input#pass').on('input:notempty', function(e) {
+                    if (!document.getElementById('pass').validity.patternMismatch) {
+                        document.getElementById('pass').setCustomValidity('');
+                    } else {
+                        document.getElementById('pass').setCustomValidity('La contraseña debe contener al menos 8 caracteres y una mayuscula');
+                    }
+                });
 
                 function enableButton(e) {
-                    $$('#register-step1 .btn-2 a').removeClass('grey');
-                    $$('#register-step1 .btn-2 a').off('click');
-                    $$('#register-step1 .btn-2 a').on('click', function(e) {
-                        if (app.methods.isEmpty(query)) {
-                            app.data.store.setItem('username', $$('#fullname').val());
-                            app.data.store.setItem('pwd', $$('#pass').val());
-                            app.data.store.setItem('flow', 'RD');
-                            /* app.data.register.username = $$('#fullname').val();
-                            app.data.register.password = $$('#pass').val(); */
-                            /* app.data.store.setItem('flow', app.data.flow).then(function(value) {
-                                app.data.store.setItem('register', app.data.register).then(function(value) { */
-                            app.methods.redirectTo('register-s2');
-                            /* });
-}); */
-                        } else if (!app.methods.isEmpty(query)) {
-                            app.data.store.setItem('username', $$('#fullname').val());
-                            app.data.store.setItem('pwd', $$('#pass').val());
-                            app.data.store.setItem('email', email);
-                            app.data.store.setItem('code', code);
-                            app.data.store.setItem('flow', 'RA');
-                            /* app.data.assistant.name = $$('#fullname').val();
-                            app.data.assistant.password = $$('#pass').val();
-                            app.data.assistant.email = email;
-                            app.data.assistant.code = code; */
-                            /* app.data.store.setItem('flow', app.data.flow).then(function(value) {
-                                app.data.store.setItem('assistant', app.data.assistant).then(function(value) { */
-                            app.methods.redirectTo('photo-module');
-                            /* });
-                            }); */
-                        }
-                    });
+                    if (!document.getElementById('pass').validity.patternMismatch) {
+                        $$('#register-step1 .btn-2 a').removeClass('grey');
+                        $$('#register-step1 .btn-2 a').off('click');
+                        $$('#register-step1 .btn-2 a').on('click', function(e) {
+                            if (app.methods.isEmpty(query)) {
+                                app.data.store.setItem('username', $$('#fullname').val());
+                                app.data.store.setItem('pwd', $$('#pass').val());
+                                app.data.store.setItem('flow', 'RD');
+                                app.methods.redirectTo('register-s2');
+                            } else if (!app.methods.isEmpty(query)) {
+                                app.data.store.setItem('username', $$('#fullname').val());
+                                app.data.store.setItem('pwd', $$('#pass').val());
+                                app.data.store.setItem('email', email);
+                                app.data.store.setItem('code', code);
+                                app.data.store.setItem('flow', 'RA');
+                                app.methods.redirectTo('photo-module');
+                            }
+                        });
+                    } else {
+                        disableButton();
+                    }
                 }
 
                 function disableButton() {

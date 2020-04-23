@@ -59,6 +59,14 @@
 
     export default {
         on: {
+            pageBeforeIn: function(e, page) {
+                var self = this;
+                var app = self.$app;
+                if (sessionStorage.getItem('user') != null) {
+                    window.location.href = '/#!/home';
+                    window.location.reload();
+                }
+            },
             pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;

@@ -59,25 +59,10 @@
 
     export default {
         on: {
-            pageBeforeIn: function(e, page) {
-                var self = this;
-                var app = self.$app;
-                console.log(localStorage.getItem('login-user'));
-
-                if (localStorage.getItem('login-user') != null) {
-                    sessionStorage.setItem('key', localStorage.getItem('login-key'));
-                    sessionStorage.setItem('user', localStorage.getItem('login-user'));
-                    window.location.href = '/#!/home';
-                    window.location.reload();
-                }
-            },
             pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-
-                console.log('ahoy');
-
 
                 disableButton();
 

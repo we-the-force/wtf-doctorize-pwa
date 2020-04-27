@@ -98,7 +98,8 @@ var app = new Framework7({
                 blood: '',
                 pressure: '',
             },
-            url: 'https://api.mydoctorize.com'
+            url: 'https://api.mydoctorize.com',
+            appUrl: 'http://127.0.0.1:8080'
                 /* url: 'http://localhost:1337' */
         };
     },
@@ -161,10 +162,12 @@ var app = new Framework7({
 
 if (getCookie("landingPage") != 'visited') {
     app.methods.redirectTo('intro-splash-01');
-} else if (localStorage.getItem('login-user') != null) {
+} else if (localStorage.getItem('login-user') != null && window.location.href == app.data.appUrl + '/#!/login') {
     sessionStorage.setItem('key', localStorage.getItem('login-key'));
     sessionStorage.setItem('user', localStorage.getItem('login-user'));
     app.methods.redirectTo('home');
+} else if (localStorage.getItem('login-user') == null && window.location.href != app.data.appUrl + '/#!/login') {
+    app.methods.redirectTo('root');
 }
 
 function getCookie(cname) {

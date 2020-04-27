@@ -232,11 +232,12 @@
                                 data: j,
                                 success: function(e) {
                                     console.log('ahoy');
+                                    getUser();
                                 },
                                 error: function(e) {
                                     app.preloader.hide();
                                 }
-                            }).then(getUser());
+                            });
                             break;
                         case "SS":
                             /* specialityID = specialties.values.indexOf(value);
@@ -251,12 +252,12 @@
                                 data: j,
                                 success: function(e) {
                                     console.log('ahoy');
-
+                                    getUser();
                                 },
                                 error: function(e) {
                                     app.preloader.hide();
                                 }
-                            }).then(getUser());
+                            });
                             break;
                     }
                 }

@@ -524,7 +524,8 @@
                                     app.request.postJSON(app.data.url + '/doctors', {
                                             "Nombre": username,
                                             "user": e.user.id,
-                                            "correo": email
+                                            "correo": email,
+                                            "especialidad": $$("#specialty-picker").val()
                                         },
                                         function(el) {
                                             console.log(el);

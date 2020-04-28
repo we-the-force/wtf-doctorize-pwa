@@ -629,6 +629,7 @@
                     //guarda horas de el horario
                     //guarda variable de edicion
                     //crea pop up y lo abre
+
                     nol = $$(this).closest('li').attr('id');
                     dow = $$(this).closest('.accordion-item').attr('id');
                     hours = $$(this).closest('li').children('p').text().split(' - ');
@@ -656,7 +657,7 @@
                         if (isNaN(nid)) {
                             nid = 1;
                         }
-                        $$('#' + dow + ' .list ul').append('<li class="row hora" id="' + nid + '">' +
+                        $$('#' + dow + ' .list ul').append('<li class="row hora l' + y.id + '" id="' + nid + '">' +
                             '<a class="close">' +
                             '<i class="material-icons">' +
                             'close' +
@@ -752,7 +753,7 @@
                         let st = ArrST[0] + ':' + ArrST[1];
                         let et = ArrEt[0] + ':' + ArrEt[1];
 
-                        $$('#' + val.nombre + ' .list ul').append('<li class="row hora" id="' + y.id + '">' +
+                        $$('#' + val.nombre + ' .list ul').append('<li class="row hora l' + y.id + '" id="' + y.id + '">' +
                             '<a class="close">' +
                             '<i class="material-icons">' +
                             'close' +
@@ -770,6 +771,22 @@
                             $$('#' + val.nombre + ' .resume').append('<hr>');
                         }
                         $$('#' + val.nombre + ' .resume').append('<p id="r' + y.id + '"> ' + st + ' - ' + et + '</p>');
+
+                        $$('.popup_open').click(function(x) {
+                            //guarda el numero de linea
+                            //guarda dia de la semana
+                            //guarda horas de el horario
+                            //guarda variable de edicion
+                            //crea pop up y lo abre
+                            nol = $$(this).closest('li').attr('id');
+                            dow = $$(this).closest('.accordion-item').attr('id');
+                            hours = $$(this).closest('li').children('p').text().split(' - ');
+                            new_x = false;
+                            var popup = app.popup.create({
+                                el: '.edit-timetable'
+                            });
+                            popup.open();
+                        });
                     }
                 }
             }

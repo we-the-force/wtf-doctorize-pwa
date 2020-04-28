@@ -69,9 +69,10 @@
 
                 disableButton();
                 app.data.store.getItem('consultorio').then(function(e) {
-                    app.request.get(app.data.url + '/consultorios/' + e, function(val) {
-                        var x = JSON.parse(val);
-
+                    /* app.request.get(app.data.url + '/consultorios/' + e, function(val) { */
+                    app.request.get(app.data.url + '/horarios?doctor.id=' + doctor.doctor.id, function(value) {
+                        var x = JSON.parse(value);
+                        console.log(x);
                         var calendarModal = app.calendar.create({
                             inputEl: '#date',
                             openIn: 'customModal',
@@ -84,10 +85,13 @@
                             dateFormat: 'dd MM yyyy',
                             disabled: function(e) {
                                 let date = moment(e);
-                                let y = x.Dias.filter(z => {
-                                    return z.dia == date.isoWeekday()
+                                let bool = true;
+                                x.forEach(element => {
+                                    if (element.dias[date.isoWeekday() - 1].activo) {
+                                        bool = false;
+                                    }
                                 });
-                                return y.length == 0 ? true : false;
+                                return bool;
                             },
                             renderToolbar: function() {
                                 return '<div class="toolbar calendar-custom-toolbar no-shadow">' +
@@ -122,11 +126,24 @@
                                     app.request.get(app.data.url + '/citas?fecha=' + z.format("YYYY-MM-DD"),
                                         function(el) {
                                             let v = JSON.parse(el);
-
                                             console.log(v);
+                                            console.log(z.isoWeekday());
                                             v = v.map(e => {
                                                 let horaArr = e.hora.split(":");
                                                 return moment(z).hour(horaArr[0]).minute(horaArr[1]);
+                                            });
+                                            let hours = [];
+                                            x.forEach(function(ele) {
+                                                let hoursHorario = [];
+                                                ele.dias[z.isoWeekday() - 1].horas.forEach(function(elem) {
+                                                    let d = moment();
+                                                    let splitInicio = elem.start.split(":");
+                                                    let splitFin = elem.end.split(":");
+                                                    let start = moment(d).hour(splitInicio[0]).minute(splitInicio[1]);
+                                                    let fin = moment(d).hour(splitFin[0]).minute(splitFin[1]);
+                                                    console.log(start.minute());
+
+                                                });
                                             });
 
                                             let y = [];
@@ -168,6 +185,7 @@
                             }
                         });
                     });
+                    /* }); */
                 });
 
                 $$('#agendar-cita-fecha .btn-back').click(function() {

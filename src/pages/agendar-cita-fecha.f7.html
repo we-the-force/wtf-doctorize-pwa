@@ -70,7 +70,7 @@
                 disableButton();
                 app.data.store.getItem('consultorio').then(function(e) {
                     /* app.request.get(app.data.url + '/consultorios/' + e, function(val) { */
-                    app.request.get(app.data.url + '/horarios?doctor.id=' + doctor.doctor.id, function(value) {
+                    app.request.get(app.data.url + '/horarios?doctor.id=' + doctor.doctor.id + '&consultorio.id=' + e, function(value) {
                         var x = JSON.parse(value);
                         console.log(x);
                         var calendarModal = app.calendar.create({
@@ -126,8 +126,6 @@
                                     app.request.get(app.data.url + '/citas?fecha=' + z.format("YYYY-MM-DD"),
                                         function(el) {
                                             let v = JSON.parse(el);
-                                            console.log(v);
-                                            console.log(z.isoWeekday());
                                             v = v.map(e => {
                                                 let horaArr = e.hora.split(":");
                                                 return moment(z).hour(horaArr[0]).minute(horaArr[1]);
@@ -136,44 +134,33 @@
                                             x.forEach(function(ele) {
                                                 let hoursHorario = [];
                                                 ele.dias[z.isoWeekday() - 1].horas.forEach(function(elem) {
-                                                    let d = moment();
+                                                    let arr1 = [];
                                                     let splitInicio = elem.start.split(":");
                                                     let splitFin = elem.end.split(":");
-                                                    let start = moment(d).hour(splitInicio[0]).minute(splitInicio[1]);
-                                                    let fin = moment(d).hour(splitFin[0]).minute(splitFin[1]);
-                                                    console.log(start.minute());
-
-                                                });
-                                            });
-
-                                            let y = [];
-                                            let STArray = x.HorarioApertura.split(":");
-                                            let CTArray = x.HorarioCierre.split(":");
-                                            let ICArray = x.InicioComida.split(":");
-                                            let FCArray = x.FinComida.split(":");
-                                            let ST = moment(z).hour(STArray[0]).minute(STArray[1]);
-                                            let CT = moment(z).hour(CTArray[0]).minute(CTArray[1]);
-                                            let IC = moment(z).hour(ICArray[0]).minute(ICArray[1]);
-                                            let FC = moment(z).hour(FCArray[0]).minute(FCArray[1]);
-                                            z = ST;
-                                            while (z.isBefore(CT)) {
-                                                if (z.isAfter(today)) {
-                                                    if (!z.isBetween(IC, FC)) {
-                                                        if (v.every(e => !(e.isSameOrAfter(z) && e.isBefore(moment(z).add(30, 'm'))))) {
-                                                            y.push(z.format("HH:mm"));
-                                                            z.add(30, 'm');
-                                                            continue;
+                                                    let start = moment(z).hour(splitInicio[0]).minute(splitInicio[1]);
+                                                    let fin = moment(z).hour(splitFin[0]).minute(splitFin[1]);
+                                                    start.minute(start.minute() <= 30 && start.minute() > 0 ? 30 : 0);
+                                                    while (start.isBefore(fin)) {
+                                                        if (start.isAfter(today)) {
+                                                            if (v.every(e => !(e.isSameOrAfter(start) && e.isBefore(moment(start).add(30, 'm'))))) {
+                                                                arr1.push(start.format("HH:mm"));
+                                                                start.add(30, 'm');
+                                                                continue;
+                                                            }
                                                         }
+                                                        start.add(30, 'm');
                                                     }
-                                                }
-                                                z.add(30, 'm');
-                                            }
-
+                                                    hoursHorario = hoursHorario.concat(arr1);
+                                                });
+                                                hours = hours.concat(hoursHorario);
+                                            });
+                                            console.log(hours);
+                                            let unique = [...new Set(hours)];
                                             var pickerDevice = app.picker.create({
                                                 inputEl: '#time',
                                                 cols: [{
                                                     textAlign: 'center',
-                                                    values: y
+                                                    values: unique
                                                 }]
                                             });
                                             $$(document).on('picker:closed', '#time', function(e) {

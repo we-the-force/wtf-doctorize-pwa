@@ -99,7 +99,7 @@ var app = new Framework7({
                 pressure: '',
             },
             url: 'https://api.mydoctorize.com',
-            appUrl: 'http://127.0.0.1:8080'
+            appUrl: 'https://app.mydoctorize.com'
                 /* url: 'http://localhost:1337' */
         };
     },

@@ -67,8 +67,9 @@
                             app.methods.redirectTo('offices-add-form-basic');
                         });
                         for (var i = 0; i < x.length; i++) {
-                            let HA = x[i].HorarioApertura.split(":");
-                            let HC = x[i].HorarioCierre.split(":");
+                            /* let HA = x[i].HorarioApertura.split(":");
+                            let HC = x[i].HorarioCierre.split(":"); */
+                            let hos = x[i].hospital == null ? "" : x[i].hospital;
                             let activ = x[i].Activo == true ? "active" : "inactive";
                             $$('.consultorios').append(
                                 '<li id="card' + x[i].id + '">' +
@@ -78,9 +79,9 @@
                                 'local_hospital' +
                                 '</i>' +
                                 '<div class="card-content card-content-padding">' +
-                                '<p class="title dark-blue">' + x[i].hospital + '</p>' +
+                                '<p class="title dark-blue">' + hos + '</p>' +
                                 '<p class="text dark-blue">' + x[i].nombre + '</p>' +
-                                '<p class="footer light-blue">' + HA[0] + ":" + HA[1] + ' - ' + HC[0] + ":" + HC[1] + '</p>' +
+                                /* '<p class="footer light-blue">' + HA[0] + ":" + HA[1] + ' - ' + HC[0] + ":" + HC[1] + '</p>' + */
                                 '</div>' +
                                 '<a class="popover-open" data-popover=".popover-set">' +
                                 '<i class="points material-icons dark-blue" data-id="' + x[i].id + '">' +

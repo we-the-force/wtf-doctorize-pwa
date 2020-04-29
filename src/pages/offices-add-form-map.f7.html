@@ -41,8 +41,8 @@
                             <div class="item-inner">
                                 <div class="item-label dark-blue">Dirección</div>
                                 <div class="item-input-wrap">
-                                    <input type="text" class="rqrd" name="direction" id="direction" placeholder="Dirección" required
-                                        validate>
+                                    <input type="text" class="rqrd" name="direction" id="direction"
+                                        placeholder="Dirección" required validate>
                                     <span class="input-clear-button"></span>
                                 </div>
                             </div>
@@ -51,8 +51,8 @@
                             <div class="item-inner">
                                 <div class="item-label dark-blue">Número de Consultorio</div>
                                 <div class="item-input-wrap">
-                                    <input type="text" name="consultorio" id="consultorio" placeholder="Consultorio (Opcional)"
-                                        validate>
+                                    <input type="text" name="consultorio" id="consultorio"
+                                        placeholder="Consultorio (Opcional)" validate>
                                     <span class="input-clear-button"></span>
                                 </div>
                             </div>
@@ -91,12 +91,14 @@
                 var app = self.$app;
                 var hospital = '',
                     direction = '',
-                    consultorio = '';
+                    consultorio = '',
+                    edit;
                 var regex = /^[0-9]*$/;
 
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
 
                 app.data.store.getItem('officeEdit').then(function(value) {
-
+                    edit = value;
                     disableButton();
 
                     if (value) {
@@ -178,7 +180,119 @@
                         app.data.store.setItem("hospital", $$('[name="hospital"]').val());
                         app.data.store.setItem("address", $$('[name="direction"]').val());
                         app.data.store.setItem("number", consultorio);
-                        app.methods.redirectTo('offices-add-form-schedule');
+                        /* app.methods.redirectTo('offices-add-form-schedule'); */
+                        if (edit) {
+                            let email, nombre, phone, hospital, numero, direccion;
+                            app.data.store.iterate(function(val, key, i) {
+                                switch (key) {
+                                    case 'address':
+                                        direccion = val;
+                                        break;
+                                    case 'email':
+                                        email = val;
+                                        break;
+                                    case 'hospital':
+                                        hospital = val;
+                                        break;
+                                    case 'nombre':
+                                        nombre = val;
+                                        break;
+                                    case 'number':
+                                        numero = val;
+                                        break;
+                                    case 'phone':
+                                        phone = val;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }).then(function(e) {
+                                app.data.store.getItem('officeId').then(function(val) {
+                                    app.request({
+                                        url: app.data.url + '/consultorios/' + val,
+                                        method: "PUT",
+                                        crossDomain: true,
+                                        data: {
+                                            "correo": email,
+                                            "nombre": nombre,
+                                            "telefono": phone,
+                                            "hospital": $$('[name="hospital"]').val(),
+                                            "numero": $$('#consultorio').val(),
+                                            "direccion": $$('[name="direction"]').val(),
+                                            "lat": 12.12,
+                                            "lng": 213.234,
+                                            "doctor": doctor.doctor.id, //mandar pedir el numero app.data.doctor.id,
+                                            /* "HorarioApertura": startTime,
+                                            "HorarioCierre": closeTime,
+                                            "Dias": ArrDays,
+                                            "InicioComida": lunchStartTime,
+                                            "FinComida": lunchCloseTime, */
+                                            "Activo": true
+                                        },
+                                        success: function(e) {
+                                            app.data.store.clear();
+                                            app.preloader.hide();
+                                            app.methods.redirectTo('offices-show');
+                                        },
+                                        error: function(e) {
+                                            app.preloader.hide();
+                                        }
+                                    });
+                                });
+                            });
+                            // patch put
+
+                        } else {
+                            let email, nombre, phone, hospital, numero, direccion;
+                            app.data.store.iterate(function(val, key, i) {
+                                switch (key) {
+                                    case 'address':
+                                        direccion = val;
+                                        break;
+                                    case 'email':
+                                        email = val;
+                                        break;
+                                    case 'hospital':
+                                        hospital = val;
+                                        break;
+                                    case 'nombre':
+                                        nombre = val;
+                                        break;
+                                    case 'number':
+                                        numero = val;
+                                        break;
+                                    case 'phone':
+                                        phone = val;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }).then(function(e) {
+                                app.request.postJSON(app.data.url + '/consultorios', {
+                                    "correo": email,
+                                    "nombre": nombre,
+                                    "telefono": phone,
+                                    "hospital": $$('[name="hospital"]').val(),
+                                    "numero": $$('#consultorio').val(),
+                                    "direccion": $$('[name="direction"]').val(),
+                                    "lat": 12.12,
+                                    "lng": 213.234,
+                                    "doctor": doctor.doctor.id, //mandar pedir el numero app.data.doctor.id,
+                                    /* "HorarioApertura": startTime,
+                                    "HorarioCierre": closeTime,
+                                    "Dias": ArrDays,
+                                    "InicioComida": lunchStartTime,
+                                    "FinComida": lunchCloseTime, */
+                                    "Activo": true
+                                }, function(e) {
+                                    app.data.store.clear();
+                                    app.preloader.hide();
+                                    app.methods.redirectTo('offices-show');
+                                }, function(e) {
+                                    app.preloader.hide();
+                                });
+                            });
+                        }
                     });
                     /*  } */
                 }

@@ -100,7 +100,7 @@ var app = new Framework7({
             },
             url: 'https://api.mydoctorize.com',
             appUrl: 'https://app.mydoctorize.com'
-                /* url: 'http://localhost:1337' */
+                /* appUrl: 'http://localhost:8080' */
         };
     },
     // App root methods
@@ -162,10 +162,13 @@ var app = new Framework7({
 
 if (getCookie("landingPage") != 'visited') {
     app.methods.redirectTo('intro-splash-01');
-} else if (localStorage.getItem('login-user') != null && window.location.href == app.data.appUrl) {
+} else if (localStorage.getItem('login-user') != null && window.location.href == app.data.appUrl + '/') {
     sessionStorage.setItem('key', localStorage.getItem('login-key'));
     sessionStorage.setItem('user', localStorage.getItem('login-user'));
     app.methods.redirectTo('home');
+} else if (localStorage.getItem('login-user') != null) {
+    console.log(window.location.href);
+    console.log(app.data.appUrl);
 }
 /* else if (localStorage.getItem('login-user') == null && window.location.href != app.data.appUrl && window.location.href != app.data.appUrl + '/#!/register-s1/' && window.location.href != app.data.appUrl + '/#!/photo-module/') {
     app.methods.redirectTo('root');

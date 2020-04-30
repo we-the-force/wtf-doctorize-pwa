@@ -162,7 +162,9 @@ var app = new Framework7({
 
 if (getCookie("landingPage") != 'visited') {
     app.methods.redirectTo('intro-splash-01');
-} else if (localStorage.getItem('login-user') != null && window.location.href == app.data.appUrl + '/#!/login') {
+} else if (localStorage.getItem('login-user') != null && window.location.href == app.data.appUrl) {
+    console.log('ahoy');
+
     sessionStorage.setItem('key', localStorage.getItem('login-key'));
     sessionStorage.setItem('user', localStorage.getItem('login-user'));
     app.methods.redirectTo('home');

@@ -596,27 +596,76 @@
                 function registrarAsistente() {
                     app.data.store.getItem('assistant').then(function(value) {
                         app.data.assistant = value;
+                        console.log('ahoy');
+
                         $$('.photo-module h1').text('Foto de Perfil');
-                        $$('.photo-module h4').text('Agrega tu foto de perfil');
+                        $$('.photo-module p.mar').text('Agrega tu foto de perfil');
 
                         $$('#photo-module .btn-2 a').off('click');
                         $$('#photo-module .btn-2 a').on('click', function(e) {
-                            c.result('base64').then(function(blob) {
+                            let username /* , pwd */ , assistId;
+                            app.data.store.iterate(function(val, key, i) {
+                                switch (key) {
+                                    case 'username':
+                                        username = val;
+                                        break;
+                                        /* case 'pwd':
+                                            pwd = val;
+                                            break; */
+                                    case 'assistId':
+                                        assistId = val;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }).then(function(el) {
                                 app.preloader.show('blue');
-                                app.request.postJSON(app.data.url + '/account/confirmation/assistant', {
-                                    "email": app.data.assistant.email,
-                                    "code": app.data.assistant.code,
-                                    "name": app.data.assistant.name,
-                                    "password": app.data.assistant.password,
-                                    "imageData": blob
-                                }, function(e) {
-                                    app.data.store.removeItem('flow').then(function(value) {
+                                app.request({
+                                    url: app.data.url + '/asistentes/' + assistId,
+                                    method: "PUT",
+                                    crossDomain: true,
+                                    data: {
+                                        "nombre": username,
+                                        "Confirmed": true,
+                                    },
+                                    success: function(e) {
+                                        console.log(e);
+                                        console.log(assistId);
+
+                                        c.result('blob').then(blob => {
+
+                                            let file = new File([blob], "perfil.png", new Date());
+                                            const data = new FormData();
+                                            data.append("files", file);
+                                            data.append("refId", assistId);
+                                            data.append("ref", "asistente");
+                                            data.append('source', 'users-permissions');
+                                            data.append('field', 'img_data');
+                                            app.request({
+                                                url: app.data.url + '/upload',
+                                                method: "POST",
+                                                crossDomain: true,
+                                                contentType: "multipart/form-data",
+                                                data: data,
+                                                success: function(e) {
+                                                    console.log('ahoy');
+                                                },
+                                                error: function(e) {
+                                                    app.preloader.hide();
+                                                },
+                                                complete: function(e) {
+                                                    app.data.store.clear();
+                                                    app.preloader.hide();
+                                                    app.methods.redirectTo('root');
+                                                }
+
+                                            });
+
+                                        });
+                                    },
+                                    error: function(e) {
                                         app.preloader.hide();
-                                        app.methods.redirectTo('root');
-                                    });
-                                }, function(e) {
-                                    app.preloader.hide();
-                                    app.dialog.alert("Error");
+                                    }
                                 });
                             });
                         });

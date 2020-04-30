@@ -3,7 +3,7 @@
     <div class="page-content login-screen-content register-step1">
       <div class="screen-title header-blue">
         <div class="list">
-          <ul>
+          <ul id="header">
             <li>
               <div class="row">
                 <div class="col-10"></div>
@@ -30,11 +30,12 @@
               </div>
             </li>
 
-            <li class="item-content item-input">
+            <li class="item-content item-input" id="inputPass">
               <div class="item-inner searchbar-inner">
                 <div class="item-input-wrap rounded">
                   <i class="icons material-icons">vpn_key</i>
-                  <input type="password" id="pass" class="pass" placeholder="Contraseña" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" required validate>
+                  <input type="password" id="pass" class="pass" placeholder="Contraseña"
+                    pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" required validate>
                   <span class="input-clear-button"></span>
                 </div>
               </div>
@@ -73,13 +74,21 @@
 
                 var urlParams = (new URL(document.location)).searchParams;
                 var query = app.utils.parseUrlQuery(window.location.href);
-                var code = query.code;
-                var email = query.email;
+                var asistId = query.id;
+                var numInputs = 2;
+
+                if (!app.methods.isEmpty(query)) {
+                    $$('#inputPass').css("visibility", "hidden");
+                    $$('#header h1').text('Nombre');
+                    $$('#header p').text('Ingresar nombre para continuar con el proceso de registro.');
+                    numInputs = 1;
+                }
+
                 $$('#register-step1 input').on('input:notempty', function(e) {
                     var nonempty = $$('#register-step1 input').filter(function() {
                         return this.value != ''
                     });
-                    if (nonempty.length == 2) {
+                    if (nonempty.length == numInputs) {
                         enableButton();
                     }
                 });
@@ -108,9 +117,8 @@
                                 app.methods.redirectTo('register-s2');
                             } else if (!app.methods.isEmpty(query)) {
                                 app.data.store.setItem('username', $$('#fullname').val());
-                                app.data.store.setItem('pwd', $$('#pass').val());
-                                app.data.store.setItem('email', email);
-                                app.data.store.setItem('code', code);
+                                /* app.data.store.setItem('pwd', $$('#pass').val()); */
+                                app.data.store.setItem('assistId', asistId);
                                 app.data.store.setItem('flow', 'RA');
                                 app.methods.redirectTo('photo-module');
                             }

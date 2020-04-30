@@ -3,7 +3,7 @@
         <div class="page-content">
             <div class="header">
                 <div class="doc-horarios">
-                    <a class="" href="/doctor/configuration">
+                    <a class="close" href="/doctor/configuration">
                         <i class="material-icons">chevron_left</i>
                     </a>
                     <h1>Horarios</h1>
@@ -284,6 +284,12 @@
                             });
                             //abre cuadro de dialogo
                             dialog.open();
+                        });
+
+                        $$('#doctor-horarios .header .close').click(function(val) {
+                            app.data.store.clear().then(function(x) {
+                                app.methods.redirectTo('config');
+                            });
                         });
                     });
             }

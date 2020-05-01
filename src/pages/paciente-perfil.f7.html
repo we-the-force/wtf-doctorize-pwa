@@ -359,7 +359,6 @@
                     app.request.get(app.data.url + '/pacientes/' + ptnt_id,
                         function(e) {
                             var x = JSON.parse(e);
-                            console.log(x);
 
                             hsocial = x.Historia_social;
                             nombre = x.nombre;
@@ -387,12 +386,12 @@
                                 function(el) {
 
                                     let y = JSON.parse(el);
-                                    console.log(y);
-
-                                    $$('.vitales .content #temperatura .card-footer p').text(y[0].Temperatura.value);
-                                    $$('.vitales .content #presion .card-footer p').text(y[0].presion.value);
-                                    $$('.vitales .content #respiracion .card-footer p').text(y[0].Respiracion.value);
-                                    $$('.vitales .content #pulso .card-footer p').text(y[0].pulso.value);
+                                    if (y[0] != undefined) {
+                                        $$('.vitales .content #temperatura .card-footer p').text(y[0].Temperatura.value);
+                                        $$('.vitales .content #presion .card-footer p').text(y[0].presion.value);
+                                        $$('.vitales .content #respiracion .card-footer p').text(y[0].Respiracion.value);
+                                        $$('.vitales .content #pulso .card-footer p').text(y[0].pulso.value);
+                                    }
                                 },
                                 function(el) {
                                     app.preloader.hide();
@@ -734,6 +733,10 @@
                             app.preloader.hide();
 
                         });
+                });
+
+                $$('.header .dots .dot.info').click(function(el) {
+                    app.methods.redirectTo('nuevo-paciente');
                 });
 
                 $$('.header .options .appointment').click(function(e) {

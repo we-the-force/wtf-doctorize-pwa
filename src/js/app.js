@@ -166,9 +166,6 @@ if (getCookie("landingPage") != 'visited') {
     sessionStorage.setItem('key', localStorage.getItem('login-key'));
     sessionStorage.setItem('user', localStorage.getItem('login-user'));
     app.methods.redirectTo('home');
-} else if (localStorage.getItem('login-user') != null) {
-    console.log(window.location.href);
-    console.log(app.data.appUrl);
 }
 /* else if (localStorage.getItem('login-user') == null && window.location.href != app.data.appUrl && window.location.href != app.data.appUrl + '/#!/register-s1/' && window.location.href != app.data.appUrl + '/#!/photo-module/') {
     app.methods.redirectTo('root');

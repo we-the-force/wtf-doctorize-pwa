@@ -170,7 +170,7 @@
 
                                     /* pone la carta de la cita */
                                     $$('#schedule ' + x).children('.list').children('ul').append(
-                                        '<div class="card v3">' + /* card-expandable */
+                                        '<div class="card v3" data-id="' + z[i].id + '">' + /* card-expandable */
                                         '<div class="rectangle turquoise card-opened-fade-out"></div>' +
                                         '<ditogglev class="card-content">' +
                                         '<div class="card-content-padding show card-opened-fade-out">' +
@@ -191,9 +191,12 @@
 
                                     $$('#schedule .card').off('click');
                                     $$('#schedule .card').click(function(val) {
-                                        localStorage.setItem('consulta', true);
+                                        /* localStorage.setItem('consulta', true);
                                         app.data.store.setItem('back_consulta', 'schedule').then(function() {
                                             app.methods.redirectTo('nueva-consulta');
+                                        }); */
+                                        app.data.store.setItem('cita', $$(this).data('id')).then(function(elem) {
+                                            app.methods.redirectTo('cita-detalles');
                                         });
                                     });
 

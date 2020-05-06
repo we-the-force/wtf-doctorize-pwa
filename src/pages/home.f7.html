@@ -76,8 +76,6 @@
               </div>
               <div data-slides-per-view="1.5" data-space-between="0" class="swiper-container swiper-init demo-swiper">
                 <div class="swiper-wrapper">
-
-
                 </div>
               </div>
             </li>
@@ -178,7 +176,7 @@
                         date.add(1, 'd');
                         if (today.isBefore(date) && cards < 10) {
                             swiper.appendSlide(
-                                '<div class="swiper-slide" id="id_' + element.id + '">' +
+                                '<div class="swiper-slide citas" id="id_' + element.id + '" data-id="' + element.id + '">' +
                                 '<div class="card card-outline home appointments">' +
                                 '<div class="rectangle turquoise"></div>' +
                                 '<div class="card-content card-content-padding">' +
@@ -195,6 +193,12 @@
                             );
                             cards++;
                         }
+                    });
+
+                    $$('.swiper-slide.citas').click(function(ele) {
+                        app.data.store.setItem('cita', $$(this).data('id')).then(function(elem) {
+                            app.methods.redirectTo('cita-detalles');
+                        });
                     });
                 });
 

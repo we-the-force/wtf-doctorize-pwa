@@ -1,0 +1,72 @@
+<template>
+    <div class="page date-flow" data-name="date-details" id="date-details">
+        <div class="page-content date-details">
+            <div class="header-turquoise v2 flex">
+                <div class="header basic center fixed">
+                    <a class="btn-back back" href="#">
+                        <i class="material-icons white">chevron_left</i>
+                    </a>
+
+                </div>
+                <div class="head-date">
+                    <img src="../static/icons/logo.svg" alt="">
+
+                    <div class="info">
+                        <p>Nombre</p>
+                        <div class="dots">
+                            <a class="dot msg">
+                                <i class="icons material-icons">comment</i>
+                            </a>
+                            <a class="dot mail">
+                                <i class="icons material-icons">mail</i>
+                            </a>
+                            <a class="dot phone">
+                                <i class="icons material-icons">phone</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cont">
+                <div class="desc">
+                    <h1>Consulta</h1>
+                    <div class="time">
+                        <i class="material-icons">watch_later</i>
+                        <p class="day"> 12 Agosto 2019</p>
+                    </div>
+                    <p>Consultorio</p>
+                </div>
+                <p class="price">
+                    $500
+                </p>
+            </div>
+            <div class="container right bottom">
+                <div class="btn-2">
+                    <a href="">
+                        <p>Consultar </p>
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageInit: function(e, page) {
+                var self = this;
+                var app = self.$app;
+
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
+
+                app.data.store.getItem('cita').then(function(val) {
+                    console.log(val);
+
+                });
+
+            }
+        }
+    }
+</script>n

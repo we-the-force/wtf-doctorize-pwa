@@ -170,14 +170,29 @@
                                     app.data.store.setItem('hosp-json-id', x.consultorio.id);
                                     app.data.store.setItem('horario-json', x.dias);
                                     app.data.store.setItem('horario-name', x.nombre);
+                                    app.data.store.setItem('horario-id', timetable);
+                                    app.data.store.setItem('edit', true).then(function(value) {
+                                        /* app.popover.close(); */
+                                        app.methods.redirectTo('doctor-horarios-add');
+                                    });
+                                }
+                            );
+                            /* app.request.get(app.data.url + '/horarios/' + id,
+                                function(e) {
+                                    var x = JSON.parse(e);
+                                    console.log(x);
+                                    app.data.store.setItem('asist-json', x.asistente.nombre);
+                                    app.data.store.setItem('asist-json-id', x.asistente.id);
+                                    app.data.store.setItem('hosp-json', x.consultorio.nombre);
+                                    app.data.store.setItem('hosp-json-id', x.consultorio.id);
+                                    app.data.store.setItem('horario-json', x.dias);
+                                    app.data.store.setItem('horario-name', x.nombre);
                                     app.data.store.setItem('horario-id', id).then(function(value) {
                                         app.methods.redirectTo('doctor-horarios-show');
                                     });
-                                });
-                            /* app.data.store.setItem('id-horario', $$(this).siblings('a').children('i').data('id')).then(function(value) {
-                                app.methods.redirectTo('doctor-horarios-show');
-                            }); */
+                                }); */
                         });
+
                         //evento agregar horario
                         $$('.new_timetable').click(function(x) {
                             //especifica que es un nuevo horario y redirecciopna

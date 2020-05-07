@@ -21,19 +21,10 @@
                     <ul>
                         <li class="item-content item-input linear">
                             <div class="item-inner">
-                                <div class="item-label dark-blue">Consultorio</div>
-                                <div class="item-input-wrap">
-                                    <select name="consultorio" id="consultorio" placeholder="Please choose...">
-
-                                    </select>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="item-content item-input linear">
-                            <div class="item-inner">
                                 <div class="item-label dark-blue">Nombre</div>
                                 <div class="item-input-wrap">
-                                    <input type="text" name="nombre" id="nombre" placeholder="Nombre" required validate>
+                                    <input type="text" name="nombre" id="nombre" list="pacientes" placeholder="Nombre"
+                                        required validate>
                                     <span class="input-clear-button"></span>
                                 </div>
                             </div>
@@ -57,6 +48,16 @@
                                 </div>
                             </div>
                         </li>
+                        <li class="item-content item-input linear">
+                            <div class="item-inner">
+                                <div class="item-label dark-blue">Consultorio</div>
+                                <div class="item-input-wrap">
+                                    <select name="consultorio" id="consultorio" placeholder="Please choose...">
+
+                                    </select>
+                                </div>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -69,12 +70,29 @@
                 </div>
             </div>
         </div>
+        <datalist id="pacientes">
+        </datalist>
     </div>
 </template>
 <script>
     import $$ from 'dom7';
     export default {
         on: {
+            pageBeforeIn: function(e, page) {
+                var self = this;
+                var app = self.$app;
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
+                app.request.get(app.data.url + '/pacientes?doctor.id=' + doctor.doctor.id,
+                    function(e) {
+                        var x = JSON.parse(e);
+                        x.forEach(element => {
+                            $$('datalist').append(
+                                '<option value="' + element.nombre + '" data-id="' + element.id + '">'
+                            );
+                        });
+                    }
+                );
+            },
             pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
@@ -98,10 +116,37 @@
                     },
                     function(e) {
                         app.preloader.hide();
-                    });
+                    }
+                );
 
 
                 disableButton();
+
+                $$('#agendar-cita input#nombre').change(function(e) {
+                    let id = $$('datalist#pacientes [value="' + $$(this).val() + '"]').data('id');
+                    if (id != undefined) {
+                        app.request.get(app.data.url + '/pacientes/' + id,
+                            function(e) {
+                                var x = JSON.parse(e);
+                                console.log(x);
+                                $$('input#email').val(x.correo);
+                                $$('input#phone').val(x.telefono);
+                                enableButton();
+                            }
+                        );
+                    }
+                    /* app.request.get(app.data.url + '/pacientes?nombre=' +
+                        function(e) {
+                            var x = JSON.parse(e);
+                            x.forEach(element => {
+                                $$('datalist').append(
+                                    '<option value="' + element.nombre + '" data-id="' + element.id + '">'
+                                );
+                            });
+                        }
+                    ); */
+
+                });
 
                 $$('#agendar-cita input').on('input:notempty', function(e) {
                     var nonempty = $$('#agendar-cita input').filter(function() {
@@ -144,16 +189,16 @@
                 });
 
                 function enableButton() {
-                    name = $$('#agendar-cita #nombre').val();
                     email = $$('#email').val();
                     phone = $$('#phone').val();
-                    consultorio = $$('#consultorio').val();
+                    let pat_id = $$('datalist#pacientes [value="' + name + '"]').data('id');
                     if (regex.test(email) && regex2.test(phone)) {
                         $$('#agendar-cita .btn-2 a').removeClass('grey');
                         $$('#agendar-cita .btn-2 a').off('click');
                         $$('#agendar-cita .btn-2 a').on('click', function(e) {
-                            console.log(name);
-
+                            name = $$('#agendar-cita #nombre').val();
+                            consultorio = $$('#consultorio').val();
+                            app.data.store.setItem('patient', pat_id);
                             app.data.store.setItem("nombre", name);
                             app.data.store.setItem("email", email);
                             app.data.store.setItem("phone", phone);

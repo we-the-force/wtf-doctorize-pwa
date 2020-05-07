@@ -189,9 +189,12 @@
                     $$('#agendar-cita-fecha .btn-2 a').click(function(e) {
                         console.log(y);
                         console.log(z.format("YYYY-MM-DD"));
-                        let email, nombre, phone, consultorio;
+                        let email, nombre, phone, consultorio, pat_id;
                         app.data.store.iterate(function(value, key, i) {
                             switch (key) {
+                                case "patient":
+                                    pat_id = value;
+                                    break;
                                 case "email":
                                     email = value;
                                     break;
@@ -207,13 +210,13 @@
                                 default:
                                     break;
                             }
-
                         }).then(function(e) {
                             console.log(z.format("YYYY-MM-DD"));
                             let consulta = localStorage.getItem('consulta');
                             if (!consulta) {
                                 app.request.postJSON(app.data.url + '/citas', {
                                         "correo": email,
+                                        "paciente": pat_id,
                                         "telefono": phone,
                                         "nombre": nombre,
                                         "fecha": z.format("YYYY-MM-DD"),

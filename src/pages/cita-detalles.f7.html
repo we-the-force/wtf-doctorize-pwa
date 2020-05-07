@@ -3,7 +3,7 @@
         <div class="page-content date-details">
             <div class="header-turquoise v2 flex">
                 <div class="header basic center fixed">
-                    <a class="btn-back back" href="#">
+                    <a class="btn-back" href="#">
                         <i class="material-icons white">chevron_left</i>
                     </a>
 
@@ -12,15 +12,15 @@
                     <img src="../static/icons/logo.svg" alt="">
 
                     <div class="info">
-                        <p>Nombre</p>
+                        <p></p>
                         <div class="dots">
-                            <a class="dot msg">
+                            <a class="dot msg" target="_blank">
                                 <i class="icons material-icons">comment</i>
                             </a>
-                            <a class="dot mail">
+                            <a class="dot mail" target="_blank">
                                 <i class="icons material-icons">mail</i>
                             </a>
-                            <a class="dot phone">
+                            <a class="dot phone" target="_blank">
                                 <i class="icons material-icons">phone</i>
                             </a>
                         </div>
@@ -34,7 +34,7 @@
                         <i class="material-icons">watch_later</i>
                         <p class="day"> 12 Agosto 2019</p>
                     </div>
-                    <p>Consultorio</p>
+                    <p id="consultorio">Consultorio</p>
                 </div>
                 <p class="price">
                     $500
@@ -58,14 +58,59 @@
             pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
-
+                var moment = require('moment');
+                moment.locale('es');
+                moment().format();
                 var doctor = JSON.parse(sessionStorage.getItem('user'));
 
                 app.data.store.getItem('cita').then(function(val) {
-                    console.log(val);
+                    app.request.get(app.data.url + '/citas/' + val, function(elem) {
+                        var x = JSON.parse(elem);
+                        console.log(x);
+                        $$('.head-date .info p').text(x.nombre);
+                        /* $$('.head-date .info .dots .phone').attr('href', 'https://api.whatsapp.com/send?phone=' + x.telefono); */
+                        $$('.head-date .info .dots .mail').attr('href', 'mailto:' + x.correo);
+                        $$('.head-date .info .dots .msg').attr('href', 'https://api.whatsapp.com/send?phone=' + x.telefono);
+                        $$('.cont .desc .time .day').text(moment(x.fecha).format("DD MMMM YYYY"));
+                        $$('.cont .desc #consultorio').text(x.consultorio.nombre);
+                        app.request.get(app.data.url + '/pacientes?nombre=' + x.nombre, function(ele) {
+                            var y = JSON.parse(ele);
+                            if (y.length > 0) {
+                                $$('.head-date img').attr('src', app.data.url + '/' + y[0].img_data.url);
+                            }
+                            $$('#date-details .btn-2 a').on('click', function(e) {
+                                if (y.length > 0) {
+                                    localStorage.setItem('patient_id', y[0].id);
+                                    localStorage.setItem('consulta', true);
+                                    app.data.store.setItem('back_consulta', 'schedule').then(function() {
+                                        app.methods.redirectTo('nueva-consulta');
+                                    });
+                                } else {
+                                    app.data.store.setItem("patient-consult", true).then(function(params) {
+                                        app.methods.redirectTo('nuevo-paciente');
+                                    });
+                                }
+                            });
+                        });
 
+                    });
                 });
 
+                $$('#date-details .btn-back').click(
+                    function name(params) {
+                        app.data.store.getItem('back_cita').then(function(val) {
+                            if (val == 'back_h') {
+                                app.data.store.clear().then(function(e) {
+                                    app.methods.redirectTo('home');
+                                });
+                            } else if (val == 'back_s') {
+                                app.data.store.clear().then(function(e) {
+                                    app.methods.redirectTo('schedule');
+                                });
+                            }
+                        });
+                    }
+                );
             }
         }
     }

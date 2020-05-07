@@ -195,6 +195,7 @@
                                         app.data.store.setItem('back_consulta', 'schedule').then(function() {
                                             app.methods.redirectTo('nueva-consulta');
                                         }); */
+                                        app.data.store.setItem('back_cita', 'back_s');
                                         app.data.store.setItem('cita', $$(this).data('id')).then(function(elem) {
                                             app.methods.redirectTo('cita-detalles');
                                         });

@@ -244,6 +244,20 @@
                     }
                 });
 
+                app.data.store.getItem('cita').then(function(val) {
+                    if (val) {
+                        app.request.get(app.data.url + '/citas/' + val,
+                            function(elem) {
+                                var cita = JSON.parse(elem);
+                                console.log(cita);
+                                $$('#nombre').val(cita.nombre);
+                                $$('#email').val(cita.correo);
+                                $$('#phone').val(cita.telefono);
+                            }
+                        );
+                    }
+                });
+
                 $$('#nuevo-paciente input').on('input:notempty', function(e) {
                     nonempty = $$('#nuevo-paciente .input').filter(function() {
                         return this.value != ''
@@ -362,14 +376,14 @@
                                         "tipo_sangre": blood,
                                         "doctor": doctor.doctor.id
                                     },
-                                    function(e) {
-                                        console.log(e);
+                                    function(pat) {
+                                        console.log(pat);
 
                                         c.result('blob').then(blob => {
                                             let file = new File([blob], "perfil.png", new Date());
                                             const data = new FormData();
                                             data.append("files", file);
-                                            data.append("refId", e.id);
+                                            data.append("refId", pat.id);
                                             data.append("ref", "paciente");
                                             data.append('source', 'users-permissions');
                                             data.append('field', 'img_data');
@@ -380,9 +394,20 @@
                                                 contentType: "multipart/form-data",
                                                 data: data,
                                                 success: function(e) {
-                                                    app.data.store.clear().then(function(e) {
-                                                        app.preloader.hide();
-                                                        app.methods.redirectTo('home');
+                                                    app.data.store.getItem('cita').then(function(val) {
+                                                        if (val) {
+                                                            localStorage.setItem('patient_id', pat.id);
+                                                            localStorage.setItem('consulta', true);
+                                                            app.preloader.hide();
+                                                            app.data.store.setItem('back_consulta', 'schedule').then(function() {
+                                                                app.methods.redirectTo('nueva-consulta');
+                                                            });
+                                                        } else {
+                                                            app.data.store.clear().then(function(e) {
+                                                                app.preloader.hide();
+                                                                app.methods.redirectTo('home');
+                                                            });
+                                                        }
                                                     });
                                                 },
                                                 error: function(e) {

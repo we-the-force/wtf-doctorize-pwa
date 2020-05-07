@@ -196,6 +196,7 @@
                     });
 
                     $$('.swiper-slide.citas').click(function(ele) {
+                        app.data.store.setItem('back_cita', 'back_h');
                         app.data.store.setItem('cita', $$(this).data('id')).then(function(elem) {
                             app.methods.redirectTo('cita-detalles');
                         });

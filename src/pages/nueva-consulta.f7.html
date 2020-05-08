@@ -353,6 +353,8 @@
                                 '<option value="' + element.nombre + '" data-id="' + element.id + '">'
                             );
                         });
+                        let v = $$('#pacientes option[data-id="' + localStorage.getItem('patient_id') + '"]').val();
+                        $$('#nueva_consulta input#nombre').val(v);
                     }
                 );
             },
@@ -370,6 +372,7 @@
                 disableButton();
 
                 let prevPageMedics = page.pageFrom != undefined && page.pageFrom.el.id == 'paciente-med-form';
+
                 if (localStorage.getItem('files')) {
                     app.data.store.getItem('files').then(function(val) {
                         files = val;
@@ -392,7 +395,7 @@
                     app.data.store.getItem('cita_cons_name').then(function(val) {
                         $$('.card.cita .date_row .title').text(val);
                     });
-                    $$('.card.cita .date_row .data').text(date.format('DD / MMM / YYYY'));
+                    $$('.card.cita .date_row .date').text(date.format('DD / MMM / YYYY'));
                     $$('.card.cita .name').text(z.nombre);
                     $$('.card.cita .phone').text(z.telefono);
                     $$('.card.cita .data').text(z.correo);
@@ -522,7 +525,6 @@
                 function enableButton(params) {
 
                     var pnt_id = localStorage.getItem('patient_id');
-                    console.log(pnt_id);
 
                     if (pnt_id != "undefined" && pnt_id != null) {
                         $$('#nueva_consulta .bsc .btn-2 a').off('click');

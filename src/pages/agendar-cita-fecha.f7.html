@@ -176,11 +176,9 @@
                 });
 
                 $$('#agendar-cita-fecha .btn-back').click(function() {
-                    app.data.store.clear().then(
-                        function() {
-                            app.methods.redirectTo('agendar-cita');
-                        }
-                    );
+
+                    app.methods.redirectTo('agendar-cita');
+
                 });
 
                 function enableButton(z, y) {

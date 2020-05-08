@@ -83,8 +83,9 @@
                                 "metodo": metodo,
                                 "estatus": "confirmado",
                                 "paciente": pacienteId,
-                                "doctor": doctor.doctor.id,
-                                "consulta": consulta
+                                "doctor": doctor.doctor.id
+                                    /* ,
+                                                                    "consulta": consulta */
                             };
                             localStorage.setItem('pago', JSON.stringify(newPay));
                             app.methods.redirectTo('nueva-consulta');
@@ -95,8 +96,9 @@
                                     "metodo": metodo,
                                     "estatus": "confirmado",
                                     "paciente": pacienteId,
-                                    "doctor": doctor.doctor.id,
-                                    "consulta": consulta
+                                    "doctor": doctor.doctor.id
+                                        /* ,
+                                                                            "consulta": consulta */
                                 },
                                 function(el) {
                                     app.preloader.hide();

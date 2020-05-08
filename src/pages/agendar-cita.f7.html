@@ -122,6 +122,20 @@
 
                 disableButton();
 
+
+                if (localStorage.getItem('patient_id')) {
+                    let pat_id = localStorage.getItem('patient_id');
+                    app.request.get(app.data.url + '/pacientes/' + pat_id,
+                        function(e) {
+                            var x = JSON.parse(e);
+                            $$('input#email').val(x.correo);
+                            $$('input#phone').val(x.telefono);
+                            $$('input#nombre').val(x.nombre);
+                            enableButton();
+                        }
+                    );
+                }
+
                 $$('#agendar-cita input#nombre').change(function(e) {
                     let id = $$('datalist#pacientes [value="' + $$(this).val() + '"]').data('id');
                     if (id != undefined) {

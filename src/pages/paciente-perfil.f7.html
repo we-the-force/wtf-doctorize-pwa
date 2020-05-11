@@ -728,45 +728,47 @@
                             );
 
                             app.preloader.hide();
+
+                            $$('.header .dots .dot.info').click(function(el) {
+                                app.methods.redirectTo('nuevo-paciente');
+                            });
+
+                            $$('.header .options .appointment').click(function(e) {
+                                app.data.store.getItem('patient_id').then(function(value) {
+                                    var ptnt_id = value;
+                                    localStorage.setItem('patient_id', ptnt_id);
+                                    localStorage.setItem('consulta', true);
+                                    app.data.store.setItem('back_consulta', 'paciente').then(function() {
+                                        app.methods.redirectTo('nueva-consulta');
+                                    });
+                                });
+                            });
+
+                            $$('.header .options .payment').click(function(e) {
+                                app.data.store.getItem('patient_id').then(function(value) {
+                                    var ptnt_id = value;
+                                    localStorage.setItem('patient_id', ptnt_id);
+                                    app.data.store.setItem('pago-patient-id', ptnt_id);
+                                    app.data.store.setItem('pago-patient', x.nombre)
+                                    app.data.store.setItem('back_pago', 'paciente').then(function() {
+                                        app.methods.redirectTo('doctor-agregar-pago');
+                                    });
+                                });
+                            });
+                            $$('.header .options .schedule').click(function(e) {
+                                app.data.store.getItem('patient_id').then(function(value) {
+                                    var ptnt_id = value;
+                                    localStorage.setItem('patient_id', ptnt_id);
+                                    app.data.store.setItem('back_cita', 'paciente').then(function() {
+                                        app.methods.redirectTo('agendar-cita');
+                                    });
+                                });
+                            });
                         },
                         function(e) {
                             app.preloader.hide();
 
                         });
-                });
-
-                $$('.header .dots .dot.info').click(function(el) {
-                    app.methods.redirectTo('nuevo-paciente');
-                });
-
-                $$('.header .options .appointment').click(function(e) {
-                    app.data.store.getItem('patient_id').then(function(value) {
-                        var ptnt_id = value;
-                        localStorage.setItem('patient_id', ptnt_id);
-                        localStorage.setItem('consulta', true);
-                        app.data.store.setItem('back_consulta', 'paciente').then(function() {
-                            app.methods.redirectTo('nueva-consulta');
-                        });
-                    });
-                });
-
-                $$('.header .options .payment').click(function(e) {
-                    app.data.store.getItem('patient_id').then(function(value) {
-                        var ptnt_id = value;
-                        localStorage.setItem('patient_id', ptnt_id);
-                        app.data.store.setItem('back_pago', 'paciente').then(function() {
-                            app.methods.redirectTo('doctor-agregar-pago');
-                        });
-                    });
-                });
-                $$('.header .options .schedule').click(function(e) {
-                    app.data.store.getItem('patient_id').then(function(value) {
-                        var ptnt_id = value;
-                        localStorage.setItem('patient_id', ptnt_id);
-                        app.data.store.setItem('back_cita', 'paciente').then(function() {
-                            app.methods.redirectTo('agendar-cita');
-                        });
-                    });
                 });
 
                 $$('.nav.title .arrow').click(function(val) {

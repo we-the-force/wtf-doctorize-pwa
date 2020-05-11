@@ -35,6 +35,7 @@
                         <p class="day"> 12 Agosto 2019</p>
                     </div>
                     <p id="consultorio">Consultorio</p>
+                    <p id="confirm" style="color:#27AE60; font-weight: bold;">Confirmado</p>
                 </div>
                 <p class="price">
                     $500
@@ -67,6 +68,9 @@
                     app.request.get(app.data.url + '/citas/' + val, function(elem) {
                         var x = JSON.parse(elem);
                         console.log(x);
+                        if (!x.confirmado) {
+                            $$('#confirm').css('display', 'none');
+                        }
                         $$('.head-date .info p').text(x.nombre);
                         /* $$('.head-date .info .dots .phone').attr('href', 'https://api.whatsapp.com/send?phone=' + x.telefono); */
                         $$('.head-date .info .dots .mail').attr('href', 'mailto:' + x.correo);

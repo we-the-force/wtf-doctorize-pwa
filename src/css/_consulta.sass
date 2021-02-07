@@ -137,7 +137,7 @@
                                 color: $light-blue
                                 margin: 10px 9px
                                 text-align: center
-                                &#unity
+                                &.unity
                                     margin: 10px auto 10px 0px
                                     height: 30px
                                     width: 30px
@@ -217,6 +217,7 @@
                                 font: $Body-4
                                 color: $light-blue
                             .data
+                                overflow-x: unset
                                 margin-top: 5px
                                 margin-bottom: 5px
                                 color: $grey
@@ -254,6 +255,8 @@
                                 color: $red
                                 &.paid
                                     color: $light-blue
+                                &.unpaid
+                                    color: $red
             .item-input.v2
                 margin: 15px 0px 25px 0px
                 display: flex

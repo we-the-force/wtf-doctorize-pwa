@@ -3,7 +3,7 @@
         <div class="page-content">
             <div class="header">
                 <div class="doc-horarios-add show">
-                    <a class="" href="/doctor/timetable">
+                    <a class="close" href="#">
                         <i class="material-icons">chevron_left</i>
                     </a>
                     <p class="title1">Horarios name</p>
@@ -15,7 +15,7 @@
             <div class="list" id="info">
                 <ul>
                     <li>
-                        <div class="card card-outline doc-horarios add" id="">
+                        <div class="card card-outline doc-horarios add" id="asist">
                             <div class="rectangle light-blue"></div>
                             <i class="clock material-icons light-blue">
                                 person
@@ -26,7 +26,7 @@
                         </div>
                     </li>
                     <li>
-                        <div class="card card-outline doc-horarios add" id="">
+                        <div class="card card-outline doc-horarios add" id="hosp">
                             <div class="rectangle red"></div>
                             <i class="clock material-icons red">
                                 room
@@ -188,37 +188,90 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
-
+                var asistente, horario, nombre, hospital;
                 //llenar datos ***************
 
-                app.data.store.getItem('id-horario').then(function (value) {
-                    //llena nombre del horario (traer) ***************
-                    $$('#doctor-horarios-show .title1').text('Horario ' + value);
+                app.data.store.iterate(function(value, key, i) {
+                    switch (key) {
+                        case "asist-json":
+                            asistente = value;
+                            break;
+                        case "horario-name":
+                            nombre = value;
+                            break;
+                        case "hosp-json":
+                            hospital = value;
+                            break;
+                        case "horario-json":
+                            horario = value;
+                            break;
+                        default:
+                            break;
+                    }
+
+                }).then(function(e) {
+                    $$('#doctor-horarios-show .title1').text(nombre);
+                    $$('#info #asist .card-content p').text(asistente);
+                    $$('#info #hosp .card-content p').text(hospital);
+                    horario.forEach(x => {
+                        fillEdit(x);
+                    });
                 });
 
-                $$('.header .edit').click(function (x) {
+                $$('.header .edit').click(function(x) {
                     //variable de edicion, y redirije
-                    app.data.store.setItem('edit', true).then(function (value) {
+                    app.data.store.setItem('show', true);
+                    app.data.store.setItem('edit', true).then(function(value) {
                         app.methods.redirectTo('doctor-horarios-add');
                     });
                 });
 
                 //cuando un valor de un toggle cambie
-                $$('.toggle').change(function (val) {
+                $$('.toggle').change(function(val) {
                     var toggle = app.toggle.get($$(this));
                     //toogle on/off
-                    if(!toggle.checked){
+                    if (!toggle.checked) {
                         $$(this).closest('.card').addClass('inactive');
                         //desactivar horario*****************
-                    }else{
+                    } else {
                         $$(this).closest('.card').removeClass('inactive');
                         //activar horario**********************+
                     }
-                    
+
                 });
+
+                $$('.header .close').click(function(val) {
+                    app.data.store.clear().then(function(x) {
+                        app.methods.redirectTo('doctor-horarios');
+                    });
+                });
+
+                function fillEdit(val) {
+                    var toggle = app.toggle.get($$('#' + val.nombre + ' .card-content .toggle'));
+                    if (val.activo) {
+                        toggle.checked = true;
+                        $$('#' + val.nombre + ' .card').closest('.card').removeClass('inactive');
+                    } else {
+                        toggle.checked = false;
+                        $$('#' + val.nombre + ' .card').closest('.card').addClass('inactive');
+                    }
+                    $$('#' + val.nombre + ' .resume').empty();
+                    for (let i = 0; i < val.horas.length; i++) {
+                        const y = val.horas[i];
+                        let ArrST = y.start.split(":");
+                        let ArrEt = y.end.split(":");
+                        let st = ArrST[0] + ':' + ArrST[1];
+                        let et = ArrEt[0] + ':' + ArrEt[1];
+
+                        if (i != 0) {
+                            $$('#' + val.nombre + ' .resume').append('<hr>');
+                        }
+                        $$('#' + val.nombre + ' .resume').append('<p id="r' + y.id + '"> ' + st + ' - ' + et + '</p>');
+                    }
+                }
 
             }
         }

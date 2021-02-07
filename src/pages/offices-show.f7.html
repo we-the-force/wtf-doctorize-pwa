@@ -50,7 +50,7 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 var id_office
@@ -58,31 +58,30 @@
                 app.preloader.show('blue');
                 var doctor = JSON.parse(sessionStorage.getItem('user'));
 
-                /* app.data.store.getItem('doctor').then(function (value) {
-                    app.data.doctor = value; */
+                app.request.get(app.data.url + '/consultorios?doctor.id=' + doctor.doctor.id,
+                    function(ele) {
+                        var x = JSON.parse(ele);
 
-                $$('.fab').click(function () {
-                    app.data.consultorio.edit = false;
-                    app.data.store.setItem('office', app.data.consultorio).then(function (value) {
-                        app.methods.redirectTo('offices-add-form-basic');
-                    });
-                });
-
-                app.request.get(app.data.url + '/doctors/' + doctor.id + '/offices',
-                    function (e) {
-                        var x = JSON.parse(e);
+                        $$('.fab').click(function() {
+                            app.data.store.setItem('officeEdit', false);
+                            app.methods.redirectTo('offices-add-form-basic');
+                        });
                         for (var i = 0; i < x.length; i++) {
+                            /* let HA = x[i].HorarioApertura.split(":");
+                            let HC = x[i].HorarioCierre.split(":"); */
+                            let hos = x[i].hospital == null ? "" : x[i].hospital;
+                            let activ = x[i].Activo == true ? "active" : "inactive";
                             $$('.consultorios').append(
                                 '<li id="card' + x[i].id + '">' +
-                                '<div class="card card-outline info_basic active">' +
+                                '<div class="card card-outline info_basic ' + activ + '">' +
                                 '<div class="rectangle turquoise"></div>' +
                                 '<i class="clock material-icons turquoise">' +
                                 'local_hospital' +
                                 '</i>' +
                                 '<div class="card-content card-content-padding">' +
-                                '<p class="title dark-blue">' + x[i].hospital + '</p>' +
-                                '<p class="text dark-blue">' + x[i].name + '</p>' +
-                                '<p class="footer light-blue">' + x[i].startTime + ' - ' + x[i].closeTime + '</p>' +
+                                '<p class="title dark-blue">' + hos + '</p>' +
+                                '<p class="text dark-blue">' + x[i].nombre + '</p>' +
+                                /* '<p class="footer light-blue">' + HA[0] + ":" + HA[1] + ' - ' + HC[0] + ":" + HC[1] + '</p>' + */
                                 '</div>' +
                                 '<a class="popover-open" data-popover=".popover-set">' +
                                 '<i class="points material-icons dark-blue" data-id="' + x[i].id + '">' +
@@ -95,7 +94,7 @@
                         }
                         app.preloader.hide();
 
-                        $$('#offices-show .points').click(function (e) {
+                        $$('#offices-show .points').click(function(e) {
                             //guarda el id del horario *****************
                             id_office = $$(this).data('id');
                             //cambia el texto del menu dependiendo si el horario esta desactivado o no
@@ -106,7 +105,7 @@
                             }
                         });
 
-                        $$('.item-link.delete').click(function (x) {
+                        $$('.item-link.delete').click(function(x) {
                             //cierra pop over
                             app.popover.close();
                             //crea cuadro de dialogo
@@ -115,62 +114,80 @@
                                 title: '<i class="material-icons">error</i>',
                                 text: 'Esta seguro que desea eliminar este consultorio?',
                                 content: 'Esta operación es irreversible',
-                                buttons: [
-                                    {
-                                        text: '<p>Cancelar</p> <i class="material-icons">chevron_right</i>',
-                                        cssClass: 'cancel',
-                                        onClick:
-                                            //cancela la accion, cierra ventana
-                                            function (x, y) {
-                                                dialog.close();
-                                                console.log('Not deleted');
+                                buttons: [{
+                                    text: '<p>Cancelar</p> <i class="material-icons">chevron_right</i>',
+                                    cssClass: 'cancel',
+                                    onClick:
+                                    //cancela la accion, cierra ventana
+                                        function(x, y) {
+                                        dialog.close();
+                                        console.log('Not deleted');
 
-                                            }
-                                    },
-                                    {
-                                        text: '<p>Eliminar</p> <i class="material-icons">chevron_right</i>',
-                                        cssClass: 'delete',
-                                        onClick:
-                                            function (x, y) {
-                                                app.preloader.show('blue');
-                                                app.request({
-                                                    url: app.data.url + '/offices/' + id_office,
-                                                    method: "DELETE",
-                                                    crossDomain: true,
-                                                    success: function (e) {
-                                                        app.preloader.hide();
-                                                        app.dialog.alert('Se eliminó el consultorio.', function () {
-                                                            app.methods.cuteHide($$('#offices-show ul li#card' + id_office));
-                                                        });
-                                                    },
-                                                    error: function (e) {
-                                                        app.preloader.hide();
-                                                        app.dialog.alert('Ha ocurrido un error elminando el consultorio.');
-                                                    }
-                                                });
-                                            }
                                     }
-                                ]
+                                }, {
+                                    text: '<p>Eliminar</p> <i class="material-icons">chevron_right</i>',
+                                    cssClass: 'delete',
+                                    onClick: function(x, y) {
+                                        app.preloader.show('blue');
+                                        app.request({
+                                            url: app.data.url + '/consultorios/' + id_office,
+                                            method: "DELETE",
+                                            crossDomain: true,
+                                            success: function(e) {
+                                                app.preloader.hide();
+                                                app.dialog.alert('Se eliminó el consultorio.', function() {
+                                                    app.methods.cuteHide($$('#offices-show ul li#card' + id_office));
+                                                });
+                                            },
+                                            error: function(e) {
+                                                app.preloader.hide();
+                                                app.dialog.alert('Ha ocurrido un error elminando el consultorio.');
+                                            }
+                                        });
+                                    }
+                                }]
                             });
                             //abre cuadro de dialogo
                             dialog.open();
                         });
 
-                        $$('.item-link.edit').click(function (x) {
+                        $$('.item-link.edit').click(function(x) {
                             //salva variable para saber que es edicion, cierra el popover y redirecciona
-                            app.data.consultorio.id = id_office;
-                            app.data.consultorio.edit = true;
-                            app.data.store.setItem('office', app.data.consultorio).then(function (value) {
-                                app.popover.close();
-                                app.methods.redirectTo('offices-add-form-basic');
-                            });
+                            app.data.store.setItem('officeId', id_office);
+                            app.popover.close();
+                            app.data.store.setItem('officeEdit', true).then(
+                                function(e) {
+                                    app.methods.redirectTo('offices-add-form-basic');
+                                }
+                            );
                         });
 
-                        $$('.item-link.state').click(function (x) {
+                        $$('.item-link.state').click(function(x) {
                             //activa desactiva el horario
-                            $$('#offices-show .consultorios').find('li#card' + id_office).children().toggleClass('active');
-                            $$('#offices-show .consultorios').find('li#card' + id_office).children().toggleClass('inactive');
-                            //mandar desactivar*******************
+                            let value;
+                            app.preloader.show();
+                            if ($$('#offices-show .consultorios').find('li#card' + id_office).children().hasClass('active')) {
+                                value = false;
+                            } else {
+                                value = true;
+                            }
+                            app.request({
+                                url: app.data.url + '/consultorios/' + id_office,
+                                method: "PUT",
+                                crossDomain: true,
+                                data: {
+                                    "Activo": value
+                                },
+                                success: function(e) {
+                                    app.preloader.hide();
+                                    $$('#offices-show .consultorios').find('li#card' + id_office).children().toggleClass('active');
+                                    $$('#offices-show .consultorios').find('li#card' + id_office).children().toggleClass('inactive');
+                                },
+                                error: function(e) {
+                                    app.preloader.hide();
+                                }
+                            });
+                            //mandar desactivar*******************                            
                             app.popover.close();
                         });
 

@@ -3,7 +3,7 @@
     <div class="page-content login-screen-content register-step1">
       <div class="screen-title header-blue">
         <div class="list">
-          <ul>
+          <ul id="header">
             <li>
               <div class="row">
                 <div class="col-10"></div>
@@ -17,7 +17,7 @@
           </ul>
         </div>
       </div>
-      <div>
+      <div class="flex_grow">
         <div class="list inputs">
           <ul>
             <li class="item-content item-input">
@@ -29,12 +29,13 @@
                 </div>
               </div>
             </li>
-            
-            <li class="item-content item-input">
+
+            <li class="item-content item-input" id="inputPass">
               <div class="item-inner searchbar-inner">
                 <div class="item-input-wrap rounded">
                   <i class="icons material-icons">vpn_key</i>
-                  <input type="text" id="pass" class="pass" placeholder="Contraseña" required validate>
+                  <input type="password" id="pass" class="pass" placeholder="Contraseña"
+                    pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" required validate>
                   <span class="input-clear-button"></span>
                 </div>
               </div>
@@ -53,66 +54,85 @@
       </div>
     </div>
 
-      
+
   </div>
 </template>
 <script>
-  import $$ from 'dom7';
-  export default {
-    on: {
-      pageInit: function (e, page) {
-        var self = this;
-        var app = self.$app;
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageBeforeOut: function(e, page) {
+                var self = this;
+                var app = self.$app;
+                if (e.detail.direction == 'backward') {
+                    app.data.store.removeItem('flow');
+                }
+            },
+            pageInit: function(e, page) {
+                var self = this;
+                var app = self.$app;
 
-        let urlParams = (new URL(document.location)).searchParams;
-        var query = app.utils.parseUrlQuery(window.location.href);
-        let code = query.code;
-        let email = query.email;
+                var urlParams = (new URL(document.location)).searchParams;
+                var query = app.utils.parseUrlQuery(window.location.href);
+                var asistId = query.id;
+                var numInputs = 2;
 
-        if (!app.methods.isEmpty(query)) {
-          app.data.flow = 'RA';
-        } else {
-          app.data.flow = 'RD';
+                if (!app.methods.isEmpty(query)) {
+                    $$('#inputPass').css("visibility", "hidden");
+                    $$('#header h1').text('Nombre');
+                    $$('#header p').text('Ingresar nombre para continuar con el proceso de registro.');
+                    numInputs = 1;
+                }
+
+                $$('#register-step1 input').on('input:notempty', function(e) {
+                    var nonempty = $$('#register-step1 input').filter(function() {
+                        return this.value != ''
+                    });
+                    if (nonempty.length == numInputs) {
+                        enableButton();
+                    }
+                });
+
+                $$('#register-step1 input').on('input:empty', function(e) {
+                    disableButton();
+                });
+
+                $$('#register-step1 input#pass').on('input:notempty', function(e) {
+                    if (!document.getElementById('pass').validity.patternMismatch) {
+                        document.getElementById('pass').setCustomValidity('');
+                    } else {
+                        document.getElementById('pass').setCustomValidity('La contraseña debe contener al menos 8 caracteres y una mayuscula');
+                    }
+                });
+
+                function enableButton(e) {
+                    if (!document.getElementById('pass').validity.patternMismatch) {
+                        $$('#register-step1 .btn-2 a').removeClass('grey');
+                        $$('#register-step1 .btn-2 a').off('click');
+                        $$('#register-step1 .btn-2 a').on('click', function(e) {
+                            if (app.methods.isEmpty(query)) {
+                                app.data.store.setItem('username', $$('#fullname').val());
+                                app.data.store.setItem('pwd', $$('#pass').val());
+                                app.data.store.setItem('flow', 'RD');
+                                app.methods.redirectTo('register-s2');
+                            } else if (!app.methods.isEmpty(query)) {
+                                app.data.store.setItem('username', $$('#fullname').val());
+                                /* app.data.store.setItem('pwd', $$('#pass').val()); */
+                                app.data.store.setItem('assistId', asistId);
+                                app.data.store.setItem('flow', 'RA');
+                                app.methods.redirectTo('photo-module');
+                            }
+                        });
+                    } else {
+                        disableButton();
+                    }
+                }
+
+                function disableButton() {
+                    $$('#register-step1 .btn-2 a').addClass('grey');
+                    $$('#register-step1 .btn-2 a').off('click');
+                }
+            }
         }
-
-        $$('#register-step1 .btn-simple').on('click', function (e) {
-          app.data.flow = 'default';
-          app.data.store.removeItem('flow');
-          app.methods.redirectTo('root');
-        });
-
-        $$('#register-step1 .btn-2 a').addClass('grey');
-        $$('#register-step1 .btn-2 a').off('click');
-        $$(document).on('input:notempty', '#fullname', function (e) {
-          $$(document).on('input:notempty', '#pass', function (e) {
-            $$('#register-step1 .btn-2 a').removeClass('grey');
-            $$('#register-step1 .btn-2 a').off('click');
-            $$('#register-step1 .btn-2 a').on('click', function (e) {
-              if (app.data.flow == 'RD') {
-                app.data.register.username = $$('#fullname').val();
-                app.data.register.password = $$('#pass').val();
-                app.data.store.setItem('flow', app.data.flow).then(function (value) {
-                  app.data.store.setItem('register', app.data.register).then(function (value) {
-                    app.methods.redirectTo('register-s2');
-                  });
-                });
-              } else if (app.data.flow == 'RA') {
-                app.data.assistant.name = $$('#fullname').val();
-                app.data.assistant.password = $$('#pass').val();
-                app.data.assistant.email = email;
-                app.data.assistant.code = code;
-                app.data.store.setItem('flow', app.data.flow).then(function (value) {
-                  app.data.store.setItem('assistant', app.data.assistant).then(function (value) {
-                    app.methods.redirectTo('photo-module');
-                  });
-                });
-              } else {
-                app.methods.redirectTo('root');//avisar de error
-              }
-            });
-          });
-        });
-      }
     }
-  }
 </script>

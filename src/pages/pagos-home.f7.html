@@ -353,69 +353,90 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageBeforeIn: function (e, page) {
+            pageBeforeIn: function(e, page) {
                 var self = this;
                 var app = self.$app;
 
             },
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 var doctor = JSON.parse(sessionStorage.getItem('user'));
                 var pagos;
+                var moment = require('moment');
+                moment.locale('es');
+                moment().format();
+
 
                 if (doctor != null && doctor != 'undefined' && doctor != '') {
-                    $$(".toolbar .profile").html('<img src="' + app.data.url + '/' + doctor.photo + '50.png" alt="not found">');
+                    $$(".toolbar .profile").html('<img src="' + app.data.url + doctor.img_data.url + '" alt="not found">');
                 }
 
                 app.preloader.show('blue');
-                app.request.get(app.data.url,
-                    function (e) {
+                app.request.get(app.data.url + '/pagos?doctor.id=' + doctor.doctor.id + '&_sort=updated_at:desc',
+                    function(e) {
 
                         pagos = JSON.parse(e);
+                        console.log(pagos);
+
                         let recibidos = [];
                         let pendientes = [];
-                        $$('.header .TotalIncome').text('$100,899.00');
-                        $$('.header .labelIncome').text('Total de ingresos');
+                        recibidos = pagos.filter(e => {
+                            return e.estatus == 'confirmado';
+                        });
+                        pendientes = pagos.filter(x => {
+                            return e.estatus == 'pendiente';
+                        });
+                        let total = 0;
+                        recibidos.forEach(x => {
+                            total += x.costo;
+                        });
+                        $$('.header .TotalIncome').text('$' + total);
                         fillPage('recibidos', recibidos);
                         fillPage('pendientes', pendientes);
 
                         app.preloader.hide();
-                        $$('.header .toolbar .tab-link').click(function (x) {
+                        $$('.header .toolbar .tab-link').click(function(x) {
                             let tab = $$(this);
-                            if (tab.attr('id') == 'recibidos_tab') {
-                                $$('.header .TotalIncome').text('$100,899.00');//agregar valor
-                                $$('.header .TotalIncome').toggleClass('light-blue');
+                            if (tab.attr('id') == 'recibidos_tab') { //agregar valor
+                                let total = 0;
+                                recibidos.forEach(x => {
+                                    total = +x.costo;
+                                });
+                                $$('.header .TotalIncome').text('$' + total);
+                                $$('.header .TotalIncome').removeClass('light-blue');
                                 $$('.header .labelIncome').text('Total de ingresos');
-
-                                fillPage('recibidos');
+                                /* fillPage('recibidos'); */
                             } else if (tab.attr('id') == 'pendientes_tab') {
-                                //llenar pagina
-                                $$('.header .TotalIncome').text('$30,899.00');//agregar valor
-                                $$('.header .TotalIncome').toggleClass('light-blue');
+                                let total = 0;
+                                pendientes.forEach(x => {
+                                    total = +x.costo;
+                                });
+                                $$('.header .TotalIncome').text('$' + total); //agregar valor
+                                $$('.header .TotalIncome').addClass('light-blue');
                                 $$('.header .labelIncome').text('Total pendientes');
-
-                                fillPage('pendientes');
+                                /* fillPage('pendientes'); */
                             }
                         });
 
-                        $$('#pagos-home .card.pagos').click(function (x) {
+                        $$('#pagos-home .card.pagos').click(function(x) {
                             let card = $$(this);
+                            app.data.store.setItem('pagoId', card.data('id'));
                             if (card.parent().attr('id') == 'recibidos') {
-                                app.data.store.setItem('details', 'recibidos').then(function (value) {
+                                app.data.store.setItem('details', 'recibidos').then(function(value) {
                                     app.methods.redirectTo('pago-details');
                                 });
                             } else if (card.parent().attr('id') == 'pendientes') {
-                                app.data.store.setItem('details', 'pendientes').then(function (value) {
+                                app.data.store.setItem('details', 'pendientes').then(function(value) {
                                     app.methods.redirectTo('pago-details');
                                 });
                             }
                         });
 
                     },
-                    function (e) {
+                    function(e) {
 
-                        let recibidos = [];
+                        /* let recibidos = [];
                         let pendientes = [];
                         $$('.header .TotalIncome').text('$100,899.00');
                         $$('.header .labelIncome').text('Total de ingresos');
@@ -423,17 +444,17 @@
                         fillPage('pendientes', pendientes);
                         app.preloader.hide();
 
-                        $$('.header .toolbar .tab-link').click(function (x) {
+                        $$('.header .toolbar .tab-link').click(function(x) {
                             let tab = $$(this);
                             if (tab.attr('id') == 'recibidos_tab') {
-                                $$('.header .TotalIncome').text('$100,899.00');//agregar valor
+                                $$('.header .TotalIncome').text('$100,899.00'); //agregar valor
                                 $$('.header .TotalIncome').toggleClass('light-blue');
                                 $$('.header .labelIncome').text('Total de ingresos');
 
                                 fillPage('recibidos');
                             } else if (tab.attr('id') == 'pendientes_tab') {
                                 //llenar pagina
-                                $$('.header .TotalIncome').text('$30,899.00');//agregar valor
+                                $$('.header .TotalIncome').text('$30,899.00'); //agregar valor
                                 $$('.header .TotalIncome').toggleClass('light-blue');
                                 $$('.header .labelIncome').text('Total pendientes');
 
@@ -441,38 +462,46 @@
                             }
                         });
 
-                        $$('#pagos-home .card.pagos').click(function (x) {
+                        $$('#pagos-home .card.pagos').click(function(x) {
                             let card = $$(this);
                             console.log('card clicked redirect to details');
                             if (card.parent().attr('id') == 'recibidos') {
-                                app.data.store.setItem('details', 'recibidos').then(function (value) {
+                                app.data.store.setItem('details', 'recibidos').then(function(value) {
                                     app.methods.redirectTo('pago-details');
                                 });
                             } else if (card.parent().attr('id') == 'pendientes') {
-                                app.data.store.setItem('details', 'pendientes').then(function (value) {
+                                app.data.store.setItem('details', 'pendientes').then(function(value) {
                                     app.methods.redirectTo('pago-details');
                                 });
                             }
-                        });
+                        }); */
 
                     }
                 );
 
                 function fillPage(x, y) {
-                    /* y.forEach(el => {
+                    let dates = y.map(el => {
+                        return moment(el.updated_at).format('YYYY-MM-DD');
+                    });
+                    dates = dates.filter(function(item, pos) {
+                        return dates.indexOf(item) == pos;
+                    });
+                    dates.forEach(date => {
+                        let pagos = y.filter(function(item, i) {
+                            return date == moment(item.updated_at).format('YYYY-MM-DD');
+                        });
+                        fillDay(x, pagos);
+                    });
+                    /* y = y.map(el => {
+
                         fillDay(x, el);
                     }); */
-                    console.log('page');
-
-                    for (let i = 0; i < 4; i++) {
+                    /* for (let i = 0; i < 4; i++) {
                         fillDay(x, []);
-                    }
+                    } */
                 }
 
                 function fillDay(x, y) {
-                    /* y.forEach(el => {
-                        fillDay(x, el);
-                    }); *//* $$('#'+x) */
                     let color, letter_color;
                     if (x == 'recibidos') {
                         color = 'yellow-2';
@@ -481,30 +510,32 @@
                         color = 'red'
                         letter_color = 'red';
                     }
+                    let date = moment(y[0].updated_at);
+
                     $$('#' + x).append(
                         '<div class="divider">' +
                         '<div class="monthYear">' +
-                        '<p class="mon">ENE</p>' +
-                        '<p class="year">2020</p>' +
+                        '<p class="mon">' + date.format("MMM") + '</p>' +
+                        '<p class="year">' + date.format("YYYY") + '</p>' +
                         '</div>' +
                         '<div class="line">' +
                         '<hr>' +
                         '</div>' +
                         '<div class="day">' +
-                        '21' +
+                        date.format("DD") +
                         '</div>' +
                         '</div>'
                     );
-                    for (let i = 0; i < 3; i++) {
+                    y.forEach(el => {
                         $$('#' + x).append(
-                            '<div class="card card-outline pagos">' +
+                            '<div class="card card-outline pagos" data-id="' + el.id + '">' +
                             '<div class="rectangle ' + color + '"></div>' +
                             '<div class="card-content card-content-padding">' +
-                            '<div class="name">Alejandro De Leon Lopez</div>' +
+                            '<div class="name">' + el.paciente.nombre + '</div>' +
                             '<hr>' +
                             '<div class="cash">' +
-                            '<p class="money ' + letter_color + '">$300.00</p>' +
-                            '<p class="no">Pago 1 / 1</p>' +
+                            '<p class="money ' + letter_color + '">$' + el.costo + '</p>' +
+                            /* '<p class="no">Pago 1 / 1</p>' + */
                             '</div>' +
                             '<hr>' +
                             '<div class="concept">Consulta' +
@@ -513,7 +544,7 @@
                             '</div>' +
                             '</div>'
                         );
-                    }
+                    });
                 }
             }
         }

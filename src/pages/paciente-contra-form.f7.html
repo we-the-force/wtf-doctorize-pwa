@@ -31,7 +31,7 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageBeforeOut: function (e, page) {
+            pageBeforeOut: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 if (e.detail.direction == 'backward') {
@@ -41,12 +41,12 @@
                     app.data.store.removeItem('edit_patient_data');
                 }
             },
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 var edit
 
-                app.data.store.getItem('edit_patient_data').then(function (value) {
+                app.data.store.getItem('edit_patient_data').then(function(value) {
                     edit = value;
 
                     disableButton();
@@ -54,45 +54,74 @@
                     if (edit) {
                         //llena inputs
                         app.preloader.show('blue');
-                        app.data.store.getItem('patient_id').then(function (value) {
-                            var ptnt_id = value;
-                            app.data.store.getItem('contra_id').then(function (value) {
-                                var cnd_mdc_id = value;
-                                app.request.get(app.data.url + '/patients/' + ptnt_id,
-                                    function (e) {
-                                        var x = JSON.parse(e);
-                                        $$('#paciente-contra-form textarea').val('asdf');
-                                        checkval();
-                                        app.preloader.hide();
-                                    },
-                                    function (e) {
-                                        app.preloader.hide();
-                                    });
-                            });
+                        app.data.store.getItem('contra_id').then(function(value) {
+                            var cnd_mdc_id = value;
+                            app.request.get(app.data.url + '/contraindicaciones/' + cnd_mdc_id,
+                                function(e) {
+                                    var x = JSON.parse(e);
+                                    $$('#paciente-contra-form textarea').val(x.contraindicacion);
+                                    checkval();
+                                    app.preloader.hide();
+                                },
+                                function(e) {
+                                    app.preloader.hide();
+                                });
                         });
                     }
 
-                    $$('#paciente-contra-form textarea').on('change', checkval);
+                    $$('#paciente-contra-form textarea').on('input:notempty', checkval);
                 });
 
                 function checkval() {
-                    var nonempty = $$('#paciente-contra-form textarea').filter(function () {
+                    var nonempty = $$('#paciente-contra-form textarea').filter(function() {
                         return this.value != ''
                     });
 
-                    console.log(nonempty);
-                    
                     if (nonempty.length == 1) {
                         $$('#paciente-contra-form .btn-2 a').removeClass('grey');
-                        $$('#paciente-contra-form .btn-2 a').click(function (val) {
+                        $$('#paciente-contra-form .btn-2 a').off('click');
+                        $$('#paciente-contra-form .btn-2 a').click(function(val) {
                             let contra;
                             contra = $$('#paciente-contra-form textarea').val();
                             if (edit) {
-                                console.log('api edit');
-                                app.methods.redirectTo('paciente-perfil');
+                                app.data.store.getItem('patient_id').then(function(value) {
+                                    var ptnt_id = value;
+                                    app.data.store.getItem('contra_id').then(function(value) {
+                                        var cnd_mdc_id = value;
+                                        app.request({
+                                            url: app.data.url + '/contraindicaciones/' + cnd_mdc_id,
+                                            method: "PUT",
+                                            crossDomain: true,
+                                            data: {
+                                                "contraindicacion": contra,
+                                                "paciente": ptnt_id
+                                            },
+                                            success: function(e) {
+                                                app.preloader.hide();
+                                                app.methods.redirectTo('paciente-perfil');
+                                            },
+                                            error: function(e) {
+                                                app.preloader.hide();
+                                            }
+                                        });
+                                    });
+                                });
                             } else {
-                                console.log('api create');
-                                app.methods.redirectTo('paciente-perfil');
+                                app.preloader.show('blue');
+                                app.data.store.getItem('patient_id').then(function(value) {
+                                    var ptnt_id = value;
+                                    app.request.postJSON(app.data.url + '/contraindicaciones', {
+                                            "contraindicacion": contra,
+                                            "paciente": ptnt_id
+                                        },
+                                        function(e) {
+                                            app.preloader.hide();
+                                            app.methods.redirectTo('paciente-perfil');
+                                        },
+                                        function(e) {
+                                            app.preloader.hide();
+                                        });
+                                });
                             }
                         });
                     } else if (nonempty.length < 1) {

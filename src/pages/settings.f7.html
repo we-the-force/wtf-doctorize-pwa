@@ -85,16 +85,18 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
 
                 var doctor = JSON.parse(sessionStorage.getItem('user'));
-                $$("#set-name input").val(doctor.name);
+                console.log(doctor);
+
+                $$("#set-name input").val(doctor.username);
                 $$("#set-mail input").val(doctor.email);
-                $$("#set-cel input").val(doctor.cellphone);
-                $$("#set-special input").val(doctor.specialty.name);
-                $$(".list.photo .edit").html('<img src="' + app.data.url + '/' + doctor.photo + '200.png" alt="not found">');
+                $$("#set-cel input").val(doctor.telefono);
+                $$("#set-special input").val(doctor.doctor.especialidad);
+                $$(".list.photo .edit").html('<img src="' + app.data.url + doctor.img_data.url + '" alt="not found">');
 
                 /* app.data.store.getItem('doctor').then(function (value) {
                     app.data.doctor = value;
@@ -107,43 +109,43 @@
                     $$(".photo .edit").html('<img src="' + app.data.url + '/' + app.data.doctor.photo + '200.png" alt="not found">');
                 }); */
 
-                $$(".btn-back").click(function (e) {
+                $$(".btn-back").click(function(e) {
                     app.data.flow = 'default';
-                    app.data.store.removeItem('flow').then(function (value) {
+                    app.data.store.removeItem('flow').then(function(value) {
                         app.methods.redirectTo('config');
                     });
                 });
-                $$("#set-name").click(function (e) {
+                $$("#set-name").click(function(e) {
                     app.data.flow = 'SN';
-                    app.data.store.setItem('flow', app.data.flow).then(function (value) {
+                    app.data.store.setItem('flow', app.data.flow).then(function(value) {
                         app.methods.redirectTo('settings-edit');
                     });
                 });
 
-                $$("#set-mail").click(function (e) {
+                $$("#set-mail").click(function(e) {
                     app.data.flow = 'SM';
-                    app.data.store.setItem('flow', app.data.flow).then(function (value) {
+                    app.data.store.setItem('flow', app.data.flow).then(function(value) {
                         app.methods.redirectTo('settings-edit');
                     });
                 });
 
-                $$("#set-cel").click(function (e) {
+                $$("#set-cel").click(function(e) {
                     app.data.flow = 'SC';
-                    app.data.store.setItem('flow', app.data.flow).then(function (value) {
+                    app.data.store.setItem('flow', app.data.flow).then(function(value) {
                         app.methods.redirectTo('settings-edit');
                     });
                 });
 
-                $$("#set-special").click(function (e) {
+                $$("#set-special").click(function(e) {
                     app.data.flow = 'SS';
-                    app.data.store.setItem('flow', app.data.flow).then(function (value) {
+                    app.data.store.setItem('flow', app.data.flow).then(function(value) {
                         app.methods.redirectTo('settings-edit');
                     });
                 });
 
-                $$(".photo .edit").click(function (e) {
+                $$(".photo .edit").click(function(e) {
                     app.data.flow = 'UD';
-                    app.data.store.setItem('flow', app.data.flow).then(function (value) {
+                    app.data.store.setItem('flow', app.data.flow).then(function(value) {
                         app.methods.redirectTo('photo-module');
                     });
                 });

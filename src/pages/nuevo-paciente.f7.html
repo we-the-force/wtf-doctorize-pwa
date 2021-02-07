@@ -3,7 +3,7 @@
         <div class="page-content">
             <div class="header-turquoise photo nuevo-paciente v2">
                 <div class="header basic center fixed">
-                    <a class="btn-back" id="back" href="/home">
+                    <a class="btn-back back" id="back" href="#">
                         <i class="material-icons white">chevron_left</i>
                     </a>
                     <p class="title1 white">Nuevo paciente</p>
@@ -47,10 +47,51 @@
                     <ul>
                         <li class="item-content item-input linear">
                             <div class="item-inner">
+                                <div class="item-label dark-blue">Nombre</div>
+                                <div class="item-input-wrap">
+                                    <input class="input" type="text" name="nombre" id="nombre" placeholder="Nombre"
+                                        required validate>
+                                    <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input linear">
+                            <div class="item-inner">
+                                <div class="item-label dark-blue">Correo</div>
+                                <div class="item-input-wrap">
+                                    <input class="input" type="email" name="email" id="email"
+                                        placeholder="Correo Electronico" required validate>
+                                    <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input linear">
+                            <div class="item-inner">
+                                <div class="item-label dark-blue">Celular</div>
+                                <div class="item-input-wrap">
+                                    <input type="tel" class="input" name="phone" id="phone" placeholder="Celular"
+                                        required validate pattern="[0-9]{10}"
+                                        data-error-message="Ingrese un telefono con una longitud de 10 numeros">
+                                    <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input linear">
+                            <div class="item-inner">
+                                <div class="item-label dark-blue">Edad</div>
+                                <div class="item-input-wrap">
+                                    <input type="number" class="input" name="age" id="age" placeholder="Edad" required
+                                        validate pattern="[0-9]*" data-error-message="Solo numeros!">
+                                    <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input linear">
+                            <div class="item-inner">
                                 <div class="item-label dark-blue">Fecha de Nacimiento</div>
                                 <div class="item-input-wrap">
-                                    <input type="date" name="birthdate" id="birthdate" placeholder="Fecha de Nacimiento"
-                                        required validate>
+                                    <input class="input" type="date" name="birthdate" id="birthdate"
+                                        placeholder="Fecha de Nacimiento" required validate>
                                     <span class="input-clear-button"></span>
                                 </div>
                             </div>
@@ -70,8 +111,8 @@
                             <div class="item-inner">
                                 <div class="item-label dark-blue">Estado civil</div>
                                 <div class="item-input-wrap">
-                                    <input type="text" name="civil-status" id="civil-status" placeholder="Estado civil"
-                                        required validate>
+                                    <input class="input" type="text" name="civil-status" id="civil-status"
+                                        placeholder="Estado civil" required validate>
                                     <span class="input-clear-button"></span>
                                 </div>
                             </div>
@@ -80,7 +121,8 @@
                             <div class="item-inner">
                                 <div class="item-label dark-blue">Peso</div>
                                 <div class="item-input-wrap">
-                                    <input type="text" name="weight" id="weight" placeholder="Peso" required validate>
+                                    <input class="input" type="text" name="weight" id="weight" placeholder="Peso"
+                                        required validate>
                                     <span class="input-clear-button"></span>
                                 </div>
                             </div>
@@ -89,8 +131,8 @@
                             <div class="item-inner">
                                 <div class="item-label dark-blue">Estatura</div>
                                 <div class="item-input-wrap">
-                                    <input type="text" name="height" id="height" placeholder="Estatura" required
-                                        validate>
+                                    <input class="input" type="text" name="height" id="height" placeholder="Estatura"
+                                        required validate>
                                     <span class="input-clear-button"></span>
                                 </div>
                             </div>
@@ -99,13 +141,13 @@
                             <div class="item-inner">
                                 <div class="item-label dark-blue">Tipo de Sangre</div>
                                 <div class="item-input-wrap">
-                                    <input type="text" name="blood" id="blood" placeholder="Tipo de Sangre" required
-                                        validate>
+                                    <input class="input" type="text" name="blood" id="blood"
+                                        placeholder="Tipo de Sangre" required validate>
                                     <span class="input-clear-button"></span>
                                 </div>
                             </div>
                         </li>
-                        <li class="item-content item-input linear">
+                        <!-- <li class="item-content item-input linear">
                             <div class="item-inner">
                                 <div class="item-label dark-blue">Presión Sanguínea</div>
                                 <div class="item-input-wrap">
@@ -114,7 +156,7 @@
                                     <span class="input-clear-button"></span>
                                 </div>
                             </div>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -138,12 +180,22 @@
     } from 'lodash';
     export default {
         on: {
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
                 var regex2 = /^([0-9]){10}$/;
-                var c, birthdate = '', civilStatus = '', weight = '', height = '', blood = '', pressure = '';
+                var c, birthdate = '',
+                    civilStatus = '',
+                    weight = '',
+                    height = '',
+                    blood = '',
+                    pressure = '',
+                    nombre = '',
+                    celular = '',
+                    edad = '',
+                    correo = '',
+                    nonempty = [];
                 var ac = app.actions.create({
                     content: '<div class="actions-modal">' +
                         '<div class="actions-group">' +
@@ -164,82 +216,214 @@
                         '</div>',
                     buttons: [{}]
                 });
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
 
                 disableButton();
+                app.data.store.getItem('patient_id').then(function(value) {
+                    if (value) {
+                        $$('#nuevo-paciente .header .title1').text('Editar Paciente');
+                        app.request.get(app.data.url + '/pacientes/' + value,
+                            function(e) {
+                                let x = JSON.parse(e);
+                                console.log(x);
+                                $$('#nombre').val(x.nombre);
+                                $$('#birthdate').val(x.fecha_nacimiento);
+                                $$('#civil-status').val(x.Historia_social.estado_civil);
+                                $$('#weight').val(x.peso);
+                                $$('#height').val(x.estatura);
+                                $$('#blood').val(x.tipo_sangre);
+                                $$('#age').val(x.edad);
+                                $$('#email').val(x.correo);
+                                $$('#phone').val(x.telefono);
+                                $$('.upload-photo img').attr('src', app.data.url + '/' + x.img_data.url);
+                                $$('.upload-photo img').css("transform", "translate(-50%, -50%)");
+                                enableButton();
+                            }
+                        );
 
-                $$(document).on('input:notempty', '#birthdate', function (e) {
-                    if (civilStatus != '' && weight != '' && height != '' && blood != '' && pressure != '') {
-                        birthdate = new Date($$('#birthdate').val());
-                        enableButton();
-                    } else {
-                        birthdate = new Date($$('#birthdate').val());
                     }
                 });
 
-                $$(document).on('input:notempty', '#civil-status', function (e) {
-                    if (birthdate != '' && weight != '' && height != '' && blood != '' && pressure != '') {
-                        civilStatus = new Date($$('#civil-status').val());
-                        enableButton();
-                    } else {
-                        civilStatus = new Date($$('#civil-status').val());
+                app.data.store.getItem('cita').then(function(val) {
+                    if (val) {
+                        app.request.get(app.data.url + '/citas/' + val,
+                            function(elem) {
+                                var cita = JSON.parse(elem);
+                                console.log(cita);
+                                $$('#nombre').val(cita.nombre);
+                                $$('#email').val(cita.correo);
+                                $$('#phone').val(cita.telefono);
+                            }
+                        );
                     }
                 });
 
-                $$(document).on('input:notempty', '#weight', function (e) {
-                    if (birthdate != '' && civilStatus != '' && height != '' && blood != '' && pressure != '') {
-                        weight = new Date($$('#weight').val());
-                        enableButton();
-                    } else {
-                        weight = new Date($$('#weight').val());
-                    }
+                $$('#nuevo-paciente input').on('input:notempty', function(e) {
+                    nonempty = $$('#nuevo-paciente .input').filter(function() {
+                        return this.value != ''
+                    });
+                    checkVal();
                 });
 
-                $$(document).on('input:notempty', '#height', function (e) {
-                    if (birthdate != '' && civilStatus != '' && weight != '' && blood != '' && pressure != '') {
-                        height = new Date($$('#height').val());
-                        enableButton();
-                    } else {
-                        height = new Date($$('#height').val());
-                    }
-                });
-
-                $$(document).on('input:notempty', '#blood', function (e) {
-                    if (birthdate != '' && civilStatus != '' && weight != '' && height != '' && pressure != '') {
-                        blood = new Date($$('#blood').val());
-                        enableButton();
-                    } else {
-                        blood = new Date($$('#blood').val());
-                    }
-                });
-
-                $$(document).on('input:notempty', '#pressure', function (e) {
-                    if (birthdate != '' && civilStatus != '' && weight != '' && height != '' && blood != '') {
-                        pressure = new Date($$('#pressure').val());
-                        enableButton();
-                    } else {
-                        pressure = new Date($$('#pressure').val());
-                    }
-                });
-
-
-                $$(document).on('input:empty', function (e) {
+                $$(document).on('input:empty', function(e) {
                     disableButton();
                 });
 
+                function checkVal(e) {
+                    nonempty = $$('#nuevo-paciente .input').filter(function() {
+                        return this.value != ''
+                    });
+                    if (c && nonempty.length == 9) {
+                        enableButton();
+                    } else if (nonempty.length == 9) {
+                        app.data.store.getItem('patient_id').then(function(value) {
+                            if (value) {
+                                enableButton();
+                            } else {
+                                disableButton();
+                            }
+                        });
+                    } else {
+                        disableButton();
+                    }
+                }
+
                 function enableButton() {
-                    app.data.paciente.birthdate = birthdate;
-                    app.data.paciente.civilStatus = civilStatus;
-                    app.data.paciente.weight = weight;
-                    app.data.paciente.height = height;
-                    app.data.paciente.blood = blood;
-                    app.data.paciente.pressure = pressure;
+                    nombre = $$('#nombre').val();
+                    birthdate = $$('#birthdate').val();
+                    civilStatus = $$('#civil-status').val();
+                    weight = $$('#weight').val();
+                    height = $$('#height').val();
+                    blood = $$('#blood').val();
+                    pressure = $$('#pressure').val();
+                    edad = $$('#age').val();
+                    correo = $$('#email').val();
+                    celular = $$('#phone').val();
                     $$('#nuevo-paciente .btn-2 a').removeClass('grey');
                     $$('#nuevo-paciente .btn-2 a').off('click');
-                    $$('#nuevo-paciente .btn-2 a').on('click', function (e) {
-                        console.log(app.data.paciente);
-                        app.methods.redirectTo('home');
+                    $$('#nuevo-paciente .btn-2 a').on('click', function(e) {
+                        app.preloader.show('blue');
+                        app.data.store.getItem('patient_id').then(function(value) {
+                            if (value) {
+                                console.log(value);
+                                app.request({
+                                    url: app.data.url + '/Pacientes/' + value,
+                                    method: "PUT",
+                                    crossDomain: true,
+                                    data: {
+                                        "nombre": nombre,
+                                        "correo": correo,
+                                        "telefono": celular,
+                                        "edad": edad,
+                                        "genero": $$('#nuevo-paciente select').val(),
+                                        "Historia_social": {
+                                            "estado_civil": civilStatus
+                                        },
+                                        "peso": weight,
+                                        "fecha_nacimiento": birthdate,
+                                        "estatura": height,
+                                        "tipo_sangre": blood,
+                                        "doctor": doctor.doctor.id
+                                    },
+                                    success: function(e) {
+                                        if (c) {
+                                            console.log(c);
+                                            c.result('blob').then(blob => {
+                                                let file = new File([blob], "perfil.png", new Date());
+                                                const data = new FormData();
+                                                data.append("files", file);
+                                                data.append("refId", value);
+                                                data.append("ref", "paciente");
+                                                data.append('source', 'users-permissions');
+                                                data.append('field', 'img_data');
+                                                app.request({
+                                                    url: app.data.url + '/upload',
+                                                    method: "POST",
+                                                    crossDomain: true,
+                                                    contentType: "multipart/form-data",
+                                                    data: data,
+                                                    success: function(e) {
+                                                        app.preloader.hide();
+                                                        app.methods.redirectTo('paciente-perfil');
+                                                    },
+                                                    error: function(e) {
+                                                        app.preloader.hide();
+                                                    }
+                                                });
+                                            });
+                                        } else {
+                                            app.preloader.hide();
+                                            app.methods.redirectTo('paciente-perfil');
+                                        }
+                                    },
+                                    error: function(e) {
+                                        app.preloader.hide();
+                                    }
+                                });
+                            } else {
+                                app.request.postJSON(app.data.url + '/Pacientes', {
+                                        "nombre": nombre,
+                                        "correo": correo,
+                                        "telefono": celular,
+                                        "edad": edad,
+                                        "genero": $$('#nuevo-paciente select').val(),
+                                        "Historia_social": {
+                                            "estado_civil": civilStatus
+                                        },
+                                        "peso": weight,
+                                        "fecha_nacimiento": birthdate,
+                                        "estatura": height,
+                                        "tipo_sangre": blood,
+                                        "doctor": doctor.doctor.id
+                                    },
+                                    function(pat) {
+                                        console.log(pat);
 
+                                        c.result('blob').then(blob => {
+                                            let file = new File([blob], "perfil.png", new Date());
+                                            const data = new FormData();
+                                            data.append("files", file);
+                                            data.append("refId", pat.id);
+                                            data.append("ref", "paciente");
+                                            data.append('source', 'users-permissions');
+                                            data.append('field', 'img_data');
+                                            app.request({
+                                                url: app.data.url + '/upload',
+                                                method: "POST",
+                                                crossDomain: true,
+                                                contentType: "multipart/form-data",
+                                                data: data,
+                                                success: function(e) {
+                                                    app.data.store.getItem('cita').then(function(val) {
+                                                        if (val) {
+                                                            localStorage.setItem('patient_id', pat.id);
+                                                            localStorage.setItem('consulta', true);
+                                                            app.preloader.hide();
+                                                            app.data.store.setItem('back_consulta', 'schedule').then(function() {
+                                                                app.methods.redirectTo('nueva-consulta');
+                                                            });
+                                                        } else {
+                                                            app.data.store.clear().then(function(e) {
+                                                                app.preloader.hide();
+                                                                app.methods.redirectTo('home');
+                                                            });
+                                                        }
+                                                    });
+                                                },
+                                                error: function(e) {
+                                                    app.preloader.hide();
+                                                }
+                                            });
+                                        });
+                                    },
+                                    function(e) {
+                                        app.preloader.hide();
+                                    }
+                                );
+                            }
+                        });
                     });
+
                 }
 
                 function disableButton() {
@@ -247,17 +431,17 @@
                     $$('#nuevo-paciente .btn-2 a').off('click');
                 }
 
-                $$('.nuevo-paciente .upload-photo').on('click', function () {
+                $$('.nuevo-paciente .upload-photo').on('click', function() {
                     ac.open();
 
-                    $$('.actions-group #cancel').on('click', function () {
+                    $$('.actions-group #cancel').on('click', function() {
                         ac.close();
                     });
 
                     if (window.File && window.FileReader && window.FormData) {
                         var $inputField = $$('#file-upload');
                         $inputField.off('change');
-                        $inputField.on('change', function (e) {
+                        $inputField.on('change', function(e) {
 
                             var file = e.target.files[0];
 
@@ -283,11 +467,11 @@
                 function readFile(file) {
                     var reader = new FileReader();
 
-                    reader.onloadend = function () {
+                    reader.onloadend = function() {
                         processFile(reader.result, file.type);
                     }
 
-                    reader.onerror = function () {
+                    reader.onerror = function() {
                         alert('There was an error reading the file!');
                     }
 
@@ -301,7 +485,7 @@
                     var image = new Image();
                     image.src = dataURL;
 
-                    image.onload = function () {
+                    image.onload = function() {
                         var width = image.width;
                         var height = image.height;
                         var shouldResize = (width > maxWidth) || (height > maxHeight);
@@ -336,7 +520,7 @@
                         sendFile(dataURL);
                     };
 
-                    image.onerror = function () {
+                    image.onerror = function() {
                         alert('There was an error processing your file!');
                     };
                 }
@@ -356,6 +540,7 @@
                         },
                         showZoomer: false,
                     });
+                    checkVal();
                 }
 
             }
@@ -367,7 +552,7 @@
         width: 100%;
         height: 100%;
     }
-
+    
     .croppie-container .cr-image {
         z-index: -1;
         position: absolute;
@@ -377,7 +562,7 @@
         max-height: none;
         max-width: none;
     }
-
+    
     .croppie-container .cr-boundary {
         position: relative;
         overflow: hidden;
@@ -386,7 +571,7 @@
         width: 100%;
         height: 100%;
     }
-
+    
     .croppie-container .cr-viewport,
     .croppie-container .cr-resizer {
         position: absolute;
@@ -399,19 +584,19 @@
         box-shadow: 0 0 2000px 2000px rgba(0, 0, 0, 0.5);
         z-index: 0;
     }
-
+    
     .croppie-container .cr-resizer {
         z-index: 2;
         box-shadow: none;
         pointer-events: none;
     }
-
+    
     .croppie-container .cr-resizer-vertical,
     .croppie-container .cr-resizer-horisontal {
         position: absolute;
         pointer-events: all;
     }
-
+    
     .croppie-container .cr-resizer-vertical::after,
     .croppie-container .cr-resizer-horisontal::after {
         display: block;
@@ -423,61 +608,61 @@
         height: 10px;
         content: '';
     }
-
+    
     .croppie-container .cr-resizer-vertical {
         bottom: -5px;
         cursor: row-resize;
         width: 100%;
         height: 10px;
     }
-
+    
     .croppie-container .cr-resizer-vertical::after {
         left: 50%;
         margin-left: -5px;
     }
-
+    
     .croppie-container .cr-resizer-horisontal {
         right: -5px;
         cursor: col-resize;
         width: 10px;
         height: 100%;
     }
-
+    
     .croppie-container .cr-resizer-horisontal::after {
         top: 50%;
         margin-top: -5px;
     }
-
+    
     .croppie-container .cr-original-image {
         display: none;
     }
-
+    
     .croppie-container .cr-vp-circle {
         border-radius: 50%;
     }
-
+    
     .croppie-container .cr-overlay {
         z-index: 1;
         position: absolute;
         cursor: move;
         touch-action: none;
     }
-
+    
     .croppie-container .cr-slider-wrap {
         width: 75%;
         margin: 15px auto;
         text-align: center;
     }
-
+    
     .croppie-result {
         position: relative;
         overflow: hidden;
     }
-
+    
     .croppie-result img {
         position: absolute;
     }
-
+    
     .croppie-container .cr-image,
     .croppie-container .cr-overlay,
     .croppie-container .cr-viewport {
@@ -486,13 +671,12 @@
         -ms-transform: translateZ(0);
         transform: translateZ(0);
     }
-
     /*************************************/
     /***** STYLING RANGE INPUT ***********/
     /*************************************/
     /*http://brennaobrien.com/blog/2014/05/style-input-type-range-in-every-browser.html */
     /*************************************/
-
+    
     .cr-slider {
         -webkit-appearance: none;
         /*removes default webkit styles*/
@@ -505,7 +689,7 @@
         padding-bottom: 8px;
         background-color: transparent;
     }
-
+    
     .cr-slider::-webkit-slider-runnable-track {
         width: 100%;
         height: 3px;
@@ -513,7 +697,7 @@
         border: 0;
         border-radius: 3px;
     }
-
+    
     .cr-slider::-webkit-slider-thumb {
         -webkit-appearance: none;
         border: none;
@@ -523,17 +707,16 @@
         background: #ddd;
         margin-top: -6px;
     }
-
+    
     .cr-slider:focus {
         outline: none;
     }
-
     /*
 .cr-slider:focus::-webkit-slider-runnable-track {
 background: #ccc;
 }
 */
-
+    
     .cr-slider::-moz-range-track {
         width: 100%;
         height: 3px;
@@ -541,7 +724,7 @@ background: #ccc;
         border: 0;
         border-radius: 3px;
     }
-
+    
     .cr-slider::-moz-range-thumb {
         border: none;
         height: 16px;
@@ -550,14 +733,13 @@ background: #ccc;
         background: #ddd;
         margin-top: -6px;
     }
-
     /*hide the outline behind the border*/
-
+    
     .cr-slider:-moz-focusring {
         outline: 1px solid white;
         outline-offset: -1px;
     }
-
+    
     .cr-slider::-ms-track {
         width: 100%;
         height: 5px;
@@ -569,17 +751,17 @@ background: #ccc;
         color: transparent;
         /*remove default tick marks*/
     }
-
+    
     .cr-slider::-ms-fill-lower {
         background: rgba(0, 0, 0, 0.5);
         border-radius: 10px;
     }
-
+    
     .cr-slider::-ms-fill-upper {
         background: rgba(0, 0, 0, 0.5);
         border-radius: 10px;
     }
-
+    
     .cr-slider::-ms-thumb {
         border: none;
         height: 16px;
@@ -588,43 +770,42 @@ background: #ccc;
         background: #ddd;
         margin-top: 1px;
     }
-
+    
     .cr-slider:focus::-ms-fill-lower {
         background: rgba(0, 0, 0, 0.5);
     }
-
+    
     .cr-slider:focus::-ms-fill-upper {
         background: rgba(0, 0, 0, 0.5);
     }
-
     /*******************************************/
     /***********************************/
     /* Rotation Tools */
     /***********************************/
-
+    
     .cr-rotate-controls {
         position: absolute;
         bottom: 5px;
         left: 5px;
         z-index: 1;
     }
-
+    
     .cr-rotate-controls button {
         border: 0;
         background: none;
     }
-
+    
     .cr-rotate-controls i:before {
         display: inline-block;
         font-style: normal;
         font-weight: 900;
         font-size: 22px;
     }
-
+    
     .cr-rotate-l i:before {
         content: '↺';
     }
-
+    
     .cr-rotate-r i:before {
         content: '↻';
     }

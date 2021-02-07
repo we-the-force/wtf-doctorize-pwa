@@ -9,14 +9,14 @@
             </div>
             <i class="icon material-icons">check_circle</i>
             <p class="title">¡Felicidades!</p>
-            <p class="body">Tarjeta agregada correctamente</p>
+            <p class="body">Pago agregado correctamente</p>
         </div>
 
         <div class="page-content">
             <p class="title">Nuevo pago</p>
             <div class="patient">
                 <p class="label">Paciente</p>
-                <p class="data">Laura Rodríguez</p>
+                <p class="data"></p>
             </div>
             <div class="concept">
                 <p class="label">Concepto</p>
@@ -24,11 +24,11 @@
             </div>
             <div class="method">
                 <p class="label">Metodo de pago</p>
-                <p class="data">Efectivo</p>
+                <p class="data"></p>
             </div>
             <div class="pay">
                 <p class="label">Pago</p>
-                <p class="data">$600.00</p>
+                <p class="data"></p>
             </div>
             <div class="fab fab-center-bottom">
                 <a href="/doctor/pagos">
@@ -43,13 +43,34 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
+                let nombre, metodo, total;
+                app.data.store.iterate(function(value, key, i) {
+                    switch (key) {
+                        case "pago-patient":
+                            nombre = value;
+                            break;
+                        case "metodo":
+                            metodo = value;
+                            break;
+                        case "costo":
+                            total = value;
+                            break;
+                        default:
+                            break;
+                    }
 
-                $$('#doctor-agregar-pago-success .fab-center-bottom a').click(function (x) {
-                    app.data.store.clear();
+                }).then(function(e) {
+                    $$('#doctor-agregar-pago-success .patient .data').text(nombre);
+                    $$('#doctor-agregar-pago-success .method .data').text(metodo);
+                    $$('#doctor-agregar-pago-success .pay .data').text('$' + total);
+                    $$('#doctor-agregar-pago-success .fab-center-bottom a').click(function(x) {
+                        app.data.store.clear();
+                    });
                 });
+
 
             }
         }

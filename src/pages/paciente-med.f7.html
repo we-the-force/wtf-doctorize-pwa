@@ -16,27 +16,25 @@
             </div>
             <div class="slot dosis">
                 <p class="title">Dosis</p>
-                <p class="data">1 Tableta (Oral) -  Diaria</p>
+                <!-- <p class="data">1 Tableta (Oral) -  Diaria</p> -->
             </div>
             <div class="slot when">
                 <p class="title">Cuando</p>
-                <p class="data">Después de cada comida</p>
+                <!-- <p class="data">Después de cada comida</p> -->
             </div>
             <div class="slot period">
                 <p class="title">Período</p>
-                <p class="data">7 días</p>
+                <p class="data"></p>
             </div>
             <div class="slot prescript">
                 <p class="title">Prescrita por</p>
-                <p class="data">Diabetes</p>
+                <p class="data"></p>
             </div>
             <div class="slot notes">
                 <p class="title">Notas</p>
-                <p class="data">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                <p class="added">Agregada por: Dr. Bryan Thomas Gosling </p>
-                <p class="date">19/02/2020 11:15 PM</p>
+                <p class="data"></p>
+                <!-- <p class="added">Agregada por:</p> -->
+                <!-- <p class="date">19/02/2020 11:15 PM</p> -->
             </div>
 
         </div>
@@ -57,83 +55,94 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageBeforeOut: function (e,page) {
+            pageBeforeOut: function(e, page) {
                 var self = this;
                 var app = self.$app;
-                if(e.detail.direction == 'backward')
-                {
+                if (e.detail.direction == 'backward') {
                     app.data.store.removeItem('med_id');
                 }
             },
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
-                
+
                 app.preloader.show('blue');
-                app.data.store.getItem('patient_id').then(function (value) {
-                    var ptnt_id = value;
-                    app.data.store.getItem('med_id').then(function (value) {
-                        var cnd_mdc_id = value;
-                        app.request.get(app.data.url + '/patients/' + ptnt_id,
-                            function (e) {
-                                var x = JSON.parse(e);
-                                $$(".slot.med .data").text("Algo");
-                                $$(".slot.dosis .data").text("Algo");
-                                $$(".slot.when .data").text("Algo");
-                                $$(".slot.period .data").text("Algo");
-                                $$(".slot.prescript .data").text("Algo");
-                                $$(".slot.notes .data").text("Algo");
-                                app.preloader.hide();
-                            },
-                            function (e) {
-                                app.preloader.hide();
+                app.data.store.getItem('med_id').then(function(value) {
+                    var cnd_mdc_id = value;
+                    app.request.get(app.data.url + '/medicamentos/' + cnd_mdc_id,
+                        function(e) {
+                            var x = JSON.parse(e);
+                            console.log(x);
+
+                            $$(".slot.med .data").text(x.nombre);
+                            x.dosis.forEach(element => {
+                                $$(".slot.dosis").append(
+                                    '<p class="data">' + element.dosis + ' ' + x.tipo_medicina + ' (' + x.tipo_ingesta + ') - ' + element.frecuencia + '</p>'
+                                );
+                                $$(".slot.when").append(
+                                    '<p class="data">' + element.cuando + '</p>'
+                                );
                             });
-                    });
-                });
+                            $$(".slot.period .data").text(x.periodo);
+                            $$(".slot.prescript .data").text(x.prescrita_por);
+                            $$(".slot.notes .data").text(x.notas);
+                            app.preloader.hide();
 
-                $$('.popover-edit .item-link.edit').click(function (x) {
-                    app.popover.close();
-                    app.data.store.setItem('edit_patient_data', true).then(function (value) {
-                        app.methods.redirectTo('paciente-medicamento-form');
-                    });
-                });
+                            $$('.popover-edit .item-link.edit').click(function(x) {
+                                app.popover.close();
+                                app.data.store.setItem('edit_patient_data', true).then(function(value) {
+                                    app.methods.redirectTo('paciente-medicamento-form');
+                                });
+                            });
 
-                $$('.popover-edit .item-link.delete').click(function (x) {
-                    //cierra pop over
-                    app.popover.close();
-                    //crea cuadro de dialogo
-                    var dialog = app.dialog.create({
-                        cssClass: 'delete',
-                        title: '<i class="material-icons">error</i>',
-                        text: 'Esta seguro que desea eliminar?',
-                        content: 'Esta operación es irreversible',
-                        buttons: [
-                            {
-                                text: '<p>Cancelar</p> <i class="material-icons">chevron_right</i>',
-                                cssClass: 'cancel',
-                                onClick:
-                                    //cancela la accion, cierra ventana
-                                    function (x, y) {
-                                        dialog.close();
-                                        console.log('do not delete ');
+                            $$('.popover-edit .item-link.delete').click(function(x) {
+                                //cierra pop over
+                                app.popover.close();
+                                //crea cuadro de dialogo
+                                var dialog = app.dialog.create({
+                                    cssClass: 'delete',
+                                    title: '<i class="material-icons">error</i>',
+                                    text: 'Esta seguro que desea eliminar?',
+                                    content: 'Esta operación es irreversible',
+                                    buttons: [{
+                                        text: '<p>Cancelar</p> <i class="material-icons">chevron_right</i>',
+                                        cssClass: 'cancel',
+                                        onClick:
+                                        //cancela la accion, cierra ventana
+                                            function(x, y) {
+                                            dialog.close();
+                                            console.log('do not delete ');
 
-                                    }
-                            },
-                            {
-                                text: '<p>Eliminar</p> <i class="material-icons">chevron_right</i>',
-                                cssClass: 'delete',
-                                onClick:
-                                    function (x, y) {
-                                        //mandar eliminar el horario**********+
-                                        //cierra ventana, elimina tarjeta
-                                        dialog.close();
-                                        console.log('delete');
-                                    }
-                            }
-                        ]
-                    });
-                    //abre cuadro de dialogo
-                    dialog.open();
+                                        }
+                                    }, {
+                                        text: '<p>Eliminar</p> <i class="material-icons">chevron_right</i>',
+                                        cssClass: 'delete',
+                                        onClick: function(x, y) {
+                                            app.preloader.show('blue');
+                                            app.request({
+                                                url: app.data.url + '/medicamentos/' + cnd_mdc_id,
+                                                method: "DELETE",
+                                                crossDomain: true,
+                                                success: function(e) {
+                                                    app.preloader.hide();
+                                                    app.dialog.alert('Se ha eliminado.', function() {
+                                                        app.methods.redirectTo('paciente-perfil');
+                                                    });
+                                                },
+                                                error: function(e) {
+                                                    app.preloader.hide();
+                                                }
+                                            });
+                                        }
+                                    }]
+                                });
+                                //abre cuadro de dialogo
+                                dialog.open();
+                            });
+                        },
+                        function(e) {
+                            app.preloader.hide();
+                        });
                 });
             }
         }

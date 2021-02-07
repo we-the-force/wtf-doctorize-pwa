@@ -12,10 +12,10 @@
     * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
       * Enable inline JS: add 'unsafe-inline' to default-src
   -->
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:">
-    <meta https-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:">
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:"> -->
+    <!-- <meta https-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
-    <meta name="referrer" content="origin-when-cross-origin">
+    <!-- <meta name="referrer" content="origin-when-cross-origin"> -->
     <meta name="theme-color" content="#2F80ED">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
@@ -36,7 +36,7 @@
             });
         });
     </script>
-    
+
     <!-- built styles file will be auto injected -->
 </head>
 
@@ -278,21 +278,21 @@
 </body>
 
 <div class="popover popover-menu">
-  <div class="popover-angle"></div>
-  <div class="popover-inner">
-    <a class="add-block patient popover-close" href="/nuevo-paciente">
-      <i class="icon material-icons">person</i>
-      <p>PACIENTE</p>
-    </a>
-    <a class="add-block appointment popover-close" href="/agendar-cita">
-      <i class="icon material-icons">today</i>
-      <P>CITA</P>
-    </a>
-    <a class="add-block pay popover-close" href="/doctor/agregar/pago">
-      <i class="icon material-icons">monetization_on</i>
-      <P>PAGO</P>
-    </a>
-  </div>
+    <div class="popover-angle"></div>
+    <div class="popover-inner">
+        <a class="add-block patient popover-close" href="/nuevo-paciente">
+            <i class="icon material-icons">person</i>
+            <p>PACIENTE</p>
+        </a>
+        <a class="add-block appointment popover-close" href="/agendar-cita">
+            <i class="icon material-icons">today</i>
+            <P>CITA</P>
+        </a>
+        <a class="add-block pay popover-close" href="/doctor/agregar/pago">
+            <i class="icon material-icons">monetization_on</i>
+            <P>PAGO</P>
+        </a>
+    </div>
 </div>
 
 

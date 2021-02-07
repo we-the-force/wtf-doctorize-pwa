@@ -107,7 +107,8 @@
                 </div>
             </div>
             <div class="container two">
-                <a href="/offices-add-form-map" data-view=".view-main" id="cancel" class="item-link btn-simple">Cancelar</a>
+                <a href="/offices-add-form-map" data-view=".view-main" id="cancel"
+                    class="item-link btn-simple">Cancelar</a>
                 <div class="btn-2">
                     <a href="">
                         <p>Siguiente </p>
@@ -122,183 +123,310 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageInit: function (e, page) {
+            pageBeforeOut: function(e, page) {
+                var self = this;
+                var app = self.$app;
+                if (e.detail.direction == 'backward') {
+                    app.data.store.removeItem('hospital');
+                    app.data.store.removeItem('address');
+                    app.data.store.removeItem('number');
+                }
+            },
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 var days = $$('[name="chbx"]');
-                var startTime = '', closeTime = '', lunchStartTime = '', lunchCloseTime = '';
+                var edit;
                 var doctor = JSON.parse(sessionStorage.getItem('user'));
                 /* app.data.store.getItem('doctor').then(function (value) {
                     app.data.doctor = value; */
-                    app.data.store.getItem('office').then(function (value) {
-                        app.data.consultorio = value;
-                        
-                        disableButton();
+                app.data.store.getItem('officeEdit').then(function(value) {
+                    edit = value;
+                    disableButton();
 
-                        if (app.data.consultorio.edit) {
-                            $$('#startTime').val(app.data.consultorio.startTime);
-                            $$('#closeTime').val(app.data.consultorio.closeTime);
-                            $$('#lunchCloseTime').val(app.data.consultorio.lunchCloseTime);
-                            $$('#lunchStartTime').val(app.data.consultorio.lunchStartTime);
-                            startTime = app.data.consultorio.startTime;
-                            closeTime = app.data.consultorio.closeTime;
-                            lunchCloseTime = app.data.consultorio.lunchCloseTime;
-                            lunchStartTime = app.data.consultorio.lunchStartTime;
-                            app.data.consultorio.days.forEach(Element => {
-                                var z = Element - 1;
+                    if (value) {
+                        let st, et, lsti, leti, dias;
+                        app.data.store.iterate(function(val, key, i) {
+                            switch (key) {
+                                case 'startTime':
+                                    st = val;
+                                    break;
+                                case 'endTime':
+                                    et = val;
+                                    break;
+                                case 'lunchStartTime':
+                                    lsti = val;
+                                    break;
+                                case 'lunchEndTime':
+                                    leti = val;
+                                    break;
+                                case 'dias':
+                                    dias = val;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }).then(function(e) {
+                            $$('#startTime').val(st);
+                            $$('#closeTime').val(et);
+                            $$('#lunchCloseTime').val(leti);
+                            $$('#lunchStartTime').val(lsti);
+                            console.log(dias);
+
+                            dias.forEach((Element, i) => {
+                                var z = Element.dia - 1;
                                 days[z].checked = true;
-                                $$('.days-container [id="0' + Element + '"]').addClass('checked');
+                                $$('.days-container [id="0' + Element.dia + '"]').addClass('checked');
                             });
                             enableButton();
+                        });
+                    }
+
+                    /* $$(document).on('input:notempty', '#startTime', function(e) {
+                        if (lunchCloseTime != '' && closeTime != '' && lunchStartTime != '') {
+                            startTime = $$('#startTime').val();
+                            enableButton();
+                        } else {
+                            startTime = $$('#startTime').val();
                         }
-
-                        $$(document).on('input:notempty', '#startTime', function (e) {
-                            if (lunchCloseTime != '' && closeTime != '' && lunchStartTime != '') {
-                                startTime = $$('#startTime').val();
-                                enableButton();
-                            } else {
-                                startTime = $$('#startTime').val();
-                            }
-                        });
-
-                        $$(document).on('input:notempty', '#closeTime', function (e) {
-                            if (lunchCloseTime != '' && startTime != '' && lunchStartTime != '') {
-                                closeTime = $$('#closeTime').val();
-                                enableButton();
-                            } else {
-                                closeTime = $$('#closeTime').val();
-                            }
-                        });
-
-                        $$(document).on('input:notempty', '#lunchCloseTime', function (e) {
-                            if (startTime != '' && closeTime != '' && lunchStartTime != '') {
-                                lunchCloseTime = $$('#lunchCloseTime').val();
-                                enableButton();
-                            } else {
-                                lunchCloseTime = $$('#lunchCloseTime').val();
-                            }
-                        });
-
-                        $$(document).on('input:notempty', '#lunchStartTime', function (e) {
-                            if (lunchCloseTime != '' && closeTime != '' && startTime != '') {
-                                lunchStartTime = $$('#lunchStartTime').val();
-                                enableButton();
-                            } else {
-                                lunchStartTime = $$('#lunchStartTime').val();
-                            }
-                        });
-
-
-                        $$('.days-container [id="01"]').on('click', function (e) { changeColor(0); });
-                        $$('.days-container [id="02"]').on('click', function (e) { changeColor(1); });
-                        $$('.days-container [id="03"]').on('click', function (e) { changeColor(2); });
-                        $$('.days-container [id="04"]').on('click', function (e) { changeColor(3); });
-                        $$('.days-container [id="05"]').on('click', function (e) { changeColor(4); });
-                        $$('.days-container [id="06"]').on('click', function (e) { changeColor(5); });
-                        $$('.days-container [id="07"]').on('click', function (e) { changeColor(6); });
-
-                        $$(document).on('input:empty', function (e) {
-                            disableButton();
-                        });
-
                     });
+
+                    $$(document).on('input:notempty', '#closeTime', function(e) {
+                        if (lunchCloseTime != '' && startTime != '' && lunchStartTime != '') {
+                            closeTime = $$('#closeTime').val();
+                            enableButton();
+                        } else {
+                            closeTime = $$('#closeTime').val();
+                        }
+                    });
+
+                    $$(document).on('input:notempty', '#lunchCloseTime', function(e) {
+                        if (startTime != '' && closeTime != '' && lunchStartTime != '') {
+                            lunchCloseTime = $$('#lunchCloseTime').val();
+                            enableButton();
+                        } else {
+                            lunchCloseTime = $$('#lunchCloseTime').val();
+                        }
+                    });
+
+                    $$(document).on('input:notempty', '#lunchStartTime', function(e) {
+                        if (lunchCloseTime != '' && closeTime != '' && startTime != '') {
+                            lunchStartTime = $$('#lunchStartTime').val();
+                            enableButton();
+                        } else {
+                            lunchStartTime = $$('#lunchStartTime').val();
+                        }
+                    }); */
+
+                    $$('#offices-add-form-schedule input[type="time"]').on('input:notempty', function(e) {
+                        var nonempty = $$('#offices-add-form-schedule input[type="time"]').filter(function() {
+                            return this.value != ''
+                        });
+                        if (nonempty.length == 4) {
+                            enableButton();
+                        }
+                    });
+
+                    $$('.days-container [id="01"]').on('click', function(e) {
+                        changeColor(0);
+                    });
+                    $$('.days-container [id="02"]').on('click', function(e) {
+                        changeColor(1);
+                    });
+                    $$('.days-container [id="03"]').on('click', function(e) {
+                        changeColor(2);
+                    });
+                    $$('.days-container [id="04"]').on('click', function(e) {
+                        changeColor(3);
+                    });
+                    $$('.days-container [id="05"]').on('click', function(e) {
+                        changeColor(4);
+                    });
+                    $$('.days-container [id="06"]').on('click', function(e) {
+                        changeColor(5);
+                    });
+                    $$('.days-container [id="07"]').on('click', function(e) {
+                        changeColor(6);
+                    });
+
+                    $$(document).on('input:empty', function(e) {
+                        disableButton();
+                    });
+
+                });
                 /* }); */
                 function enableButton() {
                     $$('#offices-add-form-schedule .btn-2 a').removeClass('grey');
                     $$('#offices-add-form-schedule .btn-2 a').off('click');
-                    $$('#offices-add-form-schedule .btn-2 a').on('click', function (e) {
-                        app.data.consultorio.startTime = $$('[name="startTime"]').val();
-                        app.data.consultorio.closeTime = $$('[name="closeTime"]').val();
-                        app.data.consultorio.lunchStartTime = $$('[name="lunchStartTime"]').val();
-                        app.data.consultorio.lunchCloseTime = $$('[name="lunchCloseTime"]').val();
+                    $$('#offices-add-form-schedule .btn-2 a').on('click', function(e) {
+                        let ArrST = $$('[name="startTime"]').val().split(":");
+                        let ArrCT = $$('[name="closeTime"]').val().split(":");
+                        let ArrLST = $$('[name="lunchStartTime"]').val().split(":");
+                        let ArrLCT = $$('[name="lunchCloseTime"]').val().split(":");
+                        let startTime = ArrST[0] + ":" + ArrST[1] + ":00.000";
+                        let closeTime = ArrCT[0] + ":" + ArrCT[1] + ":00.000";
+                        let lunchStartTime = ArrLST[0] + ":" + ArrLST[1] + ":00.000";
+                        let lunchCloseTime = ArrLCT[0] + ":" + ArrLCT[1] + ":00.000";
                         days = $$('[name="chbx"]');
-                        app.data.consultorio.days = [];
+                        let ArrDays = [];
                         for (var i = 0; i < days.length; i++) {
                             if (days[i].checked == true) {
                                 switch (days[i].value) {
                                     case "1":
-                                    app.data.consultorio.days.push(1);
+                                        ArrDays.push({
+                                            "dia": 1
+                                        });
                                         break;
                                     case "2":
-                                    app.data.consultorio.days.push(2);
+                                        ArrDays.push({
+                                            "dia": 2
+                                        });
                                         break;
                                     case "3":
-                                    app.data.consultorio.days.push(3);
+                                        ArrDays.push({
+                                            "dia": 3
+                                        });
                                         break;
                                     case "4":
-                                    app.data.consultorio.days.push(4);
+                                        ArrDays.push({
+                                            "dia": 4
+                                        });
                                         break;
                                     case "5":
-                                    app.data.consultorio.days.push(5);
+                                        ArrDays.push({
+                                            "dia": 5
+                                        });
+                                        break;
+                                    case "6":
+                                        ArrDays.push({
+                                            "dia": 6
+                                        });
+                                        break;
+                                    case "7":
+                                        ArrDays.push({
+                                            "dia": 7
+                                        });
                                         break;
                                 }
-                                
+
                             }
                         }
                         app.preloader.show('blue');
 
-                        console.log(app.data.consultorio);
-                        console.log('ahoy');
-                        
-                        if (app.data.consultorio.edit) {
-                            // patch put
-                            console.log(app.data.consultorio);
-                            app.request({
-                                url: app.data.url + '/offices/' + app.data.consultorio.id,
-                                method: "PATCH",
-                                crossDomain: true,
-                                data: {
-                                    "id": app.data.consultorio.id,
-                                    "email": app.data.consultorio.email,
-                                    "name": app.data.consultorio.nombre,
-                                    "phone": app.data.consultorio.phone,
-                                    "hospital": app.data.consultorio.hospital,
-                                    "number": app.data.consultorio.number,
-                                    "address": app.data.consultorio.address,
-                                    "userId": doctor.id,//mandar pedir el numero app.data.doctor.id,
-                                    "lat": 12.12,
-                                    "lng": 213.234,
-                                    "startTime": app.data.consultorio.startTime,
-                                    "closeTime": app.data.consultorio.closeTime,
-                                    "days": app.data.consultorio.days,
-                                    "lunchStartTime": app.data.consultorio.lunchStartTime,
-                                    "lunchCloseTime": app.data.consultorio.lunchCloseTime
-                                },
-                                success: function (e) {
-                                    app.data.consultorio.edit = false;
-                                    app.data.store.setItem("office", app.data.consultorio)
-                                        .then(function (value) {
+                        if (edit) {
+                            let email, nombre, phone, hospital, numero, direccion, horaAper, horaCierre, inicioComida, finComida;
+                            app.data.store.iterate(function(val, key, i) {
+                                console.log(val);
+
+                                switch (key) {
+                                    case 'address':
+                                        direccion = val;
+                                        break;
+                                    case 'email':
+                                        email = val;
+                                        break;
+                                    case 'hospital':
+                                        hospital = val;
+                                        break;
+                                    case 'nombre':
+                                        nombre = val;
+                                        break;
+                                    case 'number':
+                                        numero = val;
+                                        break;
+                                    case 'phone':
+                                        phone = val;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }).then(function(e) {
+                                app.data.store.getItem('officeId').then(function(val) {
+                                    app.request({
+                                        url: app.data.url + '/consultorios/' + val,
+                                        method: "PUT",
+                                        crossDomain: true,
+                                        data: {
+                                            "correo": email,
+                                            "nombre": nombre,
+                                            "telefono": phone,
+                                            "hospital": hospital,
+                                            "numero": numero,
+                                            "direccion": direccion,
+                                            "lat": 12.12,
+                                            "lng": 213.234,
+                                            "doctor": doctor.doctor.id, //mandar pedir el numero app.data.doctor.id,
+                                            "HorarioApertura": startTime,
+                                            "HorarioCierre": closeTime,
+                                            "Dias": ArrDays,
+                                            "InicioComida": lunchStartTime,
+                                            "FinComida": lunchCloseTime,
+                                            "Activo": true
+                                        },
+                                        success: function(e) {
+                                            app.data.store.clear();
                                             app.preloader.hide();
                                             app.methods.redirectTo('offices-show');
-                                        })
-                                        .catch(function (err) {
-                                        });
-                                },
-                                error: function (e) {
-                                    app.preloader.hide();
-                                }
+                                        },
+                                        error: function(e) {
+                                            app.preloader.hide();
+                                        }
+                                    });
+                                });
                             });
+                            // patch put
+
                         } else {
-                            app.request.postJSON(app.data.url + '/doctors/' + doctor.id + '/offices', {
-                                "email": app.data.consultorio.email,
-                                "name": app.data.consultorio.nombre,
-                                "phone": app.data.consultorio.phone,
-                                "hospital": app.data.consultorio.hospital,
-                                "number": app.data.consultorio.number,
-                                "address": app.data.consultorio.address,
-                                "userId": doctor.id,//mandar pedir el numero app.data.doctor.id,
-                                "lat": 12.12,
-                                "lng": 213.234,
-                                "startTime": app.data.consultorio.startTime,
-                                "closeTime": app.data.consultorio.closeTime,
-                                "days": app.data.consultorio.days,
-                                "lunchStartTime": app.data.consultorio.lunchStartTime,
-                                "lunchCloseTime": app.data.consultorio.lunchCloseTime
-                            }, function (e) {
-                                app.preloader.hide();
-                                app.methods.redirectTo('offices-show');
-                            }, function (e) {
-                                app.preloader.hide();
+                            let email, nombre, phone, hospital, numero, direccion, horaAper, horaCierre, inicioComida, finComida;
+                            app.data.store.iterate(function(val, key, i) {
+                                console.log(val);
+
+                                switch (key) {
+                                    case 'address':
+                                        direccion = val;
+                                        break;
+                                    case 'email':
+                                        email = val;
+                                        break;
+                                    case 'hospital':
+                                        hospital = val;
+                                        break;
+                                    case 'nombre':
+                                        nombre = val;
+                                        break;
+                                    case 'number':
+                                        numero = val;
+                                        break;
+                                    case 'phone':
+                                        phone = val;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }).then(function(e) {
+                                app.request.postJSON(app.data.url + '/consultorios', {
+                                    "correo": email,
+                                    "nombre": nombre,
+                                    "telefono": phone,
+                                    "hospital": hospital,
+                                    "numero": numero,
+                                    "direccion": direccion,
+                                    "lat": 12.12,
+                                    "lng": 213.234,
+                                    "doctor": doctor.doctor.id, //mandar pedir el numero app.data.doctor.id,
+                                    "HorarioApertura": startTime,
+                                    "HorarioCierre": closeTime,
+                                    "Dias": ArrDays,
+                                    "InicioComida": lunchStartTime,
+                                    "FinComida": lunchCloseTime,
+                                    "Activo": true
+                                }, function(e) {
+                                    app.data.store.clear();
+                                    app.preloader.hide();
+                                    app.methods.redirectTo('offices-show');
+                                }, function(e) {
+                                    app.preloader.hide();
+                                });
                             });
                         }
                     });
@@ -312,8 +440,6 @@
                         $$('.days-container [id="0' + z + '"]').removeClass('checked');
                     }
                 }
-
-
 
                 function disableButton() {
                     $$('#offices-add-form-schedule .btn-2 a').addClass('grey');

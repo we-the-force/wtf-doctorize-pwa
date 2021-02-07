@@ -17,179 +17,187 @@ import routes from './routes.js';
 import register from './register.js';
 
 Framework7.request.setup({
-  contentType: "application/json",
-  referrerPolicy: "origin-when-downgrade",
-  crossDomain: true,
-  "Access-Control-Allow-Origin": "*"
+    contentType: "application/json",
+    referrerPolicy: "origin-when-downgrade",
+    crossDomain: true,
+    "Access-Control-Allow-Origin": "*"
 });
 
 
 var app = new Framework7({
-  root: '#app', // App root element
+    root: '#app', // App root element
 
-  name: 'Doctorize', // App name
-  theme: 'auto', // Automatic theme detection
-  // App root data
+    name: 'Doctorize', // App name
+    theme: 'auto', // Automatic theme detection
+    // App root data
 
-  data: function () {
-    return {
-      store: localForage.createInstance({
-        name: "datastore"
-      }),
-      specialties: {
-        values: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
-        displayValues: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
-      },
-      register: {
-        username: '',
-        password: '',
-        email: '',
-        phone: '',
-      },
-      assistant: {
-        id: '',
-        flag: false,
-        edit: false,
-        addOffice: false,
-        code: '',
-        name: '',
-        password: '',
-        email: '',
-        consultorio: {
-          id: '',
-          name: '',
+    data: function() {
+        return {
+            store: localForage.createInstance({
+                name: "datastore"
+            }),
+            specialties: {
+                values: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
+                displayValues: ["Alergología", "Anestesiología", "Cardiología", "Gastroenterología", "Endocrinología", "Geriatría", "Hematología", "Infectología", "Nefrología", "Neumología", "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría", "Rehabilitación", "Reumatología", "Toxicología", "Urología"],
+            },
+            register: {
+                username: '',
+                password: '',
+                email: '',
+                phone: '',
+            },
+            assistant: {
+                id: '',
+                flag: false,
+                edit: false,
+                addOffice: false,
+                code: '',
+                name: '',
+                password: '',
+                email: '',
+                consultorio: {
+                    id: '',
+                    name: '',
+                },
+                permisos: [],
+            },
+            doctor: {
+                id: '',
+                email: '',
+                name: '',
+                cellphone: '',
+                specialty: {
+                    id: '',
+                    name: '',
+                },
+                photo: '',
+            },
+            consultorio: {
+                id: '',
+                nombre: '',
+                email: '',
+                phone: '',
+                hospital: '',
+                address: '',
+                number: '',
+                startTime: '',
+                closeTime: '',
+                lunchStartTime: '',
+                lunchCloseTime: '',
+                days: [],
+                edit: false,
+            },
+            paciente: {
+                nombre: '',
+                email: '',
+                phone: '',
+                birthdate: '',
+                civilStatus: '',
+                weight: '',
+                height: '',
+                blood: '',
+                pressure: '',
+            },
+            url: 'https://api.mydoctorize.com',
+            appUrl: 'https://app.mydoctorize.com'
+                /* appUrl: 'http://localhost:8080' */
+        };
+    },
+    // App root methods
+    methods: {
+        helloWorld: function() {
+            app.dialog.alert('Hello World!');
         },
-        permisos: [],
-      },
-      doctor: {
-        id: '',
-        email: '',
-        name: '',
-        cellphone: '',
-        specialty: {
-          id: '',
-          name: '',
+        previousPage: function() {
+            app.views.main.router.back();
         },
-        photo: '',
-      },
-      consultorio: {
-        id: '',
-        nombre: '',
-        email: '',
-        phone: '',
-        hospital: '',
-        address: '',
-        number: '',
-        startTime: '',
-        closeTime: '',
-        lunchStartTime: '',
-        lunchCloseTime: '',
-        days: [],
-        edit: false,
-      },
-      paciente: {
-        nombre: '',
-        email: '',
-        phone: '',
-        birthdate: '',
-        civilStatus: '',
-        weight: '',
-        height: '',
-        blood: '',
-        pressure: '',
-      },
-      /* url: '//api.mydoctorize.com' */
-      url: '//localhost:1337'
-    };
-  },
-  // App root methods
-  methods: {
-    helloWorld: function () {
-      app.dialog.alert('Hello World!');
-    },
-    previousPage: function () {
-      app.views.main.router.back();
-    },
-    redirectTo: function (pathTo) {
-      // console.log(app);
+        redirectTo: function(pathTo) {
+            // console.log(app);
 
-      app.views.main.router.navigate({
-        name: pathTo
-      });
-    },
-    isEmpty: function (obj) {
-      for (var key in obj) {
-        if (obj.hasOwnProperty(key))
-          return false;
-      }
-      return true;
-    },
-    cuteHide: function (el) {
-      el.animate({ opacity: '0' }, {
-        duration: 150,
-        complete: function () {
-          el.animate({ height: '0px' }, {
-            duration: 150,
-            complete: function () {
-              el.remove();
+            app.views.main.router.navigate({
+                name: pathTo
+            });
+        },
+        isEmpty: function(obj) {
+            for (var key in obj) {
+                if (obj.hasOwnProperty(key))
+                    return false;
             }
-          });
+            return true;
+        },
+        cuteHide: function(el) {
+            el.animate({ opacity: '0' }, {
+                duration: 150,
+                complete: function() {
+                    el.animate({ height: '0px' }, {
+                        duration: 150,
+                        complete: function() {
+                            el.remove();
+                        }
+                    });
+                }
+            });
         }
-      });
-    }
-  },
-  // App routes
-  routes: routes,
-  // Enable panel left visibility breakpoint
-  panel: {
-    leftBreakpoint: 960,
-    swipe: 'left',
-    swipeOnlyClose: true,
-  },
-  // Register service worker
-  serviceWorker: {
-    path: '/OneSignalSDKWorker.js',
-  },
-  view: {
-    pushState: true
-  },
-  navbar: {
-    showOnPageScrollEnd: false
-  },
-  flow: 'default' //RA registrar asistente, RD registrar doctor, RP registrar paciente, UA update asistente, UD update doctor, UP update patient
+    },
+    // App routes
+    routes: routes,
+    // Enable panel left visibility breakpoint
+    panel: {
+        leftBreakpoint: 960,
+        swipe: 'left',
+        swipeOnlyClose: true,
+    },
+    // Register service worker
+    serviceWorker: {
+        path: '/OneSignalSDKWorker.js',
+    },
+    view: {
+        pushState: true
+    },
+    navbar: {
+        showOnPageScrollEnd: false
+    },
+    flow: 'default' //RA registrar asistente, RD registrar doctor, RP registrar paciente, UA update asistente, UD update doctor, UP update patient
 });
 
 if (getCookie("landingPage") != 'visited') {
-  app.methods.redirectTo('intro-splash-01');
+    app.methods.redirectTo('intro-splash-01');
+} else if (localStorage.getItem('login-user') != null && window.location.href == app.data.appUrl + '/') {
+    sessionStorage.setItem('key', localStorage.getItem('login-key'));
+    sessionStorage.setItem('user', localStorage.getItem('login-user'));
+    app.methods.redirectTo('home');
 }
+/* else if (localStorage.getItem('login-user') == null && window.location.href != app.data.appUrl && window.location.href != app.data.appUrl + '/#!/register-s1/' && window.location.href != app.data.appUrl + '/#!/photo-module/') {
+    app.methods.redirectTo('root');
+} */
 
 function getCookie(cname) {
-  var name = cname + "=";
-  var decodedCookie = decodeURIComponent(document.cookie);
-  var ca = decodedCookie.split(';');
-  for (var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
     }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
+    return "";
 }
 
-app.init(function () {
-  console.log('init');
+app.init(function() {
+    console.log('init');
 
-  window.addEventListener('beforeinstallprompt', (e) => {
-    // Prevent Chrome 67 and earlier from automatically showing the prompt
-    e.preventDefault();
-    // Stash the event so it can be triggered later.
-    deferredPrompt = e;
-    // Update UI notify the user they can add to home screen
-    btnAdd.style.display = 'block';
-  });
+    window.addEventListener('beforeinstallprompt', (e) => {
+        // Prevent Chrome 67 and earlier from automatically showing the prompt
+        e.preventDefault();
+        // Stash the event so it can be triggered later.
+        deferredPrompt = e;
+        // Update UI notify the user they can add to home screen
+        btnAdd.style.display = 'block';
+    });
 
 });
 
@@ -201,56 +209,56 @@ let newWorker;
 //const applicationServerPublicKey = '';
 
 var toastWithCallback = app.toast.create({
-  text: 'A new version of this app is available.',
-  closeButton: true,
-  closeButtonText: 'Update',
-  on: {
-    close: function () {
-      newWorker.postMessage({ action: 'skipWaiting' });
-    },
-  }
+    text: 'A new version of this app is available.',
+    closeButton: true,
+    closeButtonText: 'Update',
+    on: {
+        close: function() {
+            newWorker.postMessage({ action: 'skipWaiting' });
+        },
+    }
 });
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./OneSignalSDKWorker.js').then(reg => {
-    reg.addEventListener('updatefound', () => {
+    navigator.serviceWorker.register('./OneSignalSDKWorker.js').then(reg => {
+        reg.addEventListener('updatefound', () => {
 
-      // An updated service worker has appeared in reg.installing!
-      newWorker = reg.installing;
+            // An updated service worker has appeared in reg.installing!
+            newWorker = reg.installing;
 
-      newWorker.addEventListener('statechange', () => {
+            newWorker.addEventListener('statechange', () => {
 
-        // Has service worker state changed?
-        switch (newWorker.state) {
-          case 'installed':
+                // Has service worker state changed?
+                switch (newWorker.state) {
+                    case 'installed':
 
-            // There is a new service worker available, show the notification
-            if (navigator.serviceWorker.controller) {
-              toastWithCallback.open();
-            }
+                        // There is a new service worker available, show the notification
+                        if (navigator.serviceWorker.controller) {
+                            toastWithCallback.open();
+                        }
 
-            break;
-        }
-      });
+                        break;
+                }
+            });
+        });
+
+        /*     swRegistration = reg;
+            Notification.requestPermission();
+            initializeUI(); */
+
+    }).catch(function(err) {
+        // registration failed :(
+        console.log('ServiceWorker registration failed: ', err);
     });
 
-    /*     swRegistration = reg;
-        Notification.requestPermission();
-        initializeUI(); */
-
-  }).catch(function (err) {
-    // registration failed :(
-    console.log('ServiceWorker registration failed: ', err);
-  });
-
-  let refreshing;
-  // The event listener that is fired when the service worker updates
-  // Here we reload the page
-  navigator.serviceWorker.addEventListener('controllerchange', function () {
-    if (refreshing) return;
-    window.location.reload();
-    refreshing = true;
-  });
+    let refreshing;
+    // The event listener that is fired when the service worker updates
+    // Here we reload the page
+    navigator.serviceWorker.addEventListener('controllerchange', function() {
+        if (refreshing) return;
+        window.location.reload();
+        refreshing = true;
+    });
 }
 
 //suscribe notifications

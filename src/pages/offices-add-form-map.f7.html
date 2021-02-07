@@ -32,8 +32,7 @@
                             <div class="item-inner">
                                 <div class="item-label dark-blue">Hospital</div>
                                 <div class="item-input-wrap">
-                                    <input type="text" name="hospital" id="hospital" placeholder="Hospital" required
-                                        validate>
+                                    <input type="text" name="hospital" id="hospital" placeholder="Hospital (Opcional)">
                                     <span class="input-clear-button"></span>
                                 </div>
                             </div>
@@ -42,8 +41,8 @@
                             <div class="item-inner">
                                 <div class="item-label dark-blue">Dirección</div>
                                 <div class="item-input-wrap">
-                                    <input type="text" name="direction" id="direction" placeholder="Dirección" required
-                                        validate>
+                                    <input type="text" class="rqrd" name="direction" id="direction"
+                                        placeholder="Dirección" required validate>
                                     <span class="input-clear-button"></span>
                                 </div>
                             </div>
@@ -52,8 +51,8 @@
                             <div class="item-inner">
                                 <div class="item-label dark-blue">Número de Consultorio</div>
                                 <div class="item-input-wrap">
-                                    <input type="text" name="consultorio" id="consultorio" placeholder="Consultorio"
-                                        required validate pattern="[0-9]*" data-error-message="Only numbers please!">
+                                    <input type="text" name="consultorio" id="consultorio"
+                                        placeholder="Consultorio (Opcional)" validate>
                                     <span class="input-clear-button"></span>
                                 </div>
                             </div>
@@ -78,29 +77,55 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageInit: function (e, page) {
+            pageBeforeOut: function(e, page) {
                 var self = this;
                 var app = self.$app;
-                var hospital = '', direction = '', consultorio = '';
+                if (e.detail.direction == 'backward') {
+                    app.data.store.removeItem('email');
+                    app.data.store.removeItem('nombre');
+                    app.data.store.removeItem('phone');
+                }
+            },
+            pageInit: function(e, page) {
+                var self = this;
+                var app = self.$app;
+                var hospital = '',
+                    direction = '',
+                    consultorio = '',
+                    edit;
                 var regex = /^[0-9]*$/;
 
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
 
-                app.data.store.getItem('office').then(function (value) {
-                    app.data.consultorio = value;
-
+                app.data.store.getItem('officeEdit').then(function(value) {
+                    edit = value;
                     disableButton();
 
-                    if (app.data.consultorio.edit) {
-                        $$('#hospital').val(app.data.consultorio.hospital);
-                        $$('#direction').val(app.data.consultorio.address);
-                        $$('#consultorio').val(app.data.consultorio.number);
-                        hospital = app.data.consultorio.hospital;
-                        direction = app.data.consultorio.address;
-                        consultorio = app.data.consultorio.number;
-                        enableButton();
+                    if (value) {
+                        let hospital, address, number;
+                        app.data.store.iterate(function(val, key, i) {
+                            switch (key) {
+                                case 'address':
+                                    address = val;
+                                    break;
+                                case 'hospital':
+                                    hospital = val;
+                                    break;
+                                case 'number':
+                                    number = val;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }).then(function(e) {
+                            $$('#hospital').val(hospital);
+                            $$('#direction').val(address);
+                            $$('#consultorio').val(number);
+                            enableButton();
+                        });
                     }
 
-                    $$(document).on('input:notempty', '#hospital', function (e) {
+                    /* $$(document).on('input:notempty', '#hospital', function(e) {
                         if (direction != '' && consultorio != '') {
                             hospital = $$('#hospital').val();
                             enableButton();
@@ -109,7 +134,7 @@
                         }
                     });
 
-                    $$(document).on('input:notempty', '#direction', function (e) {
+                    $$(document).on('input:notempty', '#direction', function(e) {
                         if (hospital != '' && consultorio != '') {
                             direction = $$('#direction').val();
                             enableButton();
@@ -118,42 +143,158 @@
                         }
                     });
 
-                    $$(document).on('input:notempty', '#consultorio', function (e) {
+                    $$(document).on('input:notempty', '#consultorio', function(e) {
                         if (direction != '' && hospital != '') {
                             consultorio = $$('#consultorio').val();
                             enableButton();
                         } else {
                             consultorio = $$('#consultorio').val();
                         }
+                    }); */
+
+                    $$('#offices-add-form-map input').on('input:notempty', function(e) {
+                        var nonempty = $$('#offices-add-form-map input.rqrd').filter(function() {
+                            return this.value != ''
+                        });
+                        if (nonempty.length >= 1) {
+                            enableButton();
+                        }
                     });
 
 
-                    $$('#offices-add-form-map #cancel').on('click', function (e) {
+                    $$('#offices-add-form-map #cancel').on('click', function(e) {
                         app.methods.redirectTo('offices-add-form-basic');
                     });
 
-                    $$(document).on('input:empty', function (e) {
+                    $$('#offices-add-form-map input.rqrd').on('input:empty', function(e) {
                         disableButton();
                     });
                 });
 
                 function enableButton() {
-                    if (regex.test(consultorio)) {
-                        app.data.consultorio.hospital = $$('[name="hospital"]').val();
-                        app.data.consultorio.address = $$('[name="direction"]').val();
-                        app.data.consultorio.number = $$('[name="consultorio"]').val();
-                        $$('#offices-add-form-map .btn-2 a').removeClass('grey');
-                        $$('#offices-add-form-map .btn-2 a').off('click');
-                        $$('#offices-add-form-map .btn-2 a').on('click', function (e) {
-                            app.data.store.setItem("office", app.data.consultorio)
-                                .then(function (value) {
-                                    app.methods.redirectTo('offices-add-form-schedule');
-                                })
-                                .catch(function (err) {
-                                    console.log(err);
+                    let consultorio = $$('#consultorio').val();
+                    /* if (regex.test(consultorio)) { */
+                    $$('#offices-add-form-map .btn-2 a').removeClass('grey');
+                    $$('#offices-add-form-map .btn-2 a').off('click');
+                    $$('#offices-add-form-map .btn-2 a').on('click', function(e) {
+                        app.data.store.setItem("hospital", $$('[name="hospital"]').val());
+                        app.data.store.setItem("address", $$('[name="direction"]').val());
+                        app.data.store.setItem("number", consultorio);
+                        /* app.methods.redirectTo('offices-add-form-schedule'); */
+                        if (edit) {
+                            let email, nombre, phone, hospital, numero, direccion;
+                            app.data.store.iterate(function(val, key, i) {
+                                switch (key) {
+                                    case 'address':
+                                        direccion = val;
+                                        break;
+                                    case 'email':
+                                        email = val;
+                                        break;
+                                    case 'hospital':
+                                        hospital = val;
+                                        break;
+                                    case 'nombre':
+                                        nombre = val;
+                                        break;
+                                    case 'number':
+                                        numero = val;
+                                        break;
+                                    case 'phone':
+                                        phone = val;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }).then(function(e) {
+                                app.data.store.getItem('officeId').then(function(val) {
+                                    app.request({
+                                        url: app.data.url + '/consultorios/' + val,
+                                        method: "PUT",
+                                        crossDomain: true,
+                                        data: {
+                                            "correo": email,
+                                            "nombre": nombre,
+                                            "telefono": phone,
+                                            "hospital": $$('[name="hospital"]').val(),
+                                            "numero": $$('#consultorio').val(),
+                                            "direccion": $$('[name="direction"]').val(),
+                                            "lat": 12.12,
+                                            "lng": 213.234,
+                                            "doctor": doctor.doctor.id, //mandar pedir el numero app.data.doctor.id,
+                                            /* "HorarioApertura": startTime,
+                                            "HorarioCierre": closeTime,
+                                            "Dias": ArrDays,
+                                            "InicioComida": lunchStartTime,
+                                            "FinComida": lunchCloseTime, */
+                                            "Activo": true
+                                        },
+                                        success: function(e) {
+                                            app.data.store.clear();
+                                            app.preloader.hide();
+                                            app.methods.redirectTo('offices-show');
+                                        },
+                                        error: function(e) {
+                                            app.preloader.hide();
+                                        }
+                                    });
                                 });
-                        });
-                    }
+                            });
+                            // patch put
+
+                        } else {
+                            let email, nombre, phone, hospital, numero, direccion;
+                            app.data.store.iterate(function(val, key, i) {
+                                switch (key) {
+                                    case 'address':
+                                        direccion = val;
+                                        break;
+                                    case 'email':
+                                        email = val;
+                                        break;
+                                    case 'hospital':
+                                        hospital = val;
+                                        break;
+                                    case 'nombre':
+                                        nombre = val;
+                                        break;
+                                    case 'number':
+                                        numero = val;
+                                        break;
+                                    case 'phone':
+                                        phone = val;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }).then(function(e) {
+                                app.request.postJSON(app.data.url + '/consultorios', {
+                                    "correo": email,
+                                    "nombre": nombre,
+                                    "telefono": phone,
+                                    "hospital": $$('[name="hospital"]').val(),
+                                    "numero": $$('#consultorio').val(),
+                                    "direccion": $$('[name="direction"]').val(),
+                                    "lat": 12.12,
+                                    "lng": 213.234,
+                                    "doctor": doctor.doctor.id, //mandar pedir el numero app.data.doctor.id,
+                                    /* "HorarioApertura": startTime,
+                                    "HorarioCierre": closeTime,
+                                    "Dias": ArrDays,
+                                    "InicioComida": lunchStartTime,
+                                    "FinComida": lunchCloseTime, */
+                                    "Activo": true
+                                }, function(e) {
+                                    app.data.store.clear();
+                                    app.preloader.hide();
+                                    app.methods.redirectTo('offices-show');
+                                }, function(e) {
+                                    app.preloader.hide();
+                                });
+                            });
+                        }
+                    });
+                    /*  } */
                 }
 
                 function disableButton() {

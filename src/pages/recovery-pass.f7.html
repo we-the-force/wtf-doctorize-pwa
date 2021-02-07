@@ -1,6 +1,6 @@
 <template>
     <div class="page recovery-flow" data-name="recovery-pass" id='recovery-pass'>
-        <div class="page-content login-screen-content recovery-pass center btns">
+        <div class="page-content login-screen-content recovery-pass center">
             <div class="screen-title header-blue">
                 <div class="list">
                     <ul>
@@ -16,28 +16,30 @@
                     </ul>
                 </div>
             </div>
-            <div>
+            <div class="flex_grow">
 
                 <div class="list inputs">
                     <ul>
                         <li class="item-content item-input">
                             <div class="item-inner searchbar-inner">
-                              <div class="item-input-wrap rounded">
-                                <i class="icons material-icons">vpn_key</i>
-                                <input type="password" id="password1" class="password1" placeholder="Nueva Contraseña" required validate>
-                                <span class="input-clear-button"></span>
-                              </div>
+                                <div class="item-input-wrap rounded">
+                                    <i class="icons material-icons">vpn_key</i>
+                                    <input type="password" id="password1" class="password1"
+                                        placeholder="Nueva Contraseña" required validate>
+                                    <span class="input-clear-button"></span>
+                                </div>
                             </div>
-                          </li>
-                          <li class="item-content item-input">
+                        </li>
+                        <li class="item-content item-input">
                             <div class="item-inner searchbar-inner">
-                              <div class="item-input-wrap rounded">
-                                <i class="icons material-icons">vpn_key</i>
-                                <input type="password" id="password2" class="password2" placeholder="Confirmar contraseña" required validate>
-                                <span class="input-clear-button"></span>
-                              </div>
+                                <div class="item-input-wrap rounded">
+                                    <i class="icons material-icons">vpn_key</i>
+                                    <input type="password" id="password2" class="password2"
+                                        placeholder="Confirmar contraseña" required validate>
+                                    <span class="input-clear-button"></span>
+                                </div>
                             </div>
-                          </li>
+                        </li>
                         <!-- <li class="item-content item-input">
                             <div class="item-inner">
                                 <div class="item-input-wrap rounded">
@@ -75,12 +77,12 @@
             </div>
             <div class="container">
                 <div class="btn-2">
-                  <a href="">
-                    <p>Guardar </p>
-                    <i class="material-icons">chevron_right</i>
-                  </a>
+                    <a href="">
+                        <p>Guardar </p>
+                        <i class="material-icons">chevron_right</i>
+                    </a>
                 </div>
-              </div>
+            </div>
         </div>
         <!-- <div class="list buttons">
             <ul>
@@ -100,46 +102,82 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 let urlParams = (new URL(document.location)).searchParams;
                 var query = app.utils.parseUrlQuery(window.location.href);
 
-                let mail = query.email;
-                let code = query.code;
-                var pass1, pass2;
+                var code = query.code;
 
-                $$('#recovery-pass .btn-2 a').addClass('grey');
-                $$('#recovery-pass .btn-2 a').off('click');
+                disableButton();
 
-                $$(document).on('input:notempty', '#password2', function (e) {
+                $$('#recovery-pass input').on('input:notempty', function(e) {
+                    var nonempty = $$('#recovery-pass input').filter(function() {
+                        return this.value != ''
+                    });
+                    if (nonempty.length == 2) {
+                        enableButton();
+                    }
+                });
 
-                    pass1 = $$('#password1').val();
-                    pass2 = $$('#password2').val();
+                $$('#recovery-pass input').on('input:empty', function(e) {
+                    disableButton();
+                });
+
+                function enableButton() {
+                    let pass1 = $$('#password1').val();
+                    let pass2 = $$('#password2').val();
 
                     $$('#password2').attr('pattern', pass1);
 
                     if (pass1 === pass2) {
                         $$('#recovery-pass .btn-2 a').removeClass('grey');
                         $$('#recovery-pass .btn-2 a').off('click');
-                        $$('#recovery-pass .btn-2 a').on('click', function () {
+                        $$('#recovery-pass .btn-2 a').on('click', function() {
                             app.preloader.show('blue');
-                            app.request.postJSON(app.data.url + '/account/password/confirmation', {
-                                "email": mail,
+                            app.request.postJSON(app.data.url + '/auth/reset-password', {
+                                "code": code,
                                 "password": pass1,
-                                "confirmPassword": pass2,
-                                "code": code
-                            }, function (e) {
-                                app.preloader.hide();
-                                location.href = '/';
-                            }, function (e) {
+                                "passwordConfirmation": pass2,
+                            }, function(el) {
+                                //mandar pedir doctor con email
+                                app.request.get(app.data.url + '/doctors?correo=' + el.user.email, function(doc) {
+                                        let doctor = JSON.parse(doc);
+                                        console.log(doctor[0].id);
+
+                                        app.request({
+                                            url: app.data.url + '/doctors/' + doctor[0].id,
+                                            method: "PUT",
+                                            crossDomain: true,
+                                            data: {
+                                                "user": el.user.id
+                                            },
+                                            success: function(e) {
+                                                app.preloader.hide();
+                                                app.methods.redirectTo('root');
+                                            },
+                                            error: function(e) {
+                                                app.preloader.hide();
+                                            }
+                                        });
+                                    },
+                                    function(err) {
+                                        app.preloader.hide();
+                                    }
+                                );
+                            }, function(e) {
                                 app.preloader.hide();
                             });
 
                         });
                     }
-                });
+                }
+
+                function disableButton() {
+                    $$('#recovery-pass .btn-2 a').addClass('grey');
+                    $$('#recovery-pass .btn-2 a').off('click');
+                }
             }
         }
 

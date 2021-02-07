@@ -17,7 +17,7 @@
           </ul>
         </div>
       </div>
-      <div>
+      <div class="flex_grow">
 
         <div class="list inputs">
           <ul>
@@ -75,36 +75,35 @@
   </div>
 </template>
 <script>
-  import $$ from 'dom7';
-  export default {
-    on: {
-      pageInit: function (e, page) {
-        var self = this;
-        var app = self.$app;
-        var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        var email_recovery;
+    import $$ from 'dom7';
+    export default {
+        on: {
+            pageInit: function(e, page) {
+                var self = this;
+                var app = self.$app;
+                var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                var email_recovery;
 
-        $$('#recovery .btn-2 a').addClass('grey');
-        $$('#recovery .btn-2 a').off('click');
+                $$('#recovery .btn-2 a').addClass('grey');
+                $$('#recovery .btn-2 a').off('click');
 
-        $$(document).on('input:notempty', '#email', function (e) {
-          email_recovery = $$('#recovery #email').val();
+                $$(document).on('input:notempty', '#email', function(e) {
+                    email_recovery = $$('#recovery #email').val();
 
-          if (regex.test(email_recovery)) {
-            $$('#recovery .btn-2 a').removeClass('grey');
-            $$('#recovery .btn-2 a').off('click');
-            $$('#recovery .btn-2 a').on('click', function () {
-              app.request.postJSON(app.data.url + '/account/password/reset',
-                {
-                  "email": email_recovery
-                },
-                function (e) {
-                  app.methods.redirectTo('recovery-sent');
+                    if (regex.test(email_recovery)) {
+                        $$('#recovery .btn-2 a').removeClass('grey');
+                        $$('#recovery .btn-2 a').off('click');
+                        $$('#recovery .btn-2 a').on('click', function() {
+                            app.request.postJSON(app.data.url + '/auth/forgot-password', {
+                                    "email": email_recovery
+                                },
+                                function(e) {
+                                    app.methods.redirectTo('recovery-sent');
+                                });
+                        });
+                    }
                 });
-            });
-          }
-        });
-      }
+            }
+        }
     }
-  }
 </script>

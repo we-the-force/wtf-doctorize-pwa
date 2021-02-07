@@ -69,6 +69,7 @@ import PacienteDiagnosticos from '../pages/paciente-diagnosticos.f7.html';
 import PacienteVitales from '../pages/paciente-vitales.f7.html';
 import PacienteVital from '../pages/paciente-vital.f7.html';
 import NuevaConsulta from '../pages/nueva-consulta.f7.html';
+import CitaDetalles from '../pages/cita-detalles.f7.html';
 
 var routes = [
 
@@ -76,6 +77,11 @@ var routes = [
         name: "root",
         path: '/',
         component: LoginPage,
+    },
+    {
+        name: "cita-detalles",
+        path: "/cita/detalles",
+        component: CitaDetalles,
     },
     {
         name: "nueva-consulta",

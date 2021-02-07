@@ -11,8 +11,8 @@
             <div class="patient">
                 <div class="avatar"><img src="" alt=""></div>
                 <div class="info">
-                    <p class="name">Leonardo Rodrigo</p>
-                    <p class="addr">Calle Mariano Abasolo 1090</p>
+                    <p class="name"></p>
+                    <p class="addr" style="display: none;"><!-- Calle Mariano Abasolo 1090 --></p>
                 </div>
                 <a href="#">
                     <i class="material-icons">comment</i>
@@ -60,28 +60,39 @@
 
     export default {
         on: {
-            pageBeforeOut: function (e, page) {
+            pageBeforeOut: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 app.data.store.removeItem('details');
             },
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 var moment = require('moment');
                 moment.locale('es');
                 moment().format();
 
-                app.data.store.getItem('details').then(function (value) {
-                    if (value == 'recibidos') {
-                        $$('#pago-details .breakdown .date .data').text('12 ENE. 2019');
-                        $$('[name="demo-checkbox"]')[0].checked = true;
-                        $$('#pago-details .breakdown .total .data').removeClass('red');
-                        $$('#pago-details .breakdown .total .data').addClass('dark-blue');
-                    }
+                app.data.store.getItem('details').then(function(value) {
+                    app.data.store.getItem('pagoId').then(function(pagId) {
+                        app.request.get(app.data.url + '/pagos/' + pagId,
+                            function(e) {
+                                var el = JSON.parse(e);
+                                console.log(el);
+                                $$('#pago-details .avatar img').attr('src', app.data.url + '/' + el.paciente.img_data.url);
+                                $$('#pago-details .info .name').text(el.paciente.nombre);
+                                $$('#pago-details .method .data').text(el.metodo);
+                                $$('#pago-details .total .data').text('$' + el.costo);
+                                if (value == 'recibidos') {
+                                    $$('#pago-details .breakdown .date .data').text(moment(el.updated_at).format('DD MMM YYYY'));
+                                    $$('[name="demo-checkbox"]')[0].checked = true;
+                                    $$('#pago-details .breakdown .total .data').removeClass('red');
+                                    $$('#pago-details .breakdown .total .data').addClass('dark-blue');
+                                }
+                            });
+                    });
                 });
 
-                $$('[name="demo-checkbox"]').click(function (x) {
+                $$('[name="demo-checkbox"]').click(function(x) {
                     if ($$(this)[0].checked) {
                         $$(this).attr("disabled", true);
                         app.preloader.show('blue');

@@ -28,10 +28,11 @@
 
     export default {
         on: {
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
-                app.data.store.getItem('select').then(function (value) {
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
+                app.data.store.getItem('select').then(function(value) {
                     // selecciona si es ventana de horarios o de asistentes
                     // cambia titulo de ventana
                     // llena la ventana ************+
@@ -41,76 +42,110 @@
                         fill(value);
                         $$('#doctor-horarios-select .new_asisstant').find('p').text('Agregar asistente');
                     } else if (value = 'hosp') {
-                        $$('#doctor-horarios-select .title1').text('Hospital');
+                        $$('#doctor-horarios-select .title1').text('Consultorio');
                         fill(value);
-                        $$('#doctor-horarios-select .new_asisstant').find('p').text('Agregar hospital');
+                        $$('#doctor-horarios-select .new_asisstant').find('p').text('Agregar Consultorio');
                     }
 
-                    $$('#doctor-horarios-select .data').click(function (val) {
+                    /* $$('#doctor-horarios-select .data').click(function(val) {
                         console.log($$(this).data('id'));
                         //check if asist or hosp
                         if (value == 'asist') {
                             //guardar datos************faltan
                             //redirigir 
-                            app.data.store.setItem('asist-json', $$(this).text()).then(function (value) {
+                            app.data.store.setItem('asist-json', $$(this).text()).then(function(value) {
                                 app.methods.redirectTo('doctor-horarios-add');
                             });
                         } else if (value = 'hosp') {
                             //guardar datos************faltan
                             //redirigir 
-                            app.data.store.setItem('hosp-json', $$(this).text()).then(function (value) {
+                            app.data.store.setItem('hosp-json', $$(this).text()).then(function(value) {
                                 app.methods.redirectTo('doctor-horarios-add');
                             });
                         }
-                    });
+                    }); */
 
-                    $$('#doctor-horarios-select .new_asisstant').click(function (val) {
+                    $$('#doctor-horarios-select .new_asisstant').click(function(val) {
                         console.log('click to new');
                         if (value == 'asist') {
                             //redirect to new asistent************++
-                            console.log('redirect to new asist');
+                            app.methods.redirectTo('asistentes-invitar-02');
                         } else if (value = 'hosp') {
                             //redirect to new hospital*************++
-                            console.log('redirect to new hospital');
+                            app.methods.redirectTo('offices-show');
                         }
                     });
                 });
 
                 function fill(x) {
                     if (x == 'asist') {
-                        //mandar leer asistentes ********************++
-                        // llena con tarjetas de asistente**************
-                        for (var i = 1; i < 3; i++) {
-                            $$('#doctor-horarios-select ul').append(
-                                '<li>' +
-                                '<div class="card card-outline select-horarios">' +
-                                '<div class="rectangle turquoise"></div>' +
-                                '<div class="avatar">' +
-                                '<img>' +
-                                '</div>' +
-                                '<div class="card-content card-content-padding">' +
-                                '<p class="dark-blue data" data-id="' + i + '">Angelica Galindo</p>' +
-                                '</div>' +
-                                '</div>' +
-                                '</li>');
-                        }
+                        app.request.get(app.data.url + '/asistentes?doctor.id=' + doctor.doctor.id,
+                            function(ele) {
+                                var x = JSON.parse(ele);
+                                /* x.forEach(asist => { */
+                                for (let i = 0; i < x.length; i++) {
+                                    console.log(x[i]);
+
+                                    if (x[i].nombre != null && x[i].Activo) {
+                                        $$('#doctor-horarios-select ul').append(
+                                            '<li>' +
+                                            '<div class="card card-outline select-horarios">' +
+                                            '<div class="rectangle turquoise"></div>' +
+                                            '<div class="avatar">' +
+                                            '<img src="' + app.data.url + x[i].img_data.url + '">' +
+                                            '</div>' +
+                                            '<div class="card-content card-content-padding">' +
+                                            '<p class="dark-blue data" data-id="' + x[i].id + '">' + x[i].nombre + '</p>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '</li>');
+                                    }
+                                }
+
+                                $$('#doctor-horarios-select .data').click(function(val) {
+                                    //check if asist or hosp
+                                    //guardar datos************faltan
+                                    //redirigir 
+                                    app.data.store.setItem('asist-json-id', $$(this).data('id'));
+                                    app.data.store.setItem('asist-json', $$(this).text()).then(function(value) {
+                                        app.methods.redirectTo('doctor-horarios-add');
+                                    });
+                                });
+                            });
                     } else {
+                        app.request.get(app.data.url + '/consultorios?doctor.id=' + doctor.doctor.id,
+                            function(ele) {
+                                var x = JSON.parse(ele);
+                                for (let i = 0; i < x.length; i++) {
+                                    if (x[i].Activo) {
+                                        $$('#doctor-horarios-select ul').append(
+                                            '<li>' +
+                                            '<div class="card card-outline select-horarios">' +
+                                            '<div class="rectangle turquoise"></div>' +
+                                            '<div class="avatar">' +
+                                            '<img src="../static/images/logo_v2.png" style="background: unset">' +
+                                            '</div>' +
+                                            '<div class="card-content card-content-padding">' +
+                                            '<p class="dark-blue data" data-id="' + x[i].id + '">' + x[i].nombre + '</p>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '</li>');
+                                    }
+                                }
+                                $$('#doctor-horarios-select .data').click(function(val) {
+                                    //check if asist or hosp
+                                    //guardar datos************faltan
+                                    //redirigir
+                                    app.data.store.setItem('hosp-json-id', $$(this).data('id'));
+                                    app.data.store.setItem('hosp-json', $$(this).text()).then(function(value) {
+                                        app.methods.redirectTo('doctor-horarios-add');
+                                    });
+                                });
+                            }
+                        );
+
                         //mandar leer hospitales ********************++
                         // llena con tarjetas de hospitales**************
-                        for (var i = 1; i < 3; i++) {
-                            $$('#doctor-horarios-select ul').append(
-                                '<li>' +
-                                '<div class="card card-outline select-horarios">' +
-                                '<div class="rectangle turquoise"></div>' +
-                                '<div class="avatar">' +
-                                '<img>' +
-                                '</div>' +
-                                '<div class="card-content card-content-padding">' +
-                                '<p class="dark-blue data" data-id="' + i + '">Seguro 2</p>' +
-                                '</div>' +
-                                '</div>' +
-                                '</li>');
-                        }
                     }
                 }
             }

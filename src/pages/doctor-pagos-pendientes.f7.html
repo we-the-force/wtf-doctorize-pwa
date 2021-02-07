@@ -66,75 +66,60 @@
 
     export default {
         on: {
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
-
-                app.request.get(app.data.url,
-                    function (e) {
-
-                        var x = JSON.parse(e);
-                        /* y.forEach(el => {
-                        fillDay(x, el);
-                    }); *//* $$('#'+x) */
-
-                        for (let i = 0; i < 3; i++) {
-                            $$('.list ul').append(
-                                '<li>' +
-                                '<div class="card card-outline pagos pend" id="">' +
-                                '<div class="rectangle turquoise"></div>' +
-                                '<div class="card-content card-content-padding">' +
-                                '<i class="material-icons turquoise">' +
-                                'history' +
-                                '</i>' +
-                                '<div class="data">' +
-                                '<p class="dark-blue title">Consulta</p>' +
-                                '<p class="text">Revision general</p>' +
-                                '<p class="date"> 14/nov/2019</p>' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>' +
-                                '</li>'
-                            );
-                        }
-
-                        $$('.card.pend').click(function (x) {
-                            let data = $$(this).find('.text').text();
-                            app.data.store.setItem('pago-pend', data).then(function (value) {
-                                app.methods.redirectTo('doctor-agregar-pago');
-                            });
-                        });
-                    },
-                    function (e) {
-
-                        for (let i = 0; i < 3; i++) {
-                            $$('.list ul').append(
-                                '<li>' +
-                                '<div class="card card-outline pagos pend" id="">' +
-                                '<div class="rectangle turquoise"></div>' +
-                                '<div class="card-content card-content-padding">' +
-                                '<i class="material-icons turquoise">' +
-                                'history' +
-                                '</i>' +
-                                '<div class="data">' +
-                                '<p class="dark-blue title">Consulta</p>' +
-                                '<p class="text">Revision general</p>' +
-                                '<p class="date"> 14/nov/2019</p>' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>' +
-                                '</li>'
-                            );
-                        }
-
-                        $$('.card.pend').click(function (x) {
-                            let data = $$(this).find('.text').text();
-                            app.data.store.setItem('pago-pend', data).then(function (value) {
-                                app.methods.redirectTo('doctor-agregar-pago');
-                            });
-                        });
+                var moment = require('moment');
+                moment.locale('es');
+                moment().format();
+                app.data.store.getItem('pago-patient-id').then(function(val) {
+                    let url;
+                    if (val) {
+                        url = app.data.url + '/consultas?paciente.id=' + val;
+                    } else {
+                        url = app.data.url + '/consultas';
                     }
-                );
+
+                    app.request.get(url,
+                        function(e) {
+                            var x = JSON.parse(e);
+                            console.log(x);
+                            for (let i = 0; i < x.length; i++) {
+                                const ele = x[i];
+                                if (ele.pago == null) {
+                                    let date = moment(ele.created_at);
+                                    $$('#doctor-pagos-pendientes .list ul').append(
+                                        '<li>' +
+                                        '<div class="card card-outline pagos pend" id="' + ele.id + '">' +
+                                        '<div class="rectangle turquoise"></div>' +
+                                        '<div class="card-content card-content-padding">' +
+                                        '<i class="material-icons turquoise">' +
+                                        'history' +
+                                        '</i>' +
+                                        '<div class="data">' +
+                                        '<p class="dark-blue title">Consulta</p>' +
+                                        '<p class="text" data-id="' + ele.id + '">' + ele.motivo + '</p>' +
+                                        '<p class="date">' + date.format('DD-MMM-YYYY') + '</p>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</li>'
+                                    );
+                                }
+                            }
+
+                            $$('.card.pend').click(function(x) {
+                                let data = $$(this).find('.text').text();
+                                let data_id = $$(this).find('.text').data('id');
+                                app.data.store.setItem('pago-pend-id', data_id);
+                                app.data.store.setItem('pago-pend', data).then(function(value) {
+                                    app.methods.redirectTo('doctor-agregar-pago');
+                                });
+                            });
+                        },
+                        function(e) {}
+                    );
+                });
 
             }
         }

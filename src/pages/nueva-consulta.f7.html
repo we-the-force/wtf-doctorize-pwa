@@ -1,7 +1,7 @@
 <template>
     <div class="page consulta-flow" id="nueva_consulta">
         <div class="header basic center fixed">
-            <a class="back">
+            <a class="btn_back">
                 <i class="material-icons">chevron_left</i>
             </a>
             <p class="title1">Nueva Consulta</p>
@@ -20,13 +20,14 @@
                         <label for="nombre">Nombre del paciente</label>
                         <div class="item-input-inner dropdown-blue">
                             <input class="notnull" list="pacientes" type="text" id="nombre"
-                                placeholder="Nombre del paciente">
+                                placeholder="Nombre del paciente" required validate>
                         </div>
                     </div>
                     <div class="item-input v2">
                         <label for="motivo">Motivo de consulta</label>
                         <div class="item-input-inner textarea">
-                            <textarea class="resizable notnull" id="motivo" placeholder="Agrege algo mas..."></textarea>
+                            <textarea class="resizable notnull" id="motivo" placeholder="Agrege algo mas..." required
+                                validate></textarea>
                         </div>
                     </div>
                     <div class="item-input v2">
@@ -81,21 +82,23 @@
                         </div>
                         <div class="card-content fade-in none">
                             <p>°</p>
-                            <input type="number" name="temp_num" id="temp_num" onkeypress="this.style.width = ((this.value.length + 1) * 48) + 'px';">
-                            <input type="text" name="unity" id="unity" onkeypress="this.style.width = ((this.value.length + 1) * 24) + 'px';">
+                            <input type="number" name="temp_num" id="temp_num" class="notnull"
+                                onkeypress="this.style.width = ((this.value.length + 1) * 48) + 'px';">
+                            <input type="text" name="unity" class="unity"
+                                onkeypress="this.style.width = ((this.value.length + 1) * 24) + 'px';">
                         </div>
                         <div class="card-footer fade-out">
-                            <p class="notnull">-°</p>
+                            <p class="show_num">-°</p>
                         </div>
                         <div class="card-footer fade-in none">
                             <div class="container two">
-                                <div class="btn-2 woi red">
-                                    <a href="#">
+                                <div class="btn-2 woi red cancel">
+                                    <a href="#" class="cancel">
                                         <p>Cancelar </p>
                                     </a>
                                 </div>
-                                <div class="btn-2 woi">
-                                    <a href="#">
+                                <div class="btn-2 woi sig">
+                                    <a href="#" class="sig">
                                         <p>Siguiente </p>
                                     </a>
                                 </div>
@@ -120,21 +123,23 @@
                         </div>
                         <div class="card-content fade-in none">
                             <p></p>
-                            <input type="number" name="temp_num" id="temp_num" onkeypress="this.style.width = ((this.value.length + 1) * 48) + 'px';">
-                            <input type="text" name="unity" id="unity" onkeypress="this.style.width = ((this.value.length + 1) * 24) + 'px';">
+                            <input type="number" name="temp_num" id="pres_num" class="notnull"
+                                onkeypress="this.style.width = ((this.value.length + 1) * 48) + 'px';">
+                            <input type="text" name="unity" class="unity"
+                                onkeypress="this.style.width = ((this.value.length + 1) * 24) + 'px';">
                         </div>
                         <div class="card-footer fade-out">
-                            <p class="notnull">-/-</p>
+                            <p class="show_num">-/-</p>
                         </div>
                         <div class="card-footer fade-in none">
                             <div class="container two">
-                                <div class="btn-2 woi red">
-                                    <a href="#">
+                                <div class="btn-2 woi red cancel">
+                                    <a href="#" class="cancel">
                                         <p>Cancelar </p>
                                     </a>
                                 </div>
-                                <div class="btn-2 woi">
-                                    <a href="#">
+                                <div class="btn-2 woi sig">
+                                    <a href="#" class="sig">
                                         <p>Siguiente </p>
                                     </a>
                                 </div>
@@ -159,21 +164,23 @@
                         </div>
                         <div class="card-content fade-in none">
                             <p></p>
-                            <input type="number" name="temp_num" id="temp_num" onkeypress="this.style.width = ((this.value.length + 1) * 48) + 'px';">
-                            <input type="text" name="unity" id="unity" onkeypress="this.style.width = ((this.value.length + 1) * 24) + 'px';">
+                            <input type="number" name="temp_num" id="resp_num" class="notnull"
+                                onkeypress="this.style.width = ((this.value.length + 1) * 48) + 'px';">
+                            <input type="text" name="unity" class="unity"
+                                onkeypress="this.style.width = ((this.value.length + 1) * 24) + 'px';">
                         </div>
                         <div class="card-footer fade-out">
-                            <p class="notnull">-</p>
+                            <p class="show_num">-</p>
                         </div>
                         <div class="card-footer fade-in none">
                             <div class="container two">
-                                <div class="btn-2 woi red">
-                                    <a href="#">
+                                <div class="btn-2 woi red cancel">
+                                    <a href="#" class="cancel">
                                         <p>Cancelar </p>
                                     </a>
                                 </div>
-                                <div class="btn-2 woi">
-                                    <a href="#">
+                                <div class="btn-2 woi sig">
+                                    <a href="#" class="sig">
                                         <p>Siguiente </p>
                                     </a>
                                 </div>
@@ -198,21 +205,23 @@
                         </div>
                         <div class="card-content fade-in none">
                             <p></p>
-                            <input type="number" name="temp_num" id="temp_num" onkeypress="this.style.width = ((this.value.length + 1) * 48) + 'px';">
-                            <input type="text" name="unity" id="unity" onkeypress="this.style.width = ((this.value.length + 1) * 24) + 'px';">
+                            <input type="number" name="temp_num" id="puls_num" class="notnull"
+                                onkeypress="this.style.width = ((this.value.length + 1) * 48) + 'px';">
+                            <input type="text" name="unity" class="unity"
+                                onkeypress="this.style.width = ((this.value.length + 1) * 24) + 'px';">
                         </div>
                         <div class="card-footer fade-out">
-                            <p class="notnull">-</p>
+                            <p class="show_num">-</p>
                         </div>
                         <div class="card-footer fade-in none">
                             <div class="container two">
-                                <div class="btn-2 woi red">
-                                    <a href="#">
+                                <div class="btn-2 woi red cancel">
+                                    <a href="#" class="cancel">
                                         <p>Cancelar </p>
                                     </a>
                                 </div>
-                                <div class="btn-2 woi">
-                                    <a href="#">
+                                <div class="btn-2 woi sig">
+                                    <a href="#" class="sig">
                                         <p>Siguiente </p>
                                     </a>
                                 </div>
@@ -247,12 +256,12 @@
                         <div class="card-content">
                             <div class="head">
                                 <i class="material-icons turquoise">today</i>
-                                <a class="arrow popover-open" data-popover=".popover-file">
+                                <a class="arrow popover-open" style="display: none;" data-popover=".popover-file">
                                     <i class="material-icons">more_horiz</i>
                                 </a>
                             </div>
                             <div class="date_row">
-                                <p>Clinica</p>
+                                <p class="title">Clinica</p>
                                 <p class="date">13 / Mar / 2020</p>
                             </div>
                             <p class="name">William Aristeo Gonzalez</p>
@@ -272,7 +281,7 @@
                         <div class="card-content">
                             <div class="head">
                                 <i class="material-icons icon yellow">monetization_on</i>
-                                <a class="arrow">
+                                <a class="arrow" style="display: none;">
                                     <i class="material-icons">more_horiz</i>
                                 </a>
                             </div>
@@ -292,23 +301,23 @@
                     </div>
                 </div>
             </div>
-            <div class="container">
-                <div class="btn-2 woi">
-                    <a href="">
-                        <p>Aceptar </p>
-                    </a>
-                </div>
-                <div class="fab fab-center-bottom color-red">
-                    <a href="#">
-                        <i class="icon f7-icons if-not-md">plus</i>
-                        <i class="icon material-icons md-only">add</i>
-                    </a>
+            <div>
+                <div class="container bsc">
+                    <div class="btn-2 woi">
+                        <a href="">
+                            <p>Aceptar </p>
+                        </a>
+                    </div>
+                    <!-- <div class="fab fab-center-bottom color-red">
+                        <a href="#">
+                            <i class="icon material-icons">add</i>
+                        </a>
+                    </div> -->
                 </div>
             </div>
         </div>
 
         <datalist id="pacientes">
-            <option value="Alejandro De Leon">
         </datalist>
 
         <div class="popover popover-file">
@@ -328,172 +337,385 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageBeforeIn: function (e, page) {
+            pageBeforeIn: function(e, page) {
                 var self = this;
                 var app = self.$app;
-
-                app.request.get(app.data.url,
-                    function (e) {
+                var var1 = false,
+                    var2 = false,
+                    var3 = false,
+                    var4 = false;
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
+                app.request.get(app.data.url + '/pacientes?doctor.id=' + doctor.doctor.id,
+                    function(e) {
                         var x = JSON.parse(e);
-                        app.data.store.setItem('pacientes', x);
+                        x.forEach(element => {
+                            $$('datalist').append(
+                                '<option value="' + element.nombre + '" data-id="' + element.id + '">'
+                            );
+                        });
+                        let v = $$('#pacientes option[data-id="' + localStorage.getItem('patient_id') + '"]').val();
+                        $$('#nueva_consulta input#nombre').val(v);
                     }
                 );
             },
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
-                var files = [], medics = [], pago, cita;
+                var files = [],
+                    medics = [],
+                    pago, cita;
                 var moment = require('moment');
-
                 moment.locale('es');
                 moment().format();
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
 
-                localStorage.setItem('consulta', true);
-                app.data.store.getItem('paciente').then(function (value) {
-                    /* value.forEach(element => {
-                        $$('datalist').append(
-                            '<option value="' + element.name + '">'
-                        );
-                    }); */
-                    $$('datalist').append(
-                        '<option value="William Aristeo">'
-                    );
-                    $$('datalist').append(
-                        '<option value="Elias">'
-                    );
-                    $$('datalist').append(
-                        '<option value="Karina">'
-                    );
-                    $$('datalist').append(
-                        '<option value="Cesar Molina">'
-                    );
-                });
+                disableButton();
 
-                getData();
+                let prevPageMedics = page.pageFrom != undefined && page.pageFrom.el.id == 'paciente-med-form';
 
-                $$('.card.sqr').click(function (e) {
+                if (localStorage.getItem('files')) {
+                    app.data.store.getItem('files').then(function(val) {
+                        files = val;
+                        addFilesCards();
+                    });
+                }
+                if (localStorage.getItem('medics')) {
+                    medics = JSON.parse(localStorage.getItem('medics'));
+                    if (prevPageMedics) {
+                        refillMedics();
+                    }
+                    addMedsCards();
+                } else if (prevPageMedics) {
+                    refillMedics();
+                    addMedsCards();
+                }
+                if (localStorage.getItem('cita')) {
+                    let z = JSON.parse(localStorage.getItem('cita'));
+                    let date = moment(z.fecha);
+                    app.data.store.getItem('cita_cons_name').then(function(val) {
+                        $$('.card.cita .date_row .title').text(val);
+                    });
+                    $$('.card.cita .date_row .date').text(date.format('DD / MMM / YYYY'));
+                    $$('.card.cita .name').text(z.nombre);
+                    $$('.card.cita .phone').text(z.telefono);
+                    $$('.card.cita .data').text(z.correo);
+                    $$('.card.cita').toggleClass("none");
+                    $$('.item-input.cita').toggleClass("none");
+                }
+                if (localStorage.getItem('pago')) {
+                    let z = JSON.parse(localStorage.getItem('pago'));
+                    let date = moment();
+                    $$('.card.pago .date_row .date').text(date.format('DD / MMM / YYYY'));
+                    $$('.card.pago .status').text(z.estatus);
+                    if (z.estatus == 'confirmado') {
+                        $$('.card.pago .status').removeClass('unpaid');
+                        $$('.card.pago .status').addClass('paid');
+                    } else if (z.estatus == 'pendiente') {
+                        $$('.card.pago .status').addClass('unpaid');
+                        $$('.card.pago .status').removeClass('paid');
+                    }
+                    $$('.card.pago .money').text('$' + z.costo);
+                    $$('.card.pago').toggleClass("none");
+                    $$('.item-input.pago').toggleClass("none");
+                }
+                if (localStorage.getItem('consultaName')) {
+                    /*  $$('input#nombre').val(localStorage.getItem('consultaName')); */
+                }
+                if (localStorage.getItem('consultaMotivo')) {
+                    $$('textarea#motivo').val(localStorage.getItem('consultaMotivo'));
+                }
+                if (localStorage.getItem('consultaNotes')) {
+                    $$('textarea#notes').val(localStorage.getItem('consultaNotes'));
+                }
+                if (localStorage.getItem('temp_num')) {
+                    $$('input#temp_num').val(localStorage.getItem('temp_num'));
+                    $$('input#temp_num').closest('.card.sqr').find('.show_num').text(localStorage.getItem('temp_num'));
+                }
+                if (localStorage.getItem('puls_num')) {
+                    $$('input#puls_num').val(localStorage.getItem('puls_num'));
+                    $$('input#puls_num').closest('.card.sqr').find('.show_num').text(localStorage.getItem('puls_num'));
+                }
+                if (localStorage.getItem('resp_num')) {
+                    $$('input#resp_num').val(localStorage.getItem('resp_num'));
+                    $$('input#resp_num').closest('.card.sqr').find('.show_num').text(localStorage.getItem('resp_num'));
+                }
+                if (localStorage.getItem('pres_num')) {
+                    $$('input#pres_num').val(localStorage.getItem('pres_num'));
+                    $$('input#pres_num').closest('.card.sqr').find('.show_num').text(localStorage.getItem('pres_num'));
+                }
+
+                $$('.card.sqr').click(function(e) {
                     if ($$(this).parent().find('.primary').length == 0) {
                         animateOut(this, 0);
                     } else if (!$$(this).hasClass('primary')) {
                         animateIn();
                         animateOut(this, 300);
+                    } else if ($$(e.srcElement).parent().hasClass('cancel')) {
+                        animateIn();
+                    } else if ($$(e.srcElement).parent().hasClass('sig')) {
+                        animateIn();
+                        animateOut($$(this).next(), 300);
                     }
                 });
 
-                $$('#file').change(function (e) {
+                $$('#file').change(function(e) {
                     let file = this.files[0];
                     if (file.size <= 5000000) {
                         files.push(file);
                         addFilesCards();
+                        app.data.store.setItem('files', files);
                         localStorage.setItem('files', files);
                     } else {
                         app.dialog.alert('El archivo excede el tamaño maximo');
                     }
                 });
 
-                $$('input#nombre').change(function (e) {
-                    localStorage.setItem('consultaName', $$(this).val());
+                $$('#nueva_consulta .notnull').on('input:notempty', function(e) {
+                    var nonempty = $$('input#nombre, textarea#motivo').filter(function() {
+                        return this.value != ''
+                    });
+                    if (nonempty.length == 2) {
+                        enableButton();
+                    }
                 });
 
-                $$('textarea#motivo').change(function (e) {
+                $$('#nueva_consulta .btn_back').click(function(val) {
+                    app.data.store.getItem('back_consulta').then(function(value) {
+                        localStorage.clear();
+                        localStorage.setItem('login-user', sessionStorage.getItem('user'));
+                        localStorage.setItem('login-key', sessionStorage.getItem('key'));
+                        if (value == 'schedule') {
+                            app.methods.redirectTo('cita-detalles');
+                        } else if (value == 'paciente') {
+                            app.methods.redirectTo('paciente-perfil');
+                        }
+                    });
+                });
+
+                $$('input#nombre').on('input:notempty', function(e) {
+                    localStorage.setItem('consultaName', $$(this).val());
+                    localStorage.setItem('patient_id', $$('#pacientes option[value="' + $$(this).val() + '"]').data('id'));
+                });
+
+                $$('textarea#motivo').on('input:notempty', function(e) {
                     localStorage.setItem('consultaMotivo', $$(this).val());
                 });
 
-                $$('textarea#notes').change(function (e) {
+                $$('textarea#notes').on('input:notempty', function(e) {
                     localStorage.setItem('consultaNotes', $$(this).val());
                 });
 
-                $$('.item-input .med').click(function (e) {
+                $$('.card.sqr .notnull').on('input:notempty', function(e) {
+                    localStorage.setItem($$(this).attr('id'), $$(this).val());
+                    $$(this).closest('.card.sqr').find('.show_num').text($$(this).val());
+                });
+
+                $$('.item-input .med').click(function(e) {
                     app.methods.redirectTo('paciente-medicamento-form');
                 });
 
-                $$('.item-input .cita').click(function (e) {
+                $$('.item-input .cita').click(function(e) {
                     app.methods.redirectTo('agendar-cita');
                 });
 
-                $$('.item-input .pago').click(function (e) {
+                $$('.item-input .pago').click(function(e) {
                     app.methods.redirectTo('doctor-agregar-pago');
                 });
 
-                disableButton();
-                $$('#nueva_consulta .btn-2 a').removeClass('grey');
-                $$('#nueva_consulta .btn-2 a').click(function (val) {
-                    console.log('guardar');
+                function enableButton(params) {
 
-                });
+                    var pnt_id = localStorage.getItem('patient_id');
+
+                    if (pnt_id != "undefined" && pnt_id != null) {
+                        $$('#nueva_consulta .bsc .btn-2 a').off('click');
+                        $$('#nueva_consulta .bsc .btn-2 a').removeClass('grey');
+                        $$('#nueva_consulta .bsc .btn-2 a').click(function(val) {
+                            /* app.data.store.getItem('patient_id').then(function(pnt_id) { */
+                            app.data.store.getItem('files').then(function(files) {
+                                let paciente, nombre, motivo, notas, archivos = [],
+                                    vitales, cita, pago, medics_ids = [];
+                                archivos = files;
+                                nombre = localStorage.getItem('consultaName');
+                                motivo = localStorage.getItem('consultaMotivo');
+                                notas = localStorage.getItem('consultaNotes');
+                                vitales = {
+                                    "Temperatura": {
+                                        "value": localStorage.getItem('temp_num')
+                                    },
+                                    "presion": {
+                                        "value": localStorage.getItem('pres_num')
+                                    },
+                                    "Respiracion": {
+                                        "value": localStorage.getItem('resp_num')
+                                    },
+                                    "pulso": {
+                                        "value": localStorage.getItem('puls_num')
+                                    },
+                                    "paciente": pnt_id,
+                                    "consulta": ""
+                                };
+                                cita = JSON.parse(localStorage.getItem('cita'));
+                                pago = JSON.parse(localStorage.getItem('pago'));
+                                medics.forEach(function(med) {
+                                    med.paciente = pnt_id;
+                                    app.preloader.show('blue');
+                                    app.request.postJSON(app.data.url + '/medicamentos', med,
+                                        function(el) {
+                                            console.log('meds');
+                                            medics_ids.push(el.id);
+                                        },
+                                        function(el) {
+                                            app.preloader.hide();
+                                        });
+                                });
+                                app.request.postJSON(app.data.url + '/consultas', {
+                                        "motivo": motivo,
+                                        "notas": notas,
+                                        "medicamentos": medics_ids,
+                                        "paciente": pnt_id,
+                                        "doctor": doctor.doctor.id
+                                    },
+                                    function(el) {
+                                        console.log('cons');
+                                        app.request.postJSON(app.data.url + '/citas', cita,
+                                            function(e) {
+                                                console.log('cita');
+                                                app.preloader.hide();
+                                                localStorage.clear();
+                                                app.data.store.clear();
+                                                out();
+                                            },
+                                            function(e) {
+                                                app.preloader.hide();
+                                            });
+                                        app.request.postJSON(app.data.url + '/pagos', {
+                                                "costo": pago.costo,
+                                                "metodo": pago.metodo,
+                                                "estatus": "confirmado",
+                                                "paciente": pnt_id,
+                                                "doctor": doctor.doctor.id,
+                                                "consulta": el.id
+                                            },
+                                            function(el) {
+                                                console.log('pags');
+                                                app.preloader.hide();
+                                                localStorage.clear();
+                                                app.data.store.clear();
+                                                out();
+                                            },
+                                            function(el) {
+                                                app.preloader.hide();
+                                            });
+                                        app.request.postJSON(app.data.url + '/vitales', {
+                                                "Temperatura": {
+                                                    "value": localStorage.getItem('temp_num')
+                                                },
+                                                "presion": {
+                                                    "value": localStorage.getItem('pres_num')
+                                                },
+                                                "Respiracion": {
+                                                    "value": localStorage.getItem('resp_num')
+                                                },
+                                                "pulso": {
+                                                    "value": localStorage.getItem('puls_num')
+                                                },
+                                                "paciente": pnt_id,
+                                                "consulta": el.id
+
+                                            },
+                                            function(el) {
+                                                console.log('vits');
+                                                app.preloader.hide();
+                                                localStorage.clear();
+                                                app.data.store.clear();
+                                                out();
+                                            },
+                                            function(el) {
+                                                app.preloader.hide();
+                                            }
+                                        );
+
+                                        const data = new FormData();
+                                        archivos.forEach(function(file) {
+                                            data.append("files", file);
+                                        });
+                                        data.append("refId", el.id);
+                                        data.append("ref", "consulta");
+                                        data.append('source', 'users-permissions');
+                                        data.append('field', 'archivos');
+                                        app.request({
+                                            url: app.data.url + '/upload',
+                                            method: "POST",
+                                            crossDomain: true,
+                                            contentType: "multipart/form-data",
+                                            data: data,
+                                            success: function(e) {
+                                                app.preloader.hide();
+                                                localStorage.clear();
+                                                app.data.store.clear();
+                                                out();
+                                            },
+                                            error: function(e) {
+                                                app.preloader.hide();
+                                            }
+                                        });
+                                    },
+                                    function(el) {
+                                        app.preloader.hide();
+                                    }
+                                );
+
+
+                            });
+                        });
+                    } else {
+                        $$('input#nombre').text('');
+                        disableButton();
+                    }
+                }
+
+                function out() {
+                    localStorage.setItem('login-user', sessionStorage.getItem('user'));
+                    localStorage.setItem('login-key', sessionStorage.getItem('key'));
+                    app.methods.redirectTo('home');
+                }
 
                 function animateIn() {
                     $$('.card.sqr.primary').find('.fade-in').toggleClass('show');
                     /* setTimeout(function () { */
-                        $$('.card.sqr.primary').find('.fade-in').toggleClass('none');
+                    $$('.card.sqr.primary').find('.fade-in').toggleClass('none');
                     /* }, 50);
                     setTimeout(function () { */
-                        $$('.card.sqr.primary').find('.fade-out').toggleClass('none');
+                    $$('.card.sqr.primary').find('.fade-out').toggleClass('none');
                     /* }, 50);
                     setTimeout(function () { */
-                        $$('.card.sqr.primary').toggleClass('primary');
+                    $$('.card.sqr.primary').toggleClass('primary');
                     /* }, 200); */
                 }
 
                 function animateOut(e, x) {
-                    setTimeout(function () {
+                    setTimeout(function() {
                         $$(e).toggleClass('primary');
                     }, 0 + x);
-                    setTimeout(function () {
+                    setTimeout(function() {
                         $$('.card.sqr.primary').find('.fade-out').toggleClass('none');
                     }, 250 + x);
-                    setTimeout(function () {
+                    setTimeout(function() {
                         $$('.card.sqr.primary').find('.fade-in').toggleClass('none');
                     }, 250 + x);
-                    setTimeout(function () {
+                    setTimeout(function() {
                         $$('.card.sqr.primary').find('.fade-in').toggleClass('show');
                     }, 500 + x);
+
                 }
 
                 function checkData(e) {
-                    var nonempty = $$('#nueva_consulta .notnull').filter(function () {
+                    var nonempty = $$('#nueva_consulta .notnull').filter(function() {
                         return this.value != ''
                     });
 
                     if (nonemptyinput.length == 6) {
 
-                    }
-                }
-
-                function getData(e) {
-                    let prevPageMedics = page.pageFrom != undefined && page.pageFrom.el.id == 'paciente-med-form';
-                    if (localStorage.getItem('files')) {
-                        files = localStorage.getItem('files');
-                        addFilesCards();
-                    }
-                    if (localStorage.getItem('medics')) {
-                        medics = JSON.parse(localStorage.getItem('medics'));
-                        if (prevPageMedics) {
-                            refillMedics();
-                        }
-                        addMedsCards();
-                    } else if (prevPageMedics) {
-                        refillMedics();
-                        addMedsCards();
-                    }
-                    if (localStorage.getItem('cita')) {
-                        //llenar tarjeta
-                        $$('.card.cita').toggleClass("none");
-                        $$('.item-input.cita').toggleClass("none");
-                    }
-                    if (localStorage.getItem('pago')) {
-                        //llenar tarjeta
-                        $$('.card.pago').toggleClass("none");
-                        $$('.item-input.pago').toggleClass("none");
-                    }
-                    if (localStorage.getItem('consultaName')) {
-                        $$('input#nombre').val(localStorage.getItem('consultaName'));
-                    }
-                    if (localStorage.getItem('consultaMotivo')) {
-                        $$('textarea#motivo').val(localStorage.getItem('consultaMotivo'));
-                    }
-                    if (localStorage.getItem('consultaNotes')) {
-                        $$('textarea#notes').val(localStorage.getItem('consultaNotes'));
                     }
                 }
 
@@ -505,7 +727,6 @@
                 function addFilesCards() {
                     $$('.archivos .cards').empty();
                     files.forEach(el => {
-                        console.log(el);
                         let date = moment(el.lastModifiedDate);
                         $$('.archivos .cards').append(
                             '<div class="card v2">' +
@@ -513,7 +734,7 @@
                             '<div class="card-content">' +
                             '<i class="material-icons clip">attach_file</i>' +
                             '<div class="data">' +
-                            '<p class="text">' + el.name + '</p>' +
+                            '<p class="text nomxhe">' + el.name + '</p>' +
                             '<p class="title grey">' + date.format('DD/MM/YYYY') + '</p>' +
                             '</div>' +
                             '<a class="arrow popover-open" data-popover=".popover-file">' +
@@ -522,23 +743,21 @@
                             '</div>' +
                             '</div>'
                         );
-
-
                     });
                 }
 
                 function addMedsCards() {
                     $$('.medicamentos .cards').empty();
+
                     medics.forEach(el => {
-                        console.log(el);
                         $$('.medicamentos .cards').append(
                             '<div class="card v2 light-blue">' +
                             '<div class="rectangle light-blue"></div>' +
                             '<div class="card-content">' +
                             '<img src="../static/icons/Medicinas.svg">' +
                             '<div class="data">' +
-                            '<p class="text">' + el.name + '</p>' +
-                            '<p class="title grey">' + el.tipo_med + ' - ' + el.tipo_ing + '</p>' +
+                            '<p class="text">' + el.nombre + '</p>' +
+                            '<p class="title grey">' + el.tipo_medicina + ' - ' + el.tipo_ingesta + '</p>' +
                             '</div>' +
                             '<a class="arrow">' +
                             '<i class="material-icons">chevron_right</i>' +
@@ -553,8 +772,8 @@
 
 
                 function disableButton() {
-                    $$('#nueva_consulta .btn-2 a').addClass('grey');
-                    $$('#nueva_consulta .btn-2 a').off('click');
+                    $$('#nueva_consulta .bsc .btn-2 a').addClass('grey');
+                    $$('#nueva_consulta .bsc .btn-2 a').off('click');
                 }
             }
         }

@@ -1,5 +1,5 @@
 <template>
-    <div class="page back-blue asist-flow" data-name="asistentes-confirmar">
+    <div class="page back-blue asist-flow" data-name="asistentes-confirmar" id="asistentes-confirmar">
         <div class="page-content login-screen-content center">
             <div class="screen-title header-white">
                 <div class="list">
@@ -42,7 +42,7 @@
             </div>
             <div class="container">
                 <div class="btn-2">
-                    <a href="/assistants-show" class="white">
+                    <a href="#" class="white">
                         <p>Aceptar </p>
                         <i class="material-icons">chevron_right</i>
                     </a>
@@ -65,5 +65,24 @@
 </template>
 <script>
     import $$ from 'dom7';
-    export default {}
+    export default {
+        on: {
+            pageInit: function(e, page) {
+                var self = this;
+                var app = self.$app;
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
+                $$('#asistentes-confirmar .btn-2 a').on('click', function(e) {
+                    app.data.store.getItem('select').then(function(value) {
+                        if (value == 'asist') {
+                            app.methods.redirectTo('doctor-horarios-select');
+                        } else {
+                            app.data.store.clear();
+                            app.methods.redirectTo('root');
+                        }
+                    });
+                });
+
+            }
+        }
+    }
 </script>

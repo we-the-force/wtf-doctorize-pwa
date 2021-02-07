@@ -55,170 +55,196 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
-                var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-                var datetime = '', today = '';
+                var monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+                var datetime = '',
+                    today = '',
+                    dias = [];
                 var moment = require('moment');
-                var doctor = JSON.parse(sessionStorage.getItem('user'));
+                moment.locale('es');
                 moment().format();
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
 
                 disableButton();
-
-                app.data.store.getItem('office').then(function (value) {
-                    app.data.consultorio = value;
-                    /* app.preloader.show('blue'); */
-                    app.request.get(app.data.url + '/offices/' + app.data.consultorio.id,
-                        function (e) {
-                            var x = JSON.parse(e);
-                            app.data.consultorio.startTime = x.startTime;
-                            app.data.consultorio.closeTime = x.closeTime;
-                            app.data.consultorio.lunchStartTime = x.lunchStartTime;
-                            app.data.consultorio.lunchCloseTime = x.lunchCloseTime;
-                            app.data.consultorio.days = x.days;
-                            app.preloader.hide();
-                        });
-
-                    calendarModal.on('change', function (x, y) {
-                        var z = moment(new Date(calendarModal.getValue()));
-                        today = moment();
-
-                        /* app.data.store.getItem('doctor').then(function (value2) {
-                            app.data.doctor = value2; */
-                        app.request.get(app.data.url + '/doctors/' + doctor.id + '/appointments?filter=office&filter=date&search=' + app.data.consultorio.id + '&search=' + z.format("YYYY-MM-DD"),
-                            function (e) {
-                                let x = JSON.parse(e);
-                                x = x.map(e => moment(e.date));
-                                let y = [];
-                                let startTimeArray = app.data.consultorio.startTime.split(":");
-                                let startTime = moment(z).hour(startTimeArray[0]).minute(startTimeArray[1]);
-                                let closeTimeArray = app.data.consultorio.closeTime.split(":");
-                                let closeTime = moment(z).hour(closeTimeArray[0]).minute(closeTimeArray[1]);
-                                let lunchStartTimeArray = app.data.consultorio.lunchStartTime.split(":");
-                                let lunchStartTime = moment(z).hour(lunchStartTimeArray[0]).minute(lunchStartTimeArray[1]);
-                                let lunchCloseTimeArray = app.data.consultorio.lunchCloseTime.split(":");
-                                let lunchCloseTime = moment(z).hour(lunchCloseTimeArray[0]).minute(lunchCloseTimeArray[1]);
-
-                                z = startTime;
-
-                                while (z.isBefore(closeTime)) {
-                                    if (z.isAfter(today)) {
-                                        if (!z.isBetween(lunchStartTime, lunchCloseTime)) {
-                                            if (x.every(e => !(e.isSameOrAfter(z) && e.isBefore(moment(z).add(30, 'm'))))) {
-                                                y.push(z.format("HH:mm"));
-                                                z.add(30, 'm');
-                                                continue;
-                                            }
-                                        }
+                app.data.store.getItem('consultorio').then(function(e) {
+                    /* app.request.get(app.data.url + '/consultorios/' + e, function(val) { */
+                    app.request.get(app.data.url + '/horarios?doctor.id=' + doctor.doctor.id + '&consultorio.id=' + e, function(value) {
+                        var x = JSON.parse(value);
+                        console.log(x);
+                        var calendarModal = app.calendar.create({
+                            inputEl: '#date',
+                            openIn: 'customModal',
+                            minDate: moment().subtract(1, 'd').toDate(),
+                            closeOnSelect: true,
+                            weekHeader: false,
+                            yearSelector: false,
+                            header: false,
+                            firstDay: 7,
+                            dateFormat: 'dd MM yyyy',
+                            disabled: function(e) {
+                                let date = moment(e);
+                                let bool = true;
+                                x.forEach(element => {
+                                    if (element.dias[date.isoWeekday() - 1].activo) {
+                                        bool = false;
                                     }
-                                    z.add(30, 'm');
-                                }
-
-                                $$(document).on('picker:closed', '#time', function (e) {
-                                    enableButton(z, pickerDevice.getValue());
                                 });
+                                return bool;
+                            },
+                            renderToolbar: function() {
+                                return '<div class="toolbar calendar-custom-toolbar no-shadow">' +
+                                    '<div class="toolbar-inner">' +
+                                    '<div class="left">' +
+                                    '<a href="#" class="link icon-only"><i class="icon icon-back"></i></a>' +
+                                    '</div>' +
+                                    '<div class="center"></div>' +
+                                    '<div class="right">' +
+                                    '<a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>';
+                            },
+                            on: {
+                                open: function(c) {
+                                    $$('.calendar-custom-toolbar .center').text(monthNames[c.currentMonth] + ', ' + c.currentYear);
+                                    $$('.calendar-custom-toolbar .left .link').on('click', function() {
+                                        c.prevMonth();
+                                    });
+                                    $$('.calendar-custom-toolbar .right .link').on('click', function() {
+                                        c.nextMonth();
+                                    });
+                                },
+                                monthYearChangeStart: function(c) {
+                                    $$('.calendar-custom-toolbar .center').text(monthNames[c.currentMonth] + ', ' + c.currentYear);
+                                },
+                                change: function(n, m) {
+                                    let z = moment(new Date(calendarModal.getValue()));
+                                    today = moment();
 
-                                var pickerDevice = app.picker.create({
-                                    inputEl: '#time',
-                                    cols: [
-                                        {
-                                            textAlign: 'center',
-                                            values: y
+                                    app.request.get(app.data.url + '/citas?fecha=' + z.format("YYYY-MM-DD"),
+                                        function(el) {
+                                            let v = JSON.parse(el);
+                                            v = v.map(e => {
+                                                let horaArr = e.hora.split(":");
+                                                return moment(z).hour(horaArr[0]).minute(horaArr[1]);
+                                            });
+                                            let hours = [];
+                                            x.forEach(function(ele) {
+                                                let hoursHorario = [];
+                                                ele.dias[z.isoWeekday() - 1].horas.forEach(function(elem) {
+                                                    let arr1 = [];
+                                                    let splitInicio = elem.start.split(":");
+                                                    let splitFin = elem.end.split(":");
+                                                    let start = moment(z).hour(splitInicio[0]).minute(splitInicio[1]);
+                                                    let fin = moment(z).hour(splitFin[0]).minute(splitFin[1]);
+                                                    start.minute(start.minute() <= 30 && start.minute() > 0 ? 30 : 0);
+                                                    while (start.isBefore(fin)) {
+                                                        if (start.isAfter(today)) {
+                                                            if (v.every(e => !(e.isSameOrAfter(start) && e.isBefore(moment(start).add(30, 'm'))))) {
+                                                                arr1.push(start.format("HH:mm"));
+                                                                start.add(30, 'm');
+                                                                continue;
+                                                            }
+                                                        }
+                                                        start.add(30, 'm');
+                                                    }
+                                                    hoursHorario = hoursHorario.concat(arr1);
+                                                });
+                                                hours = hours.concat(hoursHorario);
+                                            });
+                                            console.log(hours);
+                                            let unique = [...new Set(hours)];
+                                            var pickerDevice = app.picker.create({
+                                                inputEl: '#time',
+                                                cols: [{
+                                                    textAlign: 'center',
+                                                    values: unique
+                                                }]
+                                            });
+                                            $$(document).on('picker:closed', '#time', function(e) {
+                                                enableButton(z, pickerDevice.getValue());
+                                            });
                                         }
-                                    ]
-                                });
-
-                            }, function (params) {
-                                console.log(params);
-
-                            });
-
-                        /* }); */
-
+                                    );
+                                }
+                            }
+                        });
                     });
-
+                    /* }); */
                 });
 
-                var calendarModal = app.calendar.create({
-                    inputEl: '#date',
-                    openIn: 'customModal',
-                    minDate: moment().subtract(1, 'd').toDate(),
-                    closeOnSelect: true,
-                    weekHeader: false,
-                    yearSelector: false,
-                    header: false,
-                    firstDay: 7,
-                    dateFormat: 'dd MM yyyy',
-                    disabled: function (e) {
-                        var date = moment(e);
-                        return !app.data.consultorio.days.includes(date.isoWeekday())
-                    },
-                    renderToolbar: function () {
-                        return '<div class="toolbar calendar-custom-toolbar no-shadow">' +
-                            '<div class="toolbar-inner">' +
-                            '<div class="left">' +
-                            '<a href="#" class="link icon-only"><i class="icon icon-back"></i></a>' +
-                            '</div>' +
-                            '<div class="center"></div>' +
-                            '<div class="right">' +
-                            '<a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>';
-                    },
-                    on: {
-                        open: function (c) {
-                            $$('.calendar-custom-toolbar .center').text(monthNames[c.currentMonth] + ', ' + c.currentYear);
-                            $$('.calendar-custom-toolbar .left .link').on('click', function () {
-                                c.prevMonth();
-                            });
-                            $$('.calendar-custom-toolbar .right .link').on('click', function () {
-                                c.nextMonth();
-                            });
-                        },
-                        monthYearChangeStart: function (c) {
-                            $$('.calendar-custom-toolbar .center').text(monthNames[c.currentMonth] + ', ' + c.currentYear);
-                        }
-                    }
+                $$('#agendar-cita-fecha .btn-back').click(function() {
+
+                    app.methods.redirectTo('agendar-cita');
+
                 });
 
                 function enableButton(z, y) {
                     $$('#agendar-cita-fecha .btn-2 a').removeClass('grey');
                     $$('#agendar-cita-fecha .btn-2 a').off('click');
-                    $$('#agendar-cita-fecha .btn-2 a').click(function (e) {
-                        app.data.store.getItem('patient').then(function (patient) {
-                            app.data.patient = patient;
-                            datetime = moment(z.format("YYYY-MM-DD") + 'T' + y);
-                            app.preloader.show('blue');
+                    $$('#agendar-cita-fecha .btn-2 a').click(function(e) {
+                        console.log(y);
+                        console.log(z.format("YYYY-MM-DD"));
+                        let email, nombre, phone, consultorio, pat_id;
+                        app.data.store.iterate(function(value, key, i) {
+                            switch (key) {
+                                case "patient":
+                                    pat_id = value;
+                                    break;
+                                case "email":
+                                    email = value;
+                                    break;
+                                case "nombre":
+                                    nombre = value;
+                                    break;
+                                case "phone":
+                                    phone = value;
+                                    break;
+                                case "consultorio":
+                                    consultorio = value;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }).then(function(e) {
+                            console.log(z.format("YYYY-MM-DD"));
                             let consulta = localStorage.getItem('consulta');
-                            if (consulta) {
-                                let newCita = { 
-                                    "email": app.data.paciente.email,
-                                    "doctorId": doctor.id,
-                                    "officeId": app.data.consultorio.id,
-                                    "name": app.data.paciente.nombre,
-                                    "phone": app.data.paciente.phone,
-                                    "date": datetime.toDate()
+                            if (!consulta) {
+                                app.request.postJSON(app.data.url + '/citas', {
+                                        "correo": email,
+                                        "paciente": pat_id,
+                                        "telefono": phone,
+                                        "nombre": nombre,
+                                        "fecha": z.format("YYYY-MM-DD"),
+                                        "hora": y + ':00.000',
+                                        "doctor": doctor.doctor.id,
+                                        "consultorio": consultorio
+                                    },
+                                    function(e) {
+                                        app.data.store.clear().then(
+                                            function() {
+                                                app.preloader.hide();
+                                                app.methods.redirectTo('cita-agendada');
+                                            }
+                                        );
+                                    },
+                                    function(e) {
+                                        app.preloader.hide();
+                                    });
+                            } else {
+                                let newCita = {
+                                    "correo": email,
+                                    "telefono": phone,
+                                    "nombre": nombre,
+                                    "fecha": z.format("YYYY-MM-DD"),
+                                    "hora": y + ':00.000',
+                                    "doctor": doctor.doctor.id,
+                                    "consultorio": consultorio
                                 };
                                 localStorage.setItem('cita', JSON.stringify(newCita));
                                 app.methods.redirectTo('nueva-consulta');
-                            } else {
-                                app.request.postJSON(app.data.url + '/doctors/' + doctor.id + '/appointments', {
-                                    "email": app.data.paciente.email,
-                                    "doctorId": doctor.id,
-                                    "officeId": app.data.consultorio.id,
-                                    "name": app.data.paciente.nombre,
-                                    "phone": app.data.paciente.phone,
-                                    "date": datetime.toDate(),
-                                },
-                                    function (e) {
-                                        app.preloader.hide();
-                                        app.methods.redirectTo('cita-agendada');
-                                    },
-                                    function (e) {
-                                        app.preloader.hide();
-                                    });
                             }
                         });
                     });

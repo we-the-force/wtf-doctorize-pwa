@@ -12,27 +12,25 @@
         <div class="page-content">
             <div class="slot name">
                 <p class="title">Nombre</p>
-                <p class="data">Ciruggía de implante dental</p>
+                <p class="data"></p>
             </div>
             <div class="slot Implantes">
                 <p class="title">Implantes / Dispositivos de soporte</p>
-                <p class="data">Implante dental</p>
+                <p class="data"></p>
             </div>
             <div class="slot date">
                 <p class="title">Fecha</p>
-                <p class="data">19/01/2020</p>
+                <p class="data"></p>
             </div>
             <div class="slot by">
                 <p class="title">Por</p>
-                <p class="data">Dr. Gregorio Casas</p>
+                <p class="data"></p>
             </div>
             <div class="slot notes">
                 <p class="title">Notas</p>
-                <p class="data">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                    <p class="added">Agregada por: Dr. Bryan Thomas Gosling </p>
-                    <p class="date">19/02/2020 11:15 PM</p>
+                <p class="data"></p>
+                <!-- <p class="added">Agregada por: Dr. Bryan Thomas Gosling </p>
+                <p class="date">19/02/2020 11:15 PM</p> -->
             </div>
         </div>
         <div class="popover popover-edit">
@@ -52,81 +50,89 @@
     import $$ from 'dom7';
     export default {
         on: {
-            pageBeforeOut: function (e, page) {
+            pageBeforeOut: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 if (e.detail.direction == 'backward') {
                     app.data.store.removeItem('cir_id');
                 }
             },
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
-
+                var moment = require('moment');
+                moment.locale('es');
+                moment().format();
                 app.preloader.show('blue');
-                app.data.store.getItem('patient_id').then(function (value) {
-                    var ptnt_id = value;
-                    app.data.store.getItem('cir_id').then(function (value) {
-                        var cnd_mdc_id = value;
-                        app.request.get(app.data.url + '/patients/' + ptnt_id,
-                            function (e) {
-                                var x = JSON.parse(e);
-                                $$(".slot.name .data").text("Algo");
-                                $$(".slot.Implantes .data").text("Algo");
-                                $$(".slot.date .data").text("Algo");
-                                $$(".slot.by .data").text("Algo");
-                                $$(".slot.notes .data").text("Algo");
-                                app.preloader.hide();
-                            },
-                            function (e) {
-                                app.preloader.hide();
+                app.data.store.getItem('cir_id').then(function(value) {
+                    var cnd_mdc_id = value;
+                    app.request.get(app.data.url + '/cirugias/' + cnd_mdc_id,
+                        function(e) {
+                            var x = JSON.parse(e);
+                            console.log(x);
+                            let date = moment(x.fecha);
+                            $$(".slot.name .data").text(x.nombre);
+                            $$(".slot.Implantes .data").text(x.implante);
+                            $$(".slot.date .data").text(date.format('DD/MM/YYYY'));
+                            $$(".slot.by .data").text(x.especialista);
+                            $$(".slot.notes .data").text(x.notas);
+                            app.preloader.hide();
+
+                            $$('.popover-edit .item-link.edit').click(function(x) {
+                                app.popover.close();
+                                app.data.store.setItem('edit_patient_data', true).then(function(value) {
+                                    app.methods.redirectTo('paciente-cirugia-implantes-form');
+                                });
                             });
-                    });
-                });
 
-                $$('.popover-edit .item-link.edit').click(function (x) {
-                    app.popover.close();
-                    app.data.store.setItem('edit_patient_data', true).then(function (value) {
-                        app.methods.redirectTo('paciente-cirugia-implantes-form');
-                    });
-                });
+                            $$('.popover-edit .item-link.delete').click(function(x) {
+                                //cierra pop over
+                                app.popover.close();
+                                //crea cuadro de dialogo
+                                var dialog = app.dialog.create({
+                                    cssClass: 'delete',
+                                    title: '<i class="material-icons">error</i>',
+                                    text: 'Esta seguro que desea eliminar?',
+                                    content: 'Esta operación es irreversible',
+                                    buttons: [{
+                                        text: '<p>Cancelar</p> <i class="material-icons">chevron_right</i>',
+                                        cssClass: 'cancel',
+                                        onClick:
+                                        //cancela la accion, cierra ventana
+                                            function(x, y) {
+                                            dialog.close();
+                                            console.log('do not delete ');
 
-                $$('.popover-edit .item-link.delete').click(function (x) {
-                    //cierra pop over
-                    app.popover.close();
-                    //crea cuadro de dialogo
-                    var dialog = app.dialog.create({
-                        cssClass: 'delete',
-                        title: '<i class="material-icons">error</i>',
-                        text: 'Esta seguro que desea eliminar?',
-                        content: 'Esta operación es irreversible',
-                        buttons: [
-                            {
-                                text: '<p>Cancelar</p> <i class="material-icons">chevron_right</i>',
-                                cssClass: 'cancel',
-                                onClick:
-                                    //cancela la accion, cierra ventana
-                                    function (x, y) {
-                                        dialog.close();
-                                        console.log('do not delete ');
-
-                                    }
-                            },
-                            {
-                                text: '<p>Eliminar</p> <i class="material-icons">chevron_right</i>',
-                                cssClass: 'delete',
-                                onClick:
-                                    function (x, y) {
-                                        //mandar eliminar el horario**********+
-                                        //cierra ventana, elimina tarjeta
-                                        dialog.close();
-                                        console.log('delete');
-                                    }
-                            }
-                        ]
-                    });
-                    //abre cuadro de dialogo
-                    dialog.open();
+                                        }
+                                    }, {
+                                        text: '<p>Eliminar</p> <i class="material-icons">chevron_right</i>',
+                                        cssClass: 'delete',
+                                        onClick: function(x, y) {
+                                            app.preloader.show('blue');
+                                            app.request({
+                                                url: app.data.url + '/cirugias/' + cnd_mdc_id,
+                                                method: "DELETE",
+                                                crossDomain: true,
+                                                success: function(e) {
+                                                    app.preloader.hide();
+                                                    app.dialog.alert('Se ha eliminado.', function() {
+                                                        app.methods.redirectTo('paciente-perfil');
+                                                    });
+                                                },
+                                                error: function(e) {
+                                                    app.preloader.hide();
+                                                }
+                                            });
+                                        }
+                                    }]
+                                });
+                                //abre cuadro de dialogo
+                                dialog.open();
+                            });
+                        },
+                        function(e) {
+                            app.preloader.hide();
+                        });
                 });
             }
         }

@@ -49,7 +49,7 @@
                                 room
                             </i>
                             <div class="card-content card-content-padding">
-                                <p class="red">Hospital</p>
+                                <p class="red">Consultorio</p>
                                 <p class="text"></p>
                             </div>
                             <i class="points material-icons red">
@@ -88,53 +88,57 @@
 
     export default {
         on: {
-            pageInit: function (e, page) {
+            pageInit: function(e, page) {
                 var self = this;
                 var app = self.$app;
                 var asist, hosp, hora;
+                var doctor = JSON.parse(sessionStorage.getItem('user'));
+
+                app.data.store.getItem('edit').then(function(value) {
+                    if (value) {
+                        $$('#doctor-horarios-add .title1').text('Editar horario');
+                        //llenar datos al llamar **********************
+                    }
+                });
 
                 $$('#doctor-horarios-add .title1').text('Agregar horario');
                 $$('#doctor-horarios-add .btn .btn-rounded').off('click');
                 $$('#doctor-horarios-add .btn .btn-rounded').addClass('grey');
 
                 //obtiene nombre del horario y lo pone en el input
-                app.data.store.getItem('horario-name').then(function (value) {
+                app.data.store.getItem('horario-name').then(function(value) {
                     $$('.name li input').val(value);
                 });
 
                 //obtiene asistente y lo pone en la tarjeta
-                app.data.store.getItem('asist-json').then(function (value) {
-                    $$('li #asist p.text').text(value);
-                    if (value == null) {
-                        asist = false;
-                    } else {
-                        asist = true;
+                app.data.store.getItem('asist-json').then(function(value) {
+                    app.data.store.getItem('asist-json-id').then(function(id) {
+                        $$('li #asist p.text').data('id', id);
+                        $$('li #asist p.text').text(value);
+                        asist = value == null ? false : true;
                         //trigger para checkar values
-                        $$(document).trigger("checkValues");
-                    }
+                        if (value != null) $$(document).trigger("checkValues");
+                    });
                 });
 
                 //obtiene officina y guardaen la tarjeta
-                app.data.store.getItem('hosp-json').then(function (value) {
-                    $$('li #hosp p.text').text(value);
-                    if (value == null) {
-                        hosp = false;
-                    } else {
-                        hosp = true;
-
-                        //trigger para checkar values
-                        $$(document).trigger("checkValues");
-                    }
+                app.data.store.getItem('hosp-json').then(function(value) {
+                    app.data.store.getItem('hosp-json-id').then(function(id) {
+                        $$('li #hosp p.text').text(value);
+                        $$('li #hosp p.text').data('id', id);
+                        hosp = value == null ? false : true;
+                        if (value != null) $$(document).trigger("checkValues");
+                    });
                 });
 
                 //obtiene horarios y guarda en tarjeta
-                app.data.store.getItem('horario-json').then(function (value) {
+                app.data.store.getItem('horario-json').then(function(value) {
                     hora = false;
                     if (value != null) {
                         let days = '';
                         for (let i = 0; i < value.length; i++) {
                             const element = value[i];
-                            if (element.active) {
+                            if (element.activo) {
                                 switch (i) {
                                     case 0:
                                         days = days + 'L '
@@ -169,51 +173,69 @@
                     }
                 });
 
-
-                app.data.store.getItem('edit').then(function (value) {
-                    if (value) {
-                        $$('#doctor-horarios-add .title1').text('Editar horario');
-                        //llenar datos al llamar **********************
-                    }
-                });
-
                 //cuando el input del nombre no este vacio
-                $$('#doctor-horarios-add input').on('input:notempty', function (x) {
-                    app.data.store.setItem('horario-name', $$('.name li input').val()).then(function (value) {
+                $$('#doctor-horarios-add input').on('input:notempty', function(x) {
+                    app.data.store.setItem('horario-name', $$('.name li input').val()).then(function(value) {
                         $$(document).trigger("checkValues");
                     });
                 });
 
-                $$(document).on('checkValues', function (val) {
+                $$(document).on('checkValues', function(val) {
                     //si los 3 valores estan activa boton
                     if (asist && hosp && hora) {
                         $$(document).off("checkValues");
                         $$('#doctor-horarios-add .btn .btn-rounded').removeClass('grey');
-                        $$('#doctor-horarios-add .btn-rounded').click(function (val) {
+                        $$('#doctor-horarios-add .btn .btn-rounded').click(function(val) {
                             let x = {};
                             //cambiar por ids                            
-                            x.name = $$('.name li input').val();
-                            x.assistant = $$('li #asist p.text').text();
-                            x.office = $$('li #hosp p.text').text();
-                            app.data.store.getItem('horario-json').then(function (value) {
-                                x.days = value;
-                                app.data.store.setItem('horario-schedule', x).then(function (value) {
-                                    //send data
-                                    app.data.store.clear().then(function (x) {
-                                        app.methods.redirectTo('doctor-horarios');
-                                    });
-                                });
+                            x.nombre = $$('.name li input').val();
+                            x.doctor = doctor.doctor.id;
+                            x.asistente = $$('li #asist p.text').data('id');
+                            x.consultorio = $$('li #hosp p.text').data('id');
+                            app.data.store.getItem('horario-json').then(function(value) {
+                                x.dias = value;
+                                app.preloader.show('blue');
+                                app.data.store.getItem('horario-id').then(function(edit) {
+                                    if (edit) {
+                                        app.request({
+                                            url: app.data.url + '/horarios/' + edit,
+                                            method: "PUT",
+                                            crossDomain: true,
+                                            data: x,
+                                            success: function(e) {
+                                                app.data.store.clear().then(function(x) {
+                                                    app.preloader.hide();
+                                                    app.methods.redirectTo('doctor-horarios');
+                                                });
+                                            },
+                                            error: function(e) {
+                                                app.preloader.hide();
+                                            }
+                                        });
+                                    } else {
+                                        app.request.postJSON(app.data.url + '/horarios', x,
+                                            function(e) {
+                                                app.data.store.clear().then(function(x) {
+                                                    app.preloader.hide();
+                                                    app.methods.redirectTo('doctor-horarios');
+                                                });
+                                            },
+                                            function(e) {
+                                                app.preloader.hide();
+                                            });
+                                    }
+                                })
                             });
                         });
                     }
-                })
+                });
 
                 //redirige a las pantallas correspondientes
-                $$('.card.add').click(function (x) {
+                $$('.card.add').click(function(x) {
                     switch ($$(this).attr('id')) {
                         case 'hosp':
                         case 'asist':
-                            app.data.store.setItem('select', $$(this).attr('id')).then(function (value) {
+                            app.data.store.setItem('select', $$(this).attr('id')).then(function(value) {
                                 app.methods.redirectTo('doctor-horarios-select');
                             });
                             break;
@@ -226,10 +248,17 @@
                 });
 
                 //regresar
-                $$('#doctor-horarios-add .header a').click(function (val) {
-                    app.data.store.clear().then(function (x) {
-                        app.methods.redirectTo('doctor-horarios');
+                $$('#doctor-horarios-add .header a').click(function(val) {
+                    app.data.store.getItem('show').then(function(show) {
+                        if (show) {
+                            app.methods.redirectTo('doctor-horarios-show');
+                        } else {
+                            app.data.store.clear().then(function(x) {
+                                app.methods.redirectTo('doctor-horarios');
+                            });
+                        }
                     });
+
                 });
             }
         }
